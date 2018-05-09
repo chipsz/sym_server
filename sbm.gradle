@@ -3,7 +3,7 @@
 
 		- Versions will be checked for updates, conflicts, vulnerabilites etc. automatically
 		- Version changes will be logged
-		- Primarily, duplicates will be avoided by maintaining the same version across all BeyondTelecom apps.
+		- Primarily, duplicates will be avoided by maintaining the same version across all Symbiosis apps.
 
 	Dependency versions should only be managed in this file for many reasons:
 
@@ -41,6 +41,7 @@ project.ext.swagger_version			= '2.4.0'
 
 subprojects {
 
+    group = 'net.symbiosis'
 	version = '1.0.0'
 
 	apply plugin: 'maven'

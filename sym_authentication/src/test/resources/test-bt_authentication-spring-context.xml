@@ -6,9 +6,9 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <import resource="classpath*:test-bt_persistence-spring-context.xml" />
+    <import resource="classpath*:test-sym_persistence-spring-context.xml"/>
 
-    <context:component-scan base-package="net.beyondtelecom.gopay.bt_authentication" />
+    <context:component-scan base-package="net.symbiosis.authentication"/>
 
     <context:annotation-config />
 

@@ -1,9 +1,6 @@
 description = 'Symbiosis Core'
 
-group = 'net.beyondtelecom.gopay'
-version = '1.0.0'
-
-jar { baseName = 'sym_core' }
+jar { baseName = 'core' }
 
 apply plugin: 'idea'
 

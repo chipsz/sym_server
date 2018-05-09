@@ -23,7 +23,7 @@
     </context-param>
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:bt_web_ui-spring-context.xml</param-value>
+        <param-value>classpath:sym_web_ui-spring-context.xml</param-value>
     </context-param>
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
@@ -73,24 +73,24 @@
     </welcome-file-list>
 
     <servlet>
-        <servlet-name>BTWebServlet</servlet-name>
+        <servlet-name>SymWebServlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>BTWebServlet</servlet-name>
-        <url-pattern>/bt/*</url-pattern>
+        <servlet-name>SymWebServlet</servlet-name>
+        <url-pattern>/sym/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BTWebServlet</servlet-name>
+        <servlet-name>SymWebServlet</servlet-name>
         <url-pattern>*.jsf</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BTWebServlet</servlet-name>
+        <servlet-name>SymWebServlet</servlet-name>
         <url-pattern>*.faces</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BTWebServlet</servlet-name>
+        <servlet-name>SymWebServlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
 

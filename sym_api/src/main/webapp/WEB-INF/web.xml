@@ -5,11 +5,11 @@
 	                         http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          id="WebApp_ID" version="2.5">
 
-<display-name>BeyondTelecom API</display-name>
+    <display-name>Symbiosis API</display-name>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:bt_api-spring-context.xml</param-value>
+        <param-value>classpath:sym_api-spring-context.xml</param-value>
     </context-param>
 
     <!-- Spring Listener -->
@@ -22,18 +22,18 @@
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>net.beyondtelecom.gopay.bt_api.SymAPIApp</param-value>
+            <param-value>net.symbiosis.api.SymAPIApp</param-value>
         </init-param>
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>net.beyondtelecom.gopay.bt_api</param-value>
+            <param-value>net.symbiosis.api</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>jersey-servlet</servlet-name>
-        <url-pattern>/bt/*</url-pattern>
+        <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 
 </web-app>

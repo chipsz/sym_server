@@ -1,7 +1,6 @@
-group = 'net.beyondtelecom.gopay'
 description = 'Symbiosis Persistence'
 
-jar { baseName = 'sym_persistence' }
+jar { baseName = 'persistence' }
 
 apply plugin: 'idea'
 

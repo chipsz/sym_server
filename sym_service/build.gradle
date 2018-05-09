@@ -1,9 +1,6 @@
 description = 'Symbiosis Services'
 
-group = 'net.beyondtelecom.gopay'
-version = '1.0.0'
-
-jar { baseName = 'sym_service' }
+jar { baseName = 'service' }
 
 apply plugin: 'idea'
 

@@ -1,9 +1,6 @@
 description = 'Symbiosis Common'
 
-group = 'net.beyondtelecom.gopay'
-version = '1.0.0'
-
-jar { baseName = 'sym_common' }
+jar { baseName = 'common' }
 apply plugin: 'idea'
 
 configurations {

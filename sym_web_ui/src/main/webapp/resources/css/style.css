@@ -52,8 +52,7 @@
     left:       0;
     height:     100%;
     width:      100%;
-    background: rgba( 0, 0, 0, .60 )
-                url('https://www.beyondtelecoms.net/admin/resources/images/processing2.gif')
+    background: rgba( 0, 0, 0, .60 ) url('https://www.symbiosis.net/admin/resources/images/processing2.gif')
                 50% 50%
                 no-repeat;
 }

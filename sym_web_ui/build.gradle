@@ -1,7 +1,6 @@
 description = 'Symbiosis Web UI'
 
-group = 'net.beyondtelecom.bt_ui'
-version = '1.0.0'
+jar { baseName = 'web_ui' }
 
 apply plugin: 'war'
 apply plugin: 'idea'

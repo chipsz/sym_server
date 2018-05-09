@@ -3,38 +3,38 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
-    <persistence-unit name="testBTPersistence" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="testSymPersistence" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.enumeration.bt_deposit_type</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.enumeration.bt_distribution_channel</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_deposit_type</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_distribution_channel</class>
 
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.super_class.bt_entity</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.super_class.bt_complex_enum</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.super_class.bt_enum_entity</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.complex_type.bt_user</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.complex_type.bt_auth_user</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.complex_type.bt_auth_group_role</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.complex_type.bt_cashout_account</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.complex_type.bt_company</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.complex_type.bt_user_preference</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.complex_type.bt_wallet</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.complex_type.bt_wallet_group</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.complex_type.log.bt_cashout_transaction</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.complex_type.log.bt_request_response_log</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.complex_type.log.bt_session</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.complex_type.log.bt_swipe_transaction</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.enumeration.bt_channel</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.enumeration.bt_country</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.enumeration.bt_currency</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.enumeration.bt_event_type</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.enumeration.bt_financial_institution</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.enumeration.bt_financial_institution_type</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.enumeration.bt_auth_group</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.enumeration.bt_language</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.enumeration.bt_preference</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.enumeration.bt_response_code</class>
-        <class>net.beyondtelecom.gopay.bt_persistence.entity.enumeration.bt_role</class>
+        <class>net.symbiosis.persistence.entity.super_class.sym_entity</class>
+        <class>net.symbiosis.persistence.entity.super_class.sym_complex_enum</class>
+        <class>net.symbiosis.persistence.entity.super_class.sym_enum_entity</class>
+        <class>net.symbiosis.persistence.entity.complex_type.sym_user</class>
+        <class>net.symbiosis.persistence.entity.complex_type.sym_auth_user</class>
+        <class>net.symbiosis.persistence.entity.complex_type.sym_auth_group_role</class>
+        <class>net.symbiosis.persistence.entity.complex_type.sym_cashout_account</class>
+        <class>net.symbiosis.persistence.entity.complex_type.sym_company</class>
+        <class>net.symbiosis.persistence.entity.complex_type.sym_user_preference</class>
+        <class>net.symbiosis.persistence.entity.complex_type.sym_wallet</class>
+        <class>net.symbiosis.persistence.entity.complex_type.sym_wallet_group</class>
+        <class>net.symbiosis.persistence.entity.complex_type.log.sym_cashout_transaction</class>
+        <class>net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log</class>
+        <class>net.symbiosis.persistence.entity.complex_type.log.sym_session</class>
+        <class>net.symbiosis.persistence.entity.complex_type.log.sym_swipe_transaction</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_channel</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_country</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_currency</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_event_type</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_financial_institution</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_financial_institution_type</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_auth_group</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_language</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_preference</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_response_code</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_role</class>
 
         <properties>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>

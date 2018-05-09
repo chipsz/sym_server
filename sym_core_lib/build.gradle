@@ -1,9 +1,6 @@
 description = 'Symbiosis Core Library'
 
-group = 'net.beyondtelecom.gopay'
-version = '1.0.0'
-
-jar { baseName = 'sym_core_lib' }
+jar { baseName = 'core_lib' }
 
 dependencies {
     testCompile libraries.testng

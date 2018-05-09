@@ -1,7 +1,6 @@
 description = 'Symbiosis API'
 
-group = 'net.beyondtelecom.gopay'
-version = '1.0.0'
+jar { baseName = 'api' }
 
 apply plugin: 'war'
 apply plugin: 'idea'
