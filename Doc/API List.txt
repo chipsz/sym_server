@@ -1,0 +1,76 @@
+FIRST IP: 104.154.237.6
+SECOND IP: 104.154.42.123
+THIRD IP: 104.197.36.249
+FORTH IP: 104.198.224.120
+---------------------------------
+
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/session (POST)
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/session/{sessionId} (PUT)
+http://localhost:8080/sym_api-1.0.0/bt/server/json/session (POST)
+http://localhost:8080/sym_api-1.0.0/bt/server/json/session/{sessionId} (PUT)
+
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/user (POST)
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/user/{userId} (PUT)
+http://localhost:8080/sym_api-1.0.0/bt/server/json/user (POST)
+http://localhost:8080/sym_api-1.0.0/bt/server/json/user/{userId} (PUT)
+
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/walletGroup
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/walletGroup
+
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/walletGroupVoucher
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/walletGroupVoucher
+
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/merchant (POST)
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/merchant (GET)
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/merchant/{walletId} (GET)
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/merchant/{walletId}/payment (POST)
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/merchant (POST)
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/merchant (GET)
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/merchant/{walletId} (GET)
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/merchant/{walletId}/payment (POST)
+
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/voucher (GET)
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/voucher/{voucherId} (GET)
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/voucher (GET)
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/voucher/{voucherId}
+
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/voucher/{voucherId}/purchase {POST}
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/voucher/{voucherId}/purchase {POST}
+
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/responseCode
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/responseCode/{responseCodeId}
+http://localhost:8080/sym_api-1.0.0/bt/server/json/responseCode
+http://localhost:8080/sym_api-1.0.0/bt/server/json/responseCode/{responseCodeId}
+
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/systemConfig
+http://localhost:8080/sym_api-1.0.0/bt/server/json/systemConfig
+
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/language/{languageId}
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/channel/{channelId}
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/country/{countryId}
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/group/{groupId}
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/role/{roleId}
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/eventType/{eventTypeId}
+
+http://localhost:8080/sym_api-1.0.0/bt/server/json/language/{languageId}
+http://localhost:8080/sym_api-1.0.0/bt/server/json/channel/{channelId}
+http://localhost:8080/sym_api-1.0.0/bt/server/json/country/{countryId}
+http://localhost:8080/sym_api-1.0.0/bt/server/json/group/{groupId}
+http://localhost:8080/sym_api-1.0.0/bt/server/json/role/{groupId}
+http://localhost:8080/sym_api-1.0.0/bt/server/json/eventType/{eventTypeId}
+
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/serviceProvider/{serviceProviderId}
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/serviceProvider
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/serviceProvider/{serviceProviderId}
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/serviceProvider
+
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/voucherProvider/{voucherProviderId}
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/voucherProvider/{voucherProviderId}/payment (POST)
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/voucherProvider
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/voucherProvider/{voucherProviderId}/voucherImport (GET)
+http://localhost:8080/sym_api-1.0.0/bt/server/xml/gopay/voucherProvider/{voucherProviderId}/voucherImport (POST)
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/voucherProvider/{voucherProviderId}
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/voucherProvider/{voucherProviderId}/payment (POST)
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/voucherProvider
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/voucherProvider/{voucherProviderId}/voucherImport (POST)
+http://localhost:8080/sym_api-1.0.0/bt/server/json/gopay/voucherProvider/{voucherProviderId}/voucherImport (POST

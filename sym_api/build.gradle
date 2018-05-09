@@ -1,0 +1,48 @@
+description = 'Symbiosis API'
+
+group = 'net.beyondtelecom.gopay'
+version = '1.0.0'
+
+apply plugin: 'war'
+apply plugin: 'idea'
+
+configurations {
+	provided
+}
+
+sourceSets {
+	main.compileClasspath += configurations.provided
+	test.compileClasspath += configurations.provided
+	test.runtimeClasspath += configurations.provided
+}
+
+idea { module { scopes.PROVIDED.plus += [ configurations.provided] } }
+
+dependencies {
+
+    compile project(':sym_core_lib')
+    compile project(':sym_common')
+    compile project(':sym_persistence')
+    compile project(':sym_authentication')
+    compile project(':sym_core')
+
+    testCompile project(':sym_core_lib').sourceSets.test.output
+    testCompile project(':sym_common').sourceSets.test.output
+    testCompile project(':sym_persistence').sourceSets.test.output
+    testCompile project(':sym_authentication').sourceSets.test.output
+
+ 	compile libraries.modelmapper
+ 	compile libraries.spring_webmvc
+	compile libraries.jersey2_core
+	compile libraries.jersey2_servlet
+	compile libraries.jersey2_jackson
+	compile libraries.jersey2_multipart
+	compile(libraries.jersey2_spring3) {
+		exclude group: 'org.springframework', module: 'spring-beans'
+		exclude group: 'org.springframework', module: 'spring-web'
+		exclude group: 'org.springframework', module: 'spring-core'
+	}
+	testCompile libraries.testng
+	testCompile libraries.jmockit
+	testCompile libraries.spring_test
+}

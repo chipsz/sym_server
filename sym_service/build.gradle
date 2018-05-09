@@ -1,0 +1,33 @@
+description = 'Symbiosis Services'
+
+group = 'net.beyondtelecom.gopay'
+version = '1.0.0'
+
+jar { baseName = 'sym_service' }
+
+apply plugin: 'idea'
+
+configurations {
+    provided
+}
+
+sourceSets {
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+}
+
+idea { module { scopes.PROVIDED.plus += [ configurations.provided] } }
+
+dependencies {
+    provided project(':sym_core_lib')
+    provided project(':sym_common')
+    provided project(':sym_persistence')
+    testCompile project(':sym_core_lib').sourceSets.test.output
+    testCompile project(':sym_common').sourceSets.test.output
+    testCompile project(':sym_persistence').sourceSets.test.output
+
+    testCompile libraries.testng
+    testCompile libraries.jmockit
+    testCompile libraries.spring_test
+}

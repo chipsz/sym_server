@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
+</f:metadata>
+
+<h:form id="walletGroupForm" rendered="#{sessionBean.isCurrentPage('wgEdit')}" layout="block">
+
+    <p:panel header="Create a new Wallet Group" style="width: 100%; margin-bottom: 10px" styleClass="centerAlign">
+        <h:panelGrid id="wgvCreatePanel" columns="5" styleClass="centerAlign" style="width: 100%">
+            <p:outputLabel for="wgName" value="Group Name:" styleClass="leftAlign" style="width: 180px"/>
+            <p:inputText id="wgName" value="#{walletGroupBean.newWalletGroup.name}" required="true" styleClass="leftAlign">
+                <f:validator validatorId="custom.nameValidator"  />
+                <p:ajax update="msgVGName" event="keyup" />
+            </p:inputText>
+            <p:message for="wgName" id="msgVGName" display="icon" styleClass="rightAlign"/>
+
+            <p:outputLabel for="wgEnabled" value="Is Enabled?" styleClass="leftAlign"/>
+            <h:selectOneMenu id="wgEnabled" value="#{walletGroupBean.newWalletGroup.is_enabled}" styleClass="rightAlign">
+                <f:selectItems value="#{updateOptions.booleanList}" var="is_enabled" itemLabel="#{is_enabled}" itemValue="#{is_enabled}" />
+            </h:selectOneMenu>
+
+            <p:outputLabel for="wgDiscount" value="Default Discount:" styleClass="leftAlign" style="width: 180px"/>
+            <p:inputNumber id="wgDiscount" value="#{walletGroupBean.newWalletGroup.default_discount}" required="true"
+                           styleClass="leftAlign" decimalPlaces="3" minValue="0" maxValue="100">
+            </p:inputNumber>
+
+            <p:outputLabel value="&#160;&#160;&#160;&#160;&#160;&#160;"/><p:spacer/>
+            <p:commandButton id="btnCreateSP" action="#{walletGroupBean.createWalletGroup}" styleClass="rightAlign"
+                             value="Add Wallet Group" icon="ui-icon-plusthick" ajax="false"
+                             onclick="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" />
+        </h:panelGrid>
+    </p:panel>
+
+    <p:dataTable id="walletGroups" var="wg" value="#{updateOptions.walletGroups}" draggableColumns="true"
+                 editable="true" resizableColumns="true" editMode="cell" widgetVar="cellVoucherGroups"
+                 rowStyleClass="#{wg.is_enabled ? null : 'disabledRow'}">
+        <f:facet name="header">Wallet Groups</f:facet>
+        <p:ajax event="cellEdit" listener="#{walletGroupBean.onCellEdit}" update=":msgs" />
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_NAME}" sortBy="#{wg.name}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{wg.name}" /></f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{wg.name}" required="true" style="width:96%">
+                        <f:validator validatorId="custom.nameValidator"  />
+                    </p:inputText>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ENABLED}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{wg.is_enabled}" /></f:facet>
+                <f:facet name="input">
+                    <h:selectOneMenu value="#{wg.is_enabled}" style="width:100%">
+                        <f:selectItems value="#{updateOptions.booleanList}" var="is_enabled" itemLabel="#{is_enabled}" itemValue="#{is_enabled}" />
+                    </h:selectOneMenu>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_DISCOUNT}" sortBy="#{wg.default_discount}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{wg.default_discount}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{wg.default_discount}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+    </p:dataTable>
+    <p:contextMenu for="walletGroups" widgetVar="cMenu">
+        <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellVoucherGroups').showCellEditor();return false;"/>
+        <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>
+    </p:contextMenu>
+</h:form>
+
+</html>

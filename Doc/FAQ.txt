@@ -1,0 +1,2 @@
+Account does not exist = You must re-register the POS machine
+Access denied by user = Restart application and allow HTTP traffic
