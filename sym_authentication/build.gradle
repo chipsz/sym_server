@@ -28,7 +28,7 @@ dependencies {
 	testCompile libraries.jpa_2_1_api
 	testCompile libraries.dom4j
 	testCompile libraries.hibernate_antlr
-    testCompile libraries.log4j
+    //testCompile libraries.log4j
 	testCompile libraries.testng
 	compile libraries.spring_context
 	compile libraries.spring_security_core

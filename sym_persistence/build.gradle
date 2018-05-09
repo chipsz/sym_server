@@ -45,7 +45,7 @@ dependencies {
 	compile libraries.commons_collections
 	compile libraries.commons_dbcp
 
-    testCompile libraries.log4j
+    //testCompile libraries.log4j
     testCompile libraries.testng
     testCompile libraries.jmockit
     testCompile libraries.spring_test

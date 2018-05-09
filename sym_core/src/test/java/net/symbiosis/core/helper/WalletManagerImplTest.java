@@ -1,8 +1,10 @@
 package net.symbiosis.core.helper;
 
-import net.symbiosis.core.implementation.WalletManagerImpl;
-import net.symbiosis.core_lib.enumeration.SymResponseCode;
+import net.symbiosis.core.service.WalletManager;
+import net.symbiosis.core_lib.response.SymResponseObject;
 import net.symbiosis.persistence.entity.complex_type.sym_wallet;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
@@ -18,16 +20,25 @@ import static org.testng.Assert.assertTrue;
 
 @Test
 public class WalletManagerImplTest {
+
+    private WalletManager walletManager;
+
+    @BeforeClass
+    public void setUp() {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("test-sym_core-spring-context.xml");
+        walletManager = (WalletManager) context.getBean("walletManager");
+    }
+
     @Test
     public void testUpdateWalletBalance() {
 
         sym_wallet wallet = new sym_wallet(
-                new BigDecimal(100.0), null, null, null
+            new BigDecimal(100.0), null, null, null
         ).save();
 
-        SymResponseCode updateResponse = WalletManagerImpl.updateWalletBalance(wallet, new BigDecimal(10));
+        SymResponseObject<sym_wallet> updateResponse = walletManager.updateWalletBalance(wallet, new BigDecimal(10));
 
-        assertTrue(updateResponse.equals(SUCCESS));
+        assertTrue(updateResponse.getResponseCode().equals(SUCCESS));
         assertTrue(wallet.getCurrent_balance().equals(new BigDecimal(110)));
     }
 

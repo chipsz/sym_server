@@ -31,6 +31,13 @@ dependencies {
     compile libraries.spring_core
     compile libraries.modelmapper
 
+    //TODO check if these are all needed
+    testCompile libraries.hibernate_core
+    testCompile libraries.jpa_2_1_api
+    testCompile libraries.dom4j
+    testCompile libraries.hibernate_antlr
+    testCompile libraries.jpa_2_1_api
+
     testCompile libraries.testng
 	testCompile libraries.jmockit
 	testCompile libraries.spring_test
