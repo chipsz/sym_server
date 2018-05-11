@@ -1,6 +1,10 @@
 package net.symbiosis.web_ui.common;
 
-import net.symbiosis.persistence.entity.complex_type.*;
+import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
+import net.symbiosis.persistence.entity.complex_type.sym_company;
+import net.symbiosis.persistence.entity.complex_type.sym_user;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
 import net.symbiosis.persistence.entity.enumeration.sym_event_type;
 import net.symbiosis.persistence.entity.enumeration.sym_response_code;
 import net.symbiosis.persistence.entity.super_class.sym_entity;

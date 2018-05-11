@@ -16,7 +16,7 @@ import java.math.BigDecimal;
  * *
  ***************************************************************************/
 
-public interface MobileRequestProcessor {
+public interface MobileRequestProcessor extends RequestProcessor {
     SymSystemUserList registerMobileUser(String email, String msisdn, String username, String deviceId,
                                          String companyName, String firstName, String lastName, String pin);
 

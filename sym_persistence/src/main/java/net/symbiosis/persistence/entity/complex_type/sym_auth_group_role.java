@@ -24,8 +24,7 @@ public class sym_auth_group_role extends sym_enum_entity<sym_auth_group_role> {
     @JoinColumn(name = "role_id")
     private sym_role role;
 
-    public sym_auth_group_role() {
-    }
+    public sym_auth_group_role() {}
 
     public sym_auth_group_role(String name, Boolean enabled, sym_auth_group auth_group, sym_role role) {
         super(name, enabled);

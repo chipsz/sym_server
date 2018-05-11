@@ -1,5 +1,6 @@
 package net.symbiosis.persistence.entity.complex_type;
 
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.enumeration.sym_country;
 import net.symbiosis.persistence.entity.enumeration.sym_language;
 import net.symbiosis.persistence.entity.enumeration.sym_response_code;

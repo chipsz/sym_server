@@ -19,19 +19,18 @@ public class sym_auth_user extends sym_entity<sym_auth_user> {
     @ManyToOne(optional = false)
     @JoinColumn(name = "auth_group_id")
     private sym_auth_group auth_group;
-    @Basic(optional = true)
+    @Basic
     private String device_id;
-    @Basic(optional = true)
+    @Basic
     private String auth_token;
     @Basic(optional = false)
     private Date registration_date;
-    @Basic(optional = true)
+    @Basic
     private Date last_auth_date;
-    @Basic(optional = true)
+    @Basic
     private Date last_login_date;
 
-    public sym_auth_user() {
-    }
+    public sym_auth_user() {}
 
     public sym_auth_user(sym_user user, sym_channel channel, sym_auth_group auth_group,
                          String device_id, String auth_token, Date registration_date, Date last_auth_date,

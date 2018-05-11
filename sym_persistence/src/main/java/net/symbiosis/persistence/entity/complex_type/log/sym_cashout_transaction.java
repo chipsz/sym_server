@@ -1,7 +1,7 @@
 package net.symbiosis.persistence.entity.complex_type.log;
 
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
-import net.symbiosis.persistence.entity.complex_type.sym_cashout_account;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_cashout_account;
 import net.symbiosis.persistence.entity.enumeration.sym_response_code;
 import net.symbiosis.persistence.entity.super_class.sym_entity;
 
@@ -37,6 +37,8 @@ public class sym_cashout_transaction extends sym_entity<sym_cashout_transaction>
     private Date transaction_time;
     @ManyToOne
     private sym_response_code transaction_status;
+
+    public sym_cashout_transaction() {}
 
     public sym_cashout_transaction(sym_auth_user auth_user, String user_reference, sym_cashout_account cashout_account,
                                    BigDecimal transaction_amount, BigDecimal previous_balance, BigDecimal new_balance,

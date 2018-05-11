@@ -15,12 +15,22 @@
         <class>net.symbiosis.persistence.entity.complex_type.sym_user</class>
         <class>net.symbiosis.persistence.entity.complex_type.sym_auth_user</class>
         <class>net.symbiosis.persistence.entity.complex_type.sym_auth_group_role</class>
-        <class>net.symbiosis.persistence.entity.complex_type.sym_cashout_account</class>
+        <class>net.symbiosis.persistence.entity.complex_type.wallet.sym_cashout_account</class>
         <class>net.symbiosis.persistence.entity.complex_type.sym_company</class>
+        <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_pinbased_voucher</class>
+        <class>net.symbiosis.persistence.entity.complex_type.pos.sym_pos_machine</class>
+        <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_service_provider</class>
         <class>net.symbiosis.persistence.entity.complex_type.sym_user_preference</class>
-        <class>net.symbiosis.persistence.entity.complex_type.sym_wallet</class>
-        <class>net.symbiosis.persistence.entity.complex_type.sym_wallet_group</class>
+        <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher</class>
+        <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider</class>
+        <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider_payment</class>
+        <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_purchase</class>
+        <class>net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet</class>
+        <class>net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group</class>
+        <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_wallet_group_voucher</class>
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_cashout_transaction</class>
+        <class>net.symbiosis.persistence.entity.complex_type.log.sym_import_batch</class>
+        <class>net.symbiosis.persistence.entity.complex_type.log.sym_incoming_payment</class>
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log</class>
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_session</class>
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_swipe_transaction</class>
@@ -35,12 +45,14 @@
         <class>net.symbiosis.persistence.entity.enumeration.sym_preference</class>
         <class>net.symbiosis.persistence.entity.enumeration.sym_response_code</class>
         <class>net.symbiosis.persistence.entity.enumeration.sym_role</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_voucher_status</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_voucher_type</class>
 
         <properties>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
-            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.autocommit" value="true"/>
             <property name="hibernate.characterEncoding" value="UTF-8"/>

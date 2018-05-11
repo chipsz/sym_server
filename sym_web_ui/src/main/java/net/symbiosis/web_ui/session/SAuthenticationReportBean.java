@@ -40,7 +40,7 @@ public class SAuthenticationReportBean extends JSFReportable {
                 new Pair<>("auth_user.user", sessionBean.getSymbiosisAuthUser().getUser().getId()),
                 new Pair<>("start_time >", dateToString(reportStartDate)),
                 new Pair<>("start_time <", dateToString(reportEndDate))
-        ), false, false, false, true);
+        ), true, false, false, true);
     }
 
     public List<sym_session> getSessions() {

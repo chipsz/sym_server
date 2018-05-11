@@ -1,5 +1,7 @@
-package net.symbiosis.persistence.entity.complex_type;
+package net.symbiosis.persistence.entity.complex_type.wallet;
 
+import net.symbiosis.persistence.entity.complex_type.sym_company;
+import net.symbiosis.persistence.entity.complex_type.sym_user;
 import net.symbiosis.persistence.entity.super_class.sym_entity;
 
 import javax.persistence.*;

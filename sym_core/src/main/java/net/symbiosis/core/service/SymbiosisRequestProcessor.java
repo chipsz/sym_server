@@ -10,7 +10,7 @@ import net.symbiosis.core.contract.*;
  * *
  ***************************************************************************/
 
-public interface SymbiosisRequestProcessor {
+public interface SymbiosisRequestProcessor extends RequestProcessor {
     SymEnumEntity getResponseCode(Long responseCodeId);
 
     SymList getResponseCodes();

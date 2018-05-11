@@ -43,6 +43,7 @@ public class EnumEntityRepoManager {
         return results;
     }
 
+    @SuppressWarnings("unchecked")
     public static <T extends sym_enum_entity> T findByName(Class<T> entityClass, String enumName) {
 
         if (entityClass == null || enumName == null) return null;

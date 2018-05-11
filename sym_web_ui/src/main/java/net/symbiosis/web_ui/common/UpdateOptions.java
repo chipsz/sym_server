@@ -2,7 +2,11 @@ package net.symbiosis.web_ui.common;
 
 import net.symbiosis.common.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.sym_company;
-import net.symbiosis.persistence.entity.complex_type.sym_wallet_group;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_service_provider;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_wallet_group_voucher;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
 import net.symbiosis.persistence.entity.enumeration.*;
 import org.springframework.stereotype.Component;
 
@@ -25,9 +29,11 @@ import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 public class UpdateOptions implements Serializable {
 
     private List<Boolean> booleanList = new ArrayList<>(asList(true, false));
+    private List<sym_company> companies;
     private List<sym_country> countries;
     private List<sym_language> languages;
     private List<sym_deposit_type> depositTypes;
+    private List<sym_voucher_type> voucherTypes;
     private List<sym_auth_group> authGroups;
     private List<sym_wallet_group> walletGroups;
     private List<sym_channel> channels;
@@ -35,7 +41,10 @@ public class UpdateOptions implements Serializable {
     private List<sym_response_code> userStatuses;
     private List<sym_response_code> transactionStatuses;
     private List<sym_response_code> logStatuses;
-    private List<sym_company> companies;
+    private List<sym_voucher_provider> voucherProviders;
+    private List<sym_service_provider> serviceProviders;
+    private List<sym_wallet_group_voucher> walletGroupVouchers;
+    private List<sym_voucher> vouchers;
 
     UpdateOptions() {
         initCountries();
@@ -49,6 +58,11 @@ public class UpdateOptions implements Serializable {
         initLogStatuses();
         initWalletGroups();
         initCompanies();
+        initVoucherTypes();
+        initVoucherProviders();
+        initServiceProviders();
+        initVouchers();
+        initWalletGroupVouchers();
     }
 
     private List<sym_country> initCountries() {
@@ -191,4 +205,40 @@ public class UpdateOptions implements Serializable {
     public List<sym_company> getCompanies() {
         return companies;
     }
+
+    public List<sym_voucher_type> initVoucherTypes() {
+        voucherTypes = getEntityManagerRepo().findAll(sym_voucher_type.class);
+        return voucherTypes;
+    }
+
+    public List<sym_voucher_provider> initVoucherProviders() {
+        voucherProviders = getEntityManagerRepo().findAll(sym_voucher_provider.class);
+        return voucherProviders;
+    }
+
+    public List<sym_service_provider> initServiceProviders() {
+        serviceProviders = getEntityManagerRepo().findAll(sym_service_provider.class);
+        return serviceProviders;
+    }
+
+    public List<sym_voucher> initVouchers() {
+        vouchers = getEntityManagerRepo().findAll(sym_voucher.class);
+        return vouchers;
+    }
+
+    public List<sym_wallet_group_voucher> initWalletGroupVouchers() {
+        walletGroupVouchers = getEntityManagerRepo().findAll(sym_wallet_group_voucher.class);
+        return walletGroupVouchers;
+    }
+
+    public List<sym_voucher_type> getVoucherTypes() { return voucherTypes; }
+
+    public List<sym_voucher_provider> getVoucherProviders() { return voucherProviders; }
+
+    public List<sym_service_provider> getServiceProviders() { return serviceProviders; }
+
+    public List<sym_voucher> getVouchers() { return vouchers; }
+
+    public List<sym_wallet_group_voucher> getWalletGroupVouchers() { return walletGroupVouchers; }
+
 }

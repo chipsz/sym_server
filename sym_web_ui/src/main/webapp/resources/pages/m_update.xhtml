@@ -1,0 +1,251 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
+</f:metadata>
+
+    <h:form id="merchantLoadForm" rendered="#{sessionBean.isCurrentPage('mEdit')}" layout="block">
+        <p:panel header="Load Wallet Funds" style="margin-bottom:10px; width: 100%">
+            <h:panelGrid columns="4" cellpadding="5" style="width: 100%">
+                <p:outputLabel for="selectMerch" value="Merchant:" styleClass="leftAlign" />
+                <p:selectOneMenu id="selectMerch" converter="merchantConverter" value="#{merchantBean.selectedWallet}" styleClass="leftAlign">
+                    <p:ajax listener="#{merchantBean.changeWallet}" />
+                    <f:selectItems value="#{merchantBean.wallets}" var="wallet" itemLabel="#{wallet.company.id}. #{wallet.company.company_name}" itemValue="#{wallet}" />
+                </p:selectOneMenu>
+
+                <p:outputLabel for="depositType" value="Deposit Type:" styleClass="leftAlign"/>
+                <h:selectOneMenu id="depositType" converter="dtConverter" value="#{merchantBean.newDepositType}" styleClass="rightAlign">
+                    <f:selectItems value="#{updateOptions.depositTypes}" var="deposit_type" itemLabel="#{deposit_type.name}" itemValue="#{deposit_type.name}" />
+                </h:selectOneMenu>
+
+                <p:outputLabel for="amount" value="Amount:" styleClass="leftAlign"/>
+                <p:inputNumber id="amount" value="#{merchantBean.newIncomingPayment.payment_amount}" required="true" styleClass="leftAlign"/>
+
+                <p:outputLabel for="bankReference" value="Bank Reference:" styleClass="leftAlign"/>
+                <p:inputText id="bankReference" value="#{merchantBean.newIncomingPayment.bank_reference}" styleClass="rightAlign"/>
+
+                <p:outputLabel for="depositorReference" value="Depositor Reference:" styleClass="leftAlign"/>
+                <p:inputText id="depositorReference" value="#{merchantBean.newIncomingPayment.depositor_reference}" styleClass="leftAlign"/>
+
+                <p:outputLabel value="&#160;&#160;&#160;&#160;&#160;&#160;"/>
+                <p:commandButton id="btnLoadFunds" action="#{merchantBean.loadWallet}" value="Load Wallet Funds"
+                                 icon="ui-icon-plusthick" styleClass="rightAlign"
+                                 onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()" update=":merchantDataForm:merchantTable">
+                    <p:confirm header="Confirm loading merchant funds" message="Proceed to load merchant funds?" icon="ui-icon-alert" />
+                </p:commandButton>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+            </h:panelGrid>
+        </p:panel>
+    </h:form>
+    <h:form id="merchantDataForm">
+
+        <p:remoteCommand name="refreshTable" update=":merchantLoadForm :merchantDataForm:merchantTable"/>
+
+        <p:dataTable id="merchantTable" var="m" value="#{merchantBean.wallets}" tableStyle="width:auto"
+                     editable="true" resizableColumns="true" editMode="cell" widgetVar="cellMerchants" draggableColumns="true"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                     paginator="true" pageLinks="5" rows="20" style="margin-bottom:20px">
+            <f:facet name="header">
+                <p:commandButton action="#{merchantBean.initializeWallets}" value="Refresh table data" style="float:left" icon="ui-icon-arrowrefresh-1-s"
+                                 onstart="PF('statusDialog').show()" oncomplete="refreshTable(); PF('statusDialog').hide()"/>
+
+                <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+                <p:columnToggler datasource="merchantTable" trigger="toggler" />
+                #{merchantBean.tableDescription}<br/><br/>
+            </f:facet>
+
+            <ui:include src="includes/exporters.xhtml">
+                <ui:param name="backingBean" value="#{merchantBean}" />
+                <ui:param name="tableName" value="merchantTable" />
+            </ui:include>
+
+            <p:ajax event="cellEdit" listener="#{merchantBean.onCellEdit}" update=":msgs" />
+            <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ID}" sortBy="#{m.id}">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{m.id}" /></f:facet>
+                    <f:facet name="input"><p:inputText readonly="true" value="#{m.id}" style="width:96%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="#{dataTableHeaders.HEADER_TEXT_CNAME}" sortBy="#{m.company.company_name}">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{m.company.company_name}" /></f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{m.company.company_name}" required="true" style="width:96%">
+                            <f:validator validatorId="custom.plainTextValidator"  />
+                        </p:inputText>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ADMIN_NAME}" sortBy="#{m.wallet_admin_user.first_name} #{m.wallet_admin_user.last_name}">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{m.wallet_admin_user.first_name} #{m.wallet_admin_user.last_name}" /></f:facet>
+                    <f:facet name="input"><p:inputText readonly="true" value="#{m.wallet_admin_user.first_name} #{m.wallet_admin_user.last_name}" style="width:96%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="#{dataTableHeaders.HEADER_TEXT_BALANCE}" sortBy="#{m.current_balance}">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{m.current_balance}" /></f:facet>
+                    <f:facet name="input"><p:inputText readonly="true" value="#{m.current_balance}" style="width:96%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="#{dataTableHeaders.HEADER_TEXT_W_GROUP}" sortBy="#{m.wallet_group}" filterBy="#{m.wallet_group}">
+                <f:facet name="filter">
+                    <p:selectOneMenu onchange="PF('cellMerchants').filter()" >
+                        <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                        <f:selectItems value="#{updateOptions.walletGroups}" />
+                    </p:selectOneMenu>
+                </f:facet>
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{m.wallet_group}" /></f:facet>
+                    <f:facet name="input">
+                        <h:selectOneMenu value="#{m.wallet_group}" style="width:100%" converter="wgConverter">
+                            <f:selectItems value="#{updateOptions.walletGroups}" var="walletGroup" itemLabel="#{walletGroup.name}" itemValue="#{walletGroup}" />
+                        </h:selectOneMenu>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ADDRESS1}" sortBy="#{m.company.address_line_1}" exportable="false">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{m.company.address_line_1}" /></f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{m.company.address_line_1}" required="true" style="width:96%">
+                            <f:validator validatorId="custom.plainTextValidator"  />
+                        </p:inputText>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ADDRESS2}" sortBy="#{m.company.address_line_2}" exportable="false">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{m.company.address_line_2}" /></f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{m.company.address_line_2}" required="true" style="width:96%">
+                            <f:validator validatorId="custom.plainTextValidator"  />
+                        </p:inputText>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="#{dataTableHeaders.HEADER_TEXT_CITY}" sortBy="#{m.company.address_city}" exportable="false">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{m.company.address_city}" /></f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{m.company.address_city}" required="true" style="width:96%">
+                            <f:validator validatorId="custom.nameValidator"  />
+                        </p:inputText>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="#{dataTableHeaders.HEADER_TEXT_COMPANY_PHONE}" sortBy="#{m.company.phone1}">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{m.company.phone1}" /></f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{m.company.phone1}" style="width:96%">
+                            <f:validator validatorId="custom.fullMsisdnValidator"  />
+                        </p:inputText>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="#{dataTableHeaders.HEADER_TEXT_COMPANY_PHONE2}" sortBy="#{m.company.phone2}">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{m.company.phone2}" /></f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{m.company.phone2}" style="width:96%">
+                            <f:validator validatorId="custom.fullMsisdnValidator"  />
+                        </p:inputText>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="#{dataTableHeaders.HEADER_TEXT_COMPANY_VAT_NUM}" sortBy="#{m.company.vat_number}">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{m.company.vat_number}" /></f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{m.company.vat_number}" style="width:96%">
+                            <f:validator validatorId="custom.plainTextValidator"  />
+                        </p:inputText>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="#{dataTableHeaders.HEADER_TEXT_COMPANY_REG_NUM}" sortBy="#{m.company.registration_number}">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{m.company.registration_number}" /></f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{m.company.registration_number}" style="width:96%">
+                            <f:validator validatorId="custom.plainTextValidator"  />
+                        </p:inputText>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column style="text-align: center" headerText="#{dataTableHeaders.HEADER_TEXT_LINKED_USERS}" exportable="false">
+                <p:commandButton update=":merchantDataForm:mDetail" oncomplete="PF('mdOP').show('#{component.clientId}')" icon="ui-icon-pencil" title="View">
+                    <f:setPropertyActionListener value="#{m}" target="#{merchantBean.selectedUpdateWallet}" />
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+        <p:contextMenu for="merchantTable" widgetVar="cMenu">
+            <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellMerchants').showCellEditor();return false;"/>
+            <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>
+        </p:contextMenu>
+
+        <p:overlayPanel widgetVar="mdOP" showEffect="fade" hideEffect="fade" dismissable="true" showCloseIcon="true">
+
+            <p:dataTable id="mDetail" var="mu" value="#{merchantBean.merchantUsers}" tableStyle="width:auto"
+                         editable="true" resizableColumns="true" editMode="cell" widgetVar="cellMerchantUsers" draggableColumns="true"
+                         style="text-align:center;">
+                <f:facet name="header">
+                    <h:outputText value="#{merchantBean.selectedUpdateWallet.company.company_name}" />
+                </f:facet>
+
+                <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ID}" sortBy="#{mu.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{dataTableHeaders.HEADER_TEXT_ID}"/>
+                    </f:facet>
+                    <h:outputText value="#{mu.id}" />
+                </p:column>
+
+                <p:column headerText="#{dataTableHeaders.HEADER_TEXT_FIRST_NAME}" sortBy="#{mu.first_name}">
+                    <f:facet name="header">
+                        <h:outputText value="#{dataTableHeaders.HEADER_TEXT_FIRST_NAME}"/>
+                    </f:facet>
+                    <h:outputText value="#{mu.first_name}" />
+                </p:column>
+
+                <p:column headerText="#{dataTableHeaders.HEADER_TEXT_LAST_NAME}" sortBy="#{mu.last_name}">
+                    <f:facet name="header">
+                        <h:outputText value="#{dataTableHeaders.HEADER_TEXT_LAST_NAME}"/>
+                    </f:facet>
+                    <h:outputText value="#{mu.last_name}" />
+                </p:column>
+
+                <p:column headerText="#{dataTableHeaders.HEADER_TEXT_LAST_NAME}" sortBy="#{mu.last_name}">
+                    <p:commandButton value="Create POS Account" action="#{merchantBean.registerPOSUser(mu)}" icon="ui-icon-plus"
+                                     onclick="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" >
+                        <p:confirm header="Proceed With Registration" icon="ui-icon-alert"
+                                   message="Register #{mu.username} for a POS Machine account?" />
+                    </p:commandButton>
+                </p:column>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" id="confirmRegister">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+
+                <p:selectBooleanButton onLabel="Yes" offLabel="No"/>
+
+
+            </p:dataTable>
+
+        </p:overlayPanel>
+
+
+
+    </h:form>
+</html>

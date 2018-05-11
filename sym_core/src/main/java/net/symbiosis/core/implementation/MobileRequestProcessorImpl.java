@@ -18,7 +18,11 @@ import net.symbiosis.persistence.entity.complex_type.log.sym_cashout_transaction
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
 import net.symbiosis.persistence.entity.complex_type.log.sym_session;
 import net.symbiosis.persistence.entity.complex_type.log.sym_swipe_transaction;
-import net.symbiosis.persistence.entity.complex_type.*;
+import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
+import net.symbiosis.persistence.entity.complex_type.sym_company;
+import net.symbiosis.persistence.entity.complex_type.sym_user;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_cashout_account;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.enumeration.sym_auth_group;
 import net.symbiosis.persistence.entity.enumeration.sym_country;
 import net.symbiosis.persistence.entity.enumeration.sym_financial_institution;
@@ -101,21 +105,19 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
                 .findWhere(sym_company.class, new Pair<>("company_name", company.getCompany_name()));
 
         if (existingCompanies != null && existingCompanies.size() > 0) {
+            logResponse(requestResponseLog, EXISTING_DATA_FOUND);
             return new SymSystemUserList(EXISTING_DATA_FOUND).setResponse(format("Company with name '%s' already exists", companyName));
         }
 
         SymResponseObject<sym_auth_user> registrationResponse = authenticationProvider.
                 registerMobileUser(newUser, findByName(sym_auth_group.class, getProperty("DefaultMobileGroup")), company);
 
-        requestResponseLog.setOutgoing_response(registrationResponse.getMessage());
-        requestResponseLog.setOutgoing_response_time(new Date());
-        requestResponseLog.setResponse_code(fromEnum(registrationResponse.getResponseCode()));
         if (registrationResponse.getResponseCode().equals(SUCCESS)) {
             requestResponseLog.setAuth_user(registrationResponse.getResponseObject());
             requestResponseLog.setSystem_user(registrationResponse.getResponseObject().getUser());
         }
-        requestResponseLog.save();
 
+        logResponse(requestResponseLog, registrationResponse.getResponseCode());
         return new SymSystemUserList(registrationResponse.getResponseCode(), converterService.toDTO(registrationResponse.getResponseObject()));
     }
 
@@ -156,9 +158,8 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
         if (financialInstitution == null) {
             String outgoingResponse = format("financialInstitution %s does not exist", institutionId);
             logger.warning(outgoingResponse);
-            requestResponseLog.setResponse_code(fromEnum(DATA_NOT_FOUND));
-            requestResponseLog.setOutgoing_response(outgoingResponse).setOutgoing_response_time(new Date()).save();
-            return new SymResponse(DATA_NOT_FOUND);
+            logResponse(requestResponseLog, DATA_NOT_FOUND, outgoingResponse);
+            return new SymResponse(DATA_NOT_FOUND).setResponse_message(outgoingResponse);
         }
 
         accountPhone = formatFullMsisdn(accountPhone, user.getCountry().getDialing_code());
@@ -169,46 +170,39 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
         if (isNullOrEmpty(accountNickName) || !isValidPlainText(accountNickName)) {
             String outgoingResponse = "a valid accountNickName must be specified";
             logger.warning(outgoingResponse);
-            requestResponseLog.setResponse_code(fromEnum(INPUT_INVALID_REQUEST));
-            requestResponseLog.setOutgoing_response(outgoingResponse).setOutgoing_response_time(new Date()).save();
+            logResponse(requestResponseLog, INPUT_INVALID_REQUEST, outgoingResponse);
             return new SymResponse(INPUT_INVALID_REQUEST);
         } else if ((institutionType.equals(BANK) || !isNullOrEmpty(accountName)) && !isValidName(accountName)) {
             String outgoingResponse = "accountName is not valid";
             logger.warning(outgoingResponse);
-            requestResponseLog.setResponse_code(fromEnum(INPUT_INVALID_NAME));
-            requestResponseLog.setOutgoing_response(outgoingResponse).setOutgoing_response_time(new Date()).save();
+            logResponse(requestResponseLog, INPUT_INVALID_NAME, outgoingResponse);
             return new SymResponse(INPUT_INVALID_NAME);
         } else if (isNullOrEmpty(accountNumber)) {
             String outgoingResponse = "a valid accountNumber must be specified";
             logger.warning(outgoingResponse);
-            requestResponseLog.setResponse_code(fromEnum(INPUT_INVALID_REQUEST));
-            requestResponseLog.setOutgoing_response(outgoingResponse).setOutgoing_response_time(new Date()).save();
+            logResponse(requestResponseLog, INPUT_INVALID_REQUEST, outgoingResponse);
             return new SymResponse(INPUT_INVALID_REQUEST);
         } else if (!isNullOrEmpty(accountBranchCode) && !isNumeric(accountBranchCode)) {
             String outgoingResponse = "accountBranchCode is not valid";
             logger.warning(outgoingResponse);
-            requestResponseLog.setResponse_code(fromEnum(INPUT_INVALID_REQUEST));
-            requestResponseLog.setOutgoing_response(outgoingResponse).setOutgoing_response_time(new Date()).save();
+            logResponse(requestResponseLog, INPUT_INVALID_REQUEST, outgoingResponse);
             return new SymResponse(INPUT_INVALID_REQUEST);
         } else if ((institutionType.equals(MOBILE_BANK) || !isNullOrEmpty(accountPhone)) && !isValidMsisdn(accountPhone)) {
             String outgoingResponse = "accountPhone is not valid";
             logger.warning(outgoingResponse);
-            requestResponseLog.setResponse_code(fromEnum(INPUT_INVALID_MSISDN));
-            requestResponseLog.setOutgoing_response(outgoingResponse).setOutgoing_response_time(new Date()).save();
+            logResponse(requestResponseLog, INPUT_INVALID_MSISDN, outgoingResponse);
             return new SymResponse(INPUT_INVALID_MSISDN);
         } else if ((institutionType.equals(ONLINE_BANK) || !isNullOrEmpty(accountEmail)) && !isValidEmail(accountEmail)) {
             String outgoingResponse = "accountEmail is not valid";
             logger.warning(outgoingResponse);
-            requestResponseLog.setResponse_code(fromEnum(INPUT_INVALID_EMAIL));
-            requestResponseLog.setOutgoing_response(outgoingResponse).setOutgoing_response_time(new Date()).save();
+            logResponse(requestResponseLog, INPUT_INVALID_EMAIL, outgoingResponse);
             return new SymResponse(INPUT_INVALID_EMAIL);
         }
 
         new sym_cashout_account(user, financialInstitution, accountNickName, accountName, accountNumber,
                 accountBranchCode, accountPhone, accountEmail).save();
         logger.info(format("Added new %s cashout account %s for user %s", institutionType.name(), accountNickName, userId));
-        requestResponseLog.setResponse_code(fromEnum(SUCCESS));
-        requestResponseLog.setOutgoing_response(SUCCESS.getMessage()).setOutgoing_response_time(new Date()).save();
+        logResponse(requestResponseLog, SUCCESS);
         return new SymResponse(SUCCESS);
     }
 
@@ -233,23 +227,19 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
         if (cashoutAccount == null) {
             String outgoingResponse = format("cashoutAccount %s does not exist", cashoutAccountId);
             logger.warning(outgoingResponse);
-            requestResponseLog.setResponse_code(fromEnum(DATA_NOT_FOUND));
-            requestResponseLog.setOutgoing_response(outgoingResponse).setOutgoing_response_time(new Date()).save();
+            logResponse(requestResponseLog, DATA_NOT_FOUND, outgoingResponse);
             return new SymResponse(DATA_NOT_FOUND);
         } else if (!cashoutAccount.getCashout_account_user().getId().equals(userId)) {
             String outgoingResponse = format("cashoutAccount %s is not linked to user %s", cashoutAccountId, userId);
             logger.warning(outgoingResponse);
-            requestResponseLog.setResponse_code(fromEnum(DATA_NOT_FOUND));
-            requestResponseLog.setOutgoing_response(outgoingResponse).setOutgoing_response_time(new Date()).save();
+            logResponse(requestResponseLog, DATA_NOT_FOUND, outgoingResponse);
             return new SymResponse(DATA_NOT_FOUND);
         }
 
         cashoutAccount.delete();
         String outgoingResponse = format("Disabled cashoutAccount %s for user %s", cashoutAccountId, userId);
-        logger.warning(outgoingResponse);
-        requestResponseLog.setResponse_code(fromEnum(SUCCESS));
-        requestResponseLog.setOutgoing_response(outgoingResponse).setOutgoing_response_time(new Date()).save();
-
+        logger.info(outgoingResponse);
+        logResponse(requestResponseLog, SUCCESS, outgoingResponse);
         return new SymResponse(SUCCESS);
     }
 
@@ -291,7 +281,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
         String request = format("userId=%s,deviceId=%s,transactionAmount=%s,transactionReference=%s,cashoutAccountId=%s,pin=XXXXX",
                 userId, deviceId, amount, reference, cardNumber);
 
-        sym_request_response_log swipeTransactionLog = new sym_request_response_log(fromEnum(SMART_PHONE), fromEnum(LOAD_WALLET),
+        sym_request_response_log requestResponseLog = new sym_request_response_log(fromEnum(SMART_PHONE), fromEnum(LOAD_WALLET),
                 userResponse.getResponseObject(), authUsers.get(0), null,
                 new Date(), null, request, null).save();
 
@@ -303,14 +293,12 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
 
         //TODO execute swipe transaction
 
-        swipeTransactionLog.setResponse_code(fromEnum(SUCCESS));
-        swipeTransactionLog.setOutgoing_response(SUCCESS.getMessage());
-        swipeTransactionLog.setOutgoing_response_time(new Date());
 
         swipeTransaction.setNew_balance(wallet.getCurrent_balance());
         swipeTransaction.setTransaction_status(fromEnum(updateResponse.getResponseCode()));
         swipeTransaction.save();
 
+        logResponse(requestResponseLog, SUCCESS);
         return new SymWalletList(updateResponse.getResponseCode(), converterService.toDTO(wallet));
     }
 
@@ -356,22 +344,19 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
         String request = format("userId=%s,deviceId=%s,amount=%s,reference=%s,cashoutAccountId=%s,pin=XXXXX",
                 userId, deviceId, amount, reference, cashoutAccountId);
 
-        sym_request_response_log cashoutLog = new sym_request_response_log(fromEnum(SMART_PHONE), fromEnum(CASHOUT),
+        sym_request_response_log requestResponseLog = new sym_request_response_log(fromEnum(SMART_PHONE), fromEnum(CASHOUT),
                 userResponse.getResponseObject(), authUsers.get(0), null,
                 new Date(), null, request, null).save();
 
         MobileAuthenticationProvider authProvider = new MobileAuthenticationProvider(
-                cashoutLog, userResponse.getResponseObject().getUsername(), pin, deviceId
+                requestResponseLog, userResponse.getResponseObject().getUsername(), pin, deviceId
         );
 
         SymResponseObject<sym_auth_user> authResponse = authProvider.validatePin(authUsers.get(0), pin);
         if (!authResponse.getResponseCode().equals(SUCCESS)) {
-            cashoutLog.setResponse_code(fromEnum(authResponse.getResponseCode()));
-            cashoutLog.setOutgoing_response(authResponse.getMessage());
-            cashoutLog.setOutgoing_response_time(new Date());
-            cashoutLog.save();
             cashoutTransaction.setTransaction_status(fromEnum(authResponse.getResponseCode()));
             cashoutTransaction.save();
+            logResponse(requestResponseLog, authResponse.getResponseCode());
             return new SymWalletList(authResponse.getResponseCode());
         }
 
@@ -383,6 +368,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
         cashoutTransaction.setTransaction_status(fromEnum(updateResponse.getResponseCode()));
         cashoutTransaction.save();
 
+        logResponse(requestResponseLog, updateResponse.getResponseCode());
         return new SymWalletList(updateResponse.getResponseCode(), converterService.toDTO(wallet));
     }
 
@@ -401,15 +387,12 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
 
         SymResponseObject<sym_auth_user> authResponse = authenticationProvider.authenticateUser();
 
-        requestResponseLog.setOutgoing_response(authResponse.getMessage());
-        requestResponseLog.setOutgoing_response_time(new Date());
-        requestResponseLog.setResponse_code(fromEnum(authResponse.getResponseCode()));
         if (authResponse.getResponseCode().equals(SUCCESS)) {
             requestResponseLog.setAuth_user(authResponse.getResponseObject());
             requestResponseLog.setSystem_user(authResponse.getResponseObject().getUser());
         }
-        requestResponseLog.save();
 
+        logResponse(requestResponseLog, authResponse.getResponseCode());
         return new SymSystemUserList(authResponse.getResponseCode(), converterService.toDTO(authResponse.getResponseObject()));
     }
 
@@ -443,11 +426,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
             logoutResponse = authenticationProvider.endSession();
         }
 
-        requestResponseLog.setOutgoing_response(logoutResponse.getMessage());
-        requestResponseLog.setOutgoing_response_time(new Date());
-        requestResponseLog.setResponse_code(fromEnum(logoutResponse.getResponseCode()));
-        requestResponseLog.save();
-
+        logResponse(requestResponseLog, logoutResponse.getResponseCode());
         return new SymResponse(logoutResponse.getResponseCode());
     }
 }

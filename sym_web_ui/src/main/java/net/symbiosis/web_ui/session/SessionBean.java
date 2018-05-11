@@ -66,10 +66,25 @@ public class SessionBean implements Serializable {
         registerPageHandler(PAGE_REGISTRATION);
         registerPageHandler(PAGE_RESET_PASSWORD);
         registerPageHandler(PAGE_SUMMARY);
+        registerPageHandler(PAGE_V_IMPORT);
+        registerPageHandler(PAGE_WGV_UPDATE);
+        registerPageHandler(PAGE_V_UPDATE);
+        registerPageHandler(PAGE_V_CREATE);
+        registerPageHandler(PAGE_M_CREATE);
+        registerPageHandler(PAGE_WG_UPDATE);
+        registerPageHandler(PAGE_VT_UPDATE);
+        registerPageHandler(PAGE_SP_UPDATE);
+        registerPageHandler(PAGE_VP_UPDATE);
+        registerPageHandler(PAGE_M_UPDATE);
         registerPageHandler(PAGE_USER_UPDATE);
         registerPageHandler(PAGE_AU_UPDATE);
+        registerPageHandler(PAGE_PM_UPDATE);
+        registerPageHandler(PAGE_TRAN_REPORT);
+        registerPageHandler(PAGE_PMNT_REPORT);
         registerPageHandler(PAGE_AUTH_REPORT);
         registerPageHandler(PAGE_SYS_REPORT);
+        registerPageHandler(PAGE_S_TRAN_REPORT);
+        registerPageHandler(PAGE_S_PMNT_REPORT);
         registerPageHandler(PAGE_S_AUTH_REPORT);
         registerPageHandler(PAGE_U_SETTINGS);
     }
@@ -90,8 +105,8 @@ public class SessionBean implements Serializable {
 
     private SystemPage getDefaultStartPage(sym_auth_group group) {
         if (group.equals(fromEnum(SUPER_USER)) ||
-                group.equals(fromEnum(WEB_ADMIN)) ||
-                group.equals(fromEnum(WEB_CLERK))) {
+            group.equals(fromEnum(WEB_ADMIN)) ||
+            group.equals(fromEnum(WEB_CLERK))) {
             return PAGE_SUMMARY;
         } else {
             return PAGE_S_TRAN_REPORT;
@@ -213,6 +228,7 @@ public class SessionBean implements Serializable {
     }
 
     public boolean hasRole(String permission) {
+        logger.info("Checking for permission: " + permission);
         return isLoggedIn() && authProvider.hasRole(findByName(sym_role.class, permission));
     }
 }

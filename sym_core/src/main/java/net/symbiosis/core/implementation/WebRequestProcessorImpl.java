@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
@@ -71,15 +70,12 @@ public class WebRequestProcessorImpl implements WebRequestProcessor {
         SymResponseObject<sym_auth_user> registrationResponse = authenticationProvider.
                 registerWebUser(newUser, null, findByName(sym_auth_group.class, getProperty("DefaultWebGroup")), null);
 
-        requestResponseLog.setOutgoing_response(registrationResponse.getMessage());
-        requestResponseLog.setOutgoing_response_time(new Date());
-        requestResponseLog.setResponse_code(fromEnum(registrationResponse.getResponseCode()));
         if (registrationResponse.getResponseCode().equals(SUCCESS)) {
             requestResponseLog.setAuth_user(registrationResponse.getResponseObject());
             requestResponseLog.setSystem_user(registrationResponse.getResponseObject().getUser());
         }
-        requestResponseLog.save();
 
+        logResponse(requestResponseLog, registrationResponse.getResponseCode());
         return new SymSystemUserList(registrationResponse.getResponseCode(), converterService.toDTO(registrationResponse.getResponseObject()));
     }
 
@@ -161,15 +157,12 @@ public class WebRequestProcessorImpl implements WebRequestProcessor {
 
         SymResponseObject<sym_auth_user> authResponse = authenticationProvider.authenticateUser();
 
-        requestResponseLog.setOutgoing_response(authResponse.getMessage());
-        requestResponseLog.setOutgoing_response_time(new Date());
-        requestResponseLog.setResponse_code(fromEnum(authResponse.getResponseCode()));
         if (authResponse.getResponseCode().equals(SUCCESS)) {
             requestResponseLog.setAuth_user(authResponse.getResponseObject());
             requestResponseLog.setSystem_user(authResponse.getResponseObject().getUser());
         }
-        requestResponseLog.save();
 
+        logResponse(requestResponseLog, authResponse.getResponseCode());
         return new SymSystemUserList(authResponse.getResponseCode(), converterService.toDTO(authResponse.getResponseObject()));
     }
 
@@ -202,11 +195,7 @@ public class WebRequestProcessorImpl implements WebRequestProcessor {
             logoutResponse = authenticationProvider.endSession();
         }
 
-        requestResponseLog.setOutgoing_response(logoutResponse.getMessage());
-        requestResponseLog.setOutgoing_response_time(new Date());
-        requestResponseLog.setResponse_code(fromEnum(logoutResponse.getResponseCode()));
-        requestResponseLog.save();
-
+        logResponse(requestResponseLog, logoutResponse.getResponseCode());
         return new SymResponse(logoutResponse.getResponseCode());
     }
 

@@ -137,7 +137,7 @@ insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) s
 insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'WEB_ADMIN' and sr.name LIKE 'ROLE_WEB_%';
 
 /* Insert roles for SYM_SYSTEM_CLERK */
-insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'WEB_CLERK' and (sr.name IN ('ROLE_WEB_MANAGE_SYSTEM', 'ROLE_WEB_MANAGE_USERS', 'ROLE_WEB_MANAGE_SETTINGS') or sr.name LIKE 'ROLE_WEB_VIEW_%');
+insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'WEB_CLERK' and (sr.name IN ('ROLE_WEB_MANAGE_USERS', 'ROLE_WEB_MANAGE_SETTINGS') or sr.name LIKE 'ROLE_WEB_VIEW_%');
 
 /* Insert roles for SYM_SYSTEM_AGENT */
 insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'WEB_AGENT' and (sr.name LIKE 'ROLE_WEB_VIEW_SINGLE_%' or sr.name = 'ROLE_WEB_MANAGE_SETTINGS');

@@ -1,7 +1,7 @@
 package net.symbiosis.core.service;
 
 import net.symbiosis.core_lib.response.SymResponseObject;
-import net.symbiosis.persistence.entity.complex_type.sym_wallet;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 
 import java.math.BigDecimal;
 

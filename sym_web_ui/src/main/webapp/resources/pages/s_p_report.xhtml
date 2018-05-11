@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
+</f:metadata>
+
+<h:form id="sPaymentDateForm" rendered="#{sessionBean.isCurrentPage('sPmntReport')}" layout="block">
+    <p:panel header="Select Reporting Period" style="margin-bottom:10px; width: 100%">
+        <h:panelGrid columns="4" cellpadding="5" style="width: 100%">
+            <p:outputLabel for="reportStartDate" value="Report Start Date:" />
+            <p:calendar id="reportStartDate" value="#{SPaymentReportBean.reportStartDate}"
+                        pattern="MM/dd/yyyy HH:mm:ss" navigator="true">
+                <p:ajax event="dateSelect" listener="#{SPaymentReportBean.initializePayments}" update=":sPaymentReportForm"
+                        onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+            </p:calendar>
+
+            <p:outputLabel for="reportEndDate" value="Report End Date:" />
+            <p:calendar id="reportEndDate" value="#{SPaymentReportBean.reportEndDate}"
+                        pattern="MM/dd/yyyy HH:mm:ss" navigator="true">
+                <p:ajax event="dateSelect" listener="#{SPaymentReportBean.initializePayments}" update=":sPaymentReportForm"
+                        onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+            </p:calendar>
+        </h:panelGrid>
+    </p:panel>
+</h:form>
+
+<h:form id="sPaymentReportForm" rendered="#{sessionBean.isCurrentPage('sPmntReport')}" layout="block">
+
+    <p:dataTable id="sPaymentsTable" var="p" value="#{SPaymentReportBean.payments}" draggableColumns="true"
+                 resizableColumns="true" editMode="cell" widgetVar="cellPayments" tableStyle="width:auto"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                 paginator="true" pageLinks="5" rows="20" style="margin-bottom:20px">
+        <f:facet name="header">
+            <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+            <p:columnToggler datasource="sPaymentsTable" trigger="toggler" />
+            #{SPaymentReportBean.tableDescription}<br/><br/>
+        </f:facet>
+
+        <ui:include src="includes/exporters.xhtml">
+            <ui:param name="backingBean" value="#{SPaymentReportBean}" />
+            <ui:param name="tableName" value="sPaymentsTable" />
+        </ui:include>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ID}" sortBy="#{p.id}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_ID}"/>
+            </f:facet>
+            <h:outputText value="#{p.id}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_TIME_LOADED}" sortBy="#{p.time_loaded}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_TIME_LOADED}"/>
+            </f:facet>
+            <h:outputText value="#{p.time_loaded}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_CNAME}" sortBy="#{p.wallet.company.company_name}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_CNAME}"/>
+            </f:facet>
+            <h:outputText value="#{p.wallet.company.company_name}" />
+        </p:column>
+
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_AMOUNT}" sortBy="#{p.payment_amount}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_AMOUNT}"/>
+            </f:facet>
+            <h:outputText value="#{p.payment_amount}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_BALANCE}" sortBy="#{p.wallet.current_balance}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_BALANCE}"/>
+            </f:facet>
+            <h:outputText value="#{p.wallet.current_balance}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_PAYMENT_TYPE}" sortBy="#{p.deposit_type.name}" filterBy="#{p.deposit_type}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_PAYMENT_TYPE}"/>
+            </f:facet>
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellPayments').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.depositTypes}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{p.deposit_type.name}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_BANK_REF}" sortBy="#{p.bank_reference}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_BANK_REF}"/>
+            </f:facet>
+            <h:outputText value="#{p.bank_reference}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_DEPOSITOR_REF}" sortBy="#{p.depositor_reference}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_DEPOSITOR_REF}"/>
+            </f:facet>
+            <h:outputText value="#{p.depositor_reference}" />
+        </p:column>
+
+    </p:dataTable>
+
+</h:form>
+
+</html>

@@ -19,11 +19,8 @@ import javax.persistence.Table;
 @Table(name = "sym_distribution_channel")
 @AttributeOverride(name = "id", column = @Column(name = "distribution_channel_id"))
 public class sym_distribution_channel extends sym_enum_entity<sym_distribution_channel> {
-    public enum DISTRIBUTION_CHANNEL {RECEIPT, SMS}
 
-    public sym_distribution_channel() {
-    }
-
+    public sym_distribution_channel() {}
     public sym_distribution_channel(String name, Boolean enabled) {
         super(name, enabled);
     }

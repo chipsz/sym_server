@@ -3,8 +3,14 @@ package net.symbiosis.core.implementation;
 import net.symbiosis.core.contract.base.EnumEntityData;
 import net.symbiosis.core.contract.symbiosis.*;
 import net.symbiosis.core.service.ConverterService;
+import net.symbiosis.persistence.entity.complex_type.log.sym_import_batch;
 import net.symbiosis.persistence.entity.complex_type.log.sym_session;
-import net.symbiosis.persistence.entity.complex_type.*;
+import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
+import net.symbiosis.persistence.entity.complex_type.sym_user;
+import net.symbiosis.persistence.entity.complex_type.voucher.*;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_cashout_account;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
 import net.symbiosis.persistence.entity.enumeration.sym_currency;
 import net.symbiosis.persistence.entity.enumeration.sym_financial_institution;
 import net.symbiosis.persistence.entity.super_class.sym_enum_entity;
@@ -13,6 +19,9 @@ import org.modelmapper.config.Configuration;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.convention.NameTokenizers;
 import org.springframework.stereotype.Service;
+
+import static net.symbiosis.common.configuration.Configuration.getProperty;
+import static net.symbiosis.common.security.Security.decryptAES;
 
 /***************************************************************************
  * *
@@ -78,6 +87,18 @@ public class ConverterServiceImpl implements ConverterService {
     }
 
     @Override
+    public SymImportBatch toDTO(sym_import_batch sourceData) {
+        if (sourceData == null) { return null; }
+        SymImportBatch ettlImportBatch = new SymImportBatch();
+        modelMapper().map(sourceData, ettlImportBatch);
+        ettlImportBatch.setServiceProvider(sourceData.getVoucher().getService_provider().getName());
+        ettlImportBatch.setVoucherProvider(sourceData.getVoucher().getVoucher_provider().getName());
+        ettlImportBatch.setVoucherValue(sourceData.getVoucher().getVoucher_value());
+        ettlImportBatch.setVoucherType(sourceData.getVoucher().getVoucher_type().getName());
+        return ettlImportBatch;
+    }
+
+    @Override
     public SymSystemUser toDTO(sym_user symUser) {
         if (symUser == null) {
             return null;
@@ -136,6 +157,63 @@ public class ConverterServiceImpl implements ConverterService {
         symWallet.setAccountAdminUserId(sourceData.getWallet_admin_user().getId());
         symWallet.setVoucherGroupId(sourceData.getWallet_group().getId());
         return symWallet;
+    }
+
+    @Override
+    public SymServiceProvider toDTO(sym_service_provider sourceData) {
+        if (sourceData == null) { return null; }
+        SymServiceProvider serviceProvider = new SymServiceProvider();
+        modelMapper().map(sourceData, serviceProvider);
+        return serviceProvider;
+    }
+
+    @Override
+    public SymVoucherProvider toDTO(sym_voucher_provider sourceData) {
+        if (sourceData == null) { return null; }
+        SymVoucherProvider voucherProvider = new SymVoucherProvider();
+        modelMapper().map(sourceData, voucherProvider);
+        return voucherProvider;
+    }
+
+    @Override
+    public SymVoucherPurchase toDTO(sym_voucher_purchase sourceData) {
+        if (sourceData == null) { return null; }
+        SymVoucherPurchase voucherPurchase = new SymVoucherPurchase();
+        modelMapper().map(sourceData, voucherPurchase);
+        if (sourceData.getPinbased_voucher() != null) {
+            voucherPurchase.setVoucherSerial(sourceData.getPinbased_voucher().getSerial_number());
+            voucherPurchase.setVoucherPin(
+                decryptAES(getProperty("AES128BitKey"),
+                    getProperty("AESInitializationVector"),
+                    sourceData.getPinbased_voucher().getVoucher_pin()
+                )
+            );
+        }
+        voucherPurchase.setVoucherPurchaseId(sourceData.getId());
+        voucherPurchase.setServiceProvider(sourceData.getVoucher().getService_provider().getName());
+        voucherPurchase.setVoucherType(sourceData.getVoucher().getVoucher_type().getName());
+        voucherPurchase.setUnits(sourceData.getVoucher().getUnits());
+        return voucherPurchase;
+    }
+
+    @Override
+    public SymVoucher toDTO(sym_voucher sourceData) {
+        if (sourceData == null) { return null; }
+        SymVoucher ettlVoucher = new SymVoucher();
+        modelMapper().map(sourceData, ettlVoucher);
+        ettlVoucher.setVoucherId(sourceData.getId());
+        ettlVoucher.setVoucherType(sourceData.getVoucher_type().getName());
+        ettlVoucher.setVoucherProvider(sourceData.getVoucher_provider().getName());
+        ettlVoucher.setServiceProvider(sourceData.getService_provider().getName());
+        return ettlVoucher;
+    }
+
+    @Override
+    public SymWalletGroupVoucher toDTO(sym_wallet_group_voucher sourceData) {
+        if (sourceData == null) { return null; }
+        SymWalletGroupVoucher ettlWalletGroupVoucher = new SymWalletGroupVoucher();
+        modelMapper().map(sourceData, ettlWalletGroupVoucher);
+        return ettlWalletGroupVoucher;
     }
 
     @Override

@@ -59,6 +59,7 @@ public class EntityManagerRepo {
     }
 
     @Transactional
+    @SuppressWarnings("unchecked")
     public <E extends sym_entity> E saveOrUpdate(sym_entity<E> e) {
         LOGGER.info("Updating entity: " + e.toString());
         try {
@@ -79,6 +80,7 @@ public class EntityManagerRepo {
     }
 
     @Transactional
+    @SuppressWarnings("unchecked")
     public <E extends sym_entity> E save(sym_entity<E> e) {
         LOGGER.info("Saving new entity to database: " + e.toString());
         try {
@@ -115,20 +117,20 @@ public class EntityManagerRepo {
     @Transactional
     public <E extends sym_entity> Long countWhere(Class<E> entityClass, List<Pair<String, ?>> criterion,
                                                   boolean useLikeQuery, boolean useOrQuery) {
-        String conditions = "";
+        StringBuilder conditions = new StringBuilder();
 
         for (Pair<String, ?> criteria : criterion) {
             if (conditions.length() > 0) {
                 if (useOrQuery) {
-                    conditions += " OR ";
+                    conditions.append(" OR ");
                 } else {
-                    conditions += " AND ";
+                    conditions.append(" AND ");
                 }
             }
             if (useLikeQuery) {
-                conditions += criteria.getLeft() + " LIKE '%" + criteria.getRight() + "%' ";
+                conditions.append(criteria.getLeft()).append(" LIKE '%").append(criteria.getRight()).append("%' ");
             } else {
-                conditions += criteria.getLeft() + "= '" + criteria.getRight() + "' ";
+                conditions.append(criteria.getLeft()).append("= '").append(criteria.getRight()).append("' ");
             }
         }
 
@@ -182,6 +184,7 @@ public class EntityManagerRepo {
     }
 
     @Transactional
+    @SuppressWarnings("unchecked")
     public <E extends sym_entity> List<E> findAll(Class<E> entityClass, boolean reverseOrder) {
         LOGGER.info("findAll " + entityClass.getSimpleName());
         String queryString = "SELECT e FROM " + entityClass.getSimpleName() + " e" + (reverseOrder ? " ORDER BY e.id DESC" : "");
@@ -206,14 +209,14 @@ public class EntityManagerRepo {
     public <E extends sym_entity> List<E> findWhere(Class<E> entityClass, List<Pair<String, ?>> criterion,
                                                     int maxResults, boolean caseSensitive, boolean useLikeQuery, boolean useOrQuery, boolean reverseOrder) {
 
-        String conditions = "";
+        StringBuilder conditions = new StringBuilder();
 
         for (Pair<String, ?> criteria : criterion) {
             if (conditions.length() > 0) {
                 if (useOrQuery) {
-                    conditions += " OR ";
+                    conditions.append(" OR ");
                 } else {
-                    conditions += " AND ";
+                    conditions.append(" AND ");
                 }
             }
             String prefix = "", suffix = "";
@@ -222,11 +225,13 @@ public class EntityManagerRepo {
                 suffix = ")";
             }
             if (useLikeQuery) {
-                conditions += prefix + criteria.getLeft() + suffix + " LIKE " +
-                        prefix + "'%" + criteria.getRight() + "%'" + suffix + " ";
+                conditions.append(prefix).append(criteria.getLeft()).append(suffix)
+                          .append(" LIKE ").append(prefix)
+                          .append("'%").append(criteria.getRight()).append("%'").append(suffix).append(" ");
             } else {
-                conditions += prefix + criteria.getLeft() + suffix + "= " +
-                        prefix + "'" + criteria.getRight() + "'" + suffix + " ";
+                conditions.append(prefix).append(criteria.getLeft()).append(suffix)
+                          .append("= ").append(prefix)
+                          .append("'").append(criteria.getRight()).append("'").append(suffix).append(" ");
             }
         }
 
@@ -257,6 +262,7 @@ public class EntityManagerRepo {
         return findWhere(entityClass, criteria, -1, false, false, false, false);
     }
 
+    @SuppressWarnings("unchecked")
     public <E extends sym_entity> List<E> findWhere(Class<E> entityClass, Pair<String, ?> criteria) {
         List conditions = new ArrayList<Pair<String, Object>>();
         conditions.add(criteria);
@@ -274,6 +280,7 @@ public class EntityManagerRepo {
         return findWhere(entityClass, criterion, -1, caseSensitive, useLikeQuery, useOrQuery, reverseOrder);
     }
 
+    @SuppressWarnings("unchecked")
     public <E extends sym_entity> List<E> findWhere(Class<E> entityClass, Pair<String, ?> criteria,
                                                     boolean caseSensitive, boolean useLikeQuery, boolean useOrQuery, boolean reverseOrder) {
         List conditions = new ArrayList<Pair<String, Object>>();

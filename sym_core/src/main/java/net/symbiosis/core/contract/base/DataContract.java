@@ -14,6 +14,7 @@ import java.io.Serializable;
 
 @XmlRootElement
 public abstract class DataContract<T extends DataContract> implements Serializable {
+
     protected SymResponse symResponse;
 
     public DataContract() {

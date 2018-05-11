@@ -38,6 +38,8 @@ public class sym_swipe_transaction extends sym_entity<sym_swipe_transaction> {
     @ManyToOne
     private sym_response_code transaction_status;
 
+    public sym_swipe_transaction(){}
+
     public sym_swipe_transaction(sym_auth_user auth_user, String user_reference, String bank_reference,
                                  String card_number, BigDecimal transaction_amount, BigDecimal previous_balance,
                                  BigDecimal new_balance, Date transaction_time, sym_response_code transaction_status) {

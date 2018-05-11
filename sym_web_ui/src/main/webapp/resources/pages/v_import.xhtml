@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
+</f:metadata>
+
+
+<h:form id="voucherImportForm" rendered="#{sessionBean.isCurrentPage('vImport')}" layout="block">
+    <p:panel header="Upload new voucher file" style="margin-bottom:10px; width: 100%">
+        <h:panelGrid columns="4" cellpadding="5" style="width: 100%">
+            <p:outputLabel for="selectVP" value="Select Voucher Provider: " />
+            <p:selectOneMenu id="selectVP" style="width:150px" converter="vpConverter"
+                             value="#{voucherImportBean.selectedVoucherProvider}">
+                <p:ajax listener="#{voucherImportBean.changeVoucherProvider}" />
+                <f:selectItems id="selectVPItem" value="#{updateOptions.voucherProviders}"
+                               var="vp" itemLabel="#{vp.name}" itemValue="#{vp.name}" />
+            </p:selectOneMenu>
+
+            <p:outputLabel for="vValue" value="Voucher Value:" styleClass="leftAlign"/>
+            <p:inputNumber id="vValue" required="false" styleClass="leftAlign" decimalPlaces="0" minValue="0">
+                <p:ajax listener="#{voucherImportBean.updateAmount}" />
+            </p:inputNumber>
+        </h:panelGrid>
+
+        <h:panelGrid style="width: 100%">
+            <p:fileUpload style="width: 100%" id="fileUpload" fileUploadListener="#{voucherImportBean.handleFileUpload}"
+                          mode="advanced" dragDropSupport="true" update="voucherImportTable" sizeLimit="100000" multiple="false"
+                          allowTypes="/(\.|\/)(txt|dec|enc|pgp|gpg|loaded|TXT|DEC|ENC|PGP|GPG|LOADED)$/"
+                          onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()">
+            </p:fileUpload>
+        </h:panelGrid>
+    </p:panel>
+
+    <p:panel header="Select Reporting Period" style="margin-bottom:10px; width: 100%">
+        <h:panelGrid columns="4" cellpadding="5" style="width: 100%">
+            <p:outputLabel for="reportStartDate" value="Report Start Date:" />
+            <p:calendar id="reportStartDate" value="#{voucherImportBean.reportStartDate}"
+                        pattern="MM/dd/yyyy HH:mm:ss" navigator="true">
+                <p:ajax event="dateSelect" listener="#{voucherImportBean.initializeImports}" update="@this"
+                        onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+            </p:calendar>
+
+            <p:outputLabel for="reportEndDate" value="Report End Date:" />
+            <p:calendar id="reportEndDate" value="#{voucherImportBean.reportEndDate}"
+                        pattern="MM/dd/yyyy HH:mm:ss" navigator="true">
+                <p:ajax event="dateSelect" listener="#{voucherImportBean.initializeImports}" update="@this"
+                        onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+            </p:calendar>
+        </h:panelGrid>
+    </p:panel>
+
+    <p:dataTable id="voucherImportTable" var="vi" value="#{voucherImportBean.voucherImports}" tableStyle="width:auto"
+                 resizableColumns="true" editMode="cell" widgetVar="cellVoucherImports" draggableColumns="true"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                 paginator="true" pageLinks="5" rows="20" style="margin-bottom:20px">
+        <f:facet name="header">
+            <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+            <p:columnToggler datasource="voucherImportTable" trigger="toggler" />
+            #{voucherImportBean.tableDescription}<br/><br/>
+        </f:facet>
+
+        <ui:include src="includes/exporters.xhtml">
+            <ui:param name="backingBean" value="#{voucherImportBean}" />
+            <ui:param name="tableName" value="voucherImportTable" />
+        </ui:include>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ID}" sortBy="#{vi.id}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_ID}"/>
+            </f:facet>
+            <h:outputText value="#{vi.id}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_VP_BATCH_ID}" sortBy="#{vi.voucher_provider_batch_id}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_VP_BATCH_ID}"/>
+            </f:facet>
+            <h:outputText value="#{vi.voucher_provider_batch_id}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_VP}" sortBy="#{vi.voucher.voucher_provider.name}"
+                  filterBy="#{vi.voucher.voucher_provider}" filterMatchMode="exact">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_VP}"/>
+            </f:facet>
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellVoucherImports').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.voucherProviders}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{vi.voucher.voucher_provider.name}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_V_DESCRIPTION}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_V_DESCRIPTION}"/>
+            </f:facet>
+            <h:outputText value="(#{vi.voucher.id}) #{vi.voucher.voucher_value} #{vi.voucher.service_provider.name} #{vi.voucher.voucher_type.name}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_NUM_VOUCHERS}" sortBy="#{vi.number_of_vouchers}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_NUM_VOUCHERS}"/>
+            </f:facet>
+            <h:outputText value="#{vi.number_of_vouchers}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_T_AMOUNT}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_T_AMOUNT}"/>
+            </f:facet>
+            <h:outputText value="#{voucherImportBean.getVoucherTotalAmount(vi.id)}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_IMPORT_DATE}" sortBy="#{vi.import_date_time}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_IMPORT_DATE}"/>
+            </f:facet>
+            <h:outputText value="#{vi.import_date_time}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_FILENAME}" sortBy="#{vi.filename}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_FILENAME}"/>
+            </f:facet>
+            <h:outputText value="#{vi.filename}" />
+        </p:column>
+
+    </p:dataTable>
+
+</h:form>
+
+
+</html>

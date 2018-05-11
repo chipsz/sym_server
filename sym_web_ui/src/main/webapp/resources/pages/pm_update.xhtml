@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
+</f:metadata>
+
+<h:form id="posMachineForm" rendered="#{sessionBean.isCurrentPage('pmEdit')}" layout="block">
+
+    <p:dataTable id="posMachineTable" var="pm" value="#{posMachineBean.posMachines}" tableStyle="width:auto"
+                 resizableColumns="true" editMode="cell" widgetVar="cellPosMachine" editable="true"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                 paginator="true" pageLinks="5" rows="20" style="margin-bottom:20px" draggableColumns="true">
+        <f:facet name="header">
+            <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+            <p:columnToggler datasource="posMachineTable" trigger="toggler" />
+            #{posMachineBean.tableDescription}<br/><br/>
+        </f:facet>
+
+        <p:ajax event="cellEdit" listener="#{posMachineBean.onCellEdit}" update=":msgs" />
+
+        <ui:include src="includes/exporters.xhtml">
+            <ui:param name="backingBean" value="#{posMachineBean}" />
+            <ui:param name="tableName" value="posMachineTable" />
+        </ui:include>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ID}" sortBy="#{pm.id}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_ID}"/>
+            </f:facet>
+            <h:outputText value="#{pm.id}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_CNAME}" sortBy="#{pm.auth_user.user.wallet.company.company_name}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_CNAME}"/>
+            </f:facet>
+            <h:outputText value="#{pm.auth_user.user.wallet.company.company_name}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_BNAME}" sortBy="#{pm.branch_name}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_BNAME}"/>
+            </f:facet>
+            <h:outputText value="#{pm.branch_name}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_MNAME}" sortBy="#{pm.machine_name}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_MNAME}"/>
+            </f:facet>
+            <h:outputText value="#{pm.machine_name}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_MSISDN}" sortBy="#{pm.msisdn1}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{pm.msisdn1}" /></f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{pm.msisdn1}" style="width:96%">
+                        <f:validator validatorId="custom.fullMsisdnValidator"  />
+                    </p:inputText>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_MSISDN2}" sortBy="#{pm.msisdn2}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{pm.msisdn2}" /></f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{pm.msisdn2}" style="width:96%">
+                        <f:validator validatorId="custom.fullMsisdnValidator"  />
+                    </p:inputText>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_IMEI1}" sortBy="#{pm.imei1}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_IMEI1}"/>
+            </f:facet>
+            <h:outputText value="#{pm.imei1}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_IMEI2}" sortBy="#{pm.imei2}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_IMEI2}"/>
+            </f:facet>
+            <h:outputText value="#{pm.imei2}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_IMSI1}" sortBy="#{pm.imsi1}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_IMSI1}"/>
+            </f:facet>
+            <h:outputText value="#{pm.imsi1}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_IMSI2}" sortBy="#{pm.imsi2}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_IMSI2}"/>
+            </f:facet>
+            <h:outputText value="#{pm.imsi2}" />
+        </p:column>
+
+    </p:dataTable>
+
+</h:form>
+
+</html>

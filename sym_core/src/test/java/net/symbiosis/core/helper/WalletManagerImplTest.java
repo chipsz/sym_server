@@ -2,7 +2,7 @@ package net.symbiosis.core.helper;
 
 import net.symbiosis.core.service.WalletManager;
 import net.symbiosis.core_lib.response.SymResponseObject;
-import net.symbiosis.persistence.entity.complex_type.sym_wallet;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

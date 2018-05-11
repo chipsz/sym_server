@@ -10,7 +10,7 @@ import net.symbiosis.core_lib.enumeration.SymChannel;
  * Contact:     kaviyat@payserv.co.zw                                      *
  **************************************************************************/
 
-public interface WebRequestProcessor {
+public interface WebRequestProcessor extends RequestProcessor {
     SymSystemUserList registerWebUser(String email, String msisdn, String msisdn2, String username, String deviceId,
                                       String firstName, String lastName, String dateOfBirth);
 

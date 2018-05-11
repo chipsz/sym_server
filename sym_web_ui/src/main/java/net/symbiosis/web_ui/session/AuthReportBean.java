@@ -31,7 +31,7 @@ public class AuthReportBean extends JSFReportable {
         sessions = getEntityManagerRepo().findWhere(sym_session.class, asList(
                 new Pair<>("start_time >", dateToString(reportStartDate)),
                 new Pair<>("start_time <", dateToString(reportEndDate))
-        ), false, false, false, true);
+        ), true, false, false, true);
     }
 
     public List<sym_session> getSessions() {

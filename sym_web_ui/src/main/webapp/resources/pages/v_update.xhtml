@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
+</f:metadata>
+
+<h:form id="voucherForm" rendered="#{sessionBean.isCurrentPage('vEdit')}" layout="block">
+    <p:remoteCommand name="refreshTable" update=":voucherForm:voucherTable"/>
+    <p:dataTable id="voucherTable" var="voucher" value="#{voucherBean.vouchers}" tableStyle="width:auto"
+                 editable="true" resizableColumns="true" editMode="cell" widgetVar="cellVouchers" draggableColumns="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                 paginator="true" pageLinks="5" rows="20" style="margin-bottom:20px" rowStyleClass="#{voucher.is_active  ? null : 'disabledRow'}">
+        <f:facet name="header">
+            <p:commandButton action="#{voucherBean.initializeVouchers}" value="Refresh table data" style="float:left" icon="ui-icon-arrowrefresh-1-s"
+                             onstart="PF('statusDialog').show()" oncomplete="refreshTable(); PF('statusDialog').hide()"/>
+            <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+            <p:columnToggler datasource="voucherTable" trigger="toggler" />
+            #{voucherBean.tableDescription}<br/><br/>
+        </f:facet>
+
+        <ui:include src="includes/exporters.xhtml">
+            <ui:param name="backingBean" value="#{voucherBean}" />
+            <ui:param name="tableName" value="voucherTable" />
+        </ui:include>
+
+        <p:ajax event="cellEdit" listener="#{voucherBean.onCellEdit}" update=":msgs" />
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ID}" sortBy="#{voucher.id}">
+            <h:outputText value="#{voucher.id}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_VP}" sortBy="#{voucher.voucher_provider.name}"
+                  filterBy="#{voucher.voucher_provider}" filterMatchMode="exact">
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellVouchers').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.voucherProviders}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{voucher.voucher_provider.name}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_SP}" sortBy="#{voucher.service_provider.name}"
+                  filterBy="#{voucher.service_provider}" filterMatchMode="exact">
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellVouchers').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.serviceProviders}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{voucher.service_provider.name}" /></f:facet>
+                <f:facet name="input"><p:inputText readonly="true" value="#{voucher.service_provider.name}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_VALUE}" sortBy="#{voucher.voucher_value}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{voucher.voucher_value}" /></f:facet>
+                <f:facet name="input"><p:inputText readonly="true" value="#{voucher.voucher_value}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_VTYPE}" sortBy="#{voucher.voucher_type.name}"
+                  filterBy="#{voucher.voucher_type}" filterMatchMode="exact">
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellVouchers').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.voucherTypes}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{voucher.voucher_type.name}" /></f:facet>
+                <f:facet name="input"><p:inputText readonly="true" value="#{voucher.voucher_type.name}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_UNITS}" sortBy="#{voucher.units}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{voucher.units}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{voucher.units}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_VP_DISCOUNT}" sortBy="#{voucher.voucher_provider_discount}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{voucher.voucher_provider_discount}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{voucher.voucher_provider_discount}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_IS_FIXED}" filterBy="#{voucher.is_fixed}" filterMatchMode="exact">
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellVouchers').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.booleanList}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{voucher.is_fixed}" /></f:facet>
+                <f:facet name="input"><p:inputText readonly="true" value="#{voucher.is_fixed}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_IS_PINBASED}" filterBy="#{voucher.is_pin_based}" filterMatchMode="exact">
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellVouchers').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.booleanList}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{voucher.is_pin_based}" /></f:facet>
+                <f:facet name="input">
+                    <h:selectOneMenu value="#{voucher.is_pin_based}" style="width:100%">
+                        <f:selectItems value="#{updateOptions.booleanList}" var="is_pin_based" itemLabel="#{is_pin_based}" itemValue="#{is_pin_based}" />
+                    </h:selectOneMenu>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ENABLED}" filterBy="#{voucher.is_active}" filterMatchMode="exact">
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellVouchers').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.booleanList}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{voucher.is_active}" /></f:facet>
+                <f:facet name="input">
+                    <h:selectOneMenu value="#{voucher.is_active}" style="width:100%">
+                        <f:selectItems value="#{updateOptions.booleanList}" var="is_active" itemLabel="#{is_active}" itemValue="#{is_active}" />
+                    </h:selectOneMenu>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+    </p:dataTable>
+    <p:contextMenu for="voucherTable" widgetVar="cMenu">
+        <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellVouchers').showCellEditor();return false;"/>
+        <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>
+    </p:contextMenu>
+</h:form>
+
+</html>

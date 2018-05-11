@@ -16,8 +16,7 @@ import javax.persistence.Entity;
 @AttributeOverride(name = "id", column = @Column(name = "role_id"))
 public class sym_role extends sym_enum_entity<sym_role> {
 
-    public sym_role() {
-    }
+    public sym_role() {}
 
     public sym_role(String name, Boolean enabled) {
         super(name, enabled);

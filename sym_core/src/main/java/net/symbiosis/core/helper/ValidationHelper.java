@@ -2,9 +2,11 @@ package net.symbiosis.core.helper;
 
 import net.symbiosis.core_lib.response.SymResponseObject;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
-import net.symbiosis.persistence.entity.complex_type.sym_cashout_account;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
-import net.symbiosis.persistence.entity.complex_type.sym_wallet;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_cashout_account;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.enumeration.sym_deposit_type;
 
 import java.math.BigDecimal;
@@ -50,6 +52,19 @@ public class ValidationHelper {
                     .setMessage(format("Auth User with id %d was not found", authUserId));
         }
         return new SymResponseObject<>(SUCCESS, authUser);
+    }
+
+    public static SymResponseObject<sym_voucher> validateVoucher(Long voucherId) {
+        if (voucherId == null) {
+            return new SymResponseObject<sym_voucher>(INPUT_INCOMPLETE_REQUEST)
+                    .setMessage("voucherId cannot be null");
+        }
+        sym_voucher voucher = getEntityManagerRepo().findById(sym_voucher.class, voucherId);
+        if (voucher == null) {
+            return new SymResponseObject<sym_voucher>(INPUT_INVALID_REQUEST)
+                    .setMessage(format("Voucher with id %d was not found", voucherId));
+        }
+        return new SymResponseObject<>(SUCCESS, voucher);
     }
 
     public static SymResponseObject<sym_wallet> validateWallet(Long walletId) {
@@ -106,4 +121,21 @@ public class ValidationHelper {
 
         return new SymResponseObject<>(SUCCESS, amount);
     }
+
+    public static SymResponseObject<sym_voucher_provider> validateVoucherProvider(Long voucherProviderId) {
+        if (voucherProviderId == null) {
+            return new SymResponseObject<sym_voucher_provider>(INPUT_INCOMPLETE_REQUEST)
+                    .setMessage("voucherProviderId cannot be null");
+        }
+        sym_voucher_provider voucherProvider = getEntityManagerRepo()
+                .findById(sym_voucher_provider.class, voucherProviderId);
+
+        if (voucherProvider == null) {
+            return new SymResponseObject<sym_voucher_provider>(INPUT_INVALID_REQUEST)
+                    .setMessage(format("Voucher Provider with id %s was not found", voucherProviderId));
+        }
+
+        return new SymResponseObject<>(SUCCESS, voucherProvider);
+    }
+
 }

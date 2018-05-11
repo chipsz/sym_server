@@ -30,8 +30,7 @@ public class sym_session extends sym_entity<sym_session> {
     @Basic(optional = true)
     private Date end_time;
 
-    public sym_session() {
-    }
+    public sym_session() {}
 
     public sym_session(sym_auth_user auth_user, String device_id, String auth_token, Date start_time, Date end_time) {
         this.auth_user = auth_user;

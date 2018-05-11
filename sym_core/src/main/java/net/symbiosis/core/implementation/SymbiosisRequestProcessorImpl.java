@@ -7,7 +7,7 @@ import net.symbiosis.core.contract.symbiosis.SymWallet;
 import net.symbiosis.core.service.ConverterService;
 import net.symbiosis.core.service.SymbiosisRequestProcessor;
 import net.symbiosis.persistence.dao.EnumEntityRepoManager;
-import net.symbiosis.persistence.entity.complex_type.sym_wallet;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.enumeration.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
