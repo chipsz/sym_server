@@ -31,7 +31,7 @@ public class SystemReportBean extends JSFReportable {
         systemLogs = getEntityManagerRepo().findWhere(sym_request_response_log.class, asList(
                 new Pair<>("incoming_request_time >", dateToString(reportStartDate)),
                 new Pair<>("incoming_request_time <", dateToString(reportEndDate))
-        ), false, false, false, true);
+        ), true, false, false, true);
     }
 
     public List<sym_request_response_log> getSystemLogs() {

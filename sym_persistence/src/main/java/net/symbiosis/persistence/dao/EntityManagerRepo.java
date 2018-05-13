@@ -206,6 +206,7 @@ public class EntityManagerRepo {
         return findAll(entityClass, false);
     }
 
+    @SuppressWarnings("unchecked")
     public <E extends sym_entity> List<E> findWhere(Class<E> entityClass, List<Pair<String, ?>> criterion,
                                                     int maxResults, boolean caseSensitive, boolean useLikeQuery, boolean useOrQuery, boolean reverseOrder) {
 
@@ -308,12 +309,12 @@ public class EntityManagerRepo {
         if (list.size() == 1) {
             return new SymResponseObject<>(SymResponseCode.SUCCESS, list.get(0));
         } else if (list.size() > 1) {
-            String alert = "Found non unique entries for " + list.get(0).getClass().getSimpleName() + "\r\n\r\n";
+            StringBuilder alert = new StringBuilder("Found non unique entries for " + list.get(0).getClass().getSimpleName() + "\r\n\r\n");
             for (E item : list) {
-                alert += item.toString() + "\n";
+                alert.append(item.toString()).append("\n");
             }
-            new Exception(alert).printStackTrace();
-            sendEmailAlert("SYMBIOSIS_CONTROL_CENTER", "Found non unique entries for " + list.get(0).getClass().getSimpleName(), alert);
+            new Exception(alert.toString()).printStackTrace();
+            sendEmailAlert("SYMBIOSIS_CONTROL_CENTER", "Found non unique entries for " + list.get(0).getClass().getSimpleName(), alert.toString());
             return new SymResponseObject<>(SymResponseCode.GENERAL_ERROR);
         }
         return new SymResponseObject<>(SymResponseCode.DATA_NOT_FOUND);

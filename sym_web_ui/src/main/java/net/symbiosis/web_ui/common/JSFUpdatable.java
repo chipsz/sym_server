@@ -1,12 +1,18 @@
 package net.symbiosis.web_ui.common;
 
+import net.symbiosis.persistence.entity.complex_type.pos.sym_pos_machine;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.sym_company;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_service_provider;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_wallet_group_voucher;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
 import net.symbiosis.persistence.entity.enumeration.sym_event_type;
 import net.symbiosis.persistence.entity.enumeration.sym_response_code;
+import net.symbiosis.persistence.entity.enumeration.sym_voucher_type;
 import net.symbiosis.persistence.entity.super_class.sym_entity;
 import net.symbiosis.web_ui.session.SessionBean;
 import org.primefaces.component.datatable.DataTable;
@@ -16,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,6 +47,7 @@ import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
  *                                                                         *
  ***************************************************************************/
 
+@ManagedBean
 public abstract class JSFUpdatable extends JSFExportable implements JSFLoggable, Serializable {
 
     private static final Logger logger = Logger.getLogger(JSFUpdatable.class.getSimpleName());
@@ -59,15 +67,15 @@ public abstract class JSFUpdatable extends JSFExportable implements JSFLoggable,
     public abstract void init();
 
     private sym_event_type getEventType(sym_entity updateTable) {
-        if (updateTable instanceof sym_company || updateTable instanceof sym_wallet) {
-            return fromEnum(UPDATE_MERCHANT);
-        }
-        if (updateTable instanceof sym_user || updateTable instanceof sym_auth_user) {
-            return fromEnum(UPDATE_USER);
-        }
-        if (updateTable instanceof sym_wallet_group) {
-            return fromEnum(UPDATE_WALLET_GROUP);
-        }
+        if (updateTable instanceof sym_company || updateTable instanceof sym_wallet) { return fromEnum(UPDATE_MERCHANT); }
+        if (updateTable instanceof sym_user || updateTable instanceof sym_auth_user) { return fromEnum(UPDATE_USER); }
+        if (updateTable instanceof sym_voucher) { return fromEnum(UPDATE_VOUCHER); }
+        if (updateTable instanceof sym_voucher_type) { return fromEnum(UPDATE_VOUCHER_TYPE); }
+        if (updateTable instanceof sym_service_provider) { return fromEnum(UPDATE_SERVICE_PROVIDER); }
+        if (updateTable instanceof sym_voucher_provider) { return fromEnum(UPDATE_VOUCHER_PROVIDER); }
+        if (updateTable instanceof sym_wallet_group) { return fromEnum(UPDATE_WALLET_GROUP); }
+        if (updateTable instanceof sym_wallet_group_voucher) { return fromEnum(UPDATE_WALLET_GROUP_VOUCHER); }
+        if (updateTable instanceof sym_pos_machine) { return fromEnum(UPDATE_POS_MACHINE); }
         return null;
     }
 

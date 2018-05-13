@@ -10,6 +10,7 @@ import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
 import net.symbiosis.persistence.entity.enumeration.*;
 import org.springframework.stereotype.Component;
 
+import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
  *                                                                         *
  ***************************************************************************/
 
+@ManagedBean
 @Component
 public class UpdateOptions implements Serializable {
 
