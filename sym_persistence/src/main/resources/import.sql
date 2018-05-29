@@ -130,6 +130,7 @@ insert ignore into sym_auth_group (name, is_enabled) values ('WEB_CLERK',1);
 insert ignore into sym_auth_group (name, is_enabled) values ('WEB_AGENT',1);
 insert ignore into sym_auth_group (name, is_enabled) values ('POS_AGENT',1);
 insert ignore into sym_auth_group (name, is_enabled) values ('POS_ADMIN',1);
+insert ignore into sym_auth_group (name, is_enabled) values ('MOBILE_USER',1);
 
 insert ignore into sym_role (name, is_enabled) values ('ROLE_WEB_MANAGE_EVD', 1);
 insert ignore into sym_role (name, is_enabled) values ('ROLE_WEB_MANAGE_STOCK', 1);
@@ -156,6 +157,8 @@ insert ignore into sym_role (name, is_enabled) values ('ROLE_WEB_MANAGE_SETTINGS
 
 insert ignore into sym_role (name, is_enabled) values ('ROLE_POS_MANAGE_SETTINGS', 1);
 
+insert ignore into sym_role (name, is_enabled) values ('ROLE_MOBILE_MANAGE_SETTINGS', 1);
+
 insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'SUPER_USER' and sr.name LIKE '%';
 
 insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'WEB_ADMIN' and sr.name LIKE 'ROLE_WEB_%';
@@ -165,6 +168,8 @@ insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) s
 insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'WEB_AGENT' and (sr.name LIKE 'ROLE_WEB_VIEW_SINGLE_%' or sr.name = 'ROLE_WEB_MANAGE_SETTINGS');
 
 insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'POS_ADMIN' and sr.name LIKE ('ROLE_POS_%');
+
+insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'MOBILE_USER' and sr.name LIKE ('ROLE_MOBILE_%');
 
 insert ignore into sym_voucher_type (voucher_type_id,is_enabled,name) values (1, 1, 'AIRTIME');
 insert ignore into sym_voucher_type (voucher_type_id,is_enabled,name) values (2, 0, 'ELECTRICITY');

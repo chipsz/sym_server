@@ -1,4 +1,4 @@
-package net.symbiosis.core.implementation;
+package net.symbiosis.core.impl;
 
 import net.symbiosis.core.service.WalletManager;
 import net.symbiosis.core_lib.response.SymResponseObject;

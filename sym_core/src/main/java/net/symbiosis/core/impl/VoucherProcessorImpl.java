@@ -1,4 +1,4 @@
-package net.symbiosis.core.implementation;
+package net.symbiosis.core.impl;
 
 import net.symbiosis.common.structure.Pair;
 import net.symbiosis.common.utilities.FileUtils;
@@ -38,7 +38,7 @@ import static net.symbiosis.common.configuration.NetworkUtilities.sendEmailAlert
 import static net.symbiosis.common.security.Security.encryptAES;
 import static net.symbiosis.core.helper.UploadFileHelper.*;
 import static net.symbiosis.core.helper.ValidationHelper.*;
-import static net.symbiosis.core.implementation.WalletManagerImpl.updateVoucherProviderBalance;
+import static net.symbiosis.core.impl.WalletManagerImpl.updateVoucherProviderBalance;
 import static net.symbiosis.core_lib.enumeration.SymDistributionChannel.RECEIPT;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
 import static net.symbiosis.core_lib.enumeration.SymVoucherStatus.*;

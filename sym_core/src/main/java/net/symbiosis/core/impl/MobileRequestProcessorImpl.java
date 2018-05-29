@@ -110,7 +110,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
         }
 
         SymResponseObject<sym_auth_user> registrationResponse = authenticationProvider.
-                registerMobileUser(newUser, findByName(sym_auth_group.class, getProperty("DefaultMobileGroup")), company);
+            registerMobileUser(newUser, findByName(sym_auth_group.class, getProperty("DefaultMobileGroup")), company);
 
         if (registrationResponse.getResponseCode().equals(SUCCESS)) {
             requestResponseLog.setAuth_user(registrationResponse.getResponseObject());
