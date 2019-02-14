@@ -22,7 +22,7 @@ import java.math.BigDecimal;
  ***************************************************************************/
 
 @Component
-@Path("/voucher")
+@Path("/")
 @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED, MediaType.MULTIPART_FORM_DATA})
 @Produces({MediaType.APPLICATION_JSON})
 //@Api("XML Voucher API")

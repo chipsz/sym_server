@@ -26,7 +26,7 @@ public interface POSRestService {
     Response endSession(Long sessionId, String deviceId, String authToken) throws SymRestException;
     Response register(String branchName, String machineName, String imei1, String imei2, String imsi1, String imsi2,
                       String msisdn1, String msisdn2, String username, String pin) throws SymRestException;
-    Response buyVoucher(Long voucherId, String imei, String pin, String cashier, BigDecimal voucherValue,
+    Response buyVoucher(Long voucherId, String username, String pin, String cashier, BigDecimal voucherValue,
                         String recipient) throws SymRestException;
-    Response queryTransaction(Long voucherPurchaseId, String imei, String pin) throws SymRestException;
+    Response queryTransaction(Long voucherPurchaseId, String username, String pin) throws SymRestException;
 }

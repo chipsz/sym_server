@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 import static javax.ws.rs.core.Response.status;
 
 @Controller
-@Path("/symbiosis/xml")
+@Path("/xml/")
 @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_FORM_URLENCODED, MediaType.MULTIPART_FORM_DATA})
 @Produces({MediaType.APPLICATION_XML})
 public class SymXMLRestController implements SymbiosisRestService {

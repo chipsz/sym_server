@@ -1,9 +1,12 @@
-package net.symbiosis.persistence.entity.complex_type.pos;
+package net.symbiosis.persistence.entity.complex_type.device;
 
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
-import net.symbiosis.persistence.entity.super_class.sym_entity;
+import net.symbiosis.persistence.entity.super_class.sym_device;
 
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import java.util.Date;
 
 /***************************************************************************
  * *
@@ -15,18 +18,15 @@ import javax.persistence.*;
 
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "pos_machine_id"))
-public class sym_pos_machine extends sym_entity<sym_pos_machine> {
+public class sym_device_pos_machine extends sym_device<sym_device_pos_machine> {
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "auth_user_id")
-    private sym_auth_user auth_user;
     @Column(nullable = false)
     private String branch_name;
     @Column(nullable = false)
     private String machine_name;
-    @Column(nullable = false, unique = true, length = 16)
+    @Column(nullable = false, length = 16)
     private String imei1;
-    @Column(nullable = false, unique = true, length = 16)
+    @Column(nullable = false, length = 16)
     private String imei2;
     @Column(length = 16)
     private String imsi1;
@@ -37,11 +37,12 @@ public class sym_pos_machine extends sym_entity<sym_pos_machine> {
     @Column(length = 12)
     private String msisdn2;
 
-	public sym_pos_machine() {}
+	public sym_device_pos_machine() {}
 
-    public sym_pos_machine(sym_auth_user auth_user, String branch_name, String machine_name,
-                            String imei1, String imei2, String imsi1, String imsi2, String msisdn1, String msisdn2) {
-        this.auth_user = auth_user;
+    public sym_device_pos_machine(sym_auth_user auth_user, Boolean is_active, Date registration_date,
+                                  Date last_auth_date, String branch_name, String machine_name, String imei1,
+                                  String imei2, String imsi1, String imsi2, String msisdn1, String msisdn2) {
+        super(auth_user, is_active, registration_date, last_auth_date);
         this.branch_name = branch_name;
         this.machine_name = machine_name;
         this.imei1 = imei1;

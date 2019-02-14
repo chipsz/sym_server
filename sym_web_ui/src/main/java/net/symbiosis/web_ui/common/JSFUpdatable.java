@@ -1,6 +1,6 @@
 package net.symbiosis.web_ui.common;
 
-import net.symbiosis.persistence.entity.complex_type.pos.sym_pos_machine;
+import net.symbiosis.persistence.entity.complex_type.device.sym_device_pos_machine;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.sym_company;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
@@ -75,7 +75,7 @@ public abstract class JSFUpdatable extends JSFExportable implements JSFLoggable,
         if (updateTable instanceof sym_voucher_provider) { return fromEnum(UPDATE_VOUCHER_PROVIDER); }
         if (updateTable instanceof sym_wallet_group) { return fromEnum(UPDATE_WALLET_GROUP); }
         if (updateTable instanceof sym_wallet_group_voucher) { return fromEnum(UPDATE_WALLET_GROUP_VOUCHER); }
-        if (updateTable instanceof sym_pos_machine) { return fromEnum(UPDATE_POS_MACHINE); }
+        if (updateTable instanceof sym_device_pos_machine) { return fromEnum(UPDATE_POS_MACHINE); }
         return null;
     }
 

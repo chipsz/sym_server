@@ -18,7 +18,8 @@
         <class>net.symbiosis.persistence.entity.complex_type.wallet.sym_cashout_account</class>
         <class>net.symbiosis.persistence.entity.complex_type.sym_company</class>
         <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_pinbased_voucher</class>
-        <class>net.symbiosis.persistence.entity.complex_type.pos.sym_pos_machine</class>
+        <class>net.symbiosis.persistence.entity.complex_type.device.sym_device_phone</class>
+        <class>net.symbiosis.persistence.entity.complex_type.device.sym_device_pos_machine</class>
         <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_service_provider</class>
         <class>net.symbiosis.persistence.entity.complex_type.sym_user_preference</class>
         <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher</class>

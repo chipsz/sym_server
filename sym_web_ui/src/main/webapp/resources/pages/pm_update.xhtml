@@ -78,6 +78,13 @@
             </p:cellEditor>
         </p:column>
 
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ACTIVE}" sortBy="#{pm.is_active}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_ACTIVE}"/>
+            </f:facet>
+            <h:outputText value="#{pm.is_active}" />
+        </p:column>
+
         <p:column headerText="#{dataTableHeaders.HEADER_TEXT_IMEI1}" sortBy="#{pm.imei1}">
             <f:facet name="header">
                 <h:outputText value="#{dataTableHeaders.HEADER_TEXT_IMEI1}"/>
@@ -104,6 +111,20 @@
                 <h:outputText value="#{dataTableHeaders.HEADER_TEXT_IMSI2}"/>
             </f:facet>
             <h:outputText value="#{pm.imsi2}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_REG_DATE}" sortBy="#{pm.registration_date}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_REG_DATE}"/>
+            </f:facet>
+            <h:outputText value="#{pm.registration_date}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_LAST_AUTH_DATE}" sortBy="#{pm.last_auth_date}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_LAST_AUTH_DATE}"/>
+            </f:facet>
+            <h:outputText value="#{pm.last_auth_date}" />
         </p:column>
 
     </p:dataTable>

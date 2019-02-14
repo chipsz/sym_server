@@ -1,6 +1,6 @@
 package net.symbiosis.web_ui.session;
 
-import net.symbiosis.persistence.entity.complex_type.pos.sym_pos_machine;
+import net.symbiosis.persistence.entity.complex_type.device.sym_device_pos_machine;
 import net.symbiosis.web_ui.common.JSFUpdatable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -25,7 +25,7 @@ import static net.symbiosis.web_ui.common.DataTableHeaders.*;
 public class PosMachineBean extends JSFUpdatable {
 
     private static final String TABLE_NAME = "Pos Machines";
-    private List<sym_pos_machine> posMachines;
+    private List<sym_device_pos_machine> posMachines;
 
     @Autowired
     public PosMachineBean(SessionBean sessionBean) {
@@ -48,12 +48,12 @@ public class PosMachineBean extends JSFUpdatable {
     }
 
     private void initializePosMachines() {
-        posMachines = getEntityManagerRepo().findAll(sym_pos_machine.class, true);
+        posMachines = getEntityManagerRepo().findAll(sym_device_pos_machine.class, true);
     }
 
-    public List<sym_pos_machine> getPosMachines() { return posMachines; }
+    public List<sym_device_pos_machine> getPosMachines() { return posMachines; }
 
-    public void setPosMachines(List<sym_pos_machine> posMachines) { this.posMachines = posMachines; }
+    public void setPosMachines(List<sym_device_pos_machine> posMachines) { this.posMachines = posMachines; }
 
     @Override
     public String getTableDescription() { return TABLE_NAME; }

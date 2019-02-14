@@ -1,4 +1,4 @@
-package net.symbiosis.core.implementation;
+package net.symbiosis.core.impl;
 
 import net.symbiosis.authentication.authentication.PosAuthenticationProvider;
 import net.symbiosis.common.structure.Pair;
@@ -11,8 +11,8 @@ import net.symbiosis.core.service.ConverterService;
 import net.symbiosis.core.service.POSRequestProcessor;
 import net.symbiosis.core.service.VoucherProcessor;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.persistence.entity.complex_type.device.sym_device_pos_machine;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
-import net.symbiosis.persistence.entity.complex_type.pos.sym_pos_machine;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_purchase;
 import net.symbiosis.persistence.entity.enumeration.sym_channel;
@@ -136,6 +136,7 @@ public class POSRequestProcessorImpl implements POSRequestProcessor {
 
         SymResponseObject<sym_auth_user> userResponse = posAuthenticationProvider.authenticateUser();
 
+        //validate user credentials
         if (!userResponse.getResponseCode().equals(SUCCESS)) {
             requestResponseLog.setResponse_code(fromEnum(userResponse.getResponseCode()));
             requestResponseLog.setOutgoing_response(userResponse.getResponseCode().getMessage());
@@ -144,31 +145,26 @@ public class POSRequestProcessorImpl implements POSRequestProcessor {
             return new SymDeviceUserResponse(userResponse.getResponseCode());
         }
 
-
         //check for existing registration
-        List<sym_pos_machine> existingRegistration = getEntityManagerRepo().findWhere(sym_pos_machine.class, asList(
-                new Pair<>("auth_user", userResponse.getResponseObject().getId()),
-                new Pair<>("imei1", imei1),
-                new Pair<>("imei2", imei2)
+        List<sym_device_pos_machine> existingRegistration = getEntityManagerRepo().findWhere(sym_device_pos_machine.class, asList(
+            new Pair<>("is_active", 1),
+            new Pair<>("imei1", imei1),
+            new Pair<>("imei2", imei2)
         ));
 
-        sym_pos_machine posMachine;
+        sym_device_pos_machine posMachine;
 
-        if (existingRegistration != null && existingRegistration.size() > 0) {
-            posMachine = existingRegistration.get(0);
+        //deactivate any existing registrations
+        if (existingRegistration != null) {
+            for (sym_device_pos_machine existingPos : existingRegistration) {
+                existingPos.setIs_active(false);
+            }
         }
-        else { posMachine = new sym_pos_machine(); }
 
-        posMachine.setAuth_user(userResponse.getResponseObject());
-        posMachine.setBranch_name(branchName);
-        posMachine.setImei1(imei1);
-        posMachine.setImei2(imei2);
-        posMachine.setImsi1(imsi1);
-        posMachine.setImsi2(imsi2);
-        posMachine.setMachine_name(machineName);
-        posMachine.setMsisdn1(msisdn1);
-        posMachine.setMsisdn2(msisdn2);
-        posMachine.save();
+        //activate new machine
+        new sym_device_pos_machine(userResponse.getResponseObject(), true, new Date(), new Date(),
+                branchName, machineName, imei1, imei2, imsi1, imsi2, msisdn1, msisdn2)
+        .save();
 
         requestResponseLog.setResponse_code(fromEnum(SUCCESS));
         requestResponseLog.setOutgoing_response(SUCCESS.getMessage());
@@ -179,26 +175,32 @@ public class POSRequestProcessorImpl implements POSRequestProcessor {
     }
 
     @Override
-    public SymVoucherPurchaseList buyVoucher(Long voucherId, String imei, String pin, BigDecimal voucherValue,
+    public SymVoucherPurchaseList buyVoucher(Long voucherId, String username, String pin, BigDecimal voucherValue,
                                              String recipient, String cashierName) {
 
-        logger.info(format("Got POS machine %s request for voucherId %s (amount=%s) purchase from cashier %s",
-                imei, voucherId, voucherValue == null ? "not specified" : voucherValue, cashierName));
+        logger.info(format("Got POS machine request by user %s for voucherId %s (amount=%s) purchase from cashier %s",
+                username, voucherId, voucherValue == null ? "not specified" : voucherValue, cashierName));
 
-        List<sym_pos_machine> posMachines = getEntityManagerRepo().findWhere(sym_pos_machine.class, new Pair<>("imei1", imei));
+        List<sym_device_pos_machine> posMachines = getEntityManagerRepo().findWhere(
+            sym_device_pos_machine.class, asList(
+                new Pair<>("is_active", 1),
+                new Pair<>("auth_user.user.username", username)
+            )
+        );
 
         if (posMachines.size() != 1) { return new SymVoucherPurchaseList(AUTH_NON_EXISTENT); }
 
-        logger.info(format("Using company %s wallet", posMachines.get(0).getAuth_user().getUser().getWallet().getCompany().getCompany_name()));
-
         sym_auth_user authUser = posMachines.get(0).getAuth_user();
 
+        logger.info(format("Using company %s wallet", authUser.getUser().getWallet().getCompany().getCompany_name()));
+
+
         String incomingRequest = format("voucherId=%s|imei=%s|pin=%s|cashier=%s|voucherValue=%s|recipient=%s",
-            voucherId, imei, pin, cashierName, voucherValue, recipient);
+            voucherId, posMachines.get(0).getImei1(), pin, cashierName, voucherValue, recipient);
 
         sym_request_response_log log = new sym_request_response_log(fromEnum(POS_MACHINE), fromEnum(LOGIN), incomingRequest);
 
-        PosAuthenticationProvider authProvider = new PosAuthenticationProvider(log, imei, authUser.getUser().getUsername(), pin);
+        PosAuthenticationProvider authProvider = new PosAuthenticationProvider(log, posMachines.get(0).getImei1(), authUser.getUser().getUsername(), pin);
 
         SymResponseObject<sym_auth_user> authResponse = authProvider.authenticateUser();
 
@@ -215,20 +217,26 @@ public class POSRequestProcessorImpl implements POSRequestProcessor {
     }
 
     @Override
-    public SymVoucherPurchaseList queryTransaction(Long voucherPurchaseId, String imei, String pin) {
-        logger.info(format("Got POS machine %s request to query voucher purchase %s", imei, voucherPurchaseId));
-        List<sym_pos_machine> posMachines = getEntityManagerRepo().findWhere(sym_pos_machine.class, new Pair<>("imei1", imei));
+    public SymVoucherPurchaseList queryTransaction(Long voucherPurchaseId, String username, String pin) {
+        logger.info(format("Got POS machine request by %s to query voucher purchase %s", username, voucherPurchaseId));
+        List<sym_device_pos_machine> posMachines = getEntityManagerRepo().findWhere(
+            sym_device_pos_machine.class, asList(
+                    new Pair<>("is_active", 1),
+                    new Pair<>("auth_user.user.username", username)
+            )
+        );
 
         if (posMachines.size() != 1) { return new SymVoucherPurchaseList(AUTH_NON_EXISTENT); }
+
         sym_auth_user authUser = posMachines.get(0).getAuth_user();
 
-        logger.info(format("Using company %s wallet", posMachines.get(0).getAuth_user().getUser().getWallet().getCompany().getCompany_name()));
+        logger.info(format("Using company %s wallet", authUser.getUser().getWallet().getCompany().getCompany_name()));
 
-        String incomingRequest = format("voucherPurchaseId=%s|imei=%s|pin=%s", voucherPurchaseId, imei, pin);
+        String incomingRequest = format("voucherPurchaseId=%s|imei=%s|pin=%s", voucherPurchaseId, posMachines.get(0).getImei1(), pin);
 
         sym_request_response_log log = new sym_request_response_log(fromEnum(POS_MACHINE), fromEnum(LOGIN), incomingRequest);
 
-        PosAuthenticationProvider authProvider = new PosAuthenticationProvider(log, imei, authUser.getUser().getUsername(), pin);
+        PosAuthenticationProvider authProvider = new PosAuthenticationProvider(log, posMachines.get(0).getImei1(), authUser.getUser().getUsername(), pin);
 
         SymResponseObject<sym_auth_user> authResponse = authProvider.authenticateUser();
 

@@ -14,20 +14,20 @@ http://localhost:8080/sym_api-1.0.0/api/xml/user/{userId} (PUT)
 http://localhost:8080/sym_api-1.0.0/api/user (POST)
 http://localhost:8080/sym_api-1.0.0/api/user/{userId} (PUT)
 
-http://localhost:8080/sym_api-1.0.0/api/xml/mobi/walletGroup
-http://localhost:8080/sym_api-1.0.0/api/mobi/walletGroup
+http://localhost:8080/sym_api-1.0.0/api/xml/walletGroup
+http://localhost:8080/sym_api-1.0.0/api/walletGroup
 
-http://localhost:8080/sym_api-1.0.0/api/xml/mobi/walletGroupVoucher
-http://localhost:8080/sym_api-1.0.0/api/mobi/walletGroupVoucher
+http://localhost:8080/sym_api-1.0.0/api/xml/walletGroup/{walletGroupId}/voucher
+http://localhost:8080/sym_api-1.0.0/api/walletGroup/{walletGroupId}/voucher
 
-http://localhost:8080/sym_api-1.0.0/api/xml/mobi/merchant (POST)
-http://localhost:8080/sym_api-1.0.0/api/xml/mobi/merchant (GET)
-http://localhost:8080/sym_api-1.0.0/api/xml/mobi/merchant/{walletId} (GET)
-http://localhost:8080/sym_api-1.0.0/api/xml/mobi/merchant/{walletId}/payment (POST)
-http://localhost:8080/sym_api-1.0.0/api/mobi/merchant (POST)
-http://localhost:8080/sym_api-1.0.0/api/mobi/merchant (GET)
-http://localhost:8080/sym_api-1.0.0/api/mobi/merchant/{walletId} (GET)
-http://localhost:8080/sym_api-1.0.0/api/mobi/merchant/{walletId}/payment (POST)
+http://localhost:8080/sym_api-1.0.0/api/xml/mobi/wallet (POST)
+http://localhost:8080/sym_api-1.0.0/api/xml/mobi/wallet (GET)
+http://localhost:8080/sym_api-1.0.0/api/xml/mobi/wallet/{walletId} (GET)
+http://localhost:8080/sym_api-1.0.0/api/xml/mobi/wallet/{walletId}/payment (POST)
+http://localhost:8080/sym_api-1.0.0/api/mobi/wallet (POST)
+http://localhost:8080/sym_api-1.0.0/api/mobi/wallet (GET)
+http://localhost:8080/sym_api-1.0.0/api/mobi/wallet/{walletId} (GET)
+http://localhost:8080/sym_api-1.0.0/api/mobi/wallet/{walletId}/payment (POST)
 
 http://localhost:8080/sym_api-1.0.0/api/xml/mobi/voucher (GET)
 http://localhost:8080/sym_api-1.0.0/api/xml/mobi/voucher/{voucherId} (GET)

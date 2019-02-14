@@ -56,6 +56,7 @@ public class DataTableHeaders {
     public static final String HEADER_TEXT_LANGUAGE = "Language";
     public static final String HEADER_TEXT_COUNTRY = "Country";
     public static final String HEADER_TEXT_ENABLED = "Is Enabled";
+    public static final String HEADER_TEXT_ACTIVE = "Is Active";
     public static final String HEADER_TEXT_VP = "Voucher Provider";
     public static final String HEADER_TEXT_SP = "Service Provider";
     public static final String HEADER_TEXT_VALUE = "Value";
@@ -260,6 +261,10 @@ public class DataTableHeaders {
 
     public String getHEADER_TEXT_ENABLED() {
         return HEADER_TEXT_ENABLED;
+    }
+
+    public String getHEADER_TEXT_ACTIVE() {
+        return HEADER_TEXT_ACTIVE;
     }
 
     public String getHEADER_TEXT_VP() {

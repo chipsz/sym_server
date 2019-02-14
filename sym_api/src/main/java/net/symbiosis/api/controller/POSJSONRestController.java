@@ -73,19 +73,19 @@ public class POSJSONRestController extends POSXMLRestController implements POSRe
 
     @POST @Path("/voucher/{voucherId}/purchase")
     public Response buyVoucher(@PathParam("voucherId") Long voucherId,
-                               @FormParam("imei") String imei,
+                               @FormParam("username") String username,
                                @FormParam("pin") String pin,
                                @FormParam("cashier") String cashierName,
                                @FormParam("voucherValue") BigDecimal voucherValue,
                                @FormParam("recipient") String recipient) throws SymRestException {
-        return super.buyVoucher(voucherId, imei, pin, cashierName, voucherValue, recipient);
+        return super.buyVoucher(voucherId, username, pin, cashierName, voucherValue, recipient);
     }
 
     @POST @Path("/voucherPurchase/{voucherPurchaseId}")
     public Response queryTransaction(@PathParam("voucherPurchaseId") Long voucherPurchaseId,
-                                     @FormParam("imei") String imei,
+                                     @FormParam("username") String username,
                                      @FormParam("pin") String pin) throws SymRestException {
-        return super.queryTransaction(voucherPurchaseId, imei, pin);
+        return super.queryTransaction(voucherPurchaseId, username, pin);
     }
 
 }

@@ -32,7 +32,7 @@ import static javax.ws.rs.core.Response.status;
 import static net.symbiosis.common.configuration.Configuration.getProperty;
 
 @Component
-@Path("/pos")
+@Path("/xml/pos")
 @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_FORM_URLENCODED})
 @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_OCTET_STREAM})
 //@Api("POS XML")
@@ -135,25 +135,25 @@ public class POSXMLRestController implements POSRestService {
     @Override
     @POST @Path("/voucher/{voucherId}/purchase")
     public Response buyVoucher(@PathParam("voucherId") Long voucherId,
-                               @FormParam("imei") String imei,
+                               @FormParam("username") String username,
                                @FormParam("pin") String pin,
                                @FormParam("cashier") String cashierName,
                                @FormParam("voucherValue") BigDecimal voucherValue,
                                @FormParam("recipient") String recipient) throws SymRestException {
-        logger.info(format("Got request to buy voucherId %s (amount=%s) from POS machine %s, cashier %s",
-            voucherId, voucherValue == null ? "not specified" : voucherValue, imei, cashierName));
+        logger.info(format("Got request to buy voucherId %s (amount=%s) from POS machine with user %s, cashier %s",
+            voucherId, voucherValue == null ? "not specified" : voucherValue, username, cashierName));
 
-        return Response.status(200).entity(posRequestProcessor.buyVoucher(voucherId, imei, pin,
+        return Response.status(200).entity(posRequestProcessor.buyVoucher(voucherId, username, pin,
             voucherValue, recipient, cashierName)).build();
     }
 
     @Override
     @POST @Path("/voucherPurchase/{voucherPurchaseId}")
     public Response queryTransaction(@PathParam("voucherPurchaseId") Long voucherPurchaseId,
-                                     @FormParam("imei") String imei,
+                                     @FormParam("username") String username,
                                      @FormParam("pin") String pin) throws SymRestException {
-        logger.info(format("Got request to query transaction %s by device %s", voucherPurchaseId, imei));
+        logger.info(format("Got request to query transaction %s by POS machine with user %s", voucherPurchaseId, username));
 
-        return Response.status(200).entity(posRequestProcessor.queryTransaction(voucherPurchaseId, imei, pin)).build();
+        return Response.status(200).entity(posRequestProcessor.queryTransaction(voucherPurchaseId, username, pin)).build();
     }
 }

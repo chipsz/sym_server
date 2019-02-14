@@ -34,13 +34,13 @@ public abstract class SymEnumEntityDaoImpl<E extends sym_entity, I extends Seria
     @Override
     public List<E> findEnabled() {
         System.out.println(getEntityClass().getSimpleName() + " findEnabled = true");
-        return getEntityManagerRepo().findWhere(getEntityClass(), new Pair<>("is_enabled", true));
+        return getEntityManagerRepo().findWhere(getEntityClass(), new Pair<>("is_enabled", 1));
     }
 
     @Override
     public E findEnabledByName(String name) {
         System.out.println(getEntityClass().getSimpleName() + " findEnabledByName " + name);
-        return getEntityManagerRepo().findWhere(getEntityClass(), Arrays.asList(new Pair<>("is_enabled", true), new Pair<>("name", name))).get(0);
+        return getEntityManagerRepo().findWhere(getEntityClass(), Arrays.asList(new Pair<>("is_enabled", 1), new Pair<>("name", name))).get(0);
     }
 
     @Override

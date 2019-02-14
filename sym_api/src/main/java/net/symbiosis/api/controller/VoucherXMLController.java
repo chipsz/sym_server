@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 import static java.lang.String.format;
 
 @Component
-@Path("/voucher")
+@Path("/xml/")
 @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_FORM_URLENCODED, MediaType.MULTIPART_FORM_DATA})
 @Produces({MediaType.APPLICATION_XML})
 //@Api("XML Voucher API")

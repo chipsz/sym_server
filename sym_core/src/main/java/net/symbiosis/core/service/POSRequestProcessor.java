@@ -22,7 +22,7 @@ public interface POSRequestProcessor extends RequestProcessor {
     SymResponse endPosSession(Long sessionId, String imei, String authToken);
     SymDeviceUserResponse registerPosUser(String branchName, String machineName, String imei1, String imei2, String imsi1,
                                           String imsi2, String msisdn1, String msisdn2, String username, String pin);
-    SymVoucherPurchaseList buyVoucher(Long voucherId, String imei, String pin, BigDecimal voucherValue,
+    SymVoucherPurchaseList buyVoucher(Long voucherId, String username, String pin, BigDecimal voucherValue,
                                       String recipient, String cashierName);
-    SymVoucherPurchaseList queryTransaction(Long voucherPurchaseId, String imei, String pin);
+    SymVoucherPurchaseList queryTransaction(Long voucherPurchaseId, String username, String pin);
 }

@@ -24,7 +24,7 @@ import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
  **************************************************************************/
 
 @Controller
-@Path("/web/xml")
+@Path("/xml/web")
 @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_FORM_URLENCODED, MediaType.MULTIPART_FORM_DATA})
 @Produces({MediaType.APPLICATION_XML})
 public class WebXMLRestController implements WebRestService {

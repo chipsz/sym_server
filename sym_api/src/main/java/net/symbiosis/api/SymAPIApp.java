@@ -2,10 +2,7 @@ package net.symbiosis.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.symbiosis.api.controller.MobileJSONRestController;
-import net.symbiosis.api.controller.MobileXMLRestController;
-import net.symbiosis.api.controller.SymJSONRestController;
-import net.symbiosis.api.controller.SymXMLRestController;
+import net.symbiosis.api.controller.*;
 import net.symbiosis.api.exception.SymRestExceptionHandler;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -46,6 +43,8 @@ public class SymAPIApp extends ResourceConfig {
         register(SymRestExceptionHandler.class);
         register(MobileXMLRestController.class);
         register(MobileJSONRestController.class);
+        register(POSXMLRestController.class);
+        register(POSJSONRestController.class);
         register(SymXMLRestController.class);
         register(SymJSONRestController.class);
     }
