@@ -1,0 +1,7 @@
+description = 'Symbiosis Core Library'
+
+jar { baseName = 'core_lib' }
+
+dependencies {
+    testCompile libraries.testng
+}

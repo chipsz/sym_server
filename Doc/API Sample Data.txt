@@ -1,0 +1,37 @@
+
+USER API:
+	http://localhost:8080/sym_api-1.0.0/api/xml/mobi/user (POST)
+	deviceId=1234&username=tich&email=bhpenetrator@gmail.com&msisdn=0123456789&firstName=tich&lastName=deBlak
+
+	http://localhost:8080/sym_api-1.0.0/api/xml/mobi/user/2 (POST)
+	password=newpass&username=tich&deviceId=1234&authToken=1l0d58DI0V5Mkt2r
+	
+	http://localhost:8080/sym_api-1.0.0/api/xml/mobi/user?username=tk (GET)
+	http://localhost:8080/sym_api-1.0.0/api/xml/mobi/user?firstName=tsungai (GET)
+	http://localhost:8080/sym_api-1.0.0/api/xml/mobi/user?lastName=kav (GET)
+	http://localhost:8080/sym_api-1.0.0/api/xml/mobi/user?email=tsungai.kaviya@gmail.com (GET)
+
+MERCHANT API:
+
+	http://localhost:8080/sym_api-1.0.0/api/xml/mobi/merchant (POST)
+	walletGroupId=1&firstName=tich&lastName=de%20blak&username=tich&email=bhpenetrator@gmail.com&msisdn=0123456789&deviceId=deviceId
+
+	http://localhost:8080/sym_api-1.0.0/api/xml/mobi/merchant (POST)
+	walletGroupId=2&accountAdminUserId=2
+	walletGroupId=1&firstName=test&lastName=user&username=uname&email=testuser@gmail.com&msisdn=0111222333&deviceId=deviceId
+
+	http://localhost:8080/sym_api-1.0.0/api/xml/mobi/merchant/1/payment (POST)
+	amount=10000&depositTypeId=2&depositReference=Merchant1&paymentTime=1485125614713&institutionName=Ecobank&bankReference=XYZREF1234&bankStatementId=10001
+	
+PAYMENT API:
+
+	http://localhost:8080/sym_api-1.0.0/api/xml/mobi/voucher/5/purchase
+	authUserId=1&systemUserId=1&walletId=1
+
+VOUCHER IMPORT API:
+
+	http://localhost:8080/sym_api-1.0.0/api/xml/mobi/voucherProvider/1/voucherImport
+	
+BANK API:
+
+	http://localhost:8080/sym_api-1.0.0/api/xml/mobi/bank

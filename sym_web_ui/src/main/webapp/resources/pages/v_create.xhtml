@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
+</f:metadata>
+
+<h:form id="voucherCreateForm" rendered="#{sessionBean.isCurrentPage('vCreate')}" layout="block">
+    <p:defaultCommand target="btnCreateVoucher" />
+    <p:panel header="Create New Voucher" style="width: 100%;" styleClass="centerAlign">
+
+        <h:panelGrid id="voucherDetailsPanel" columns="4" styleClass="centerAlign" style="width: 100%">
+            <p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+
+            <p:outputLabel for="voucherProvider" value="Voucher Provider" styleClass="leftAlign"/>
+            <h:selectOneMenu id="voucherProvider" value="#{voucherCreateBean.newVoucher.voucher_provider}"
+                             styleClass="leftAlign" converter="vpConverter" required="true">
+                <f:selectItem itemLabel="- Voucher Provider -" itemValue="#{null}" noSelectionOption="true" />
+                <f:selectItems value="#{updateOptions.voucherProviders}" var="vp" itemLabel="#{vp.name}" itemValue="#{vp}" />
+            </h:selectOneMenu>
+            <p:outputLabel for="vValue" value="Value:" styleClass="leftAlign"/>
+            <p:inputNumber id="vValue" minValue="0" value="#{voucherCreateBean.newVoucher.voucher_value}"
+                           required="true" styleClass="rightAlign" />
+            <p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+
+            <p:outputLabel for="serviceProvider" value="Service Provider" styleClass="leftAlign"/>
+            <h:selectOneMenu id="serviceProvider" value="#{voucherCreateBean.newVoucher.service_provider}"
+                             styleClass="leftAlign" converter="spConverter" required="true">
+                <f:selectItem itemLabel="- Service Provider -" itemValue="#{null}" noSelectionOption="true" />
+                <f:selectItems value="#{updateOptions.serviceProviders}" var="sp" itemLabel="#{sp.name}" itemValue="#{sp}" />
+            </h:selectOneMenu>
+            <p:outputLabel for="vpDiscount" value="VP Discount:" styleClass="leftAlign"/>
+            <p:inputNumber id="vpDiscount" minValue="0" maxValue="100" value="#{voucherCreateBean.newVoucher.voucher_provider_discount}"
+                           required="true" styleClass="rightAlign"/>
+            <p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+
+
+            <p:outputLabel for="voucherType" value="Voucher Type" styleClass="leftAlign"/>
+            <h:selectOneMenu id="voucherType" value="#{voucherCreateBean.newVoucher.voucher_type}"
+                             styleClass="leftAlign" converter="vtConverter" required="true">
+                <f:selectItems value="#{updateOptions.voucherTypes}" var="vt" itemLabel="#{vt.name}" itemValue="#{vt}" />
+            </h:selectOneMenu>
+            <p:outputLabel for="vUnit" value="Units:" styleClass="leftAlign"/>
+            <p:inputText id="vUnit" value="#{voucherCreateBean.newVoucher.units}"
+                         required="true" maxlength="5" styleClass="rightAlign"/>
+            <p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+        </h:panelGrid>
+
+        <h:panelGrid id="voucherBooleanPanel" columns="6" styleClass="centerAlign" style="width: 100%" >
+            <p:outputLabel for="isPinBased" value="PinBased:" styleClass="leftAlign" style="width: 16.6%"/>
+            <h:selectOneMenu id="isPinBased" value="#{voucherCreateBean.newVoucher.is_pin_based}" required="true" styleClass="centerAlign">
+                <f:selectItems value="#{updateOptions.booleanList}" var="pb" itemLabel="#{pb}" itemValue="#{pb}" />
+            </h:selectOneMenu>
+            <p:outputLabel for="isFixed" value="Fixed:" styleClass="centerAlign" style="width: 16.6%"/>
+            <h:selectOneMenu id="isFixed" value="#{voucherCreateBean.newVoucher.is_fixed}" required="true" styleClass="centerAlign">
+                <f:selectItems value="#{updateOptions.booleanList}" var="f" itemLabel="#{f}" itemValue="#{f}" />
+            </h:selectOneMenu>
+            <p:outputLabel for="isEnabled" value="Enabled:" style="width: 16.6%" styleClass="centerAlign"/>
+            <h:selectOneMenu id="isEnabled" value="#{voucherCreateBean.newVoucher.is_active}" required="true" styleClass="rightAlign">
+                <f:selectItems value="#{updateOptions.booleanList}" var="e" itemLabel="#{e}" itemValue="#{e}" />
+            </h:selectOneMenu>
+            <p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/><p:spacer/>
+        </h:panelGrid>
+
+        <h:panelGrid id="voucherButtonPanel" columns="1" styleClass="centerAlign" style="width: 100%" >
+            <p:commandButton id="btnCreateVoucher" action="#{voucherCreateBean.createNewVoucher}" value="Create Voucher"
+                             onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"
+                             icon="ui-icon-plus" ajax="true" styleClass="rightAlign" update="voucherCreateForm"/>
+        </h:panelGrid>
+    </p:panel>
+</h:form>
+
+</html>

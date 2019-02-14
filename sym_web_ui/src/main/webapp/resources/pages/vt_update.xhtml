@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
+</f:metadata>
+
+<h:form id="vtCreateForm" rendered="#{sessionBean.isCurrentPage('vtEdit')}" layout="block">
+    <p:panel header="Create a new Voucher Type" style="width: 100%; margin-bottom: 10px" styleClass="centerAlign">
+        <h:panelGrid id="vtCreatePanel" columns="6" styleClass="centerAlign" style="width: 100%">
+            <p:outputLabel for="vtName" value="Name:" styleClass="leftAlign"/>
+            <p:inputText id="vtName" value="#{voucherTypeBean.newVoucherType.name}" required="true" styleClass="inputField">
+                <f:validator validatorId="custom.nameValidator"  />
+                <p:ajax update="msgVTName" event="keyup" />
+            </p:inputText>
+            <p:message for="vtName" id="msgVTName" display="icon" styleClass="rightAlign"/>
+
+            <p:outputLabel for="vtEnabled" value="Is Enabled?" styleClass="centerAlign"/>
+            <h:selectOneMenu id="vtEnabled" value="#{voucherTypeBean.newVoucherType.is_enabled}" styleClass="inputField">
+                <f:selectItems value="#{updateOptions.booleanList}" var="is_enabled" itemLabel="#{is_enabled}" itemValue="#{is_enabled}" />
+            </h:selectOneMenu>
+            <p:commandButton id="btnCreateVT" action="#{voucherTypeBean.createNewVoucherType}" styleClass="rightAlign"
+                             value="Add New Voucher Type" icon="ui-icon-plusthick" ajax="false" update=":vtUpdateForm"
+                             onclick="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"  />
+        </h:panelGrid>
+    </p:panel>
+</h:form>
+
+<h:form id="vtUpdateForm" rendered="#{sessionBean.isCurrentPage('vtEdit')}" layout="block">
+    <p:dataTable id="voucherTypes" var="vt" value="#{updateOptions.voucherTypes}" draggableColumns="true"
+                 editable="true" resizableColumns="true" editMode="cell" widgetVar="cellVoucherTypes"
+                 rowStyleClass="#{vt.is_enabled ? null : 'disabledRow'}">
+        <f:facet name="header">Voucher Types</f:facet>
+        <p:ajax event="cellEdit" listener="#{voucherTypeBean.onCellEdit}" update=":msgs" />
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ID}" sortBy="#{vt.id}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{vt.id}" /></f:facet>
+                <f:facet name="input"><p:inputText readonly="true" value="#{vt.id}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_NAME}" sortBy="#{vt.name}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{vt.name}" /></f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{vt.name}" required="true" style="width:96%">
+                        <f:validator validatorId="custom.plainTextValidator"  />
+                    </p:inputText>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ENABLED}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{vt.is_enabled}" /></f:facet>
+                <f:facet name="input">
+                    <h:selectOneMenu value="#{vt.is_enabled}" style="width:100%">
+                        <f:selectItems value="#{updateOptions.booleanList}" var="is_enabled" itemLabel="#{is_enabled}" itemValue="#{is_enabled}" />
+                    </h:selectOneMenu>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+    </p:dataTable>
+    <p:contextMenu for="voucherTypes" widgetVar="cMenu">
+        <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellVoucherTypes').showCellEditor();return false;"/>
+        <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>
+    </p:contextMenu>
+</h:form>
+
+</html>

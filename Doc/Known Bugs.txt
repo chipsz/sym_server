@@ -1,0 +1,10 @@
+PDF Emails from interface
+Export selected columns only
+Restore old data to table on failed update
+
+JBoss monitoring for reboot
+Create jboss-deployment-structure for PGP
+Bank Management
+
+register existing user
+duplicate key exception on null emails/phone/msisdn

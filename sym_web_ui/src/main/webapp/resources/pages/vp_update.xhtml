@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
+</f:metadata>
+
+<h:form id="voucherProviderForm" rendered="#{sessionBean.isCurrentPage('vpEdit')}" layout="block">
+
+    <p:panel header="Create a new Voucher Provider" style="width: 100%; margin-bottom: 10px" styleClass="centerAlign">
+        <h:panelGrid id="vpCreatePanel" columns="6" styleClass="centerAlign" style="width: 100%">
+            <p:outputLabel for="vpName" value="Name:" styleClass="leftAlign"/>
+            <p:inputText id="vpName" value="#{voucherProviderBean.newVoucherProvider.name}" required="true" styleClass="inputField">
+                <f:validator validatorId="custom.plainTextValidator"  />
+                <p:ajax update="msgVPName" event="keyup" />
+            </p:inputText>
+            <p:message for="vpName" id="msgVPName" display="icon" styleClass="rightAlign"/>
+
+            <p:outputLabel for="vpEnabled" value="Is Enabled?" styleClass="leftAlign"/>
+            <h:selectOneMenu id="vpEnabled" value="#{voucherProviderBean.newVoucherProvider.is_enabled}" styleClass="rightAlign">
+                <f:selectItems value="#{updateOptions.booleanList}" var="is_enabled" itemLabel="#{is_enabled}" itemValue="#{is_enabled}" />
+            </h:selectOneMenu>
+            <p:commandButton id="btnCreateVP" action="#{voucherProviderBean.createVoucherProvider}"
+                 value="Add New Voucher Provider" icon="ui-icon-plusthick" ajax="false"
+                 onclick="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"  />
+        </h:panelGrid>
+    </p:panel>
+
+    <p:dataTable id="voucherProviders" var="vp" value="#{updateOptions.voucherProviders}" draggableColumns="true"
+                 editable="true" resizableColumns="true" editMode="cell" widgetVar="cellVoucherProviders"
+                 rowStyleClass="#{vp.is_enabled ? null : 'disabledRow'}">
+        <f:facet name="header">Voucher Providers</f:facet>
+        <p:ajax event="cellEdit" listener="#{voucherProviderBean.onCellEdit}" update=":msgs" />
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ID}" sortBy="#{vp.id}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{vp.id}" /></f:facet>
+                <f:facet name="input"><p:inputText readonly="true" value="#{vp.id}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_NAME}" sortBy="#{vp.name}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{vp.name}" /></f:facet>
+                <f:facet name="input">
+                    <p:inputText value="#{vp.name}" required="true" style="width:96%">
+                        <f:validator validatorId="custom.plainTextValidator"  />
+                    </p:inputText>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ENABLED}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{vp.is_enabled}" /></f:facet>
+                <f:facet name="input">
+                    <h:selectOneMenu value="#{vp.is_enabled}" style="width:100%">
+                        <f:selectItems value="#{updateOptions.booleanList}" var="is_enabled" itemLabel="#{is_enabled}" itemValue="#{is_enabled}" />
+                    </h:selectOneMenu>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_BALANCE}" sortBy="#{vp.current_balance}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{vp.current_balance}" /></f:facet>
+                <f:facet name="input"><p:inputText readonly="true" value="#{vp.current_balance}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+    </p:dataTable>
+    <p:contextMenu for="voucherProviders" widgetVar="cMenu">
+        <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellVoucherProviders').showCellEditor();return false;"/>
+        <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>
+    </p:contextMenu>
+</h:form>
+
+</html>

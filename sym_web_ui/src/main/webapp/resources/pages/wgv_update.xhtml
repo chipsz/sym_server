@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
+</f:metadata>
+
+<h:form id="walletGroupVoucherForm" rendered="#{sessionBean.isCurrentPage('wgvEdit')}" layout="block">
+    <p:dataTable id="walletGroupVouchers" var="wgv" value="#{updateOptions.walletGroupVouchers}" draggableColumns="true"
+                 editable="true" resizableColumns="true" editMode="cell" widgetVar="cellWalletGroupVouchers"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                 paginator="true" pageLinks="5" rows="20" style="margin-bottom:20px">
+        <f:facet name="header">
+            <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+            <p:columnToggler datasource="walletGroupVouchers" trigger="toggler" />
+            Group Vouchers<br/><br/>
+        </f:facet>
+        <p:ajax event="cellEdit" listener="#{walletGroupVoucherBean.onCellEdit}" update=":msgs" />
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_W_GROUP}" sortBy="#{wgv.wallet_group.name}" filterBy="#{wgv.wallet_group}">
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellWalletGroupVouchers').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.walletGroups}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{wgv.wallet_group.name}" /></f:facet>
+                <f:facet name="input"><p:inputText readonly="true" value="#{wgv.wallet_group.name}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_V_DESCRIPTION}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="(#{wgv.voucher.id}) #{wgv.voucher.voucher_value} #{wgv.voucher.service_provider.name} #{wgv.voucher.voucher_type.name}" /></f:facet>
+                <f:facet name="input"><p:inputText readonly="true" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_M_DISCOUNT}" sortBy="#{wgv.wallet_discount}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{wgv.wallet_discount}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{wgv.wallet_discount}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+    </p:dataTable>
+    <p:contextMenu for="walletGroupVouchers" widgetVar="cMenu">
+        <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellWalletGroupVouchers').showCellEditor();return false;"/>
+        <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>
+    </p:contextMenu>
+</h:form>
+
+</html>

@@ -1,0 +1,30 @@
+description = 'Symbiosis Common'
+
+jar { baseName = 'common' }
+apply plugin: 'idea'
+
+configurations {
+    provided
+}
+
+sourceSets {
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+}
+
+idea { module { scopes.PROVIDED.plus += [ configurations.provided] } }
+
+dependencies {
+    provided project(':sym_core_lib')
+    compile libraries.gson
+    compile libraries.json
+    compile libraries.javax_mail
+    compile libraries.commons_codec
+    compile libraries.jmimemagic
+    provided libraries.bcpg
+    provided libraries.bcprov
+    testCompile libraries.bcpg
+    testCompile libraries.bcprov
+    testCompile libraries.testng
+}

@@ -1,0 +1,52 @@
+description = 'Symbiosis Web UI'
+
+jar { baseName = 'web_ui' }
+
+apply plugin: 'war'
+apply plugin: 'idea'
+
+configurations {
+    provided
+}
+
+sourceSets {
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+}
+
+idea { module { scopes.PROVIDED.plus += [ configurations.provided] } }
+
+dependencies {
+    compile project(':sym_core_lib')
+    compile project(':sym_common')
+    compile project(':sym_persistence')
+    compile project(':sym_authentication')
+    compile project(':sym_core')
+
+    testCompile project(':sym_core_lib').sourceSets.test.output
+    testCompile project(':sym_common').sourceSets.test.output
+    testCompile project(':sym_persistence').sourceSets.test.output
+    testCompile project(':sym_authentication').sourceSets.test.output
+    testCompile project(':sym_core').sourceSets.test.output
+
+    compile libraries.spring_core
+    compile libraries.spring_web
+    compile libraries.jsf_api
+    compile libraries.jsf_impl
+    compile libraries.cdi_api
+    compile libraries.javax_servlet_jstl
+    compile libraries.javax_servlet_api
+    compile libraries.javax_validation
+
+    compile libraries.theme_pf
+    compile libraries.theme_pf_all
+    compile libraries.theme_pf_extensions
+    compile libraries.itext
+    compile libraries.poi
+    compile libraries.xmlbeans
+
+    testCompile libraries.testng
+    testCompile libraries.jmockit
+    testCompile libraries.spring_test
+}

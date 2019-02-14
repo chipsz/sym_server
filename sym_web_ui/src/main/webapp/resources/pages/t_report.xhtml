@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
+</f:metadata>
+
+
+<h:form id="transactionDateForm" rendered="#{sessionBean.isCurrentPage('tranReport')}" layout="block">
+    <p:remoteCommand name="refreshTable" update=":transactionReportForm:transactionTable"/>
+    <p:panel header="Select Reporting Period" style="margin-bottom:10px; width: 100%">
+        <h:panelGrid columns="5" cellpadding="5" style="width: 100%">
+            <p:outputLabel for="reportStartDate" value="Report Start Date:" />
+            <p:calendar id="reportStartDate" value="#{transactionReportBean.reportStartDate}"
+                        pattern="MM/dd/yyyy HH:mm:ss" navigator="true">
+                <p:ajax event="dateSelect" listener="#{transactionReportBean.initializeVoucherPurchases}" update=":transactionReportForm"
+                        onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+            </p:calendar>
+
+            <p:outputLabel for="reportEndDate" value="Report End Date:" />
+            <p:calendar id="reportEndDate" value="#{transactionReportBean.reportEndDate}"
+                        pattern="MM/dd/yyyy HH:mm:ss" navigator="true">
+                <p:ajax event="dateSelect" listener="#{transactionReportBean.initializeVoucherPurchases}" update=":transactionReportForm"
+                        onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+            </p:calendar>
+
+            <p:commandButton action="#{transactionReportBean.initializeVoucherPurchases}" value="Refresh table data"
+                             icon="ui-icon-arrowrefresh-1-s" update=":transactionReportForm"
+                             onstart="PF('statusDialog').show()" oncomplete="refreshTable(); PF('statusDialog').hide()"/>
+
+        </h:panelGrid>
+    </p:panel>
+</h:form>
+
+<h:form id="transactionReportForm" rendered="#{sessionBean.isCurrentPage('tranReport')}" layout="block">
+    <p:remoteCommand name="refreshTable" update=":transactionReportForm:transactionTable"/>
+    <p:dataTable id="transactionTable" var="tran" value="#{transactionReportBean.voucherPurchases}"
+                 resizableColumns="true" tableStyle="width:auto" draggableColumns="true" widgetVar="cellTransaction"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                 paginator="true" pageLinks="5" rows="20" style="margin-bottom:20px"
+                 rowStyleClass="#{tran.response_code.id == 0 ? null : 'disabledRow'}"
+                 filteredValue="#{transactionReportBean.filteredVoucherPurchases}">
+        <p:ajax event="filter" oncomplete="refreshTable();" />
+        <f:facet name="header">
+            <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+            <p:columnToggler datasource="transactionTable" trigger="toggler" />
+            #{transactionReportBean.tableDescription}<br/><br/>
+        </f:facet>
+
+        <ui:include src="includes/exporters.xhtml">
+            <ui:param name="backingBean" value="#{transactionReportBean}" />
+            <ui:param name="tableName" value="transactionTable" />
+        </ui:include>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ID}" sortBy="#{tran.id}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_ID}"/>
+            </f:facet>
+            <h:outputText value="#{tran.id}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_CNAME}" sortBy="#{tran.wallet.company.company_name}"
+                  filterBy="#{tran.wallet.company.company_name}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_CNAME}"/>
+            </f:facet>
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellTransaction').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.companies}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{tran.wallet.company.company_name}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_CASHIER_NAME}" sortBy="#{tran.cashier_name}"
+                  filterBy="#{tran.cashier_name}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_CASHIER_NAME}"/>
+            </f:facet>
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellTransaction').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{transactionReportBean.cashiers}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{tran.cashier_name}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_SP}" sortBy="#{tran.voucher.service_provider.name}"
+                  filterBy="#{tran.voucher.voucher_provider}" filterMatchMode="exact">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_SP}"/>
+            </f:facet>
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellTransaction').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.serviceProviders}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{tran.voucher.service_provider.name}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_VTYPE}" sortBy="#{tran.voucher.voucher_type.name}"
+                  filterBy="#{tran.voucher.voucher_type}" filterMatchMode="exact">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_VTYPE}"/>
+            </f:facet>
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellTransaction').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.voucherTypes}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{tran.voucher.voucher_type.name}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_TRANSACTION_STATUS}" sortBy="#{tran.response_code}" filterBy="#{tran.response_code}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_TRANSACTION_STATUS}"/>
+            </f:facet>
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellTransaction').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.transactionStatuses}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{tran.response_code}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_TIME}" sortBy="#{tran.transaction_time}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_TIME}"/>
+            </f:facet>
+            <h:outputText value="#{tran.transaction_time}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_VP}" sortBy="#{tran.voucher.voucher_provider.name}"
+                  filterBy="#{tran.voucher.voucher_provider}" filterMatchMode="exact">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_VP}"/>
+            </f:facet>
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellTransaction').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.voucherProviders}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{tran.voucher.voucher_provider.name}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_AMOUNT}" footerText="#{transactionReportBean.amountTotal}"
+                  sortBy="#{tran.voucher_value}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_AMOUNT}"/>
+            </f:facet>
+            <h:outputText value="#{tran.voucher_value}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_VP_COST}" footerText="#{transactionReportBean.VPCostTotal}"
+                  sortBy="#{tran.voucher_provider_value}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_VP_COST}"/>
+            </f:facet>
+            <h:outputText value="#{tran.voucher_provider_value}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_MERCHANT_COST}" footerText="#{transactionReportBean.walletCostTotal}"
+                  sortBy="#{tran.wallet_cost}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_MERCHANT_COST}"/>
+            </f:facet>
+            <h:outputText value="#{tran.wallet_cost}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_EMPOWER_PROFIT}" footerText="#{transactionReportBean.empowerProfitTotal}"
+                  sortBy="#{transactionReportBean.getDifferenceBetween(tran.wallet_cost,tran.voucher_provider_value)}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_EMPOWER_PROFIT}"/>
+            </f:facet>
+            <h:outputText value="#{transactionReportBean.getDifferenceBetween(tran.wallet_cost,tran.voucher_provider_value)}" />
+        </p:column>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_MERCHANT_PROFIT}" footerText="#{transactionReportBean.merchantProfitTotal}"
+                  sortBy="#{transactionReportBean.getDifferenceBetween(tran.voucher_value,tran.wallet_cost)}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_MERCHANT_PROFIT}"/>
+            </f:facet>
+            <h:outputText value="#{transactionReportBean.getDifferenceBetween(tran.voucher_value,tran.wallet_cost)}" />
+        </p:column>
+    </p:dataTable>
+
+</h:form>
+
+</html>

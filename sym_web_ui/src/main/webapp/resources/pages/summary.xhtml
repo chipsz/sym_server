@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
+</f:metadata>
+
+<h:form id="voucherStockForm" rendered="#{sessionBean.isCurrentPage('summary')}" layout="block">
+
+    <f:facet name="header">System Statistics</f:facet>
+    <table style="width:100%; vertical-align: top; text-align: center; border-width: 1px;">
+        <f:facet name="header">System Summary</f:facet>
+        <tr valign="top">
+            <td valign="top">
+                <p:panel id="transactions" closable="true" header="Transactions" style="text-align: left; margin-bottom: 10px">
+                    <h:outputText value="Total Transactions: #{summaryBean.totalTransactions}"/><br/>
+                    <h:outputText value="Total Successful Transactions: #{summaryBean.totalSuccessfulTransactions}"/><br/>
+                    <h:outputText value="Total Transactions Today: #{summaryBean.totalTransactionsToday}" /><br/>
+                    <h:outputText value="Total Successful Transactions Today: #{summaryBean.totalSuccessfulTransactionsToday}" />
+                </p:panel>
+                <p:panel id="payments" closable="true" header="Payments" style="text-align: left; margin-bottom: 10px">
+                    <h:outputText value="Total Payments: #{summaryBean.totalPayments}"/><br/>
+                    <h:outputText value="Total Payments Today: #{summaryBean.totalPaymentsToday}" /><br/>
+                </p:panel>
+            </td>
+            <td valign="top">
+                <p:panel id="errors" closable="true" header="Errors"
+                         style="text-align: left; margin-right: 10px; margin-left: 10px;margin-bottom: 10px">
+                    <h:outputText value="Total Errors Today: #{summaryBean.totalErrorsToday}" /><br/>
+                    <h:outputText value="Stock Errors Today: #{summaryBean.stockErrorsToday}" /><br/>
+                    <h:outputText value="Funds Errors Today: #{summaryBean.fundsErrorsToday}" /><br/>
+                    <h:outputText value="System Errors Today: #{summaryBean.systemErrorsToday}" />
+                </p:panel>
+            </td>
+            <td valign="top">
+                <p:panel id="merchants" closable="true" header="Merchants"  style="text-align: left; margin-bottom: 10px">
+                    <h:outputText value="Total Merchants: #{summaryBean.totalMerchants}" />
+                </p:panel>
+                <p:panel id="systemUsers" closable="true" header="Users"  style="text-align: left; margin-bottom: 10px">
+                    <h:outputText value="Total Registered Users: #{summaryBean.totalUsers}" />
+                </p:panel>
+                <p:panel id="activeVouchers" closable="true" header="Vouchers"  style="text-align: left; margin-bottom: 10px">
+                    <h:outputText value="Total Active Vouchers: #{summaryBean.activeVouchers}" />
+                </p:panel>
+            </td>
+        </tr>
+    </table>
+
+    <br/>
+    <p:dataTable id="voucherStockTable" var="vs" value="#{summaryBean.voucherStockList}"
+                 resizableColumns="true" widgetVar="cellVoucherStock" paginator="true" pageLinks="5" rows="20" style="margin-bottom:20px; width: auto" draggableColumns="true"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
+        <f:facet name="header">
+            <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+            <p:columnToggler datasource="voucherStockTable" trigger="toggler" />
+            #{summaryBean.tableDescription}<br/><br/>
+        </f:facet>
+
+        <ui:include src="includes/exporters.xhtml">
+            <ui:param name="backingBean" value="#{summaryBean}" />
+            <ui:param name="tableName" value="voucherStockTable" />
+        </ui:include>
+
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ID}" sortBy="#{vs.voucher.id}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_ID}"/>
+            </f:facet>
+            <h:outputText value="#{vs.voucher.id}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_VP}" sortBy="#{vs.voucher.voucher_provider.name}"
+                  filterBy="#{vs.voucher.voucher_provider}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_VP}"/>
+            </f:facet>
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellVoucherStock').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.voucherProviders}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{vs.voucher.voucher_provider}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_SP}" sortBy="#{vs.voucher.service_provider.name}"
+                  filterBy="#{vs.voucher.service_provider}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_SP}"/>
+            </f:facet>
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellVoucherStock').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.serviceProviders}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <h:outputText value="#{vs.voucher.service_provider}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_AMOUNT}" sortBy="#{vs.voucher.voucher_value}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_AMOUNT}"/>
+            </f:facet>
+            <h:outputText value="#{vs.voucher.voucher_value}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_VTYPE}" sortBy="#{vs.voucher.voucher_type.name}"
+                  filterBy="#{vs.voucher.voucher_type}">
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellVoucherStock').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.voucherTypes}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_VTYPE}"/>
+            </f:facet>
+            <h:outputText value="#{vs.voucher.voucher_type.name}" />
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_STOCK}" sortBy="#{vs.availableVouchers}">
+            <f:facet name="header">
+                <h:outputText value="#{dataTableHeaders.HEADER_TEXT_STOCK}"/>
+            </f:facet>
+            <h:outputText value="#{vs.availableVouchers}" />
+        </p:column>
+    </p:dataTable>
+</h:form>
+</html>
