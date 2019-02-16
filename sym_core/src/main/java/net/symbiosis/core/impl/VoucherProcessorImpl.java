@@ -298,7 +298,9 @@ public class VoucherProcessorImpl implements VoucherProcessor {
 	public SymVoucherList getVouchers() {
 		logger.info("Getting voucher list");
 		ArrayList<SymVoucher> vouchers = new ArrayList<>();
-		getEntityManagerRepo().findAll(sym_voucher.class).forEach(v -> vouchers.add(converterService.toDTO(v)));
+		getEntityManagerRepo()
+            .findWhere(sym_voucher.class, new Pair<>("is_active", 1))
+            .forEach(v -> vouchers.add(converterService.toDTO(v)));
 		logger.info(format("Returning %s vouchers", vouchers.size()));
 		return new SymVoucherList(SUCCESS, vouchers);
 	}

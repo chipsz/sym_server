@@ -25,7 +25,7 @@
                 <p:spacer/>
                 <h:panelGrid id="loginPanel" columns="2" styleClass="centerAlign">
                     <p:outputLabel for="username" value="Username:" styleClass="rightAlign"/>
-                    <p:inputText id="username" value="#{credentials.username}" required="true" label="Username">
+                    <p:inputText id="username" name="username" value="#{credentials.username}" required="true" label="Username">
                         <f:validator validatorId="custom.usernameValidator"  />
                         <p:ajax update="msgUsername" event="keyup" />
                     </p:inputText>
@@ -33,7 +33,7 @@
                     <p:message for="username" id="msgUsername" display="icon" styleClass="rightAlign" />
 
                     <p:outputLabel for="password" value="Password:" styleClass="rightAlign"/>
-                    <p:password id="password" value="#{credentials.password}" required="true" label="Password">
+                    <p:password id="password" name="password" value="#{credentials.password}" required="true" label="Password">
                         <f:validateLength minimum="2" maximum="20" />
                         <p:ajax update="msgPassword" event="keyup" />
                     </p:password>

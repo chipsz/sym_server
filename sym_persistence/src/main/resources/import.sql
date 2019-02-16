@@ -212,7 +212,7 @@ insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_pr
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 8, 1, '20.00', 1, 1);
 
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 10, 1, '1.00', 2, 2);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 10, 1, '2.00', 2, 2;
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 10, 1, '2.00', 2, 2);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 10, 1, '5.00', 2, 2);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 10, 1, '10.00', 2, 2);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 10, 1, '20.00', 2, 2);
@@ -231,8 +231,8 @@ insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_pr
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 0, '$', 7, 4, '89.00', 6, 6);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 0, '$', 7, 4, '150.00', 6, 6);
 
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 0, '$', 10, 4, '30.00', 4, 4);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 0, '$', 10, 4, '89.00', 4, 4);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 0, '$', 10, 2, '30.00', 4, 4);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 0, '$', 10, 2, '89.00', 4, 4);
 
 insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (1, 'DEFAULT_WALLET_GROUP', 1, 3.5);
 insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (2, 'MEDIUM_VOLUME_WALLET_GROUP', 1, 4.0);
