@@ -67,15 +67,15 @@ public abstract class JSFUpdatable extends JSFExportable implements JSFLoggable,
     public abstract void init();
 
     private sym_event_type getEventType(sym_entity updateTable) {
-        if (updateTable instanceof sym_company || updateTable instanceof sym_wallet) { return fromEnum(UPDATE_MERCHANT); }
-        if (updateTable instanceof sym_user || updateTable instanceof sym_auth_user) { return fromEnum(UPDATE_USER); }
-        if (updateTable instanceof sym_voucher) { return fromEnum(UPDATE_VOUCHER); }
-        if (updateTable instanceof sym_voucher_type) { return fromEnum(UPDATE_VOUCHER_TYPE); }
-        if (updateTable instanceof sym_service_provider) { return fromEnum(UPDATE_SERVICE_PROVIDER); }
-        if (updateTable instanceof sym_voucher_provider) { return fromEnum(UPDATE_VOUCHER_PROVIDER); }
-        if (updateTable instanceof sym_wallet_group) { return fromEnum(UPDATE_WALLET_GROUP); }
-        if (updateTable instanceof sym_wallet_group_voucher) { return fromEnum(UPDATE_WALLET_GROUP_VOUCHER); }
-        if (updateTable instanceof sym_device_pos_machine) { return fromEnum(UPDATE_POS_MACHINE); }
+        if (updateTable instanceof sym_company || updateTable instanceof sym_wallet) { return fromEnum(WALLET_UPDATE); }
+        if (updateTable instanceof sym_user || updateTable instanceof sym_auth_user) { return fromEnum(USER_UPDATE); }
+        if (updateTable instanceof sym_voucher) { return fromEnum(VOUCHER_UPDATE); }
+        if (updateTable instanceof sym_voucher_type) { return fromEnum(VOUCHER_TYPE_UPDATE); }
+        if (updateTable instanceof sym_service_provider) { return fromEnum(SERVICE_PROVIDER_UPDATE); }
+        if (updateTable instanceof sym_voucher_provider) { return fromEnum(VOUCHER_PROVIDER_UPDATE); }
+        if (updateTable instanceof sym_wallet_group) { return fromEnum(WALLET_GROUP_UPDATE); }
+        if (updateTable instanceof sym_wallet_group_voucher) { return fromEnum(WALLET_GROUP_VOUCHER_UPDATE); }
+        if (updateTable instanceof sym_device_pos_machine) { return fromEnum(DEVICE_POS_MACHINE_UPDATE); }
         return null;
     }
 

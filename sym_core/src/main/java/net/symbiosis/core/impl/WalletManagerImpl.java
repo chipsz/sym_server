@@ -43,8 +43,7 @@ public class WalletManagerImpl implements WalletManager {
 
             wallet.setCurrent_balance(wallet.getCurrent_balance().add(amount)).save();
 
-            logger.info(format("New balance for wallet %s is %s", wallet.getId(),
-                    wallet.getCurrent_balance().toPlainString()));
+            logger.info(format("New balance for wallet %s is %s", wallet.getId(), wallet.getCurrent_balance().toPlainString()));
 
             return new SymResponseObject<>(SUCCESS, wallet);
         } catch (Exception ex) {

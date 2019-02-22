@@ -16,7 +16,7 @@ import java.util.List;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.context.FacesContext.getCurrentInstance;
-import static net.symbiosis.core_lib.enumeration.SymEventType.CREATE_VOUCHER_TYPE;
+import static net.symbiosis.core_lib.enumeration.SymEventType.VOUCHER_TYPE_CREATE;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.EXISTING_DATA_FOUND;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
@@ -66,7 +66,7 @@ public class VoucherTypeBean extends JSFUpdatable {
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_ERROR,
                 "Failed to create voucher type",
                 "Voucher type with name " + newVoucherType.getName() + " already exists"));
-            log(fromEnum(CREATE_VOUCHER_TYPE), sessionBean.getSymbiosisAuthUser(),
+            log(fromEnum(VOUCHER_TYPE_CREATE), sessionBean.getSymbiosisAuthUser(),
                 fromEnum(EXISTING_DATA_FOUND), requestTime, new Date(),
                 "CREATE VOUCHER TYPE " + newVoucherType.getName() + " | ENABLED = " + newVoucherType.getIs_enabled(),
                 "Voucher type with name " + newVoucherType.getName() + " already exists");
@@ -76,7 +76,7 @@ public class VoucherTypeBean extends JSFUpdatable {
         getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_INFO,
             "Successfully created new voucher type " + newVoucherType.getName(),
             "Created voucher type " + newVoucherType.getName()));
-        log(fromEnum(CREATE_VOUCHER_TYPE), sessionBean.getSymbiosisAuthUser(),
+        log(fromEnum(VOUCHER_TYPE_CREATE), sessionBean.getSymbiosisAuthUser(),
             fromEnum(SUCCESS), requestTime, new Date(),
             "CREATE VOUCHER TYPE " + newVoucherType.getName() + " | ENABLED = " + newVoucherType.getIs_enabled(),
             "Created voucher type " + newVoucherType.getName());

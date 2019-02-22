@@ -27,7 +27,7 @@ import static javax.faces.context.FacesContext.getCurrentInstance;
 import static net.symbiosis.common.configuration.Configuration.getCountryCodePrefix;
 import static net.symbiosis.common.configuration.Configuration.getProperty;
 import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
-import static net.symbiosis.core_lib.enumeration.SymEventType.REGISTRATION;
+import static net.symbiosis.core_lib.enumeration.SymEventType.USER_REGISTRATION;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.formatFullMsisdn;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
@@ -67,7 +67,7 @@ public class RegistrationBean implements Serializable {
         logger.info(format("Performing registration for %s %s", registrationData.getFirstName(), registrationData.getLastName()));
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(
-                fromEnum(WEB), fromEnum(REGISTRATION), registrationData.toPrintableString()).save();
+                fromEnum(WEB), fromEnum(USER_REGISTRATION), registrationData.toPrintableString()).save();
 
         if (!registrationData.getPassword().equals(registrationData.getConfirmPassword())) {
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_ERROR,

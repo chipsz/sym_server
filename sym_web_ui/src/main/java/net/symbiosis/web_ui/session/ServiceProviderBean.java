@@ -16,7 +16,7 @@ import java.util.List;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.context.FacesContext.getCurrentInstance;
-import static net.symbiosis.core_lib.enumeration.SymEventType.CREATE_SERVICE_PROVIDER;
+import static net.symbiosis.core_lib.enumeration.SymEventType.SERVICE_PROVIDER_CREATE;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.EXISTING_DATA_FOUND;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
@@ -69,7 +69,7 @@ public class ServiceProviderBean extends JSFUpdatable {
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_ERROR,
                 "Failed to create service provider",
                 "Service Provider with name " + newServiceProvider.getName() + " already exists"));
-            log(fromEnum(CREATE_SERVICE_PROVIDER), sessionBean.getSymbiosisAuthUser(), fromEnum(EXISTING_DATA_FOUND), requestTime, new Date(),
+            log(fromEnum(SERVICE_PROVIDER_CREATE), sessionBean.getSymbiosisAuthUser(), fromEnum(EXISTING_DATA_FOUND), requestTime, new Date(),
                 "CREATE SERVICE PROVIDER " + newServiceProvider.getName() + " | ENABLED = " + newServiceProvider.getIs_enabled(),
                 "Service Provider with name " + newServiceProvider.getName() + " already exists");
             return;
@@ -79,7 +79,7 @@ public class ServiceProviderBean extends JSFUpdatable {
         getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_INFO,
                 "Successfully Created Service Provider",
                 "Created new service provider " + newServiceProvider.getName()));
-        log(fromEnum(CREATE_SERVICE_PROVIDER), sessionBean.getSymbiosisAuthUser(), fromEnum(SUCCESS), requestTime, new Date(),
+        log(fromEnum(SERVICE_PROVIDER_CREATE), sessionBean.getSymbiosisAuthUser(), fromEnum(SUCCESS), requestTime, new Date(),
             "CREATE SERVICE PROVIDER TYPE " + newServiceProvider.getName() + " | ENABLED = " + newServiceProvider.getIs_enabled(),
             "Created new service provider " + newServiceProvider.getName());
         newServiceProvider = new sym_service_provider();

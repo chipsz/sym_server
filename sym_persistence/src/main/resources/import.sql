@@ -15,30 +15,41 @@ insert ignore into sym_currency (currency_name,iso_4217_code,iso_4217_num) value
 insert ignore into sym_currency (currency_name,iso_4217_code,iso_4217_num) values ('Euro','EUR','978');
 insert ignore into sym_currency (currency_name,iso_4217_code,iso_4217_num) values ('Zambian Kwacha','ZMW','967');
 
-insert ignore into sym_event_type (name,is_enabled) values ('REGISTRATION',1);
-insert ignore into sym_event_type (name,is_enabled) values ('LOGIN',1);
-insert ignore into sym_event_type (name,is_enabled) values ('LOGOUT',1);
-insert ignore into sym_event_type (name,is_enabled) values ('CASHOUT',1);
-insert ignore into sym_event_type (name,is_enabled) values ('VOUCHER_IMPORT',1);
-insert ignore into sym_event_type (name,is_enabled) values ('LOAD_WALLET',1);
-insert ignore into sym_event_type (name,is_enabled) values ('UPDATE_MERCHANT',1);
-insert ignore into sym_event_type (name,is_enabled) values ('CREATE_VOUCHER',1);
-insert ignore into sym_event_type (name,is_enabled) values ('UPDATE_VOUCHER',1);
-insert ignore into sym_event_type (name,is_enabled) values ('CREATE_VOUCHER_TYPE',1);
-insert ignore into sym_event_type (name,is_enabled) values ('UPDATE_VOUCHER_TYPE',1);
-insert ignore into sym_event_type (name,is_enabled) values ('CREATE_SERVICE_PROVIDER',1);
-insert ignore into sym_event_type (name,is_enabled) values ('UPDATE_SERVICE_PROVIDER',1);
-insert ignore into sym_event_type (name,is_enabled) values ('CREATE_VOUCHER_PROVIDER',1);
-insert ignore into sym_event_type (name,is_enabled) values ('UPDATE_VOUCHER_PROVIDER',1);
-insert ignore into sym_event_type (name,is_enabled) values ('CREATE_WALLET_GROUP',1);
-insert ignore into sym_event_type (name,is_enabled) values ('UPDATE_WALLET_GROUP',1);
-insert ignore into sym_event_type (name,is_enabled) values ('UPDATE_WALLET_GROUP_VOUCHER',1);
-insert ignore into sym_event_type (name,is_enabled) values ('UPDATE_USER',1);
-insert ignore into sym_event_type (name,is_enabled) values ('CREATE_USER',1);
-insert ignore into sym_event_type (name,is_enabled) values ('UPDATE_PASSWORD',1);
-insert ignore into sym_event_type (name,is_enabled) values ('RESET_PASSWORD',1);
-insert ignore into sym_event_type (name,is_enabled) values ('RESET_PIN',1);
-insert ignore into sym_event_type (name,is_enabled) values ('UPDATE_POS_MACHINE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1000,'USER_REGISTRATION',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1001,'USER_ASSIGN_CHANNEL',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1002,'USER_CREATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1003,'USER_LOGIN',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1004,'USER_LOGOUT',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1005,'USER_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1006,'USER_PASSWORD_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1007,'USER_PASSWORD_RESET',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1008,'USER_PIN_RESET',1);
+
+insert ignore into sym_event_type (id,name,is_enabled) values (1100,'WALLET_LOAD',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1101,'WALLET_CASHOUT',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1102,'WALLET_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1103,'WALLET_GET_CASHOUT_ACCOUNTS',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1104,'WALLET_ADD_CASHOUT_ACCOUNT',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1105,'WALLET_DISABLE_CASHOUT_ACCOUNT',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1106,'WALLET_GROUP_CREATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1107,'WALLET_GROUP_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1108,'WALLET_GROUP_VOUCHER_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1109,'WALLET_SWIPE_IN',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1110,'WALLET_TRANSFER',1);
+
+insert ignore into sym_event_type (id,name,is_enabled) values (1200,'VOUCHER_IMPORT',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1201,'VOUCHER_CREATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1202,'VOUCHER_PURCHASE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1203,'VOUCHER_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1204,'VOUCHER_TYPE_CREATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1205,'VOUCHER_TYPE_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1206,'VOUCHER_PROVIDER_CREATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1207,'VOUCHER_PROVIDER_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1208,'SERVICE_PROVIDER_CREATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1209,'SERVICE_PROVIDER_UPDATE',1);
+
+insert ignore into sym_event_type (id,name,is_enabled) values (1300,'DEVICE_POS_MACHINE_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1301,'DEVICE_PHONE_UPDATE',1);
 
 insert ignore into sym_financial_institution_type (institution_type_id,name,is_enabled) values (1,'BANK',1);
 insert ignore into sym_financial_institution_type (institution_type_id,name,is_enabled) values (2,'MOBILE_BANK',1);

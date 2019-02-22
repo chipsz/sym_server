@@ -30,13 +30,15 @@ public class sym_cashout_account extends sym_entity<sym_cashout_account> {
     private String account_branch_code;
     private String account_phone;
     private String account_email;
+    private boolean is_active;
 
     public sym_cashout_account() {
     }
 
     public sym_cashout_account(sym_user cashout_account_user, sym_financial_institution cashout_institution,
                                String account_nick_name, String account_name, String account_number,
-                               String account_branch_code, String account_phone, String account_email) {
+                               String account_branch_code, String account_phone, String account_email,
+                               boolean is_active) {
         this.cashout_account_user = cashout_account_user;
         this.cashout_institution = cashout_institution;
         this.account_nick_name = account_nick_name;
@@ -45,6 +47,7 @@ public class sym_cashout_account extends sym_entity<sym_cashout_account> {
         this.account_branch_code = account_branch_code;
         this.account_phone = account_phone;
         this.account_email = account_email;
+        this.is_active = is_active;
     }
 
     public sym_user getCashout_account_user() {
@@ -114,5 +117,13 @@ public class sym_cashout_account extends sym_entity<sym_cashout_account> {
     @Override
     public String toString() {
         return account_nick_name;
+    }
+
+    public boolean getIs_active() {
+        return is_active;
+    }
+
+    public void setIs_active(boolean is_active) {
+        this.is_active = is_active;
     }
 }

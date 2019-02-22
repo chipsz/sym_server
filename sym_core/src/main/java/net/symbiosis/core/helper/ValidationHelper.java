@@ -92,6 +92,11 @@ public class ValidationHelper {
                     .setMessage(format("Cashout Account with id %d was not found", cashoutAccountId));
         }
 
+        if (cashoutAccount.getIs_active()) {
+            return new SymResponseObject<sym_cashout_account>(INPUT_INVALID_REQUEST)
+                    .setMessage(format("Cashout Account with id %d is disabled", cashoutAccountId));
+        }
+
         return new SymResponseObject<>(SUCCESS, cashoutAccount);
     }
 

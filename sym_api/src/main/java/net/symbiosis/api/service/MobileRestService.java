@@ -16,16 +16,19 @@ public interface MobileRestService {
     Response registerUser(String email, String msisdn, String username, String deviceId,
                           String companyName, String firstName, String lastName, String dateOfBirth);
 
-    Response getCashoutAccounts(Long userId);
+//    Response getCashoutAccounts(Long userId, String imei, String authToken);
 
-    Response addCashoutAccount(Long userId, Long institutionId, String accountNickName, String accountName,
-                               String accountNumber, String accountBranchCode, String accountPhone, String accountEmail);
+    Response addCashoutAccount(Long userId, String imei, String authToken, Long institutionId, String accountNickName,
+                               String accountName, String accountNumber, String accountBranchCode, String accountPhone,
+                               String accountEmail);
 
-    Response swipeTransaction(Long userId, String deviceId, BigDecimal amount,
-                              String reference, String cardNumber, String cardPin);
+    Response removeCashoutAccount(Long userId, String imei, String authToken, Long cashoutAccountId);
 
-    Response cashoutTransaction(Long userId, String deviceId, BigDecimal amount,
-                                String reference, Long cashoutAccountId, String pin);
+    Response buyVoucher(Long userId, String imei, String authToken, Long voucherId, BigDecimal voucherValue, String recipient);
+
+    Response swipeTransaction(Long userId, String imei, String authToken, BigDecimal amount, String reference, String cardNumber, String cardPin);
+
+    Response cashoutTransaction(Long userId, String imei, String authToken, BigDecimal amount, String reference, Long cashoutAccountId, String pin);
 
     Response startSession(String authToken, String username, String password);
 

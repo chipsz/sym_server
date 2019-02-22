@@ -1,8 +1,13 @@
 Allowed duplicate POS registration
 
-
 Changed to username authentication for POS
 - POS must send username instead of IMEI
 
 Standardized REST API endpoints
 - Change endpoint on POS machine
+
+SQL Migration
+
+SQL Replication
+
+Update event types

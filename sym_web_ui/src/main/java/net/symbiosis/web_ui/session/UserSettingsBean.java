@@ -21,7 +21,7 @@ import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.context.FacesContext.getCurrentInstance;
 import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
-import static net.symbiosis.core_lib.enumeration.SymEventType.UPDATE_PASSWORD;
+import static net.symbiosis.core_lib.enumeration.SymEventType.USER_PASSWORD_UPDATE;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.AUTH_AUTHENTICATION_FAILED;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
@@ -62,7 +62,7 @@ public class UserSettingsBean implements JSFLoggable, Serializable {
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_ERROR,
                     "Change Password Failed", "Password and password confirmation must match"));
             logger.warning("Change Password Failed: Password and password confirmation must match");
-            log(fromEnum(UPDATE_PASSWORD), sessionBean.getSymbiosisAuthUser(), fromEnum(AUTH_AUTHENTICATION_FAILED),
+            log(fromEnum(USER_PASSWORD_UPDATE), sessionBean.getSymbiosisAuthUser(), fromEnum(AUTH_AUTHENTICATION_FAILED),
                     requestTime, new Date(), "UPDATE PASSWORD",
                     "Change Password Failed: Password and password confirmation must match");
             return;
@@ -70,7 +70,7 @@ public class UserSettingsBean implements JSFLoggable, Serializable {
 
         String request = format("Change password: %s", user.getUsername());
         sym_request_response_log requestResponseLog = new sym_request_response_log(
-                fromEnum(WEB), fromEnum(UPDATE_PASSWORD), request).save();
+                fromEnum(WEB), fromEnum(USER_PASSWORD_UPDATE), request).save();
 
         requestResponseLog.setAuth_user(authUser);
         requestResponseLog.setSystem_user(authUser.getUser());
@@ -89,7 +89,7 @@ public class UserSettingsBean implements JSFLoggable, Serializable {
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_ERROR,
                     "Change Password Failed", passwordResponse.getMessage()));
             logger.warning("Change Password Failed: " + passwordResponse.getMessage());
-            log(fromEnum(UPDATE_PASSWORD), sessionBean.getSymbiosisAuthUser(), fromEnum(passwordResponse.getResponseCode()),
+            log(fromEnum(USER_PASSWORD_UPDATE), sessionBean.getSymbiosisAuthUser(), fromEnum(passwordResponse.getResponseCode()),
                     requestTime, new Date(), "UPDATE PASSWORD",
                     "Change Password Failed: " + passwordResponse.getMessage());
             return;
@@ -98,7 +98,7 @@ public class UserSettingsBean implements JSFLoggable, Serializable {
         getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_INFO,
                 "Password changed successfully", "Password changed successfully"));
         logger.info("Password changed successfully");
-        log(fromEnum(UPDATE_PASSWORD), sessionBean.getSymbiosisAuthUser(), fromEnum(SUCCESS),
+        log(fromEnum(USER_PASSWORD_UPDATE), sessionBean.getSymbiosisAuthUser(), fromEnum(SUCCESS),
                 requestTime, new Date(), "UPDATE PASSWORD",
                 "Password changed successfully");
     }

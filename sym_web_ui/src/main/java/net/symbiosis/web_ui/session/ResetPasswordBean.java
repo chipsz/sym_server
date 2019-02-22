@@ -25,7 +25,7 @@ import static javax.faces.context.FacesContext.getCurrentInstance;
 import static net.symbiosis.common.configuration.Configuration.getCountryCodePrefix;
 import static net.symbiosis.common.utilities.ReferenceGenerator.Gen;
 import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
-import static net.symbiosis.core_lib.enumeration.SymEventType.RESET_PASSWORD;
+import static net.symbiosis.core_lib.enumeration.SymEventType.USER_PASSWORD_RESET;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.formatFullMsisdn;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
@@ -112,7 +112,7 @@ public class ResetPasswordBean implements Serializable {
         }
 
         sym_request_response_log log = new sym_request_response_log(
-                fromEnum(WEB), fromEnum(RESET_PASSWORD),
+                fromEnum(WEB), fromEnum(USER_PASSWORD_RESET),
                 format("Reset password for %s : %s : %s", username, email, msisdn)).save();
 
         WebAuthenticationProvider authProvider = new WebAuthenticationProvider(log, resetUser);

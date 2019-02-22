@@ -294,6 +294,26 @@ public class EntityManagerRepo {
         return findWhere(entityClass, singletonList(criteria), maxResults, caseSensitive, useLikeQuery, useOrQuery, reverseOrder);
     }
 
+    public <E extends sym_entity> E findFirst(Class<E> entityClass, List<Pair<String, ?>> criterion,
+                                                    boolean caseSensitive, boolean useLikeQuery, boolean useOrQuery) {
+        List<E> results = findWhere(entityClass, criterion, 1, caseSensitive, useLikeQuery, useOrQuery, false);
+        return (results != null && results.size() > 0) ? results.get(0) : null;
+    }
+
+    public <E extends sym_entity> E findLast(Class<E> entityClass, List<Pair<String, ?>> criterion,
+                                                    boolean caseSensitive, boolean useLikeQuery, boolean useOrQuery) {
+        List<E> results = findWhere(entityClass, criterion, 1, caseSensitive, useLikeQuery, useOrQuery, true);
+        return (results != null && results.size() > 0) ? results.get(0) : null;
+    }
+
+    public <E extends sym_entity> E findFirst(Class<E> entityClass, List<Pair<String, ?>> criterion) {
+        return findFirst(entityClass, criterion, false, false, false);
+    }
+
+    public <E extends sym_entity> E findLast(Class<E> entityClass, List<Pair<String, ?>> criterion) {
+        return findLast(entityClass, criterion, false, false, true);
+    }
+
     public <E extends sym_entity> SymResponseObject<E> findUniqueWhere(
             Class<E> entityClass, List<Pair<String, ?>> criteria) {
         return enforceUnique(findWhere(entityClass, criteria, UNLIMITED_RESULTS,

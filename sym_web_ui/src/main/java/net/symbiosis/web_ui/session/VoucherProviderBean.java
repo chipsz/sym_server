@@ -18,7 +18,7 @@ import java.util.List;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.context.FacesContext.getCurrentInstance;
-import static net.symbiosis.core_lib.enumeration.SymEventType.CREATE_VOUCHER_PROVIDER;
+import static net.symbiosis.core_lib.enumeration.SymEventType.VOUCHER_PROVIDER_CREATE;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.EXISTING_DATA_FOUND;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
@@ -73,7 +73,7 @@ public class VoucherProviderBean extends JSFUpdatable {
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_ERROR,
                 "Failed to create voucher provider",
                 "Voucher Provider with name " + newVoucherProvider.getName() + " already exists"));
-            log(fromEnum(CREATE_VOUCHER_PROVIDER), sessionBean.getSymbiosisAuthUser(),
+            log(fromEnum(VOUCHER_PROVIDER_CREATE), sessionBean.getSymbiosisAuthUser(),
                 findByName(sym_response_code.class, EXISTING_DATA_FOUND.name()), requestTime, new Date(),
                 "CREATE VOUCHER PROVIDER " + newVoucherProvider.getName() + " | ENABLED = " + newVoucherProvider.getIs_enabled(),
                 "Voucher provider with name " + newVoucherProvider.getName() + " already exists");
@@ -83,7 +83,7 @@ public class VoucherProviderBean extends JSFUpdatable {
         getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_INFO,
                 "Successfully Created Voucher Provider",
                 "Created new voucher provider " + newVoucherProvider.getName()));
-        log(fromEnum(CREATE_VOUCHER_PROVIDER), sessionBean.getSymbiosisAuthUser(),
+        log(fromEnum(VOUCHER_PROVIDER_CREATE), sessionBean.getSymbiosisAuthUser(),
             findByName(sym_response_code.class, SUCCESS.name()), requestTime, new Date(),
             "CREATE VOUCHER PROVIDER " + newVoucherProvider.getName() + " | ENABLED = " + newVoucherProvider.getIs_enabled(),
             "Created new voucher provider " + newVoucherProvider.getName());

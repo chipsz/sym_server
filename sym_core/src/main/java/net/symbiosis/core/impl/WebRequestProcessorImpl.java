@@ -1,4 +1,4 @@
-package net.symbiosis.core.implementation;
+package net.symbiosis.core.impl;
 
 import net.symbiosis.authentication.authentication.WebAuthenticationProvider;
 import net.symbiosis.common.structure.Pair;
@@ -61,7 +61,7 @@ public class WebRequestProcessorImpl implements WebRequestProcessor {
                 languageFromString(getProperty("DefaultLanguage")));
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(
-                fromEnum(WEB), fromEnum(REGISTRATION), newUser.toPrintableString()).save();
+                fromEnum(WEB), fromEnum(USER_REGISTRATION), newUser.toPrintableString()).save();
 
         WebAuthenticationProvider authenticationProvider = new WebAuthenticationProvider(
                 requestResponseLog, username, null, deviceId
@@ -70,12 +70,7 @@ public class WebRequestProcessorImpl implements WebRequestProcessor {
         SymResponseObject<sym_auth_user> registrationResponse = authenticationProvider.
                 registerWebUser(newUser, null, findByName(sym_auth_group.class, getProperty("DefaultWebGroup")), null);
 
-        if (registrationResponse.getResponseCode().equals(SUCCESS)) {
-            requestResponseLog.setAuth_user(registrationResponse.getResponseObject());
-            requestResponseLog.setSystem_user(registrationResponse.getResponseObject().getUser());
-        }
-
-        logResponse(requestResponseLog, registrationResponse.getResponseCode());
+        logResponse(registrationResponse.getResponseObject(), requestResponseLog, registrationResponse.getResponseCode());
         return new SymSystemUserList(registrationResponse.getResponseCode(), converterService.toDTO(registrationResponse.getResponseObject()));
     }
 
@@ -149,7 +144,7 @@ public class WebRequestProcessorImpl implements WebRequestProcessor {
         String request = format("deviceId:%s|username:%s|password:%s|channel:%s", deviceId, username, password, channel.name());
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(
-                fromEnum(WEB), fromEnum(LOGIN), request).save();
+                fromEnum(WEB), fromEnum(USER_LOGIN), request).save();
 
         WebAuthenticationProvider authenticationProvider = new WebAuthenticationProvider(
                 requestResponseLog, username, password, deviceId
@@ -157,12 +152,7 @@ public class WebRequestProcessorImpl implements WebRequestProcessor {
 
         SymResponseObject<sym_auth_user> authResponse = authenticationProvider.authenticateUser();
 
-        if (authResponse.getResponseCode().equals(SUCCESS)) {
-            requestResponseLog.setAuth_user(authResponse.getResponseObject());
-            requestResponseLog.setSystem_user(authResponse.getResponseObject().getUser());
-        }
-
-        logResponse(requestResponseLog, authResponse.getResponseCode());
+        logResponse(authResponse.getResponseObject(), requestResponseLog, authResponse.getResponseCode());
         return new SymSystemUserList(authResponse.getResponseCode(), converterService.toDTO(authResponse.getResponseObject()));
     }
 
@@ -172,7 +162,7 @@ public class WebRequestProcessorImpl implements WebRequestProcessor {
         logger.info(format("Performing logout for session %s", sessionId));
         String request = format("sessionId:%s|deviceId:%s|authToken:%s|channel:%s", sessionId, deviceId, authToken, channel.name());
         sym_request_response_log requestResponseLog = new sym_request_response_log(
-                fromEnum(WEB), fromEnum(LOGOUT), request).save();
+                fromEnum(WEB), fromEnum(USER_LOGOUT), request).save();
 
         sym_session currentSession = getEntityManagerRepo().findById(sym_session.class, sessionId);
 
@@ -180,6 +170,7 @@ public class WebRequestProcessorImpl implements WebRequestProcessor {
 
         if (currentSession == null) {
             logoutResponse = new SymResponseObject(DATA_NOT_FOUND);
+            logResponse(null, requestResponseLog, logoutResponse.getResponseCode());
         } else {
             WebAuthenticationProvider authenticationProvider = new WebAuthenticationProvider(
                     requestResponseLog, currentSession.getAuth_user()
@@ -193,9 +184,9 @@ public class WebRequestProcessorImpl implements WebRequestProcessor {
             authenticationProvider.setAuthToken(authToken);
 
             logoutResponse = authenticationProvider.endSession();
+            logResponse(currentSession.getAuth_user(), requestResponseLog, logoutResponse.getResponseCode());
         }
 
-        logResponse(requestResponseLog, logoutResponse.getResponseCode());
         return new SymResponse(logoutResponse.getResponseCode());
     }
 

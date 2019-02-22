@@ -29,8 +29,8 @@ import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static net.symbiosis.common.configuration.Configuration.getProperty;
 import static net.symbiosis.core_lib.enumeration.SymChannel.POS_MACHINE;
-import static net.symbiosis.core_lib.enumeration.SymEventType.LOGIN;
-import static net.symbiosis.core_lib.enumeration.SymEventType.REGISTRATION;
+import static net.symbiosis.core_lib.enumeration.SymEventType.USER_LOGIN;
+import static net.symbiosis.core_lib.enumeration.SymEventType.USER_REGISTRATION;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
@@ -70,7 +70,7 @@ public class POSRequestProcessorImpl implements POSRequestProcessor {
         logger.info(format("Performing login for %s", username));
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(
-            POS_CHANNEL, fromEnum(LOGIN),
+            POS_CHANNEL, fromEnum(USER_LOGIN),
             format("IMEI:'%s' | username:'%s' | pin_length:[%s]", imei, username, pin == null ? 0 : pin.length())
         );
 
@@ -119,7 +119,7 @@ public class POSRequestProcessorImpl implements POSRequestProcessor {
                 branchName, machineName, imei1, imei2, imsi1, imsi2, msisdn1, msisdn2, username);
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(
-                POS_CHANNEL, fromEnum(REGISTRATION), incomingRequest
+                POS_CHANNEL, fromEnum(USER_REGISTRATION), incomingRequest
         );
 
         if (imei1 == null || imei2 == null) {
@@ -198,22 +198,24 @@ public class POSRequestProcessorImpl implements POSRequestProcessor {
         String incomingRequest = format("voucherId=%s|imei=%s|pin=%s|cashier=%s|voucherValue=%s|recipient=%s",
             voucherId, posMachines.get(0).getImei1(), pin, cashierName, voucherValue, recipient);
 
-        sym_request_response_log log = new sym_request_response_log(fromEnum(POS_MACHINE), fromEnum(LOGIN), incomingRequest);
+        sym_request_response_log log = new sym_request_response_log(fromEnum(POS_MACHINE), fromEnum(USER_LOGIN), incomingRequest);
 
         PosAuthenticationProvider authProvider = new PosAuthenticationProvider(log, posMachines.get(0).getImei1(), authUser.getUser().getUsername(), pin);
 
         SymResponseObject<sym_auth_user> authResponse = authProvider.authenticateUser();
 
         if (!authResponse.getResponseCode().equals(SUCCESS)) {
-            log.setOutgoing_response(authResponse.getMessage());
-            log.setOutgoing_response_time(new Date());
-            log.setResponse_code(fromEnum(authResponse.getResponseCode()));
-            log.save();
             logger.info(format("Authentication failed. %s", authResponse.getMessage()));
+            logResponse(authUser, log, authResponse.getResponseCode());
             return new SymVoucherPurchaseList(authResponse.getResponseCode());
         }
 
-        return voucherProcessor.buyVoucher(voucherId, authUser.getId(), voucherValue, recipient, cashierName);
+        SymVoucherPurchaseList purchaseResponse = voucherProcessor.buyVoucher(voucherId, authUser.getId(), voucherValue, recipient, cashierName);
+
+        logResponse(authUser, log, purchaseResponse.getSymResponse().getResponse());
+
+        return purchaseResponse;
+
     }
 
     @Override
@@ -234,7 +236,7 @@ public class POSRequestProcessorImpl implements POSRequestProcessor {
 
         String incomingRequest = format("voucherPurchaseId=%s|imei=%s|pin=%s", voucherPurchaseId, posMachines.get(0).getImei1(), pin);
 
-        sym_request_response_log log = new sym_request_response_log(fromEnum(POS_MACHINE), fromEnum(LOGIN), incomingRequest);
+        sym_request_response_log log = new sym_request_response_log(fromEnum(POS_MACHINE), fromEnum(USER_LOGIN), incomingRequest);
 
         PosAuthenticationProvider authProvider = new PosAuthenticationProvider(log, posMachines.get(0).getImei1(), authUser.getUser().getUsername(), pin);
 

@@ -32,8 +32,8 @@ import static javax.faces.context.FacesContext.getCurrentInstance;
 import static net.symbiosis.common.configuration.Configuration.getProperty;
 import static net.symbiosis.common.utilities.ReferenceGenerator.GenPin;
 import static net.symbiosis.core_lib.enumeration.SymChannel.POS_MACHINE;
-import static net.symbiosis.core_lib.enumeration.SymEventType.LOAD_WALLET;
-import static net.symbiosis.core_lib.enumeration.SymEventType.REGISTRATION;
+import static net.symbiosis.core_lib.enumeration.SymEventType.USER_REGISTRATION;
+import static net.symbiosis.core_lib.enumeration.SymEventType.WALLET_LOAD;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.GENERAL_ERROR;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
@@ -133,7 +133,7 @@ public class MerchantBean extends JSFUpdatable {
                     format("Loaded wallet %s with amount %s", selectedWallet.getCompany().getCompany_name(),
                         getNewIncomingPayment().getPayment_amount())));
 
-                log(fromEnum(LOAD_WALLET), sessionBean.getSymbiosisAuthUser(), fromEnum(loadResult.getResponseCode()),
+                log(fromEnum(WALLET_LOAD), sessionBean.getSymbiosisAuthUser(), fromEnum(loadResult.getResponseCode()),
                     requestTime, new Date(), "LOAD WALLET " + getSelectedWallet().getId() +
                         " WITH " + getNewIncomingPayment().getPayment_amount() +
                         " FROM " + getNewIncomingPayment().getDeposit_type().getName(),
@@ -144,7 +144,7 @@ public class MerchantBean extends JSFUpdatable {
                 getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_ERROR,
                         "Loading wallet failed!", loadResult.getMessage()));
 
-                log(fromEnum(LOAD_WALLET), sessionBean.getSymbiosisAuthUser(), fromEnum(loadResult.getResponseCode()),
+                log(fromEnum(WALLET_LOAD), sessionBean.getSymbiosisAuthUser(), fromEnum(loadResult.getResponseCode()),
                     requestTime, new Date(), "LOAD WALLET " + getSelectedWallet().getId() +
                         " WITH " + getNewIncomingPayment().getPayment_amount() +
                         " FROM " + getNewIncomingPayment().getDeposit_type().getName(),
@@ -154,7 +154,7 @@ public class MerchantBean extends JSFUpdatable {
         } catch (Exception ex) {
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_ERROR,
                 "Loading wallet  failed!", "Loading failed with error: " + ex.getMessage()));
-            log(fromEnum(LOAD_WALLET), sessionBean.getSymbiosisAuthUser(), fromEnum(GENERAL_ERROR),
+            log(fromEnum(WALLET_LOAD), sessionBean.getSymbiosisAuthUser(), fromEnum(GENERAL_ERROR),
                 requestTime, new Date(), "LOAD WALLET " + getSelectedWallet().getId() +
                     " WITH " + getNewIncomingPayment().getPayment_amount() +
                     " FROM " + getNewIncomingPayment().getDeposit_type().getName(),
@@ -198,7 +198,7 @@ public class MerchantBean extends JSFUpdatable {
         logger.info("Registering POS user " + updateUser.getUsername());
 
         sym_request_response_log registrationLog = new sym_request_response_log(
-            fromEnum(POS_MACHINE), fromEnum(REGISTRATION), format("Registering %s to channel POS_MACHINE", updateUser.getUsername())
+            fromEnum(POS_MACHINE), fromEnum(USER_REGISTRATION), format("Registering %s to channel POS_MACHINE", updateUser.getUsername())
         );
 
         PosAuthenticationProvider authenticationProvider = new PosAuthenticationProvider(

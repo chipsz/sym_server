@@ -110,7 +110,7 @@ public class WebAuthenticationProvider extends SymChainAuthenticationProvider {
                         .replaceAll("%support_email%", getProperty("SupportEmail"))).append("\r\n");
             }
             sendEmail(SYMBIOSIS.name(), new String[]{newUser.getEmail(), getProperty("AlertEmail")},
-                    "Welcome to Symbiosis' Control Center!", registrationEmail.toString(), CONTENT_TYPE_HTML);
+                    "Welcome to Symbiosis Control Center!", registrationEmail.toString(), CONTENT_TYPE_HTML);
         } catch (Exception e) {
             e.printStackTrace();
             sendEmailAlert(SYMBIOSIS.name(), "Failed to send registration email! \r\n", e.getMessage());

@@ -1,4 +1,4 @@
-package net.symbiosis.core.implementation;
+package net.symbiosis.core.impl;
 
 import net.symbiosis.core.contract.base.EnumEntityData;
 import net.symbiosis.core.contract.symbiosis.*;
@@ -132,6 +132,7 @@ public class ConverterServiceImpl implements ConverterService {
         SymSystemUser symSystemUser = toDTO(sourceData.getAuth_user());
         symSystemUser.setSessionId(sourceData.getId());
         symSystemUser.setUserId(sourceData.getAuth_user().getUser().getId());
+        symSystemUser.setAuthToken(sourceData.getAuth_token());
         return symSystemUser;
     }
 

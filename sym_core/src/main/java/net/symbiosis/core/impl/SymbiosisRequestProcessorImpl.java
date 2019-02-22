@@ -1,4 +1,4 @@
-package net.symbiosis.core.implementation;
+package net.symbiosis.core.impl;
 
 import net.symbiosis.core.contract.*;
 import net.symbiosis.core.contract.symbiosis.SymCurrency;

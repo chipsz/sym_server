@@ -36,7 +36,7 @@ public class MobileJSONRestController extends MobileXMLRestController {
     public Response registerUser(@FormParam("email") String email,
                                  @FormParam("msisdn") String msisdn,
                                  @FormParam("username") String username,
-                                 @FormParam("deviceId") String deviceId,
+                                 @FormParam("imei") String deviceId,
                                  @FormParam("companyName") String companyName,
                                  @FormParam("firstName") String firstName,
                                  @FormParam("lastName") String lastName,
@@ -44,15 +44,21 @@ public class MobileJSONRestController extends MobileXMLRestController {
         return super.registerUser(email, msisdn, username, deviceId, companyName, firstName, lastName, pin);
     }
 
-    @GET
-    @Path("/user/{userId}/cashoutAccount")
-    public Response getCashoutAccounts(@PathParam("userId") Long userId) {
-        return super.getCashoutAccounts(userId);
-    }
+//    @Override
+//    @POST
+//    @Path("/user/{userId}/cashoutAccount")
+//    public Response getCashoutAccounts(@PathParam("userId") Long userId,
+//                                       @FormParam("imei") String imei,
+//                                       @FormParam("authToken") String authToken) {
+//        return super.getCashoutAccounts(userId, imei, authToken);
+//    }
 
+    @Override
     @POST
     @Path("/user/{userId}/cashoutAccount")
     public Response addCashoutAccount(@PathParam("userId") Long userId,
+                                      @FormParam("imei") String imei,
+                                      @FormParam("authToken") String authToken,
                                       @FormParam("institutionId") Long institutionId,
                                       @FormParam("accountNickName") String accountNickName,
                                       @FormParam("accountName") String accountName,
@@ -60,47 +66,74 @@ public class MobileJSONRestController extends MobileXMLRestController {
                                       @FormParam("accountBranchCode") String accountBranchCode,
                                       @FormParam("accountPhone") String accountPhone,
                                       @FormParam("accountEmail") String accountEmail) {
-        return super.addCashoutAccount(userId, institutionId, accountNickName, accountName, accountNumber,
+        return super.addCashoutAccount(userId, imei, authToken, institutionId, accountNickName, accountName, accountNumber,
                 accountBranchCode, accountPhone, accountEmail);
     }
 
+
+    @Override
+    @DELETE
+    @Path("/user/{userId}/cashoutAccount/{cashoutAccountId}")
+    public Response removeCashoutAccount(@PathParam("userId") Long userId,
+                                         @FormParam("imei") String imei,
+                                         @FormParam("authToken") String authToken,
+                                         @PathParam("cashoutAccountId") Long cashoutAccountId) {
+        return super.removeCashoutAccount(userId, imei, authToken, cashoutAccountId);
+    }
+
+
+    @Override
+    @POST @Path("/voucher/{voucherId}/purchase")
+    public Response buyVoucher(@FormParam("userId") Long userId,
+                               @FormParam("imei") String imei,
+                               @FormParam("authToken") String authToken,
+                               @PathParam("voucherId") Long voucherId,
+                               @FormParam("voucherValue") BigDecimal voucherValue,
+                               @FormParam("recipient") String recipient) {
+        return super.buyVoucher(userId, imei, authToken, voucherId, voucherValue, recipient);
+    }
+
+    @Override
     @POST
     @Path("/swipeTransaction")
     public Response swipeTransaction(@FormParam("userId") Long userId,
-                                     @FormParam("deviceId") String deviceId,
+                                     @FormParam("imei") String imei,
+                                     @FormParam("authToken") String authToken,
                                      @FormParam("amount") BigDecimal amount,
                                      @FormParam("reference") String reference,
                                      @FormParam("cardNumber") String cardNumber,
                                      @FormParam("cardPin") String cardPin) {
-        return super.swipeTransaction(userId, deviceId, amount, reference, cardNumber, cardPin);
+        return super.swipeTransaction(userId, imei, authToken, amount, reference, cardNumber, cardPin);
     }
 
+    @Override
     @POST
     @Path("/cashoutTransaction")
     public Response cashoutTransaction(@FormParam("userId") Long userId,
-                                       @FormParam("deviceId") String deviceId,
+                                       @FormParam("imei") String imei,
+                                       @FormParam("authToken") String authToken,
                                        @FormParam("amount") BigDecimal amount,
                                        @FormParam("reference") String reference,
                                        @FormParam("cashoutAccountId") Long cashoutAccountId,
                                        @FormParam("pin") String pin) {
-        return super.cashoutTransaction(userId, deviceId, amount, reference, cashoutAccountId, pin);
+        return super.cashoutTransaction(userId, imei, authToken, amount, reference, cashoutAccountId, pin);
     }
 
     @Override
     @POST
     @Path("/session")
-    public Response startSession(@FormParam("deviceId") String deviceId,
+    public Response startSession(@FormParam("imei") String imei,
                                  @FormParam("username") String username,
                                  @FormParam("pin") String pin) {
-        return super.startSession(deviceId, username, pin);
+        return super.startSession(imei, username, pin);
     }
 
     @Override
     @PUT
     @Path("/session/{sessionId}")
     public Response endSession(@PathParam("sessionId") Long sessionId,
-                               @FormParam("deviceId") String deviceId,
+                               @FormParam("imei") String imei,
                                @FormParam("authToken") String authToken) {
-        return super.endSession(sessionId, deviceId, authToken);
+        return super.endSession(sessionId, imei, authToken);
     }
 }

@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
-import static net.symbiosis.core_lib.enumeration.SymEventType.LOGIN;
+import static net.symbiosis.core_lib.enumeration.SymEventType.USER_LOGIN;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 
@@ -46,7 +46,7 @@ public class SpringAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         sym_request_response_log request_response_log = new sym_request_response_log(
-                channel, fromEnum(LOGIN), authentication.getDetails().toString()).save();
+                channel, fromEnum(USER_LOGIN), authentication.getDetails().toString()).save();
 
         logger.info("Authenticating user " + authentication.getPrincipal() + " on to channel WEB");
 

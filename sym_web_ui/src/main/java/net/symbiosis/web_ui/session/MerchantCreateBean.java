@@ -25,8 +25,8 @@ import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.context.FacesContext.getCurrentInstance;
 import static net.symbiosis.common.configuration.Configuration.getProperty;
 import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
-import static net.symbiosis.core_lib.enumeration.SymEventType.CREATE_USER;
-import static net.symbiosis.core_lib.enumeration.SymEventType.REGISTRATION;
+import static net.symbiosis.core_lib.enumeration.SymEventType.USER_CREATE;
+import static net.symbiosis.core_lib.enumeration.SymEventType.USER_REGISTRATION;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.AUTH_AUTHENTICATION_FAILED;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
@@ -116,7 +116,7 @@ public class MerchantCreateBean implements JSFLoggable {
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_ERROR,
                 "Registration Failed", "Password and password confirmation must match"));
             logger.warning("Registration failed: Password and password confirmation must match");
-            log(fromEnum(CREATE_USER), sessionBean.getSymbiosisAuthUser(), fromEnum(AUTH_AUTHENTICATION_FAILED),
+            log(fromEnum(USER_CREATE), sessionBean.getSymbiosisAuthUser(), fromEnum(AUTH_AUTHENTICATION_FAILED),
                 requestTime, new Date(), "CREATE USER " + userDesc,
                 "Registration failed: Password and password confirmation must match");
             return;
@@ -124,7 +124,7 @@ public class MerchantCreateBean implements JSFLoggable {
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(
                 findByName(sym_channel.class, WEB.name()),
-                findByName(sym_event_type.class, REGISTRATION.name()),
+                findByName(sym_event_type.class, USER_REGISTRATION.name()),
                 newUser.toPrintableString()).save();
 
         WebAuthenticationProvider webAuthenticationProvider = new WebAuthenticationProvider(
@@ -138,7 +138,7 @@ public class MerchantCreateBean implements JSFLoggable {
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_INFO, "Registration Successful",
                     "Registration Successful. Confirmation email sent to " + newUser.getEmail()));
 
-            log(findByName(sym_event_type.class, CREATE_USER.name()), sessionBean.getSymbiosisAuthUser(),
+            log(findByName(sym_event_type.class, USER_CREATE.name()), sessionBean.getSymbiosisAuthUser(),
                 findByName(sym_response_code.class, SUCCESS.name()),
                 requestTime, new Date(), "CREATE USER " + userDesc,
                 "Registration Successful. Confirmation email sent to " + newUser.getEmail());
@@ -148,7 +148,7 @@ public class MerchantCreateBean implements JSFLoggable {
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_ERROR, "Registration Failed",
                     "Registration Failed. " + registrationResponse.getMessage()));
 
-            log(findByName(sym_event_type.class, CREATE_USER.name()), sessionBean.getSymbiosisAuthUser(),
+            log(findByName(sym_event_type.class, USER_CREATE.name()), sessionBean.getSymbiosisAuthUser(),
                     findByName(sym_response_code.class, registrationResponse.getResponseCode().name()),
                     requestTime, new Date(), "CREATE USER " + userDesc,
                     "Registration Failed. " + registrationResponse.getMessage());

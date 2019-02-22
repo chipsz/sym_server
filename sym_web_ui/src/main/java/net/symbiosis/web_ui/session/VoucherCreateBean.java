@@ -24,7 +24,7 @@ import static java.util.Arrays.asList;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.context.FacesContext.getCurrentInstance;
-import static net.symbiosis.core_lib.enumeration.SymEventType.CREATE_VOUCHER;
+import static net.symbiosis.core_lib.enumeration.SymEventType.VOUCHER_CREATE;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.EXISTING_DATA_FOUND;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
@@ -92,7 +92,7 @@ public class VoucherCreateBean implements JSFLoggable {
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_ERROR,
                 "Failed to create voucher",
                 "Voucher + '" + voucherDesc + "' already exists"));
-            log(fromEnum(CREATE_VOUCHER), sessionBean.getSymbiosisAuthUser(),
+            log(fromEnum(VOUCHER_CREATE), sessionBean.getSymbiosisAuthUser(),
                     fromEnum(EXISTING_DATA_FOUND),
                     requestTime, new Date(), "CREATE VOUCHER " + voucherDesc,
                     "Voucher '" + voucherDesc + "' already exists");
@@ -111,7 +111,7 @@ public class VoucherCreateBean implements JSFLoggable {
         }
         getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_INFO,
                 "Successfully created new voucher", "Created new voucher " + voucherDesc));
-        log(fromEnum(CREATE_VOUCHER), sessionBean.getSymbiosisAuthUser(),
+        log(fromEnum(VOUCHER_CREATE), sessionBean.getSymbiosisAuthUser(),
                 fromEnum(SUCCESS),
                 requestTime, new Date(), "CREATE VOUCHER " + voucherDesc,
                 "Created new voucher " + voucherDesc);

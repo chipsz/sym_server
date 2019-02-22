@@ -23,8 +23,8 @@ import static javax.faces.context.FacesContext.getCurrentInstance;
 import static net.symbiosis.common.utilities.ReferenceGenerator.Gen;
 import static net.symbiosis.common.utilities.ReferenceGenerator.GenPin;
 import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
-import static net.symbiosis.core_lib.enumeration.SymEventType.RESET_PASSWORD;
-import static net.symbiosis.core_lib.enumeration.SymEventType.RESET_PIN;
+import static net.symbiosis.core_lib.enumeration.SymEventType.USER_PASSWORD_RESET;
+import static net.symbiosis.core_lib.enumeration.SymEventType.USER_PIN_RESET;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
@@ -92,7 +92,7 @@ public class AuthUserBean extends JSFUpdatable {
         logger.info(format("Resetting password for %s", selectedAuthUser.getUser().getUsername()));
 
         sym_request_response_log passChangeLog = new sym_request_response_log(
-                fromEnum(WEB), fromEnum(RESET_PASSWORD),
+                fromEnum(WEB), fromEnum(USER_PASSWORD_RESET),
                 format("Reset password for %s", selectedAuthUser.getUser().getUsername())).save();
 
         WebAuthenticationProvider authenticationProvider = new WebAuthenticationProvider(passChangeLog, selectedAuthUser);
@@ -124,7 +124,7 @@ public class AuthUserBean extends JSFUpdatable {
         logger.info(format("Resetting pin for %s", selectedAuthUser.getUser().getUsername()));
 
         sym_request_response_log pinChangeLog = new sym_request_response_log(
-                fromEnum(WEB), fromEnum(RESET_PIN),
+                fromEnum(WEB), fromEnum(USER_PIN_RESET),
                 format("Reset pin for %s", selectedAuthUser.getUser().getUsername())).save();
 
         MobileAuthenticationProvider authenticationProvider = new MobileAuthenticationProvider(pinChangeLog,

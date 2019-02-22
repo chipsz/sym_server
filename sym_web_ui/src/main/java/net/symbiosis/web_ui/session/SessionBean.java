@@ -32,7 +32,7 @@ import static javax.faces.context.FacesContext.getCurrentInstance;
 import static net.symbiosis.common.configuration.Configuration.getProperty;
 import static net.symbiosis.core_lib.enumeration.SymAuthGroup.*;
 import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
-import static net.symbiosis.core_lib.enumeration.SymEventType.LOGIN;
+import static net.symbiosis.core_lib.enumeration.SymEventType.USER_LOGIN;
 import static net.symbiosis.core_lib.enumeration.SymPreference.PF_WEB_THEME;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
@@ -117,7 +117,7 @@ public class SessionBean implements Serializable {
 
         logger.info(format("Authenticating user %s to channel WEB", credentials.getUsername()));
         sym_request_response_log authLog = new sym_request_response_log(
-                fromEnum(WEB), fromEnum(LOGIN), format("Authenticating user %s to channel WEB",
+                fromEnum(WEB), fromEnum(USER_LOGIN), format("Authenticating user %s to channel WEB",
                 credentials.getUsername())).save();
 
         ExternalContext externalContext = getCurrentInstance().getExternalContext();

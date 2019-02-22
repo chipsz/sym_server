@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static net.symbiosis.authentication.authentication.SymbiosisAuthenticator.getUserByUsername;
-import static net.symbiosis.core_lib.enumeration.SymEventType.LOGIN;
+import static net.symbiosis.core_lib.enumeration.SymEventType.USER_LOGIN;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
@@ -129,7 +129,7 @@ public abstract class SymChainAuthenticationProvider {
 
     public final SymResponseObject<sym_auth_user> authenticateUser() {
 
-        requestResponseLog.setEvent_type(fromEnum(LOGIN));
+        requestResponseLog.setEvent_type(fromEnum(USER_LOGIN));
 
         ArrayList<AuthenticationStep> chain = authenticationChain.get(symChannel);
 
