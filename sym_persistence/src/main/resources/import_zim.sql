@@ -1,4 +1,3 @@
-insert ignore into sym_country (name,is_enabled,iso_code_2,iso_code_3,dialing_code) values ('GHANA',1,'GH','GHA',233);
 insert ignore into sym_country (name,is_enabled,iso_code_2,iso_code_3,dialing_code) values ('ZIMBABWE',0,'ZW','ZWE',263);
 insert ignore into sym_country (name,is_enabled,iso_code_2,iso_code_3,dialing_code) values ('SOUTH AFRICA',0,'ZA','ZAF',27);
 
@@ -110,13 +109,39 @@ insert ignore into sym_response_code(id,name,is_enabled,response_message) values
 insert ignore into sym_response_code(id,name,is_enabled,response_message) values(0, 'SUCCESS',1,'Successful');
 update sym_response_code set id = 0 where name = 'SUCCESS';
 
-insert ignore into sym_auth_group (auth_group_id, name, is_enabled) values (1, 'SUPER_USER',1);
-insert ignore into sym_auth_group (auth_group_id, name, is_enabled) values (2, 'WEB_ADMIN',1);
-insert ignore into sym_auth_group (auth_group_id, name, is_enabled) values (3, 'WEB_CLERK',1);
-insert ignore into sym_auth_group (auth_group_id, name, is_enabled) values (4, 'WEB_AGENT',1);
-insert ignore into sym_auth_group (auth_group_id, name, is_enabled) values (5, 'POS_AGENT',1);
-insert ignore into sym_auth_group (auth_group_id, name, is_enabled) values (6, 'POS_ADMIN',1);
-insert ignore into sym_auth_group (auth_group_id, name, is_enabled) values (7, 'MOBILE_USER',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('Agricultural Development Bank of Zimbabwe','Agribank',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('BancABC Zimbabwe','BancABC',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('Barclays Bank of Zimbabwe','Barclays Bank',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('CABS','CABS',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('CBZ Bank Limited','CBZ',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('Ecobank Zimbabwe','Ecobank',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('FBC Bank Limited','FBC',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('Metbank','Metbank',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('Nedbank Limited','Nedbank',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('NMB Bank Limited','NMB',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('Peoples Own Savings Bank','POSB',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('Stanbic Bank Zimbabwe Limited','Stanbic Bank',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('Standard Chartered Zimbabwe','Standard Chartered',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('Steward Bank','Steward Bank',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('Womens Bank','Womens Bank',1);
+insert ignore into sym_financial_institution (institution_name,short_name,institution_type_id) values ('ZB Bank Limited','ZB Bank',1);
+
+insert ignore into sym_financial_institution (institution_id,institution_name,short_name,institution_type_id) values (100,'Symbiosis Wallet','SymWallet',2);
+insert ignore into sym_financial_institution (institution_id,institution_name,short_name,institution_type_id) values (101,'EcoCash','EcoCash',2);
+insert ignore into sym_financial_institution (institution_id,institution_name,short_name,institution_type_id) values (102,'Telecash','Telecash',2);
+insert ignore into sym_financial_institution (institution_id,institution_name,short_name,institution_type_id) values (103,'OneMoney','OneMoney',2);
+insert ignore into sym_financial_institution (institution_id,institution_name,short_name,institution_type_id) values (104,'GetCash','GetCash',2);
+
+insert ignore into sym_financial_institution (institution_id,institution_name,short_name,institution_type_id) values (200,'PayPal','PayPal',3);
+insert ignore into sym_financial_institution (institution_id,institution_name,short_name,institution_type_id) values (201,'Skrill','Skrill',3);
+
+insert ignore into sym_auth_group (name, is_enabled) values ('SUPER_USER',1);
+insert ignore into sym_auth_group (name, is_enabled) values ('WEB_ADMIN',1);
+insert ignore into sym_auth_group (name, is_enabled) values ('WEB_CLERK',1);
+insert ignore into sym_auth_group (name, is_enabled) values ('WEB_AGENT',1);
+insert ignore into sym_auth_group (name, is_enabled) values ('POS_AGENT',1);
+insert ignore into sym_auth_group (name, is_enabled) values ('POS_ADMIN',1);
+insert ignore into sym_auth_group (name, is_enabled) values ('MOBILE_USER',1);
 
 insert ignore into sym_role (name, is_enabled) values ('ROLE_WEB_MANAGE_EVD', 1);
 insert ignore into sym_role (name, is_enabled) values ('ROLE_WEB_MANAGE_STOCK', 1);
@@ -143,27 +168,24 @@ insert ignore into sym_role (name, is_enabled) values ('ROLE_WEB_MANAGE_SETTINGS
 
 insert ignore into sym_role (name, is_enabled) values ('ROLE_POS_MANAGE_SETTINGS', 1);
 
-/* Insert all roles for SUPER_USER */
+insert ignore into sym_role (name, is_enabled) values ('ROLE_MOBILE_MANAGE_SETTINGS', 1);
+
 insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'SUPER_USER' and sr.name LIKE '%';
 
-/* Insert roles for EMPOWER_SYSTEM_ADMIN */
 insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'WEB_ADMIN' and sr.name LIKE 'ROLE_WEB_%';
 
-/* Insert roles for EMPOWER_SYSTEM_CLERK */
 insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'WEB_CLERK' and (sr.name IN ('ROLE_WEB_MANAGE_SYSTEM', 'ROLE_WEB_MANAGE_EVD', 'ROLE_WEB_MANAGE_STOCK', 'ROLE_WEB_MANAGE_USERS', 'ROLE_WEB_MANAGE_SETTINGS') or sr.name LIKE 'ROLE_WEB_VIEW_%');
 
-/* Insert roles for EMPOWER_SYSTEM_AGENT */
 insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'WEB_AGENT' and (sr.name LIKE 'ROLE_WEB_VIEW_SINGLE_%' or sr.name = 'ROLE_WEB_MANAGE_SETTINGS');
 
-/* Insert roles for POS_ADMIN */
 insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'POS_ADMIN' and sr.name LIKE ('ROLE_POS_%');
 
 insert ignore into sym_auth_group_role (auth_group_id,role_id,name,is_enabled) select sg.auth_group_id,sr.role_id,CONCAT(sg.name,'_',sr.name),1 from sym_auth_group sg,sym_role sr where sg.name = 'MOBILE_USER' and sr.name LIKE ('ROLE_MOBILE_%');
 
 insert ignore into sym_voucher_type (voucher_type_id,is_enabled,name) values (1, 1, 'AIRTIME');
-insert ignore into sym_voucher_type (voucher_type_id,is_enabled,name) values (2, 0, 'INTERNET');
-insert ignore into sym_voucher_type (voucher_type_id,is_enabled,name) values (3, 0, 'DSTV');
-insert ignore into sym_voucher_type (voucher_type_id,is_enabled,name) values (4, 0, 'RESULT CHECKER PIN');
+insert ignore into sym_voucher_type (voucher_type_id,is_enabled,name) values (2, 0, 'ELECTRICITY');
+insert ignore into sym_voucher_type (voucher_type_id,is_enabled,name) values (3, 0, 'PAY_TV');
+insert ignore into sym_voucher_type (voucher_type_id,is_enabled,name) values (4, 0, 'INTERNET');
 
 insert ignore into sym_voucher_status (voucher_status_id,is_enabled,name) values (1, 1, 'NEW');
 insert ignore into sym_voucher_status (voucher_status_id,is_enabled,name) values (2, 1, 'SOLD');
@@ -178,58 +200,62 @@ insert ignore into sym_deposit_type (deposit_type_id,is_enabled,name) values (3,
 insert ignore into sym_deposit_type (deposit_type_id,is_enabled,name) values (4, 1, 'DEBIT_CARD');
 insert ignore into sym_deposit_type (deposit_type_id,is_enabled,name) values (5, 1, 'BANK_TRANSFER');
 
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (1, 1, 'Airtel');
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (2, 0, 'Glo');
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (3, 1, 'MTN');
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (4, 1, 'Vodafone');
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (5, 1, 'Tigo');
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (6, 0, 'Multichoice');
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (7, 1, 'WAEC');
+insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (1, 1, 'Econet');
+insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (2, 0, 'NetOne');
+insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (3, 1, 'Telecel');
+insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (4, 1, 'ZESA');
+insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (5, 0, 'DSTV');
+insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (6, 1, 'ZOL');
+insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (7, 1, 'TelOne');
 
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (1, 1, 'Airtel');
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (2, 0, 'Glo');
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (3, 1, 'MTN');
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (4, 1, 'Vodafone');
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (5, 1, 'Tigo');
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (6, 0, 'CowryPay');
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (7, 1, 'WAEC');
+insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (1, 1, 'Econet');
+insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (2, 0, 'NetOne');
+insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (3, 1, 'Telecel');
+insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (4, 1, 'ZETDC');
+insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (5, 1, 'Multichoice');
+insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (6, 0, 'ZOL');
+insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (7, 0, 'TelOne');
 
-insert ignore into sym_pin_import_config (is_enabled,name,divide_amount_by,amount_in_contents,amount_in_filename,amount_line_num,amount_pos,amount_regex,batch_id_in_contents,batch_id_in_filename,batch_id_line_num,batch_id_pos,batch_id_regex,delimiter,expiry_date_format,expiry_in_contents,expiry_in_filename,expiry_line_num,expiry_pos,expiry_regex,filename_regex,pin_length,pin_pos,pin_start_line,serial_length,serial_pos,total_num_in_contents,total_num_in_filename,total_num_line_num,total_num_pos,total_num_regex,service_provider_id,voucher_provider_id,voucher_type_id,pgp_public_key_file,pgp_key_pass) VALUES (1,'AIRTEL_AIRTEL',100,1,0,2,3,'(\\d+),(\\d+),(\\d+),(.*)',0,1,NULL,2,'VOUCHER_BATCH_(\\d+)_(\\d+)',',','yyyyMMdd',1,0,2,5,'(\\d+),(\\d+),(\\d+),(\\d+),(\\d+),(.*)','VOUCHER_BATCH_(\\d+)_(\\d+)',14,1,2,12, 2,1,0,1,1,'(\\d+),(\\d+),(.*)',1,1,1,NULL,NULL);
-insert ignore into sym_pin_import_config (is_enabled,name,divide_amount_by,amount_in_contents,amount_in_filename,amount_line_num,amount_pos,amount_regex,batch_id_in_contents,batch_id_in_filename,batch_id_line_num,batch_id_pos,batch_id_regex,delimiter,expiry_date_format,expiry_in_contents,expiry_in_filename,expiry_line_num,expiry_pos,expiry_regex,filename_regex,pin_length,pin_pos,pin_start_line,serial_length,serial_pos,total_num_in_contents,total_num_in_filename,total_num_line_num,total_num_pos,total_num_regex,service_provider_id,voucher_provider_id,voucher_type_id,pgp_public_key_file,pgp_key_pass) VALUES (1,'VODAFONE_VODAFONE',100,0,1,NULL,0,NULL,0,1,NULL,2,'Voms(\\d+)_(\\d+).dec','##',NULL,0,0,NULL,NULL,NULL,'Voms(\\d+)_(\\d+).dec',14,2,2,15,3,1,0,1,1,'Total Vouchers=(\\d+),(.*)',4,4,1,NULL,NULL);
-insert ignore into sym_pin_import_config (is_enabled,name,divide_amount_by,amount_in_contents,amount_in_filename,amount_line_num,amount_pos,amount_regex,batch_id_in_contents,batch_id_in_filename,batch_id_line_num,batch_id_pos,batch_id_regex,delimiter,expiry_date_format,expiry_in_contents,expiry_in_filename,expiry_line_num,expiry_pos,expiry_regex,filename_regex,pin_length,pin_pos,pin_start_line,serial_length,serial_pos,total_num_in_contents,total_num_in_filename,total_num_line_num,total_num_pos,total_num_regex,service_provider_id,voucher_provider_id,voucher_type_id,pgp_public_key_file,pgp_key_pass) VALUES (1,'TIGO_TIGO',10000,1,0,2,1,'FaceValue:(\\d+)',1,0,1,1,'Batch:(\\d+)',' ','yyyyMMdd',1,0,4,1,'StopDate:(\\d+)','(\\d+)K.txt',16,2,6,11,1,0,0,NULL,NULL,NULL,5,5,1,NULL,NULL);
-insert ignore into sym_pin_import_config (is_enabled,name,divide_amount_by,amount_in_contents,amount_in_filename,amount_line_num,amount_pos,amount_regex,batch_id_in_contents,batch_id_in_filename,batch_id_line_num,batch_id_pos,batch_id_regex,delimiter,expiry_date_format,expiry_in_contents,expiry_in_filename,expiry_line_num,expiry_pos,expiry_regex,filename_regex,pin_length,pin_pos,pin_start_line,serial_length,serial_pos,total_num_in_contents,total_num_in_filename,total_num_line_num,total_num_pos,total_num_regex,service_provider_id,voucher_provider_id,voucher_type_id,pgp_public_key_file,pgp_key_pass) VALUES (1,'MTN_MTN',100,1,0,1,3,'(\\d+),(\\d+),(\\d+),(.*)',0,1,NULL,1,'(.*)_(.*)_(.*)_(.*)_(.*)',',','yyyyMMdd',1,0,1,5,'(\\d+),(\\d+),(\\d+),(\\d+),(\\d+),(.*)','GHA(.*)',14,1,1,10,2,0,0,NULL,NULL,NULL,3,3,1,'mtn_pgp_private.key','[ETTL*PGPk3y]');
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 8, 1, '1.00', 1, 1);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 8, 1, '2.00', 1, 1);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 8, 1, '5.00', 1, 1);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 8, 1, '10.00', 1, 1);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 8, 1, '20.00', 1, 1);
 
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '1.00', 1, 1);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '2.00', 1, 1);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '5.00', 1, 1);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '10.00', 1, 1);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '20.00', 1, 1);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 6.5, 1, '1.00', 3, 3);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 6.5, 1, '2.00', 3, 3);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 6.5, 1, '5.00', 3, 3);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 6.5, 1, '10.00', 3, 3);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 6.5, 1, '20.00', 3, 3);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 10, 1, '1.00', 4, 4);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 10, 1, '2.00', 4, 4);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 10, 1, '5.00', 4, 4);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 10, 1, '10.00', 4, 4);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 10, 1, '20.00', 4, 4);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '1.00', 5, 5);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '2.00', 5, 5);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '5.00', 5, 5);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '10.00', 5, 5);
-insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 10, 4, '7.50', 7, 7);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 10, 1, '1.00', 2, 2);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 10, 1, '2.00', 2, 2);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 10, 1, '5.00', 2, 2);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 10, 1, '10.00', 2, 2);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 10, 1, '20.00', 2, 2);
 
-insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (1, 'DEFAULT_MERCHANT_GROUP', 1, 3.5);
-insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (2, 'MEDIUM_VOLUME_MERCHANT_GROUP', 1, 4.0);
-insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (3, 'HIGH_VOLUME_MERCHANT_GROUP', 1, 5.0);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 6.5, 1, '1.00', 3, 3);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 6.5, 1, '2.00', 3, 3);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 6.5, 1, '5.00', 3, 3);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 6.5, 1, '10.00', 3, 3);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, '$', 6.5, 1, '20.00', 3, 3);
+
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 0, 1, '$', 8, 2, '1.00', 4, 4);
+
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 0, 1, '$', 8, 3, '10.00', 5, 5);
+
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 0, '$', 7, 4, '29.00', 6, 6);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 0, '$', 7, 4, '89.00', 6, 6);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 0, '$', 7, 4, '150.00', 6, 6);
+
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 0, '$', 10, 2, '30.00', 4, 4);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 0, '$', 10, 2, '89.00', 4, 4);
+
+insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (1, 'DEFAULT_WALLET_GROUP', 1, 3.5);
+insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (2, 'MEDIUM_VOLUME_WALLET_GROUP', 1, 4.0);
+insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (3, 'HIGH_VOLUME_WALLET_GROUP', 1, 5.0);
 
 insert ignore into sym_wallet_group_voucher (wallet_group_id,voucher_id,wallet_discount) select 1, v.voucher_id, 3.5 from sym_voucher v;
 insert ignore into sym_wallet_group_voucher (wallet_group_id,voucher_id,wallet_discount) select 2, v.voucher_id, 4.0 from sym_voucher v;
 insert ignore into sym_wallet_group_voucher (wallet_group_id,voucher_id,wallet_discount) select 3, v.voucher_id, 5.0 from sym_voucher v;
 
-insert ignore into sym_company(company_id,company_name,address_line_1,address_line_2,address_city,address_country_id,phone1,phone2) values (1,'T3raTech','4 Janeen Close','Groombridge, Mt. Pleasant','Harare',2,'263785107830','27627938765');
-insert ignore into sym_user(first_name,last_name,username,email,msisdn,msisdn2,salt,user_status_id,country_id,language_id,password,password_tries,pin,pin_tries) values ('Tsungai','Kaviya','admin','tsungai.kaviya@gmail.com','263785107830','27627938765','b4ou790Xz4jBfY0B',30,2,1,'659f6d313bb6fb10ae238ed2ecd4f3365a6a72b8ba8fbe891265a17a6a7335',0,NULL,0);
+
+insert ignore into sym_company(company_id,company_name,address_line_1,address_line_2,address_city,address_country_id,phone1,phone2) values (1,'Symbiosis','Groombridge','Mt. Pleasant','Harare',2,'263785107830','27627938765');
+insert ignore into sym_user(first_name,last_name,username,email,msisdn,msisdn2,salt,user_status_id,country_id,language_id,password,password_tries,pin,pin_tries) values ('Symbiosis','Admin','admin','tsungai.kaviya@gmail.com','263785107830','27627938765','b4ou790Xz4jBfY0B',30,2,1,'659f6d313bb6fb10ae238ed2ecd4f3365a6a72b8ba8fbe891265a17a6a7335',0,NULL,0);
 insert ignore into sym_auth_user (sym_user_id,channel_id,auth_group_id,device_id,registration_date,last_auth_date,last_login_date) SELECT su.sym_user_id,2,1,null,sysdate(),NULL,NULL FROM sym_user su WHERE su.username = 'admin';
 insert ignore into sym_wallet (wallet_id, current_balance, company_id, wallet_admin_user_id, wallet_group_id) values (1, '0.00', 1, 1, 1);
 update sym_user set wallet_id = 1 where sym_user_id = 1;
