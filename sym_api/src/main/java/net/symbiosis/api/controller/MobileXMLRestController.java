@@ -53,7 +53,7 @@ public class MobileXMLRestController implements MobileRestService {
         return status(200).entity(mobileRequestProcessor.registerMobileUser(
                 getRealParamValue(email), getRealParamValue(msisdn), getRealParamValue(username),
                 getRealParamValue(imei), getRealParamValue(companyName), getRealParamValue(firstName),
-                getRealParamValue(lastName), getRealParamValue(pin))).build();
+                getRealParamValue(lastName), getRealParamValue(pin))).header("Access-Control-Allow-Origin", "*").build();
     }
 
 //    @Override
@@ -65,7 +65,7 @@ public class MobileXMLRestController implements MobileRestService {
 //    ) {
 //        logger.info(format("Got mobile request to get cashout accounts for user %s", userId));
 //        return status(200).entity(mobileRequestProcessor.getCashoutAccounts(getRealParamValue(userId),
-//                getRealParamValue(imei), getRealParamValue(authToken))).build();
+//                getRealParamValue(imei), getRealParamValue(authToken))).header("Access-Control-Allow-Origin", "*").build();
 //    }
 
     @Override
@@ -86,7 +86,7 @@ public class MobileXMLRestController implements MobileRestService {
                 getRealParamValue(imei), getRealParamValue(authToken),
                 getRealParamValue(institutionId), getRealParamValue(accountNickName), getRealParamValue(accountName),
                 getRealParamValue(accountNumber), getRealParamValue(accountBranchCode), getRealParamValue(accountPhone),
-                getRealParamValue(accountEmail))).build();
+                getRealParamValue(accountEmail))).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @Override
@@ -99,7 +99,7 @@ public class MobileXMLRestController implements MobileRestService {
         logger.info(format("Got mobile request to remove cashout account %s for user %s", cashoutAccountId, userId));
         return status(200).entity(mobileRequestProcessor.removeCashoutAccounts(
                 getRealParamValue(userId), getRealParamValue(imei), getRealParamValue(authToken),
-                getRealParamValue(cashoutAccountId))).build();
+                getRealParamValue(cashoutAccountId))).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @Override
@@ -115,7 +115,7 @@ public class MobileXMLRestController implements MobileRestService {
 
         return Response.status(200).entity(mobileRequestProcessor.buyVoucher(getRealParamValue(userId),
                 getRealParamValue(imei), getRealParamValue(authToken), getRealParamValue(voucherId),
-                getRealParamValue(voucherValue), getRealParamValue(recipient))).build();
+                getRealParamValue(voucherValue), getRealParamValue(recipient))).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @Override
@@ -133,7 +133,7 @@ public class MobileXMLRestController implements MobileRestService {
         return status(200).entity(mobileRequestProcessor.swipeTransaction(getRealParamValue(userId),
                 getRealParamValue(imei), getRealParamValue(authToken), getRealParamValue(amount),
                 getRealParamValue(reference), getRealParamValue(cardNumber),
-                getRealParamValue(cardPin))).build();
+                getRealParamValue(cardPin))).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @Override
@@ -150,7 +150,7 @@ public class MobileXMLRestController implements MobileRestService {
         return status(200).entity(mobileRequestProcessor.cashoutTransaction(getRealParamValue(userId),
                 getRealParamValue(imei), getRealParamValue(authToken), getRealParamValue(amount),
                 getRealParamValue(reference), getRealParamValue(cashoutAccountId),
-                getRealParamValue(pin))).build();
+                getRealParamValue(pin))).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @Override
@@ -161,7 +161,7 @@ public class MobileXMLRestController implements MobileRestService {
                                  @FormParam("pin") String pin) {
         logger.info(format("Got mobile login request from device %s for user %s", imei, username));
         return status(200).entity(mobileRequestProcessor.startSession(getRealParamValue(imei),
-                getRealParamValue(username), getRealParamValue(pin), SMART_PHONE)).build();
+                getRealParamValue(username), getRealParamValue(pin), SMART_PHONE)).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @Override
@@ -172,6 +172,6 @@ public class MobileXMLRestController implements MobileRestService {
                                @FormParam("authToken") String authToken) {
         logger.info(format("Got mobile logout request from device %s for session %s", imei, sessionId));
         return status(200).entity(mobileRequestProcessor.endSession(getRealParamValue(sessionId),
-                getRealParamValue(imei), getRealParamValue(authToken), SMART_PHONE)).build();
+                getRealParamValue(imei), getRealParamValue(authToken), SMART_PHONE)).header("Access-Control-Allow-Origin", "*").build();
     }
 }

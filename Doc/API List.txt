@@ -4,6 +4,8 @@ THIRD IP: 104.197.36.249
 FORTH IP: 104.198.224.120
 ---------------------------------
 
+http://test.empowerttl.com:17505/ettl_vision/ettl_vision.apk
+
 http://localhost:8080/sym_api-1.0.0/api/xml/session (POST)
 http://localhost:8080/sym_api-1.0.0/api/xml/session/{sessionId} (PUT)
 http://localhost:8080/sym_api-1.0.0/api/session (POST)
