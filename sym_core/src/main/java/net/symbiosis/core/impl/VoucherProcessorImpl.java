@@ -13,7 +13,6 @@ import net.symbiosis.core_lib.utilities.IOUtils;
 import net.symbiosis.core_lib.utilities.SymValidator;
 import net.symbiosis.persistence.entity.complex_type.log.sym_import_batch;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
-import net.symbiosis.persistence.entity.complex_type.sym_pin_import_config;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
 import net.symbiosis.persistence.entity.complex_type.voucher.*;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;

@@ -3,7 +3,7 @@ package net.symbiosis.core.helper;
 import net.symbiosis.common.security.PGPKeyBasedFileProcessor;
 import net.symbiosis.common.utilities.ReferenceGenerator;
 import net.symbiosis.core_lib.response.SymResponseObject;
-import net.symbiosis.persistence.entity.complex_type.sym_pin_import_config;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_pin_import_config;
 
 import java.io.File;
 import java.io.IOException;

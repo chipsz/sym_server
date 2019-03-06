@@ -40,7 +40,6 @@ public class sym_pin_import_config extends sym_enum_entity<sym_pin_import_config
 	private Integer pin_length;
 	@Column(nullable = false)
 	private Integer serial_length;
-
 	@Column(nullable = false)
 	private Boolean amount_in_contents;
 	@Column(nullable = false)
@@ -50,7 +49,6 @@ public class sym_pin_import_config extends sym_enum_entity<sym_pin_import_config
 	private Integer amount_line_num;
 	private Integer amount_pos;
 	private String amount_regex;
-
 	@Column(nullable = false)
 	private Boolean batch_id_in_contents;
 	@Column(nullable = false)
@@ -76,7 +74,7 @@ public class sym_pin_import_config extends sym_enum_entity<sym_pin_import_config
 	private Integer total_num_pos;
 	private String total_num_regex;
 
-    private String pgp_public_key_file;
+    private String pgp_private_key_file;
 	private String pgp_key_pass;
 
 	public sym_pin_import_config() {}
@@ -213,9 +211,9 @@ public class sym_pin_import_config extends sym_enum_entity<sym_pin_import_config
 
 	public void setTotal_num_regex(String total_num_regex) { this.total_num_regex = total_num_regex; }
 
-    public String getPgp_public_key_file() { return pgp_public_key_file; }
+    public String getPgp_private_key_file() { return pgp_private_key_file; }
 
-    public void setPgp_public_key_file(String pgp_public_key_file) { this.pgp_public_key_file = pgp_public_key_file; }
+    public void setPgp_private_key_file(String pgp_private_key_file) { this.pgp_private_key_file = pgp_private_key_file; }
 
     public String getPgp_key_pass() { return pgp_key_pass; }
 
