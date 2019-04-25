@@ -220,9 +220,9 @@ insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_pr
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '10.00', 5, 5);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 10, 4, '7.50', 7, 7);
 
-insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (1, 'DEFAULT_MERCHANT_GROUP', 1, 3.5);
-insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (2, 'MEDIUM_VOLUME_MERCHANT_GROUP', 1, 4.0);
-insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (3, 'HIGH_VOLUME_MERCHANT_GROUP', 1, 5.0);
+insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (1, 'DEFAULT_WALLET_GROUP', 1, 3.5);
+insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (2, 'MEDIUM_VOLUME_WALLET_GROUP', 1, 4.0);
+insert ignore into sym_wallet_group (wallet_group_id,name,is_enabled,default_discount) values (3, 'HIGH_VOLUME_WALLET_GROUP', 1, 5.0);
 
 insert ignore into sym_wallet_group_voucher (wallet_group_id,voucher_id,wallet_discount) select 1, v.voucher_id, 3.5 from sym_voucher v;
 insert ignore into sym_wallet_group_voucher (wallet_group_id,voucher_id,wallet_discount) select 2, v.voucher_id, 4.0 from sym_voucher v;
