@@ -407,7 +407,7 @@ public class VoucherProcessorImpl implements VoucherProcessor {
                         voucherResponse.getResponseObject().getVoucher_value().toPlainString() + " " +
                         voucherResponse.getResponseObject().getVoucher_type().getName();
 
-                sendEmailAlert("Sym_JARVIS", "Stock depleted for " + voucherDesc,
+                sendEmailAlert("ETTL_JARVIS", "Stock depleted for " + voucherDesc,
                         "Stock depleted for voucher " + voucherId + ": " + voucherDesc);
 
                 return new SymVoucherPurchaseList(INSUFFICIENT_STOCK);
@@ -416,7 +416,7 @@ public class VoucherProcessorImpl implements VoucherProcessor {
                                      voucherResponse.getResponseObject().getVoucher_value().toPlainString() + " " +
                                      voucherResponse.getResponseObject().getVoucher_type().getName();
 
-                sendEmailAlert("Sym_JARVIS", format("Low Stock (%d) for " + voucherDesc, stockAmount),
+                sendEmailAlert("ETTL_JARVIS", format("Low Stock (%d) for " + voucherDesc, stockAmount),
                     format("Running low on stock (%d remaining) of voucher " + voucherId + ": " + voucherDesc, stockAmount)
                 );
             }
@@ -433,7 +433,7 @@ public class VoucherProcessorImpl implements VoucherProcessor {
                         voucherResponse.getResponseObject().getVoucher_value().toPlainString() + " " +
                         voucherResponse.getResponseObject().getVoucher_type().getName();
 
-                sendEmailAlert("Sym_JARVIS", "Stock depleted for " + voucherDesc,
+                sendEmailAlert("ETTL_JARVIS", "Stock depleted for " + voucherDesc,
                         "Stock depleted for voucher " + voucherId + ": " + voucherDesc);
 
                 logger.info(format("Insufficient stock of voucher %s", voucherId));
