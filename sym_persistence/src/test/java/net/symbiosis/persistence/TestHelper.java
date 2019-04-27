@@ -5,13 +5,13 @@ import net.symbiosis.persistence.entity.complex_type.sym_user;
 
 import java.util.Date;
 
-import static net.symbiosis.common.security.Security.generateSecureRandomBytes;
-import static net.symbiosis.common.utilities.ReferenceGenerator.Gen;
-import static net.symbiosis.common.utilities.ReferenceGenerator.GenMills;
 import static net.symbiosis.core_lib.enumeration.SymAuthGroup.WEB_AGENT;
 import static net.symbiosis.core_lib.enumeration.SymChannel.SMART_PHONE;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.ACC_ACTIVE;
+import static net.symbiosis.core_lib.security.Security.generateSecureRandomBytes;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.decapitalizeAll;
+import static net.symbiosis.core_lib.utilities.ReferenceGenerator.Gen;
+import static net.symbiosis.core_lib.utilities.ReferenceGenerator.GenMills;
 import static net.symbiosis.persistence.helper.SymEnumHelper.*;
 
 /***************************************************************************

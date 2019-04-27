@@ -19,9 +19,10 @@ idea { module { scopes.PROVIDED.plus += [ configurations.provided] } }
 
 dependencies {
     compile project(':sym_core_lib')
-    compile project(':sym_common')
     compile project(':sym_persistence')
+    compile project(':sym_common')
     compile project(':sym_authentication')
+//    compile project(':sym_api')
     compile project(':sym_core')
 
     testCompile project(':sym_core_lib').sourceSets.test.output

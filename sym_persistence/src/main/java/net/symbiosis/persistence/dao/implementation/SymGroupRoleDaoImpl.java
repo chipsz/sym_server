@@ -1,6 +1,6 @@
 package net.symbiosis.persistence.dao.implementation;
 
-import net.symbiosis.common.structure.Pair;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.dao.complex_type.SymGroupRoleDao;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_group_role;
 import net.symbiosis.persistence.entity.enumeration.sym_auth_group;
@@ -20,11 +20,9 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class SymGroupRoleDaoImpl extends SymEnumEntityDaoImpl<sym_auth_group_role, Long>
-        implements SymGroupRoleDao {
-    protected SymGroupRoleDaoImpl() {
-        super(sym_auth_group_role.class);
-    }
+public class SymGroupRoleDaoImpl extends SymEnumEntityDaoImpl<sym_auth_group_role, Long> implements SymGroupRoleDao {
+
+    protected SymGroupRoleDaoImpl() { super(sym_auth_group_role.class); }
 
     @Override
     public List<sym_auth_group_role> findByGroup(sym_auth_group symGroup) {

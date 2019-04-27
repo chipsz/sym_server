@@ -1,7 +1,6 @@
 package net.symbiosis.core.impl;
 
 import net.symbiosis.authentication.authentication.MobileAuthenticationProvider;
-import net.symbiosis.common.structure.Pair;
 import net.symbiosis.core.contract.*;
 import net.symbiosis.core.contract.symbiosis.SymCashoutAccount;
 import net.symbiosis.core.helper.ValidationHelper;
@@ -12,6 +11,8 @@ import net.symbiosis.core.service.WalletManager;
 import net.symbiosis.core_lib.enumeration.SymChannel;
 import net.symbiosis.core_lib.enumeration.SymFinancialInstitutionType;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.core_lib.structure.Pair;
+import net.symbiosis.core_lib.utilities.CommonUtilities;
 import net.symbiosis.persistence.entity.complex_type.log.sym_cashout_transaction;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
 import net.symbiosis.persistence.entity.complex_type.log.sym_session;
@@ -37,15 +38,16 @@ import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static net.symbiosis.common.configuration.Configuration.getProperty;
+import static net.symbiosis.common.utilities.SymValidator.*;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
 import static net.symbiosis.core_lib.enumeration.SymChannel.SMART_PHONE;
 import static net.symbiosis.core_lib.enumeration.SymEventType.*;
 import static net.symbiosis.core_lib.enumeration.SymFinancialInstitutionType.*;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.formatFullMsisdn;
-import static net.symbiosis.core_lib.utilities.SymValidator.*;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 import static net.symbiosis.persistence.helper.SymEnumHelper.*;
 
 /***************************************************************************
@@ -186,17 +188,17 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
 
         logger.info(format("Performing registration for %s %s", firstName, lastName));
 
-        if (!isNullOrEmpty(companyName) && !isValidPlainText(companyName)) {
+        if (!CommonUtilities.isNullOrEmpty(companyName) && !isValidPlainText(companyName)) {
             return new SymSystemUserList(INPUT_INVALID_NAME).setResponse(format("Company name '%s' is invalid", companyName));
         }
 
-        msisdn = formatFullMsisdn(msisdn, countryFromString(getProperty("DefaultCountry")).getDialing_code());
+        msisdn = formatFullMsisdn(msisdn, countryFromString(getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY)).getDialing_code());
 
         sym_user newUser = new sym_user(firstName, lastName,
                 null, username, null, pin, 0, 0, null,
                 email, msisdn, null, fromEnum(ACC_ACTIVE),
-                countryFromString(getProperty("DefaultCountry")),
-                languageFromString(getProperty("DefaultLanguage")));
+                countryFromString(getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY)),
+                languageFromString(getSymConfigDao().getConfig(CONFIG_DEFAULT_LANGUAGE)));
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(
                 fromEnum(SMART_PHONE), fromEnum(USER_REGISTRATION), newUser.toPrintableString()).save();
@@ -208,7 +210,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
         sym_company company = new sym_company();
 
         company.setCompany_name(companyName == null ? username : companyName);
-        company.setAddress_country(findByName(sym_country.class, getProperty("DefaultCountry")));
+        company.setAddress_country(findByName(sym_country.class, getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY)));
         company.setPhone1(formatFullMsisdn(msisdn, company.getAddress_country().getDialing_code()));
 
         List<sym_company> existingCompanies = getEntityManagerRepo()
@@ -220,7 +222,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
         }
 
         SymResponseObject<sym_auth_user> registrationResponse = authenticationProvider.
-            registerMobileUser(newUser, imei, findByName(sym_auth_group.class, getProperty("DefaultMobileGroup")), company);
+            registerMobileUser(newUser, imei, findByName(sym_auth_group.class, getSymConfigDao().getConfig(CONFIG_DEFAULT_SMART_PHONE_AUTH_GROUP)), company);
 
         logResponse(registrationResponse.getResponseObject(), requestResponseLog, registrationResponse.getResponseCode());
         return new SymSystemUserList(registrationResponse.getResponseCode(), converterService.toDTO(registrationResponse.getResponseObject()));
@@ -290,32 +292,32 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
         SymFinancialInstitutionType institutionType = SymFinancialInstitutionType.
                 valueOf(financialInstitution.getInstitution_type().getName());
 
-        if (isNullOrEmpty(accountNickName) || !isValidPlainText(accountNickName)) {
+        if (CommonUtilities.isNullOrEmpty(accountNickName) || !isValidPlainText(accountNickName)) {
             String outgoingResponse = "a valid accountNickName must be specified";
             logger.warning(outgoingResponse);
             logResponse(authUser, requestResponseLog, INPUT_INVALID_REQUEST, outgoingResponse);
             return new SymResponse(INPUT_INVALID_REQUEST);
-        } else if ((institutionType.equals(BANK) || !isNullOrEmpty(accountName)) && !isValidName(accountName)) {
+        } else if ((institutionType.equals(BANK) || !CommonUtilities.isNullOrEmpty(accountName)) && !isValidName(accountName)) {
             String outgoingResponse = "accountName is not valid";
             logger.warning(outgoingResponse);
             logResponse(authUser, requestResponseLog, INPUT_INVALID_NAME, outgoingResponse);
             return new SymResponse(INPUT_INVALID_NAME);
-        } else if (isNullOrEmpty(accountNumber)) {
+        } else if (CommonUtilities.isNullOrEmpty(accountNumber)) {
             String outgoingResponse = "a valid accountNumber must be specified";
             logger.warning(outgoingResponse);
             logResponse(authUser, requestResponseLog, INPUT_INVALID_REQUEST, outgoingResponse);
             return new SymResponse(INPUT_INVALID_REQUEST);
-        } else if (!isNullOrEmpty(accountBranchCode) && !isNumeric(accountBranchCode)) {
+        } else if (!CommonUtilities.isNullOrEmpty(accountBranchCode) && !isNumeric(accountBranchCode)) {
             String outgoingResponse = "accountBranchCode is not valid";
             logger.warning(outgoingResponse);
             logResponse(authUser, requestResponseLog, INPUT_INVALID_REQUEST, outgoingResponse);
             return new SymResponse(INPUT_INVALID_REQUEST);
-        } else if ((institutionType.equals(MOBILE_BANK) || !isNullOrEmpty(accountPhone)) && !isValidMsisdn(accountPhone)) {
+        } else if ((institutionType.equals(MOBILE_BANK) || !CommonUtilities.isNullOrEmpty(accountPhone)) && !isValidMsisdn(accountPhone)) {
             String outgoingResponse = "accountPhone is not valid";
             logger.warning(outgoingResponse);
             logResponse(authUser, requestResponseLog, INPUT_INVALID_MSISDN, outgoingResponse);
             return new SymResponse(INPUT_INVALID_MSISDN);
-        } else if ((institutionType.equals(ONLINE_BANK) || !isNullOrEmpty(accountEmail)) && !isValidEmail(accountEmail)) {
+        } else if ((institutionType.equals(ONLINE_BANK) || !CommonUtilities.isNullOrEmpty(accountEmail)) && !isValidEmail(accountEmail)) {
             String outgoingResponse = "accountEmail is not valid";
             logger.warning(outgoingResponse);
             logResponse(authUser, requestResponseLog, INPUT_INVALID_EMAIL, outgoingResponse);
@@ -421,7 +423,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
             logResponse(authUser, requestResponseLog, validationResponse.getResponseCode());
             return new SymWalletList(validationResponse.getResponseCode());
         }
-        if (!isNullOrEmpty(reference) && !isValidPlainText(reference)) {
+        if (!CommonUtilities.isNullOrEmpty(reference) && !isValidPlainText(reference)) {
             logResponse(authUser, requestResponseLog, INPUT_INVALID_REQUEST, "Transaction reference is invalid");
             return new SymWalletList(INPUT_INVALID_REQUEST).setResponse("Transaction reference is invalid");
         }
@@ -429,7 +431,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
             logResponse(authUser, requestResponseLog, INPUT_INVALID_REQUEST, "Card number is invalid");
             return new SymWalletList(INPUT_INVALID_REQUEST).setResponse("Card number is invalid");
         }
-        if (!isNullOrEmpty(valueOf(cardPin)) && !isValidCardPin(valueOf(cardPin))) {
+        if (!CommonUtilities.isNullOrEmpty(valueOf(cardPin)) && !isValidCardPin(valueOf(cardPin))) {
             logResponse(authUser, requestResponseLog, INPUT_INVALID_REQUEST, "Card pin is invalid");
             return new SymWalletList(INPUT_INVALID_PASSWORD).setResponse("Card pin is invalid");
         }
@@ -477,7 +479,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
             logResponse(authUser, requestResponseLog, validationResponse.getResponseCode());
             return new SymWalletList(validationResponse.getResponseCode());
         }
-        if (!isNullOrEmpty(reference) && !isValidPlainText(reference)) {
+        if (!CommonUtilities.isNullOrEmpty(reference) && !isValidPlainText(reference)) {
             logResponse(authUser, requestResponseLog, INPUT_INVALID_REQUEST, "Transaction reference is invalid");
             return new SymWalletList(INPUT_INVALID_REQUEST).setResponse("Transaction reference is invalid");
         }

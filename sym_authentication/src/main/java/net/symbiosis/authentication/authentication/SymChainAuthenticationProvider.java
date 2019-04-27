@@ -5,9 +5,9 @@ package net.symbiosis.authentication.authentication;
  * Author:      Tich de Blak (Tsungai Kaviya)                              *
  */
 
-import net.symbiosis.common.structure.Pair;
 import net.symbiosis.core_lib.enumeration.SymResponseCode;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.dao.EnumEntityRepoManager;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
 import net.symbiosis.persistence.entity.complex_type.log.sym_session;

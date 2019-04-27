@@ -1,8 +1,8 @@
 package net.symbiosis.core.helper;
 
 import net.symbiosis.common.security.PGPKeyBasedFileProcessor;
-import net.symbiosis.common.utilities.ReferenceGenerator;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.core_lib.utilities.ReferenceGenerator;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_pin_import_config;
 
 import java.io.File;
@@ -16,11 +16,12 @@ import java.util.logging.Logger;
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
-import static net.symbiosis.common.configuration.Configuration.getProperty;
 import static net.symbiosis.common.utilities.SymTransformer.stringToDate;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_DEFAULT_VOUCHER_EXPIRY_DAYS;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.getValueByStringPattern;
 import static net.symbiosis.core_lib.utilities.IOUtils.readFromFile;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
 /***************************************************************************
  * *
@@ -171,9 +172,9 @@ public class UploadFileHelper {
 			}
 		} else if (!pinImportConfig.getExpiry_in_contents()) {
 			logger.info(format("No configuration to get expiry date. Generating date for %s days in the future",
-					getProperty("DefaultVoucherExpiryDays")));
+                    getSymConfigDao().getConfig(CONFIG_DEFAULT_VOUCHER_EXPIRY_DAYS)));
 			Calendar calendar = Calendar.getInstance();
-			calendar.add(Calendar.DAY_OF_YEAR, parseInt(getProperty("DefaultVoucherExpiryDays")));
+			calendar.add(Calendar.DAY_OF_YEAR, parseInt(getSymConfigDao().getConfig(CONFIG_DEFAULT_VOUCHER_EXPIRY_DAYS)));
 			return new SymResponseObject<>(SUCCESS, calendar.getTime());
 		} else {
 			logger.info("Getting expiry date from file contents");

@@ -29,7 +29,9 @@ import java.util.logging.Logger;
 
 import static java.lang.String.format;
 import static javax.ws.rs.core.Response.status;
-import static net.symbiosis.common.configuration.Configuration.getProperty;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_FALCON_POS_BINARY_LOCATION;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_FALCON_POS_BINARY_NAME;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
 @Component
 @Path("/xml/pos")
@@ -66,17 +68,17 @@ public class POSXMLRestController implements POSRestService {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response getFalconBinary() throws SymRestException {
         logger.info("Got request to download Falcon POS binary");
-        File file = new File(getProperty("FalconPOSBinaryLocation"));
+        File file = new File(getSymConfigDao().getConfig(CONFIG_FALCON_POS_BINARY_LOCATION));
 
         if (!file.exists()) {
-            logger.info("File does not exist at " + getProperty("FalconPOSBinaryLocation"));
+            logger.info("File does not exist at " + getSymConfigDao().getConfig(CONFIG_FALCON_POS_BINARY_LOCATION));
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        logger.info(format("Returning %s bytes of file %s", file.length(), getProperty("FalconPOSBinaryLocation")));
+        logger.info(format("Returning %s bytes of file %s", file.length(), getSymConfigDao().getConfig(CONFIG_FALCON_POS_BINARY_LOCATION)));
 
         Response.ResponseBuilder response = Response.ok(file);
-        response.header("Content-Disposition", "attachment; filename=" + getProperty("FalconPOSBinaryName"));
+        response.header("Content-Disposition", "attachment; filename=" + getSymConfigDao().getConfig(CONFIG_FALCON_POS_BINARY_NAME));
         response.header("Content-Length", file.length());
         return response.build();
     }

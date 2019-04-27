@@ -13,7 +13,7 @@ import net.symbiosis.web_ui.annotations.PasswordConstraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import static net.symbiosis.core_lib.utilities.SymValidator.isValidPassword;
+import static net.symbiosis.common.utilities.SymValidator.isValidPassword;
 
 /**
  * ConstraintValidator for @Name

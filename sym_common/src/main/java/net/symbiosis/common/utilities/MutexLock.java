@@ -1,10 +1,12 @@
 package net.symbiosis.common.utilities;
 
-import net.symbiosis.common.configuration.Configuration;
-
 import java.util.logging.Logger;
 
+import static java.lang.Long.parseLong;
 import static java.lang.String.format;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_MUTEX_LOCK_WAIT_INTERVAL;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_MUTEX_LOCK_WAIT_TIME;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
 /**
  * ***************************************************************************
@@ -18,14 +20,13 @@ import static java.lang.String.format;
 
 public class MutexLock {
 
-    private static final Logger logger = Configuration.getNewLogger(MutexLock.class.getSimpleName());
+    private static final Logger logger = Logger.getLogger(MutexLock.class.getSimpleName());
     private static final Long DEFAULT_MUTEX_LOCK_WAIT_TIME = 10000L; //10 seconds
     private static final Long DEFAULT_MUTEX_LOCK_INTERVAL = 1000L;   //10 seconds
     private boolean locked = false;
 
-    private Long waitTimeout = Long.parseLong(Configuration.getSymbiosisProperty("MutexLockWaitTime"));
-
-    private Long waitInterval = Long.parseLong(Configuration.getSymbiosisProperty("MutexLockInterval"));
+    private Long waitTimeout = parseLong(getSymConfigDao().getConfig(CONFIG_MUTEX_LOCK_WAIT_TIME));
+    private Long waitInterval = parseLong(getSymConfigDao().getConfig(CONFIG_MUTEX_LOCK_WAIT_INTERVAL));
 
     public MutexLock() {
         this.waitTimeout = DEFAULT_MUTEX_LOCK_WAIT_TIME;

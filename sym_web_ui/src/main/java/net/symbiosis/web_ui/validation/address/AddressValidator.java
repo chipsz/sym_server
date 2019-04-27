@@ -21,7 +21,7 @@ import java.util.Map;
 
 import static java.lang.String.format;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
-import static net.symbiosis.core_lib.utilities.SymValidator.*;
+import static net.symbiosis.common.utilities.SymValidator.*;
 import static net.symbiosis.web_ui.validation.ConstraintHelper.changeAnnotationValue;
 
 /**

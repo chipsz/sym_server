@@ -1,8 +1,8 @@
 package net.symbiosis.web_ui.session;
 
 import net.symbiosis.authentication.authentication.WebAuthenticationProvider;
-import net.symbiosis.common.structure.Pair;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.enumeration.sym_channel;
@@ -22,14 +22,15 @@ import static java.util.Arrays.asList;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.context.FacesContext.getCurrentInstance;
-import static net.symbiosis.common.configuration.Configuration.getCountryCodePrefix;
-import static net.symbiosis.common.utilities.ReferenceGenerator.Gen;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_DEFAULT_COUNTRY_CODE;
 import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
 import static net.symbiosis.core_lib.enumeration.SymEventType.USER_PASSWORD_RESET;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.formatFullMsisdn;
+import static net.symbiosis.core_lib.utilities.ReferenceGenerator.Gen;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 import static net.symbiosis.web_ui.common.SystemPages.PAGE_LOGIN;
 import static net.symbiosis.web_ui.common.SystemPages.PAGE_RESET_PASSWORD;
@@ -100,10 +101,10 @@ public class ResetPasswordBean implements Serializable {
         }
 
         sym_auth_user resetUser = results.get(0);
-        logger.info(format("Validating MSISDN %s", formatFullMsisdn(msisdn, getCountryCodePrefix())));
+        logger.info(format("Validating MSISDN %s", formatFullMsisdn(msisdn, getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE))));
 
-        if (!resetUser.getUser().getMsisdn().equals(formatFullMsisdn(msisdn, getCountryCodePrefix())) &&
-                !resetUser.getUser().getMsisdn2().equals(formatFullMsisdn(msisdn, getCountryCodePrefix()))) {
+        if (!resetUser.getUser().getMsisdn().equals(formatFullMsisdn(msisdn, getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE))) &&
+                !resetUser.getUser().getMsisdn2().equals(formatFullMsisdn(msisdn, getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE)))) {
             logger.info(format("No user found for username %s and email %s", username, email));
             getCurrentInstance().addMessage(null,
                     new FacesMessage(SEVERITY_ERROR, "Password reset failed",

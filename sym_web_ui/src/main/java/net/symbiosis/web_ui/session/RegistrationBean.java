@@ -1,14 +1,13 @@
 package net.symbiosis.web_ui.session;
 
 import net.symbiosis.authentication.authentication.WebAuthenticationProvider;
-import net.symbiosis.common.structure.Pair;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.sym_company;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
 import net.symbiosis.persistence.entity.enumeration.sym_auth_group;
-import net.symbiosis.persistence.entity.enumeration.sym_country;
 import net.symbiosis.web_ui.request.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -24,14 +23,14 @@ import static java.lang.String.format;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.context.FacesContext.getCurrentInstance;
-import static net.symbiosis.common.configuration.Configuration.getCountryCodePrefix;
-import static net.symbiosis.common.configuration.Configuration.getProperty;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
 import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
 import static net.symbiosis.core_lib.enumeration.SymEventType.USER_REGISTRATION;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.formatFullMsisdn;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 import static net.symbiosis.persistence.helper.SymEnumHelper.*;
 import static net.symbiosis.web_ui.common.SystemPages.PAGE_LOGIN;
 import static net.symbiosis.web_ui.common.SystemPages.PAGE_REGISTRATION;
@@ -109,8 +108,8 @@ public class RegistrationBean implements Serializable {
             return PAGE_REGISTRATION.getBaseXHTML();
         }
 
-        registrationData.setMsisdn(formatFullMsisdn(registrationData.getMsisdn(), getCountryCodePrefix()));
-        registrationData.setMsisdn2(formatFullMsisdn(registrationData.getMsisdn2(), getCountryCodePrefix()));
+        registrationData.setMsisdn(formatFullMsisdn(registrationData.getMsisdn(), getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE)));
+        registrationData.setMsisdn2(formatFullMsisdn(registrationData.getMsisdn2(), getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE)));
 
         existingUser = getEntityManagerRepo().findWhere(sym_user.class, new Pair<>("msisdn", registrationData.getMsisdn()));
         if (existingUser != null && existingUser.size() > 0) {
@@ -128,12 +127,12 @@ public class RegistrationBean implements Serializable {
         sym_user newUser = new sym_user(registrationData.getFirstName(), registrationData.getLastName(),
                 null, registrationData.getUsername(), registrationData.getPassword(),
                 null, 0, 0, null, registrationData.getEmail(), registrationData.getMsisdn(),
-                registrationData.getMsisdn2(), fromEnum(ACC_INACTIVE), countryFromString(getProperty("DefaultCountry")),
-                languageFromString(getProperty("DefaultLanguage")));
+                registrationData.getMsisdn2(), fromEnum(ACC_INACTIVE), countryFromString(getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY)),
+                languageFromString(getSymConfigDao().getConfig(CONFIG_DEFAULT_LANGUAGE)));
 
         sym_company newCompany = new sym_company(registrationData.getCompanyName(),
                 registrationData.getAddressLine1(), registrationData.getAddressLine2(), registrationData.getAddressCity(),
-                findByName(sym_country.class, getProperty("DefaultCountry")), registrationData.getPhone1(),
+                countryFromString(getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY)), registrationData.getPhone1(),
                 registrationData.getPhone2(), registrationData.getVatNumber(), registrationData.getRegistrationNumber());
 
         WebAuthenticationProvider webAuthenticationProvider = new WebAuthenticationProvider(
@@ -141,7 +140,7 @@ public class RegistrationBean implements Serializable {
 
         SymResponseObject<sym_auth_user> registrationResponse =
                 webAuthenticationProvider.registerWebUser(newUser, newCompany,
-                        findByName(sym_auth_group.class, getProperty("DefaultWebGroup")), null);
+                        findByName(sym_auth_group.class, getSymConfigDao().getConfig(CONFIG_DEFAULT_WEB_AUTH_GROUP)), null);
 
         if (registrationResponse.getResponseCode().equals(SUCCESS)) {
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_INFO,

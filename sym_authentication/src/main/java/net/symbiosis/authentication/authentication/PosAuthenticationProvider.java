@@ -20,15 +20,15 @@ import java.util.ArrayList;
 import static java.lang.String.format;
 import static java.util.Collections.singletonList;
 import static net.symbiosis.authentication.authentication.SymbiosisAuthenticator.assignChannel;
-import static net.symbiosis.common.configuration.Configuration.getProperty;
 import static net.symbiosis.common.configuration.NetworkUtilities.sendEmail;
 import static net.symbiosis.common.configuration.NetworkUtilities.sendEmailAlert;
 import static net.symbiosis.common.mail.EMailer.CONTENT_TYPE_HTML;
-import static net.symbiosis.common.utilities.ReferenceGenerator.GenPin;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
 import static net.symbiosis.core_lib.enumeration.SymChannel.POS_MACHINE;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
-import static net.symbiosis.core_lib.enumeration.SystemType.SYMBIOSIS;
+import static net.symbiosis.core_lib.utilities.ReferenceGenerator.GenPin;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 
 public class PosAuthenticationProvider extends SymChainAuthenticationProvider {
@@ -53,7 +53,7 @@ public class PosAuthenticationProvider extends SymChainAuthenticationProvider {
         logger.info(format("Performing POS registration for %s %s", user.getFirst_name(), user.getLast_name()));
 
         SymResponseObject<sym_auth_user> registrationResponse = assignChannel(user, fromEnum(POS_MACHINE),
-            findByName(sym_auth_group.class, authGroup == null ? getProperty("DefaultPOSGroup") : authGroup.getName()),
+            findByName(sym_auth_group.class, authGroup == null ? getSymConfigDao().getConfig(CONFIG_DEFAULT_POS_MACHINE_AUTH_GROUP) : authGroup.getName()),
             null);
 
         if (registrationResponse.getResponseCode().getCode() != SUCCESS.getCode()) {
@@ -78,24 +78,24 @@ public class PosAuthenticationProvider extends SymChainAuthenticationProvider {
             fr = new FileReader(resource.getFile().getAbsolutePath());
             br = new BufferedReader(fr);
             String line;
-            String registrationEmail = "";
+            StringBuilder registrationEmail = new StringBuilder();
             br = new BufferedReader(fr);
 
             while ((line = br.readLine()) != null) {
-                registrationEmail += line.replaceAll("%reg_fname%", user.getFirst_name())
+                registrationEmail.append(line.replaceAll("%reg_fname%", user.getFirst_name())
                         .replaceAll("%reg_lname%", user.getLast_name())
                         .replaceAll("%reg_username%", user.getUsername())
                         .replaceAll("%reg_pin%", newPin)
-                        .replaceAll("%contact_address%", getProperty("ContactAddress"))
-                        .replaceAll("%support_phone%", getProperty("SupportPhone"))
-                        .replaceAll("%support_email%", getProperty("SupportEmail")) + "\r\n";
+                        .replaceAll("%contact_address%", getSymConfigDao().getConfig(CONFIG_CONTACT_ADDRESS))
+                        .replaceAll("%support_phone%", getSymConfigDao().getConfig(CONFIG_SUPPORT_PHONE))
+                        .replaceAll("%support_email%", getSymConfigDao().getConfig(CONFIG_SUPPORT_EMAIL))).append("\r\n");
             }
-            sendEmail(SYMBIOSIS.name(), new String[] {user.getEmail(), getProperty("AlertEmail")},
-                    "Welcome to Empower Jarvis Control Center!", registrationEmail, CONTENT_TYPE_HTML);
+            sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[] {user.getEmail(), getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)},
+                    "Welcome to " + getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), registrationEmail.toString(), CONTENT_TYPE_HTML);
         }
         catch (Exception e) {
             e.printStackTrace();
-            sendEmailAlert(SYMBIOSIS.name(), "Failed to send registration email! \r\n", e.getMessage());
+            sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), "Failed to send registration email! \r\n", e.getMessage());
         }
         finally {
             try {
@@ -126,24 +126,24 @@ public class PosAuthenticationProvider extends SymChainAuthenticationProvider {
                 fr = new FileReader(resource.getFile().getAbsolutePath());
                 br = new BufferedReader(fr);
                 String line;
-                String registrationEmail = "";
+                StringBuilder registrationEmail = new StringBuilder();
                 br = new BufferedReader(fr);
 
                 while ((line = br.readLine()) != null) {
-                    registrationEmail += line.replaceAll("%auth_fname%", authUser.getUser().getFirst_name())
+                    registrationEmail.append(line.replaceAll("%auth_fname%", authUser.getUser().getFirst_name())
                             .replaceAll("%auth_lname%", authUser.getUser().getLast_name())
                             .replaceAll("%auth_username%", authUser.getUser().getUsername())
                             .replaceAll("%auth_pin%", newPin)
-                            .replaceAll("%contact_address%", getProperty("ContactAddress"))
-                            .replaceAll("%support_phone%", getProperty("SupportPhone"))
-                            .replaceAll("%support_email%", getProperty("SupportEmail")) + "\r\n";
+                            .replaceAll("%contact_address%", getSymConfigDao().getConfig(CONFIG_CONTACT_ADDRESS))
+                            .replaceAll("%support_phone%", getSymConfigDao().getConfig(CONFIG_SUPPORT_PHONE))
+                            .replaceAll("%support_email%", getSymConfigDao().getConfig(CONFIG_SUPPORT_EMAIL))).append("\r\n");
                 }
-                sendEmail(SYMBIOSIS.name(), new String[] {authUser.getUser().getEmail(), getProperty("AlertEmail")},
-                        "Pin Changed on Jarvis Control Center", registrationEmail, CONTENT_TYPE_HTML);
+                sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[] {authUser.getUser().getEmail(), getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)},
+                        "Pin changed on " + getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), registrationEmail.toString(), CONTENT_TYPE_HTML);
             }
             catch (Exception e) {
                 e.printStackTrace();
-                sendEmailAlert(SYMBIOSIS.name(), "Failed to send pin changed email! \r\n", e.getMessage());
+                sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), "Failed to send pin changed email! \r\n", e.getMessage());
             }
             finally {
                 try {

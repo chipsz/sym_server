@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.context.FacesContext.getCurrentInstance;
-import static net.symbiosis.common.configuration.Configuration.getProperty;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
 import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
 import static net.symbiosis.core_lib.enumeration.SymEventType.USER_CREATE;
 import static net.symbiosis.core_lib.enumeration.SymEventType.USER_REGISTRATION;
@@ -31,6 +31,7 @@ import static net.symbiosis.core_lib.enumeration.SymResponseCode.AUTH_AUTHENTICA
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 
 /***************************************************************************
@@ -63,8 +64,8 @@ public class MerchantCreateBean implements JSFLoggable {
 
     private void initDefaultValues() {
         newUser = new sym_user();
-        newUser.setCountry(findByName(sym_country.class, getProperty("DefaultCountry")));
-        newUser.setLanguage(findByName(sym_language.class, getProperty("DefaultLanguage")));
+        newUser.setCountry(findByName(sym_country.class, getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY)));
+        newUser.setLanguage(findByName(sym_language.class, getSymConfigDao().getConfig(CONFIG_DEFAULT_LANGUAGE)));
         newUser.setPassword_tries(0);
         newUser.setPin_tries(0);
     }
@@ -132,7 +133,7 @@ public class MerchantCreateBean implements JSFLoggable {
 
         SymResponseObject<sym_auth_user> registrationResponse =
             webAuthenticationProvider.registerWebUser(newUser, selectedWallet.getCompany(),
-                findByName(sym_auth_group.class, getProperty("DefaultWebGroup")), selectedWallet);
+                findByName(sym_auth_group.class, getSymConfigDao().getConfig(CONFIG_DEFAULT_WEB_AUTH_GROUP)), selectedWallet);
 
         if (registrationResponse.getResponseCode().equals(SUCCESS)) {
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_INFO, "Registration Successful",

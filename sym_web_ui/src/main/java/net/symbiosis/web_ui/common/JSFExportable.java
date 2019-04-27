@@ -4,8 +4,8 @@ import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.pdf.PdfWriter;
-import net.symbiosis.common.configuration.Configuration;
 import net.symbiosis.common.mail.EMailer;
+import net.symbiosis.core_lib.enumeration.DBConfigVars;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import javax.faces.application.FacesMessage;
@@ -23,7 +23,8 @@ import static javax.faces.context.FacesContext.getCurrentInstance;
 import static net.symbiosis.common.configuration.ThreadPoolManager.schedule;
 import static net.symbiosis.common.mail.EMailer.createMultipartMessage;
 import static net.symbiosis.common.utilities.SymTransformer.dateToString;
-import static net.symbiosis.core_lib.utilities.SymValidator.isValidEmail;
+import static net.symbiosis.common.utilities.SymValidator.isValidEmail;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
 /***************************************************************************
  *                                                                         *
@@ -92,7 +93,7 @@ public abstract class JSFExportable {
             logger.info("Creating multipart message");
             String reportName = getTableDescription() + " - " + dateToString(new Date()) + ".xls";
             MimeMultipart multipartMessage = createMultipartMessage(
-                    emailData, "SymbiosisControlCenter " + getTableDescription() + " Report", reportName
+                    emailData, getSymConfigDao().getConfig(DBConfigVars.CONFIG_SYSTEM_NAME) + " " + getTableDescription() + " Report", reportName
             );
 
             reportEmailResponse = new FacesMessage(SEVERITY_INFO,
@@ -100,8 +101,7 @@ public abstract class JSFExportable {
                     format("Emailing report %s to %s", reportName, reportEmailRecipient));
 
             logger.info("Sending multipart email");
-            schedule(new EMailer(new String[]{reportEmailRecipient}, "SymbiosisControlCenterReport",
-                    Configuration.getProperty("SupportEmail"), "symbiosis", multipartMessage));
+            schedule(new EMailer(new String[]{reportEmailRecipient}, getSymConfigDao().getConfig(DBConfigVars.CONFIG_SYSTEM_NAME) +"Report", multipartMessage));
         } catch (Exception e) {
             e.printStackTrace();
             reportEmailResponse = new FacesMessage(SEVERITY_FATAL,
@@ -143,7 +143,7 @@ public abstract class JSFExportable {
             logger.info("Creating multipart message");
             String reportName = getTableDescription() + " - " + dateToString(new Date()) + ".pdf";
             MimeMultipart multipartMessage = createMultipartMessage(
-                    emailData, "SymbiosisControlCenter " + getTableDescription() + " Report", reportName
+                    emailData, getSymConfigDao().getConfig(DBConfigVars.CONFIG_SYSTEM_NAME) + " " + getTableDescription() + " Report", reportName
             );
 
             reportEmailResponse = new FacesMessage(SEVERITY_INFO,
@@ -152,8 +152,7 @@ public abstract class JSFExportable {
 
 
             logger.info("Sending multipart email");
-            schedule(new EMailer(new String[]{reportEmailRecipient}, "SymbiosisControlCenterReport",
-                    Configuration.getProperty("SupportEmail"), "symbiosis", multipartMessage));
+            schedule(new EMailer(new String[]{reportEmailRecipient}, getSymConfigDao().getConfig(DBConfigVars.CONFIG_SYSTEM_NAME) + "Report", multipartMessage));
         } catch (Exception e) {
             reportEmailResponse = new FacesMessage(SEVERITY_FATAL,
                     "Failed to email report to recipient '" + reportEmailRecipient + "': " + e.getMessage(),

@@ -1,6 +1,6 @@
 package net.symbiosis.common.utilities;
 
-import net.symbiosis.common.structure.Pair;
+import net.symbiosis.core_lib.structure.Pair;
 
 import java.util.ArrayList;
 import java.util.Arrays;

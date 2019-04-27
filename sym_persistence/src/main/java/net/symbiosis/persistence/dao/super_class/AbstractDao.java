@@ -1,8 +1,8 @@
 package net.symbiosis.persistence.dao.super_class;
 
-import net.symbiosis.common.structure.Pair;
 import net.symbiosis.core_lib.enumeration.SymResponseCode;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.super_class.sym_entity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

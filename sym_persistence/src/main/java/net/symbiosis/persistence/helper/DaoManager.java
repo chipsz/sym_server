@@ -2,6 +2,7 @@ package net.symbiosis.persistence.helper;
 
 import net.symbiosis.persistence.dao.EntityManagerRepo;
 import net.symbiosis.persistence.dao.complex_type.SymAuthUserDao;
+import net.symbiosis.persistence.dao.complex_type.SymConfigDao;
 import net.symbiosis.persistence.dao.complex_type.SymGroupRoleDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Component;
 public class DaoManager {
     @Autowired
     private EntityManagerRepo entityManagerRepo;
+    @Autowired
+    private SymConfigDao symConfigDao;
     @Autowired
     private SymAuthUserDao authUserDao;
     @Autowired
@@ -36,6 +39,10 @@ public class DaoManager {
 
     public static SymAuthUserDao getAuthUserDao() {
         return getInstance().authUserDao;
+    }
+
+    public static SymConfigDao getSymConfigDao() {
+        return getInstance().symConfigDao;
     }
 
     public static SymGroupRoleDao getUserGroupRoleDao() {

@@ -1,16 +1,17 @@
 package net.symbiosis.authentication.authentication;
 
-import net.symbiosis.common.structure.Pair;
 import net.symbiosis.core_lib.enumeration.SymResponseCode;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.core_lib.structure.Pair;
+import net.symbiosis.core_lib.utilities.CommonUtilities;
 import net.symbiosis.persistence.dao.complex_type.SymAuthUserDao;
+import net.symbiosis.persistence.dao.complex_type.SymConfigDao;
 import net.symbiosis.persistence.entity.complex_type.log.sym_session;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
 import net.symbiosis.persistence.entity.enumeration.sym_auth_group;
 import net.symbiosis.persistence.entity.enumeration.sym_channel;
 import net.symbiosis.persistence.entity.enumeration.sym_response_code;
-import net.symbiosis.persistence.helper.DaoManager;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,19 +19,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
-import static net.symbiosis.common.security.Security.generateIV;
-import static net.symbiosis.common.security.Security.hashWithSalt;
-import static net.symbiosis.common.security.SymbiosisSecurityEncryption.DEFAULT_SECURITY_HASH;
-import static net.symbiosis.common.security.SymbiosisSecurityEncryption.MAX_PASSWORD_TRIES;
-import static net.symbiosis.common.utilities.ReferenceGenerator.Gen;
-import static net.symbiosis.common.utilities.ReferenceGenerator.GenPin;
+import static net.symbiosis.common.utilities.SymValidator.*;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_MAX_PASSWORD_TRIES;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
+import static net.symbiosis.core_lib.security.Security.generateIV;
+import static net.symbiosis.core_lib.security.Security.hashWithSalt;
+import static net.symbiosis.core_lib.security.SymbiosisSecurityEncryption.DEFAULT_SECURITY_HASH;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.formatFullMsisdn;
-import static net.symbiosis.core_lib.utilities.SymValidator.*;
+import static net.symbiosis.core_lib.utilities.ReferenceGenerator.Gen;
+import static net.symbiosis.core_lib.utilities.ReferenceGenerator.GenPin;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
-import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
+import static net.symbiosis.persistence.helper.DaoManager.*;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 
 /**
@@ -45,13 +47,7 @@ public class SymbiosisAuthenticator {
     private static Logger logger = Logger.getLogger(SymbiosisAuthenticator.class.getSimpleName());
 
     private static SymAuthUserDao authUserDao;
-
-    static SymAuthUserDao getAuthUserDao() {
-        if (authUserDao == null) {
-            authUserDao = DaoManager.getAuthUserDao();
-        }
-        return authUserDao;
-    }
+    private static SymConfigDao symConfigDao;
 
     static SymResponseObject<sym_session> startSession(sym_channel channel,
                                                        String deviceId, String username, String password, boolean searchAllUsernameTypes) {
@@ -261,7 +257,7 @@ public class SymbiosisAuthenticator {
             return new SymResponseObject<>(INPUT_INVALID_REQUEST);
         }
 
-        if (isNullOrEmpty(newUser.getUsername()) && isNullOrEmpty(newUser.getEmail()) && isNullOrEmpty(newUser.getMsisdn())) {
+        if (CommonUtilities.isNullOrEmpty(newUser.getUsername()) && CommonUtilities.isNullOrEmpty(newUser.getEmail()) && CommonUtilities.isNullOrEmpty(newUser.getMsisdn())) {
             logger.info("Registration failed! User has no valid identifier (username/email/phone) specified.");
             return new SymResponseObject<>(INPUT_INVALID_REQUEST);
         }
@@ -281,13 +277,13 @@ public class SymbiosisAuthenticator {
 
         //valid data supplied, now check for previous registration
         List<Pair<String, ?>> conditionList = new ArrayList<>();
-        if (!isNullOrEmpty(newUser.getEmail())) {
+        if (!CommonUtilities.isNullOrEmpty(newUser.getEmail())) {
             conditionList.add(new Pair<>("email", newUser.getEmail()));
         }
-        if (!isNullOrEmpty(newUser.getMsisdn())) {
+        if (!CommonUtilities.isNullOrEmpty(newUser.getMsisdn())) {
             conditionList.add(new Pair<>("msisdn", newUser.getMsisdn()));
         }
-        if (!isNullOrEmpty(newUser.getUsername())) {
+        if (!CommonUtilities.isNullOrEmpty(newUser.getUsername())) {
             conditionList.add(new Pair<>("username", newUser.getUsername()));
         }
         List<sym_user> existingUser = getEntityManagerRepo().findWhere(sym_user.class, conditionList,
@@ -511,14 +507,14 @@ public class SymbiosisAuthenticator {
         } else {
             int passwordTries = symUser.getPassword_tries();
 
-            if (passwordTries >= MAX_PASSWORD_TRIES) {
+            if (passwordTries >= parseInt(getSymConfigDao().getConfig(CONFIG_MAX_PASSWORD_TRIES))) {
                 logger.info("Authentication failed! Password tries exceeded");
                 response.setResponseCode(ACC_PASSWORD_TRIES_EXCEEDED);
             } else if (!isValidPassword(password)) {
                 logger.info("Authentication failed! Password format was invalid");
                 response.setResponseCode(INPUT_INVALID_REQUEST).setMessage("Password format was invalid");
                 symUser.setPassword_tries(++passwordTries);
-                if (symUser.getPassword_tries() >= MAX_PASSWORD_TRIES) {
+                if (symUser.getPassword_tries() >= parseInt(getSymConfigDao().getConfig(CONFIG_MAX_PASSWORD_TRIES))) {
                     logger.info("Authentication failed! Password format was invalid. Password tries exceeded");
                     symUser.setUser_status(fromEnum(ACC_PASSWORD_TRIES_EXCEEDED));
                 }
@@ -532,7 +528,7 @@ public class SymbiosisAuthenticator {
                 response.setResponseCode(AUTH_INCORRECT_PASSWORD);
                 symUser.setPassword_tries(++passwordTries);
                 authUser.setLast_login_date(new Date());
-                if (symUser.getPassword_tries() >= MAX_PASSWORD_TRIES) {
+                if (symUser.getPassword_tries() >= parseInt(getSymConfigDao().getConfig(CONFIG_MAX_PASSWORD_TRIES))) {
                     logger.info("Password tries exceeded");
                     symUser.setUser_status(fromEnum(ACC_PASSWORD_TRIES_EXCEEDED));
                 }
@@ -560,14 +556,14 @@ public class SymbiosisAuthenticator {
         } else {
             int pinTries = symUser.getPin_tries();
 
-            if (pinTries >= MAX_PASSWORD_TRIES) {
+            if (pinTries >= parseInt(getSymConfigDao().getConfig(CONFIG_MAX_PASSWORD_TRIES))) {
                 logger.info("Authentication failed! Pin tries exceeded");
                 response.setResponseCode(ACC_PASSWORD_TRIES_EXCEEDED);
             } else if (!isValidPin(pin)) {
                 logger.info("Authentication failed! Pin format was invalid");
                 response.setResponseCode(INPUT_INVALID_REQUEST).setMessage("Pin format was invalid");
                 symUser.setPin_tries(++pinTries);
-                if (symUser.getPin_tries() >= MAX_PASSWORD_TRIES) {
+                if (symUser.getPin_tries() >= parseInt(getSymConfigDao().getConfig(CONFIG_MAX_PASSWORD_TRIES))) {
                     logger.info("Authentication failed! Pin format was invalid. Pin tries exceeded");
                     symUser.setUser_status(fromEnum(ACC_PASSWORD_TRIES_EXCEEDED));
                 }
@@ -581,7 +577,7 @@ public class SymbiosisAuthenticator {
                 response.setResponseCode(AUTH_INCORRECT_PASSWORD);
                 symUser.setPin_tries(++pinTries);
                 authUser.setLast_login_date(new Date());
-                if (symUser.getPin_tries() >= MAX_PASSWORD_TRIES) {
+                if (symUser.getPin_tries() >= parseInt(getSymConfigDao().getConfig(CONFIG_MAX_PASSWORD_TRIES))) {
                     logger.info("Pin tries exceeded");
                     symUser.setUser_status(fromEnum(ACC_PASSWORD_TRIES_EXCEEDED));
                 }

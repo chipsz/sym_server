@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import static java.lang.Math.abs;
 import static java.lang.String.format;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
-import static net.symbiosis.core_lib.utilities.SymValidator.isNullOrEmpty;
 
 
 /**
@@ -224,5 +223,9 @@ public class CommonUtilities {
             cause = cause.getCause();
         }
         return cause;
+    }
+
+    public static boolean isNullOrEmpty(String string) {
+        return string == null || string.equals("");
     }
 }

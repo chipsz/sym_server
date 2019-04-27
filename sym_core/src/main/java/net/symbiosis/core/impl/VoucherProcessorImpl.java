@@ -1,7 +1,7 @@
 package net.symbiosis.core.impl;
 
-import net.symbiosis.common.structure.Pair;
 import net.symbiosis.common.utilities.FileUtils;
+import net.symbiosis.common.utilities.SymValidator;
 import net.symbiosis.core.contract.*;
 import net.symbiosis.core.contract.symbiosis.*;
 import net.symbiosis.core.service.ConverterService;
@@ -9,8 +9,8 @@ import net.symbiosis.core.service.VoucherProcessor;
 import net.symbiosis.core.service.WalletManager;
 import net.symbiosis.core_lib.enumeration.SymResponseCode;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.core_lib.utilities.IOUtils;
-import net.symbiosis.core_lib.utilities.SymValidator;
 import net.symbiosis.persistence.entity.complex_type.log.sym_import_batch;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
@@ -34,17 +34,20 @@ import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static net.symbiosis.common.configuration.Configuration.getProperty;
 import static net.symbiosis.common.configuration.NetworkUtilities.sendEmailAlert;
-import static net.symbiosis.common.security.Security.encryptAES;
 import static net.symbiosis.core.helper.UploadFileHelper.*;
 import static net.symbiosis.core.helper.ValidationHelper.*;
 import static net.symbiosis.core.impl.WalletManagerImpl.updateVoucherProviderBalance;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_LOW_STOCK_THRESHHOLD;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_SYSTEM_NAME;
 import static net.symbiosis.core_lib.enumeration.SymDistributionChannel.RECEIPT;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
 import static net.symbiosis.core_lib.enumeration.SymVoucherStatus.*;
+import static net.symbiosis.core_lib.security.Security.encryptAES;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.getRealThrowable;
 import static net.symbiosis.core_lib.utilities.IOUtils.readArrayFromFile;
 import static net.symbiosis.core_lib.utilities.IOUtils.writeToFile;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 
 /***************************************************************************
@@ -407,16 +410,16 @@ public class VoucherProcessorImpl implements VoucherProcessor {
                         voucherResponse.getResponseObject().getVoucher_value().toPlainString() + " " +
                         voucherResponse.getResponseObject().getVoucher_type().getName();
 
-                sendEmailAlert("ETTL_JARVIS", "Stock depleted for " + voucherDesc,
+                sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), "Stock depleted for " + voucherDesc,
                         "Stock depleted for voucher " + voucherId + ": " + voucherDesc);
 
                 return new SymVoucherPurchaseList(INSUFFICIENT_STOCK);
-            } else if (stockAmount < Integer.parseInt(getProperty("LowStockThreshold"))) {
+            } else if (stockAmount < Integer.parseInt(getSymConfigDao().getConfig(CONFIG_LOW_STOCK_THRESHHOLD))) {
                 String voucherDesc = voucherResponse.getResponseObject().getService_provider().getName() + " " +
                                      voucherResponse.getResponseObject().getVoucher_value().toPlainString() + " " +
                                      voucherResponse.getResponseObject().getVoucher_type().getName();
 
-                sendEmailAlert("ETTL_JARVIS", format("Low Stock (%d) for " + voucherDesc, stockAmount),
+                sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), format("Low Stock (%d) for " + voucherDesc, stockAmount),
                     format("Running low on stock (%d remaining) of voucher " + voucherId + ": " + voucherDesc, stockAmount)
                 );
             }
@@ -433,7 +436,7 @@ public class VoucherProcessorImpl implements VoucherProcessor {
                         voucherResponse.getResponseObject().getVoucher_value().toPlainString() + " " +
                         voucherResponse.getResponseObject().getVoucher_type().getName();
 
-                sendEmailAlert("ETTL_JARVIS", "Stock depleted for " + voucherDesc,
+                sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), "Stock depleted for " + voucherDesc,
                         "Stock depleted for voucher " + voucherId + ": " + voucherDesc);
 
                 logger.info(format("Insufficient stock of voucher %s", voucherId));

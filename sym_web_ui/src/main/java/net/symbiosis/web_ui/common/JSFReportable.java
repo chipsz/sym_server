@@ -7,7 +7,8 @@ import java.util.Date;
 
 import static java.lang.Integer.parseInt;
 import static java.util.Calendar.*;
-import static net.symbiosis.common.configuration.Configuration.getProperty;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_DEFAULT_REPORTING_DAYS;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
 /***************************************************************************
  *                                                                         *
@@ -36,7 +37,7 @@ public abstract class JSFReportable extends JSFExportable implements Serializabl
         reportEndDate = endTime.getTime();
 
         Calendar startTime = Calendar.getInstance();
-        startTime.setTime(new Date(reportEndDate.getTime() - (86400000 * parseInt(getProperty("DefaultReportingDays")))));
+        startTime.setTime(new Date(reportEndDate.getTime() - (86400000 * parseInt(getSymConfigDao().getConfig(CONFIG_DEFAULT_REPORTING_DAYS)))));
         startTime.set(HOUR_OF_DAY, 0);
         startTime.set(MINUTE, 0);
         startTime.set(SECOND, 0);

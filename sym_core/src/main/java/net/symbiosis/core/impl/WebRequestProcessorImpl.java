@@ -1,7 +1,6 @@
 package net.symbiosis.core.impl;
 
 import net.symbiosis.authentication.authentication.WebAuthenticationProvider;
-import net.symbiosis.common.structure.Pair;
 import net.symbiosis.core.contract.SymResponse;
 import net.symbiosis.core.contract.SymSystemUserList;
 import net.symbiosis.core.contract.symbiosis.SymSystemUser;
@@ -9,6 +8,7 @@ import net.symbiosis.core.service.ConverterService;
 import net.symbiosis.core.service.WebRequestProcessor;
 import net.symbiosis.core_lib.enumeration.SymChannel;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
 import net.symbiosis.persistence.entity.complex_type.log.sym_session;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
@@ -21,14 +21,15 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
-import static net.symbiosis.common.configuration.Configuration.getProperty;
 import static net.symbiosis.common.utilities.SymTransformer.stringToDate;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
 import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
 import static net.symbiosis.core_lib.enumeration.SymEventType.*;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
-import static net.symbiosis.core_lib.utilities.SymValidator.isNullOrEmpty;
+import static net.symbiosis.core_lib.utilities.CommonUtilities.isNullOrEmpty;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 import static net.symbiosis.persistence.helper.SymEnumHelper.*;
 
 /***************************************************************************
@@ -57,8 +58,8 @@ public class WebRequestProcessorImpl implements WebRequestProcessor {
         sym_user newUser = new sym_user(firstName, lastName,
                 stringToDate(dateOfBirth), username, null, null, 0, 0, null,
                 email, msisdn, msisdn2, fromEnum(ACC_INACTIVE),
-                countryFromString(getProperty("DefaultCountry")),
-                languageFromString(getProperty("DefaultLanguage")));
+                countryFromString(getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY)),
+                languageFromString(getSymConfigDao().getConfig(CONFIG_DEFAULT_LANGUAGE)));
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(
                 fromEnum(WEB), fromEnum(USER_REGISTRATION), newUser.toPrintableString()).save();
@@ -68,7 +69,7 @@ public class WebRequestProcessorImpl implements WebRequestProcessor {
         );
 
         SymResponseObject<sym_auth_user> registrationResponse = authenticationProvider.
-                registerWebUser(newUser, null, findByName(sym_auth_group.class, getProperty("DefaultWebGroup")), null);
+                registerWebUser(newUser, null, findByName(sym_auth_group.class, getSymConfigDao().getConfig(CONFIG_DEFAULT_WEB_AUTH_GROUP)), null);
 
         logResponse(registrationResponse.getResponseObject(), requestResponseLog, registrationResponse.getResponseCode());
         return new SymSystemUserList(registrationResponse.getResponseCode(), converterService.toDTO(registrationResponse.getResponseObject()));

@@ -1,7 +1,6 @@
 package net.symbiosis.core.impl;
 
 import net.symbiosis.authentication.authentication.PosAuthenticationProvider;
-import net.symbiosis.common.structure.Pair;
 import net.symbiosis.core.contract.SymDeviceUserResponse;
 import net.symbiosis.core.contract.SymMap;
 import net.symbiosis.core.contract.SymResponse;
@@ -11,6 +10,7 @@ import net.symbiosis.core.service.ConverterService;
 import net.symbiosis.core.service.POSRequestProcessor;
 import net.symbiosis.core.service.VoucherProcessor;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.device.sym_device_pos_machine;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
@@ -27,12 +27,14 @@ import java.util.logging.Logger;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
-import static net.symbiosis.common.configuration.Configuration.getProperty;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_EMAIL_ALERT_TO;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_FALCON_POS_BINARY_VERSION;
 import static net.symbiosis.core_lib.enumeration.SymChannel.POS_MACHINE;
 import static net.symbiosis.core_lib.enumeration.SymEventType.USER_LOGIN;
 import static net.symbiosis.core_lib.enumeration.SymEventType.USER_REGISTRATION;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 
 /***************************************************************************
@@ -60,8 +62,8 @@ public class POSRequestProcessorImpl implements POSRequestProcessor {
     @Override
     public SymMap getFalconVersion() {
         HashMap<String, String> versionInfo = new HashMap<>();
-        versionInfo.put("version", getProperty("FalconPOSVersion"));
-        logger.info("Returning version " + getProperty("FalconPOSVersion"));
+        versionInfo.put("version", getSymConfigDao().getConfig(CONFIG_FALCON_POS_BINARY_VERSION));
+        logger.info("Returning version " + getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO));
         return new SymMap(SUCCESS, versionInfo);
     }
 
@@ -94,7 +96,7 @@ public class POSRequestProcessorImpl implements POSRequestProcessor {
             authResponse.getResponseObject().getAuth_group().getName(),
             authResponse.getResponseObject().getAuth_token(),
             authResponse.getResponseObject().getLast_login_date(),
-            getProperty("POSVersion")
+            getSymConfigDao().getConfig(CONFIG_FALCON_POS_BINARY_VERSION)
         );
 
         requestResponseLog.setOutgoing_response(authResponse.getMessage());
@@ -171,7 +173,7 @@ public class POSRequestProcessorImpl implements POSRequestProcessor {
         requestResponseLog.setOutgoing_response_time(new Date());
         requestResponseLog.save();
 
-        return new SymDeviceUserResponse(SUCCESS, new SymDeviceUser(userResponse.getResponseObject(), getProperty("FalconPOSVersion")));
+        return new SymDeviceUserResponse(SUCCESS, new SymDeviceUser(userResponse.getResponseObject(), getSymConfigDao().getConfig(CONFIG_FALCON_POS_BINARY_VERSION)));
     }
 
     @Override

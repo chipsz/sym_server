@@ -1,11 +1,9 @@
 package net.symbiosis.web_ui.session;
 
 import net.symbiosis.authentication.authentication.WebAuthenticationProvider;
-import net.symbiosis.common.structure.Pair;
 import net.symbiosis.core_lib.response.SymResponseObject;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
-import net.symbiosis.persistence.entity.complex_type.sym_user_preference;
 import net.symbiosis.persistence.entity.enumeration.sym_auth_group;
 import net.symbiosis.persistence.entity.enumeration.sym_response_code;
 import net.symbiosis.persistence.entity.enumeration.sym_role;
@@ -19,24 +17,18 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
-import static java.util.Arrays.asList;
 import static javax.faces.application.FacesMessage.*;
 import static javax.faces.context.FacesContext.getCurrentInstance;
-import static net.symbiosis.common.configuration.Configuration.getProperty;
 import static net.symbiosis.core_lib.enumeration.SymAuthGroup.*;
 import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
 import static net.symbiosis.core_lib.enumeration.SymEventType.USER_LOGIN;
-import static net.symbiosis.core_lib.enumeration.SymPreference.PF_WEB_THEME;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
-import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 import static net.symbiosis.web_ui.common.SystemPages.*;
 
@@ -181,26 +173,6 @@ public class SessionBean implements Serializable {
 
     public sym_auth_user getSymbiosisAuthUser() {
         return symbiosisAuthUser;
-    }
-
-    public String currentTheme() {
-
-        if (symbiosisAuthUser == null) {
-            return getProperty("DefaultTheme");
-        }
-
-        List<sym_user_preference> results = getEntityManagerRepo().findWhere(sym_user_preference.class, new ArrayList<>(
-                asList(
-                        new Pair<>("user", symbiosisAuthUser.getUser().getId()),
-                        new Pair<>("preference", fromEnum(PF_WEB_THEME).getId())
-                )
-        ));
-
-        if (results == null || results.size() < 1) {
-            return getProperty("DefaultTheme");
-        }
-
-        return results.get(0).getPreference_value();
     }
 
     public void checkValidSession() throws IOException {

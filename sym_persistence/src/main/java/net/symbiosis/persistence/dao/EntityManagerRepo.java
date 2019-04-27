@@ -1,8 +1,8 @@
 package net.symbiosis.persistence.dao;
 
-import net.symbiosis.common.structure.Pair;
 import net.symbiosis.core_lib.enumeration.SymResponseCode;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.super_class.sym_entity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static java.util.Collections.singletonList;
-import static net.symbiosis.common.configuration.NetworkUtilities.sendEmailAlert;
 
 /**
  * Created with IntelliJ IDEA.
@@ -334,7 +333,7 @@ public class EntityManagerRepo {
                 alert.append(item.toString()).append("\n");
             }
             new Exception(alert.toString()).printStackTrace();
-            sendEmailAlert("SYMBIOSIS_CONTROL_CENTER", "Found non unique entries for " + list.get(0).getClass().getSimpleName(), alert.toString());
+//            sendEmailAlert("SYMBIOSIS_CONTROL_CENTER", "Found non unique entries for " + list.get(0).getClass().getSimpleName(), alert.toString());
             return new SymResponseObject<>(SymResponseCode.GENERAL_ERROR);
         }
         return new SymResponseObject<>(SymResponseCode.DATA_NOT_FOUND);

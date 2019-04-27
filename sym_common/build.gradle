@@ -17,10 +17,10 @@ idea { module { scopes.PROVIDED.plus += [ configurations.provided] } }
 
 dependencies {
     provided project(':sym_core_lib')
+    provided project(':sym_persistence')
     compile libraries.gson
     compile libraries.json
     compile libraries.javax_mail
-    compile libraries.commons_codec
     compile libraries.jmimemagic
     provided libraries.bcpg
     provided libraries.bcprov

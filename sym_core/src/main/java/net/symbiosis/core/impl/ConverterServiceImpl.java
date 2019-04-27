@@ -21,7 +21,7 @@ import org.modelmapper.convention.NameTokenizers;
 import org.springframework.stereotype.Service;
 
 import static net.symbiosis.common.configuration.Configuration.getProperty;
-import static net.symbiosis.common.security.Security.decryptAES;
+import static net.symbiosis.core_lib.security.Security.decryptAES;
 
 /***************************************************************************
  * *
@@ -184,8 +184,7 @@ public class ConverterServiceImpl implements ConverterService {
         if (sourceData.getPinbased_voucher() != null) {
             voucherPurchase.setVoucherSerial(sourceData.getPinbased_voucher().getSerial_number());
             voucherPurchase.setVoucherPin(
-                decryptAES(getProperty("AES128BitKey"),
-                    getProperty("AESInitializationVector"),
+                decryptAES(getProperty("AES128BitKey"), getProperty("AESInitializationVector"),
                     sourceData.getPinbased_voucher().getVoucher_pin()
                 )
             );

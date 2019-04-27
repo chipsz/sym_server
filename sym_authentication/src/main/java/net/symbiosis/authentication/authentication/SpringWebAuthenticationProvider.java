@@ -6,7 +6,7 @@ package net.symbiosis.authentication.authentication;
  * *************************************************************************
  */
 
-import net.symbiosis.common.structure.Pair;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_group_role;
 import net.symbiosis.persistence.entity.enumeration.sym_auth_group;

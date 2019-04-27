@@ -1,10 +1,12 @@
-package net.symbiosis.core_lib.utilities;
+package net.symbiosis.common.utilities;
+
+import net.symbiosis.core_lib.utilities.CommonUtilities;
 
 import java.math.BigDecimal;
 import java.util.regex.Pattern;
 
-import static java.util.Locale.ENGLISH;
-import static java.util.ResourceBundle.getBundle;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_DEFAULT_COUNTRY_CODE;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
 /**
  * User: tkaviya
@@ -40,8 +42,8 @@ public class SymValidator {
     public static final String PIN_REGEX = "[0-9]{" + PIN_LEN + "}";
     public static final String CARD_NUMBER_REGEX = "[0-9]{" + MIN_CARD_NUM_LEN + "," + MAX_CARD_NUM_LEN + "}";
     public static final String CARD_PIN_REGEX = "[0-9]{" + MIN_CARD_PIN_LEN + "," + MAX_CARD_PIN_LEN + "}";
-    public static final String MSISDN_REGEX = "^(([0]{2})|[+])*(" + getBundle("properties/symbiosis", ENGLISH).getString("CountryCode") + ")[0-9]{9}";
-    public static final String FULL_MSISDN_REGEX = "^(" + getBundle("properties/symbiosis", ENGLISH).getString("CountryCode") + ")[0-9]{9}";
+    public static final String MSISDN_REGEX = "^(([0]{2})|[+])*(" + getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE) + ")[0-9]{9}";
+    public static final String FULL_MSISDN_REGEX = "^(" + getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE) + ")[0-9]{9}";
     public static final String TEN_DIGIT_MSISDN_REGEX = "^(0)[0-9]{9}";
     public static final String NAME_REGEX = NAME_CHARS + "{" + MIN_NAME_LEN + "," + MAX_NAME_LEN + "}";
     public static final String PLAIN_TEXT_REGEX = PLAIN_TEXT_CHARS + "{" + MIN_PLAIN_TEXT_LEN + "," + MAX_PLAIN_TEXT_LEN + "}";
@@ -61,10 +63,6 @@ public class SymValidator {
     public static final Pattern addressPattern = Pattern.compile(ADDRESS_REGEX);
     public static final Pattern usernamePattern = Pattern.compile(USERNAME_REGEX);
 
-    public static boolean isNullOrEmpty(String string) {
-        return string == null || string.equals("");
-    }
-
     public static boolean isNumeric(Object testObject) {
         if (testObject == null) return false;
         if (testObject instanceof Number) return true;
@@ -77,23 +75,23 @@ public class SymValidator {
     }
 
     public static boolean isValidEmail(String emailAddress) {
-        return !isNullOrEmpty(emailAddress) && emailPattern.matcher(emailAddress).matches();
+        return !CommonUtilities.isNullOrEmpty(emailAddress) && emailPattern.matcher(emailAddress).matches();
     }
 
     public static boolean isValidPassword(String password) {
-        return !isNullOrEmpty(password) && passwordPattern.matcher(password).matches();
+        return !CommonUtilities.isNullOrEmpty(password) && passwordPattern.matcher(password).matches();
     }
 
     public static boolean isValidPin(String pin) {
-        return !isNullOrEmpty(pin) && pinPattern.matcher(pin).matches();
+        return !CommonUtilities.isNullOrEmpty(pin) && pinPattern.matcher(pin).matches();
     }
 
     public static boolean isValidCardNumber(String cardNumber) {
-        return !isNullOrEmpty(cardNumber) && cardNumberPattern.matcher(cardNumber).matches();
+        return !CommonUtilities.isNullOrEmpty(cardNumber) && cardNumberPattern.matcher(cardNumber).matches();
     }
 
     public static boolean isValidCardPin(String pin) {
-        return !isNullOrEmpty(pin) && cardPinPattern.matcher(pin).matches();
+        return !CommonUtilities.isNullOrEmpty(pin) && cardPinPattern.matcher(pin).matches();
     }
 
     public static boolean isValidMsisdn(String msisdn, String countryCodePrefix) {
@@ -101,34 +99,34 @@ public class SymValidator {
     }
 
     public static boolean isValidMsisdn(String msisdn) {
-        return !isNullOrEmpty(msisdn) && msisdnPattern.matcher(msisdn).matches();
+        return !CommonUtilities.isNullOrEmpty(msisdn) && msisdnPattern.matcher(msisdn).matches();
     }
 
     public static boolean isValidTenDigitMsisdn(String msisdn) {
-        return !isNullOrEmpty(msisdn) && tenDigitMsisdnPattern.matcher(msisdn).matches();
+        return !CommonUtilities.isNullOrEmpty(msisdn) && tenDigitMsisdnPattern.matcher(msisdn).matches();
     }
 
     public static boolean isValidFullMsisdn(String msisdn) {
-        return !isNullOrEmpty(msisdn) && fullMsisdnPattern.matcher(msisdn).matches();
+        return !CommonUtilities.isNullOrEmpty(msisdn) && fullMsisdnPattern.matcher(msisdn).matches();
     }
 
     public static boolean isValidName(String name) {
-        return !isNullOrEmpty(name) && namePattern.matcher(name).matches();
+        return !CommonUtilities.isNullOrEmpty(name) && namePattern.matcher(name).matches();
     }
 
     public static boolean isValidPlainText(String text) {
-        return !isNullOrEmpty(text) && plainTextPattern.matcher(text).matches();
+        return !CommonUtilities.isNullOrEmpty(text) && plainTextPattern.matcher(text).matches();
     }
 
     public static boolean isValidAddress(String text) {
-        return !isNullOrEmpty(text) && addressPattern.matcher(text).matches();
+        return !CommonUtilities.isNullOrEmpty(text) && addressPattern.matcher(text).matches();
     }
 
     public static boolean isValidUsername(String username) {
-        return !isNullOrEmpty(username) && usernamePattern.matcher(username).matches();
+        return !CommonUtilities.isNullOrEmpty(username) && usernamePattern.matcher(username).matches();
     }
 
     public static boolean isValidAuthData(String authData) {
-        return !isNullOrEmpty(authData) && authData.length() <= MAX_AUTH_TOKEN_LEN;
+        return !CommonUtilities.isNullOrEmpty(authData) && authData.length() <= MAX_AUTH_TOKEN_LEN;
     }
 }

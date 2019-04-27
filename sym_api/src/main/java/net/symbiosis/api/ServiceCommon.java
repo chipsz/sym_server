@@ -1,6 +1,6 @@
 package net.symbiosis.api;
 
-import static net.symbiosis.core_lib.utilities.SymValidator.isNullOrEmpty;
+import static net.symbiosis.core_lib.utilities.CommonUtilities.isNullOrEmpty;
 
 /***************************************************************************
  * Created:     9/5/2018                                                  *

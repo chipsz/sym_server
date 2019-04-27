@@ -1,6 +1,7 @@
 package net.symbiosis.common.mail;
 
-import net.symbiosis.common.configuration.Configuration;
+import net.symbiosis.persistence.dao.complex_type.SymConfigDao;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -13,54 +14,38 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 import java.io.File;
 import java.util.Properties;
-import java.util.ResourceBundle;
 import java.util.logging.Logger;
+
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
 
 public class EMailer implements Runnable {
 
+    @Autowired
+    private SymConfigDao symConfigDao;
     private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
     public static final String DEFAULT_CONTENT_TYPE = "text/plain";
     public static final String CONTENT_TYPE_HTML = "text/html";
-    String host = "null";
-    String recipients[];
-    String subject;
-    String message;
-    String from;
-    String contentType;
-    String imageLocation;
-    String contentID;
-    boolean isMultipart = false;
-    String attachmentFilenames[] = null;
-    MimeMultipart multipart;
+    private String recipients[];
+    private String subject;
+    private String message;
+    private String contentType;
+    private String imageLocation;
+    private String contentID;
+    private boolean isMultipart = false;
+    private String attachmentFilenames[] = null;
+    private MimeMultipart multipart;
 
-    public EMailer(String recipients[], String subject, String message, String from, String host, String contentType) {
+    public EMailer(String recipients[], String subject, String message, String contentType) {
         this.recipients = recipients;
         this.subject = subject;
         this.message = message;
-        this.from = from;
-        this.host = host;
         this.contentType = contentType;
     }
-
-    /**
-     * This constructor creates a HTML email with a logo and attachments
-     *
-     * @param recipients
-     * @param subject
-     * @param message
-     * @param from
-     * @param host
-     * @param contentType
-     * @param imageLocation
-     * @param contentID
-     * @param attachmentFilenames
-     */
-    public EMailer(String recipients[], String subject, String message, String from, String host, String contentType, String imageLocation, String contentID, String attachmentFilenames[]) {
+    
+    public EMailer(String recipients[], String subject, String message, String contentType, String imageLocation, String contentID, String attachmentFilenames[]) {
         this.recipients = recipients;
         this.subject = subject;
         this.message = message;
-        this.from = from;
-        this.host = host;
         this.contentType = contentType;
         this.imageLocation = imageLocation;
         this.contentID = contentID;
@@ -68,35 +53,19 @@ public class EMailer implements Runnable {
         isMultipart = true;
     }
 
-    /**
-     * Creates HTML email with logo but no attachment
-     *
-     * @param recipients
-     * @param subject
-     * @param message
-     * @param from
-     * @param host
-     * @param contentType
-     * @param imageLocation
-     * @param contentID
-     */
-    public EMailer(String recipients[], String subject, String message, String from, String host, String contentType, String imageLocation, String contentID) {
+    public EMailer(String recipients[], String subject, String message, String contentType, String imageLocation, String contentID) {
         this.recipients = recipients;
         this.subject = subject;
         this.message = message;
-        this.from = from;
-        this.host = host;
         this.contentType = contentType;
         this.imageLocation = imageLocation;
         this.contentID = contentID;
         isMultipart = true;
     }
 
-    public EMailer(String recipients[], String subject, String from, String host, MimeMultipart multipart) {
+    public EMailer(String recipients[], String subject, MimeMultipart multipart) {
         this.recipients = recipients;
         this.subject = subject;
-        this.from = from;
-        this.host = host;
         this.multipart = multipart;
         isMultipart = true;
     }
@@ -105,29 +74,10 @@ public class EMailer implements Runnable {
         this(recipients, subject, message, DEFAULT_CONTENT_TYPE);
     }
 
-    public EMailer(String recipients[], String subject, String message, String contentType) {
-        //get alarm email address
-        String from = Configuration.getProperty("mail", "mail.smtp.submitter");
-        String host = Configuration.getProperty("mail", "mail.smtp.host");
-
-        this.recipients = recipients;
-        this.subject = subject;
-        this.message = message;
-        this.from = from;
-        this.host = host;
-        this.contentType = contentType;
-    }
-
     public EMailer(String recipients[], String subject, String message, String contentType, String imageLocation) {
-        //get alarm email address
-        String from = Configuration.getProperty("mail", "mail.smtp.submitter");
-        String host = Configuration.getProperty("mail", "mail.smtp.host");
-
         this.recipients = recipients;
         this.subject = subject;
         this.message = message;
-        this.from = from;
-        this.host = host;
         this.contentType = contentType;
         this.imageLocation = imageLocation;
         isMultipart = true;
@@ -136,21 +86,25 @@ public class EMailer implements Runnable {
     //Send the email
     public void run() {
         try {
-            //Set the host smtp address
-            Properties props = Configuration.resourceBundleToProperties(ResourceBundle.getBundle("properties/mail"));
-
             // create some properties and get the default Session
             Authenticator auth = new PopupAuthenticator(
-                    props.getProperty("mail.smtp.submitter"),
-                    props.getProperty("mail.smtp.submitter.password"));
+                    symConfigDao.getConfig(CONFIG_EMAIL_USERNAME),
+                    symConfigDao.getConfig(CONFIG_EMAIL_PASSWORD));
 
-            Session session = Session.getInstance(props, auth);
+            Properties emailProps = new Properties();
+            emailProps.put("mail.transport.protocol", symConfigDao.getConfig(CONFIG_EMAIL_PROTOCOL));
+            emailProps.put("mail.smtp.host", symConfigDao.getConfig(CONFIG_EMAIL_HOST));
+            emailProps.put("mail.smtp.auth", symConfigDao.getConfig(CONFIG_EMAIL_SMTP_AUTH));
+            emailProps.put("mail.smtp.starttls.enable", symConfigDao.getConfig(CONFIG_EMAIL_SMTP_STARTTLS_ENABLE));
+            emailProps.put("mail.smtp.port", symConfigDao.getConfig(CONFIG_EMAIL_PORT));
+
+            Session session = Session.getInstance(emailProps, auth);
 
             // create a message
             Message msg = new MimeMessage(session);
 
             // set the from and to address
-            InternetAddress addressFrom = new InternetAddress(from);
+            InternetAddress addressFrom = new InternetAddress(symConfigDao.getConfig(CONFIG_EMAIL_FROM));
             msg.setFrom(addressFrom);
 
             InternetAddress[] addressTo = new InternetAddress[recipients.length];
@@ -159,15 +113,16 @@ public class EMailer implements Runnable {
                 addressTo[i].validate();
             }
 
-            String addresses = "{";
+            StringBuilder addressesBuilder = new StringBuilder("{");
             for (int c = 0; c < addressTo.length; c++) {
-                addresses += addressTo[c].getAddress();
+                addressesBuilder.append(addressTo[c].getAddress());
                 if (c + 1 != addressTo.length)
-                    addresses += ',';
+                    addressesBuilder.append(',');
             }
+            String addresses = addressesBuilder.toString();
             addresses += "}";
 
-            logger.info("Sending email with subject: " + subject + " to addresses " + addresses + " using host: " + host);
+            logger.info("Sending email with subject: " + subject + " to addresses " + addresses + " using host: " + symConfigDao.getConfig(CONFIG_EMAIL_HOST));
 
             msg.setRecipients(Message.RecipientType.TO, addressTo);
             msg.setSubject(subject);
@@ -182,10 +137,11 @@ public class EMailer implements Runnable {
 
             Transport.send(msg);
 
-            String allRecipients = "";
+            StringBuilder allRecipientsBuilder = new StringBuilder();
             for (String recipient : recipients) {
-                allRecipients += recipient + ",";
+                allRecipientsBuilder.append(recipient).append(",");
             }
+            String allRecipients = allRecipientsBuilder.toString();
 
             logger.info("Email with subject: " + subject + " sent to: {" +
                     allRecipients.substring(0, allRecipients.length() - 1) + "}");
@@ -195,7 +151,7 @@ public class EMailer implements Runnable {
         }
     }
 
-    public Message setMultiPartMessage(Message msg) {
+    private Message setMultiPartMessage(Message msg) {
         try {
             // This HTML mail has to 2 parts, the BODY and the embedded image
             MimeMultipart multipart = new MimeMultipart("related");
@@ -213,11 +169,11 @@ public class EMailer implements Runnable {
             multipart.addBodyPart(messageBodyPart);
 
             if (attachmentFilenames != null)
-                for (int j = 0; j < attachmentFilenames.length; j++) {
+                for (String attachmentFilename : attachmentFilenames) {
                     messageBodyPart = new MimeBodyPart();
-                    DataSource source = new FileDataSource(attachmentFilenames[j]);
+                    DataSource source = new FileDataSource(attachmentFilename);
                     messageBodyPart.setDataHandler(new DataHandler(source));
-                    String filename = attachmentFilenames[j].substring(attachmentFilenames[j].lastIndexOf(File.separatorChar) + 1);
+                    String filename = attachmentFilename.substring(attachmentFilename.lastIndexOf(File.separatorChar) + 1);
                     messageBodyPart.setFileName(filename);
                     multipart.addBodyPart(messageBodyPart);
                 }
@@ -288,7 +244,7 @@ public class EMailer implements Runnable {
         String username;
         String password;
 
-        public PopupAuthenticator(String username, String password) {
+        PopupAuthenticator(String username, String password) {
             this.username = username;
             this.password = password;
         }

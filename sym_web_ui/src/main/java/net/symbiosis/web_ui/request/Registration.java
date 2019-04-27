@@ -1,6 +1,6 @@
 package net.symbiosis.web_ui.request;
 
-import net.symbiosis.common.utilities.PrintableStringClass;
+import net.symbiosis.core_lib.interfaces.PrintableStringClass;
 import net.symbiosis.web_ui.annotations.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;

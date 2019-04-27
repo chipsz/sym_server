@@ -1,5 +1,7 @@
-package net.symbiosis.core_lib.utilities;
+package net.symbiosis.common;
 
+import net.symbiosis.common.utilities.SymValidator;
+import net.symbiosis.core_lib.utilities.CommonUtilities;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -18,11 +20,11 @@ public class SymValidatorTest {
     @Test
     public void testIsNullOrEmptyTest() {
         System.out.println("RUNNING TEST: CommonUtilities.isNullOrEmpty");
-        Assert.assertTrue(SymValidator.isNullOrEmpty(null));
-        Assert.assertTrue(SymValidator.isNullOrEmpty(""));
-        Assert.assertFalse(SymValidator.isNullOrEmpty("0394580"));
-        Assert.assertFalse(SymValidator.isNullOrEmpty("test string"));
-        Assert.assertFalse(SymValidator.isNullOrEmpty(String.valueOf(false)));
+        Assert.assertTrue(CommonUtilities.isNullOrEmpty(null));
+        Assert.assertTrue(CommonUtilities.isNullOrEmpty(""));
+        Assert.assertFalse(CommonUtilities.isNullOrEmpty("0394580"));
+        Assert.assertFalse(CommonUtilities.isNullOrEmpty("test string"));
+        Assert.assertFalse(CommonUtilities.isNullOrEmpty(String.valueOf(false)));
     }
 
     @Test

@@ -2,7 +2,7 @@ package net.symbiosis.common.enumeration;
 
 import java.util.Arrays;
 
-import static net.symbiosis.core_lib.utilities.SymValidator.isNullOrEmpty;
+import static net.symbiosis.core_lib.utilities.CommonUtilities.isNullOrEmpty;
 
 /******************************************************************************
  * *

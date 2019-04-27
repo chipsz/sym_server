@@ -1,6 +1,6 @@
 package net.symbiosis.persistence.entity.super_class;
 
-import net.symbiosis.common.utilities.PrintableStringClass;
+import net.symbiosis.core_lib.interfaces.PrintableStringClass;
 import net.symbiosis.persistence.helper.DaoManager;
 
 import javax.persistence.GeneratedValue;

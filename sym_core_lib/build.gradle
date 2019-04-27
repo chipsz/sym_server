@@ -3,5 +3,6 @@ description = 'Symbiosis Core Library'
 jar { baseName = 'core_lib' }
 
 dependencies {
+    compile libraries.commons_codec
     testCompile libraries.testng
 }

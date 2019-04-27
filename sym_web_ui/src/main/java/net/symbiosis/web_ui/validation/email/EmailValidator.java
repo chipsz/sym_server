@@ -20,7 +20,7 @@ import javax.faces.validator.ValidatorException;
 import java.util.Map;
 
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
-import static net.symbiosis.core_lib.utilities.SymValidator.isValidEmail;
+import static net.symbiosis.common.utilities.SymValidator.isValidEmail;
 import static net.symbiosis.web_ui.validation.ConstraintHelper.changeAnnotationValue;
 
 /**

@@ -1,6 +1,6 @@
 package net.symbiosis.web_ui.session;
 
-import net.symbiosis.common.structure.Pair;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.log.sym_incoming_payment;
 import net.symbiosis.persistence.entity.complex_type.sym_company;
 import net.symbiosis.persistence.entity.complex_type.sym_user;

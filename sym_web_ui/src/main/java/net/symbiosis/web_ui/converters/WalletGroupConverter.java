@@ -9,7 +9,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import static java.lang.Long.parseLong;
-import static net.symbiosis.core_lib.utilities.SymValidator.isNumeric;
+import static net.symbiosis.common.utilities.SymValidator.isNumeric;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 

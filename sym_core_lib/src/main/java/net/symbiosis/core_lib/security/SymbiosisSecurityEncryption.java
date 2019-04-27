@@ -1,8 +1,4 @@
-package net.symbiosis.common.security;
-
-import net.symbiosis.common.configuration.Configuration;
-
-import static java.lang.Integer.parseInt;
+package net.symbiosis.core_lib.security;
 
 /**
  * Created by photon on 2015/12/31.
@@ -17,5 +13,5 @@ public class SymbiosisSecurityEncryption {
 
     public static final int DEFAULT_SALT_LENGTH = 64;
 
-    public static final int MAX_PASSWORD_TRIES = parseInt(Configuration.getProperty("MaxPasswordTries"));
+//    public static final int MAX_PASSWORD_TRIES = parseInt(Configuration.getProperty("MaxPasswordTries"));
 }

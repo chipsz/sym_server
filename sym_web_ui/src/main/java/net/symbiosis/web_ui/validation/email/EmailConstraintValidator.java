@@ -13,7 +13,7 @@ import net.symbiosis.web_ui.annotations.EmailConstraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import static net.symbiosis.core_lib.utilities.SymValidator.isValidEmail;
+import static net.symbiosis.common.utilities.SymValidator.isValidEmail;
 
 /**
  * ConstraintValidator for @Email

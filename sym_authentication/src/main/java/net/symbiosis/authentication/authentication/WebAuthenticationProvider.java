@@ -24,14 +24,14 @@ import java.util.ArrayList;
 import static java.lang.String.format;
 import static java.util.Collections.singletonList;
 import static net.symbiosis.authentication.authentication.SymbiosisAuthenticator.registerUser;
-import static net.symbiosis.common.configuration.Configuration.getProperty;
 import static net.symbiosis.common.configuration.NetworkUtilities.sendEmail;
 import static net.symbiosis.common.configuration.NetworkUtilities.sendEmailAlert;
 import static net.symbiosis.common.mail.EMailer.CONTENT_TYPE_HTML;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
 import static net.symbiosis.core_lib.enumeration.SymChannel.WEB;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
-import static net.symbiosis.core_lib.enumeration.SystemType.SYMBIOSIS;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 
 public class WebAuthenticationProvider extends SymChainAuthenticationProvider {
@@ -61,8 +61,10 @@ public class WebAuthenticationProvider extends SymChainAuthenticationProvider {
 
         logger.info(format("Performing WEB registration for %s %s", newUser.getFirst_name(), newUser.getLast_name()));
 
+        
+        
         SymResponseObject<sym_auth_user> registrationResponse = registerUser(newUser, fromEnum(WEB),
-                findByName(sym_auth_group.class, authGroup == null ? getProperty("DefaultWebGroup") : authGroup.getName()),
+                findByName(sym_auth_group.class, authGroup == null ? getSymConfigDao().getConfig(CONFIG_DEFAULT_WEB_AUTH_GROUP) : authGroup.getName()),
                 null);
 
         if (registrationResponse.getResponseCode().getCode() != SUCCESS.getCode()) {
@@ -78,7 +80,7 @@ public class WebAuthenticationProvider extends SymChainAuthenticationProvider {
         if (wallet == null) {
             logger.info(format("Creating wallet for user %s", newUser.getUsername()));
             wallet = new sym_wallet(new BigDecimal(0), newUser,
-                    findByName(sym_wallet_group.class, getProperty("DefaultWalletGroup")), newCompany).save();
+                    findByName(sym_wallet_group.class, getSymConfigDao().getConfig(CONFIG_DEFAULT_WALLET_GROUP)), newCompany).save();
         } else {
             logger.info(format("Setting user wallet to %s for user %s", wallet.getId(), newUser.getUsername()));
         }
@@ -105,15 +107,15 @@ public class WebAuthenticationProvider extends SymChainAuthenticationProvider {
                         .replaceAll("%reg_username%", newUser.getUsername())
                         .replaceAll("%reg_userId%", String.valueOf(registrationResponse.getResponseObject().getId().intValue()))
                         .replaceAll("%reg_authToken%", registrationResponse.getResponseObject().getAuth_token())
-                        .replaceAll("%contact_address%", getProperty("ContactAddress"))
-                        .replaceAll("%support_phone%", getProperty("SupportPhone"))
-                        .replaceAll("%support_email%", getProperty("SupportEmail"))).append("\r\n");
+                        .replaceAll("%contact_address%", getSymConfigDao().getConfig(CONFIG_CONTACT_ADDRESS))
+                        .replaceAll("%support_phone%", getSymConfigDao().getConfig(CONFIG_SUPPORT_PHONE))
+                        .replaceAll("%support_email%", getSymConfigDao().getConfig(CONFIG_SUPPORT_EMAIL))).append("\r\n");
             }
-            sendEmail(SYMBIOSIS.name(), new String[]{newUser.getEmail(), getProperty("AlertEmail")},
+            sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[]{newUser.getEmail(), getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)},
                     "Welcome to Symbiosis Control Center!", registrationEmail.toString(), CONTENT_TYPE_HTML);
         } catch (Exception e) {
             e.printStackTrace();
-            sendEmailAlert(SYMBIOSIS.name(), "Failed to send registration email! \r\n", e.getMessage());
+            sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), "Failed to send registration email! \r\n", e.getMessage());
         } finally {
             try {
                 if (br != null) {
@@ -156,15 +158,15 @@ public class WebAuthenticationProvider extends SymChainAuthenticationProvider {
                             .replaceAll("%auth_lname%", authUser.getUser().getLast_name())
                             .replaceAll("%auth_username%", authUser.getUser().getUsername())
                             .replaceAll("%auth_password%", newPassword)
-                            .replaceAll("%contact_address%", getProperty("ContactAddress"))
-                            .replaceAll("%support_phone%", getProperty("SupportPhone"))
-                            .replaceAll("%support_email%", getProperty("SupportEmail")) + "\r\n";
+                            .replaceAll("%contact_address%", getSymConfigDao().getConfig(CONFIG_CONTACT_ADDRESS))
+                            .replaceAll("%support_phone%", getSymConfigDao().getConfig(CONFIG_SUPPORT_PHONE))
+                            .replaceAll("%support_email%", getSymConfigDao().getConfig(CONFIG_SUPPORT_EMAIL)) + "\r\n";
                 }
-                sendEmail(SYMBIOSIS.name(), new String[]{authUser.getUser().getEmail(), getProperty("AlertEmail")},
+                sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[]{authUser.getUser().getEmail(), getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)},
                         "Password Changed on Symbiosis Control Center", registrationEmail, CONTENT_TYPE_HTML);
             } catch (Exception e) {
                 e.printStackTrace();
-                sendEmailAlert(SYMBIOSIS.name(), "Failed to send password changed email! \r\n", e.getMessage());
+                sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), "Failed to send password changed email! \r\n", e.getMessage());
             } finally {
                 try {
                     if (br != null) {

@@ -19,9 +19,9 @@ idea { module { scopes.PROVIDED.plus += [ configurations.provided] } }
 dependencies {
 
     provided project(':sym_core_lib')
-    provided project(':sym_common')
+//    provided project(':sym_common')
     testCompile project(':sym_core_lib').sourceSets.test.output
-    testCompile project(':sym_common').sourceSets.test.output
+//    testCompile project(':sym_common').sourceSets.test.output
 
     provided libraries.hibernate_core
     provided libraries.jpa_2_1_api

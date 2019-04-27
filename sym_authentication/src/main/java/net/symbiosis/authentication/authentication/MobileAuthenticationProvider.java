@@ -7,9 +7,9 @@ package net.symbiosis.authentication.authentication;
  *                                                                        *
  *************************************************************************/
 
-import net.symbiosis.common.structure.Pair;
 import net.symbiosis.core_lib.response.SymResponseObject;
-import net.symbiosis.core_lib.utilities.SymValidator;
+import net.symbiosis.core_lib.structure.Pair;
+import net.symbiosis.core_lib.utilities.CommonUtilities;
 import net.symbiosis.persistence.entity.complex_type.device.sym_device_phone;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
@@ -32,15 +32,15 @@ import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static net.symbiosis.authentication.authentication.SymbiosisAuthenticator.registerUser;
-import static net.symbiosis.common.configuration.Configuration.getProperty;
 import static net.symbiosis.common.configuration.NetworkUtilities.sendEmail;
 import static net.symbiosis.common.configuration.NetworkUtilities.sendEmailAlert;
 import static net.symbiosis.common.mail.EMailer.CONTENT_TYPE_HTML;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
 import static net.symbiosis.core_lib.enumeration.SymChannel.SMART_PHONE;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
-import static net.symbiosis.core_lib.enumeration.SystemType.SYMBIOSIS;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 
 public class MobileAuthenticationProvider extends SymChainAuthenticationProvider {
@@ -70,7 +70,7 @@ public class MobileAuthenticationProvider extends SymChainAuthenticationProvider
         logger.info(format("Performing MOBILE registration for %s %s", newUser.getFirst_name(), newUser.getLast_name()));
 
         SymResponseObject<sym_auth_user> registrationResponse = registerUser(newUser, fromEnum(SMART_PHONE),
-                findByName(sym_auth_group.class, authGroup == null ? getProperty("DefaultMobileGroup") : authGroup.getName()),
+                findByName(sym_auth_group.class, authGroup == null ? getSymConfigDao().getConfig(CONFIG_DEFAULT_SMART_PHONE_AUTH_GROUP) : authGroup.getName()),
                 null);
 
         if (registrationResponse.getResponseCode().getCode() != SUCCESS.getCode()) {
@@ -87,13 +87,13 @@ public class MobileAuthenticationProvider extends SymChainAuthenticationProvider
 
         logger.info(format("Creating wallet for user %s", newUser.getUsername()));
         sym_wallet wallet = new sym_wallet(new BigDecimal(0), newUser,
-                findByName(sym_wallet_group.class, getProperty("DefaultWalletGroup")), company).save();
+                findByName(sym_wallet_group.class, getSymConfigDao().getConfig(CONFIG_DEFAULT_WALLET_GROUP)), company).save();
 
         newUser.setWallet(wallet).save();
 
         sym_device_phone registrationPhone;
 
-        if (!SymValidator.isNullOrEmpty(imei)) {
+        if (!CommonUtilities.isNullOrEmpty(imei)) {
             List<sym_device_phone> existingPhones = getEntityManagerRepo().findWhere(sym_device_phone.class,
                     asList(new Pair<>("imei1", imei), new Pair<>("imei2", imei)),
                     false, false, true, false);
@@ -135,15 +135,15 @@ public class MobileAuthenticationProvider extends SymChainAuthenticationProvider
                         .replaceAll("%reg_username%", newUser.getUsername())
                         .replaceAll("%reg_userId%", String.valueOf(registrationResponse.getResponseObject().getId().intValue()))
                         .replaceAll("%reg_authToken%", registrationResponse.getResponseObject().getAuth_token())
-                        .replaceAll("%contact_address%", getProperty("ContactAddress"))
-                        .replaceAll("%support_phone%", getProperty("SupportPhone"))
-                        .replaceAll("%support_email%", getProperty("SupportEmail"))).append("\r\n");
+                        .replaceAll("%contact_address%", getSymConfigDao().getConfig(CONFIG_CONTACT_ADDRESS))
+                        .replaceAll("%support_phone%", getSymConfigDao().getConfig(CONFIG_SUPPORT_PHONE))
+                        .replaceAll("%support_email%", getSymConfigDao().getConfig(CONFIG_SUPPORT_EMAIL))).append("\r\n");
             }
-            sendEmail(SYMBIOSIS.name(), new String[]{newUser.getEmail(), getProperty("AlertEmail")},
+            sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[]{newUser.getEmail(), getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)},
                     "Welcome to Symbiosis Wallet Payment Platform", registrationEmail.toString(), CONTENT_TYPE_HTML);
         } catch (Exception e) {
             e.printStackTrace();
-            sendEmailAlert(SYMBIOSIS.name(), "Failed to send registration email! \r\n", e.getMessage());
+            sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), "Failed to send registration email! \r\n", e.getMessage());
         } finally {
             try {
                 if (br != null) {
@@ -189,15 +189,15 @@ public class MobileAuthenticationProvider extends SymChainAuthenticationProvider
                             .replaceAll("%auth_lname%", authUser.getUser().getLast_name())
                             .replaceAll("%auth_username%", authUser.getUser().getUsername())
                             .replaceAll("%auth_pin%", newPin)
-                            .replaceAll("%contact_address%", getProperty("ContactAddress"))
-                            .replaceAll("%support_phone%", getProperty("SupportPhone"))
-                            .replaceAll("%support_email%", getProperty("SupportEmail"))).append("\r\n");
+                            .replaceAll("%contact_address%", getSymConfigDao().getConfig(CONFIG_CONTACT_ADDRESS))
+                            .replaceAll("%support_phone%", getSymConfigDao().getConfig(CONFIG_SUPPORT_PHONE))
+                            .replaceAll("%support_email%", getSymConfigDao().getConfig(CONFIG_SUPPORT_EMAIL))).append("\r\n");
                 }
-                sendEmail(SYMBIOSIS.name(), new String[]{authUser.getUser().getEmail(), getProperty("AlertEmail")},
+                sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[]{authUser.getUser().getEmail(), getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)},
                         "Pin Changed on Symbiosis' Wallet Platform", registrationEmail.toString(), CONTENT_TYPE_HTML);
             } catch (Exception e) {
                 e.printStackTrace();
-                sendEmailAlert(SYMBIOSIS.name(), "Failed to send pin changed email! \r\n", e.getMessage());
+                sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), "Failed to send pin changed email! \r\n", e.getMessage());
             } finally {
                 try {
                     if (br != null) {

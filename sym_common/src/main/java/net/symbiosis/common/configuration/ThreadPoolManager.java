@@ -4,18 +4,22 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Integer.parseInt;
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_THREAD_CORE_POOL_SIZE;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_THREAD_MAX_POOL_SIZE;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
 /**
  * Created by tsungai.kaviya on 2015-09-07.
  */
 public class ThreadPoolManager {
-    private static final Integer CORE_THREADS = 10;
-    private static final Integer MAX_THREADS = 30;
+    private static final Integer MAX_THREADS = parseInt(getSymConfigDao().getConfig(CONFIG_THREAD_MAX_POOL_SIZE));
     private static final Integer KEEP_ALIVE_TIME = 20;
 
     private ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
-            CORE_THREADS, MAX_THREADS, KEEP_ALIVE_TIME, SECONDS, new ArrayBlockingQueue<>(MAX_THREADS));
+        parseInt(getSymConfigDao().getConfig(CONFIG_THREAD_CORE_POOL_SIZE)),
+        MAX_THREADS, KEEP_ALIVE_TIME, SECONDS, new ArrayBlockingQueue<>(MAX_THREADS));
 
     private static ThreadPoolManager threadPoolManager = null;
 

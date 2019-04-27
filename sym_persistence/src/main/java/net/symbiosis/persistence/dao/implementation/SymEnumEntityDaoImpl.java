@@ -1,6 +1,6 @@
 package net.symbiosis.persistence.dao.implementation;
 
-import net.symbiosis.common.structure.Pair;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.dao.super_class.AbstractDao;
 import net.symbiosis.persistence.dao.super_class.SymbisoisEnumEntityDao;
 import net.symbiosis.persistence.entity.super_class.sym_entity;

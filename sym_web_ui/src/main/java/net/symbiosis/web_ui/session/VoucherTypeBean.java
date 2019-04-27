@@ -1,6 +1,6 @@
 package net.symbiosis.web_ui.session;
 
-import net.symbiosis.common.structure.Pair;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.enumeration.sym_voucher_type;
 import net.symbiosis.web_ui.common.JSFUpdatable;
 import net.symbiosis.web_ui.common.UpdateOptions;

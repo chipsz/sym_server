@@ -1,9 +1,9 @@
 package net.symbiosis.web_ui.session;
 
 import net.symbiosis.authentication.authentication.PosAuthenticationProvider;
-import net.symbiosis.common.structure.Pair;
 import net.symbiosis.core.service.WalletManager;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.log.sym_incoming_payment;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
@@ -29,15 +29,16 @@ import static java.lang.String.format;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.context.FacesContext.getCurrentInstance;
-import static net.symbiosis.common.configuration.Configuration.getProperty;
-import static net.symbiosis.common.utilities.ReferenceGenerator.GenPin;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_DEFAULT_POS_MACHINE_AUTH_GROUP;
 import static net.symbiosis.core_lib.enumeration.SymChannel.POS_MACHINE;
 import static net.symbiosis.core_lib.enumeration.SymEventType.USER_REGISTRATION;
 import static net.symbiosis.core_lib.enumeration.SymEventType.WALLET_LOAD;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.GENERAL_ERROR;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
+import static net.symbiosis.core_lib.utilities.ReferenceGenerator.GenPin;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 import static net.symbiosis.web_ui.common.DataTableHeaders.*;
 
@@ -206,7 +207,7 @@ public class MerchantBean extends JSFUpdatable {
         );
 
         SymResponseObject<sym_auth_user> assignResponse = authenticationProvider.assignPOSChannel(
-            updateUser, findByName(sym_auth_group.class, getProperty("DefaultPOSGroup"))
+            updateUser, findByName(sym_auth_group.class, getSymConfigDao().getConfig(CONFIG_DEFAULT_POS_MACHINE_AUTH_GROUP))
         );
 
         registrationLog.setSystem_user(updateUser);

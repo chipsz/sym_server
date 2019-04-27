@@ -1,7 +1,6 @@
 package net.symbiosis.web_ui.session;
 
-import net.symbiosis.common.configuration.Configuration;
-import net.symbiosis.common.structure.Pair;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_wallet_group_voucher;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
@@ -24,10 +23,12 @@ import static java.util.Arrays.asList;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 import static javax.faces.application.FacesMessage.SEVERITY_INFO;
 import static javax.faces.context.FacesContext.getCurrentInstance;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_DEFAULT_CURRENCY_SYMBOL;
 import static net.symbiosis.core_lib.enumeration.SymEventType.VOUCHER_CREATE;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.EXISTING_DATA_FOUND;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 import static net.symbiosis.persistence.helper.SymEnumHelper.voucherTypeFromString;
 
@@ -62,7 +63,7 @@ public class VoucherCreateBean implements JSFLoggable {
     private sym_voucher initNewVoucher() {
         return new sym_voucher(
             new BigDecimal(0), false,null, voucherTypeFromString("AIRTIME"),
-            0.0, Configuration.getProperty("CurrencySymbol"),true, true
+            0.0, getSymConfigDao().getConfig(CONFIG_DEFAULT_CURRENCY_SYMBOL),true, true
         );
     }
 

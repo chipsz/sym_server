@@ -1,6 +1,6 @@
 package net.symbiosis.persistence.dao;
 
-import net.symbiosis.common.structure.Pair;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.super_class.sym_enum_entity;
 
 import java.util.HashMap;

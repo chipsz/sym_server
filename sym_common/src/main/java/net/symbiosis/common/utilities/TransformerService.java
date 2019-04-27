@@ -1,6 +1,6 @@
 package net.symbiosis.common.utilities;
 
-import net.symbiosis.common.structure.Pair;
+import net.symbiosis.core_lib.structure.Pair;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -10,9 +10,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static net.symbiosis.common.structure.Pair.p;
 import static net.symbiosis.common.utilities.Reflection.invoke;
 import static net.symbiosis.common.utilities.Reflection.resolveMethod;
+import static net.symbiosis.core_lib.structure.Pair.p;
 
 public class TransformerService {
 

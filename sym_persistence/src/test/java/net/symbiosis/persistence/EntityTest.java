@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 import java.util.Date;
 
 import static junit.framework.Assert.*;
-import static net.symbiosis.common.utilities.ReferenceGenerator.Gen;
+import static net.symbiosis.core_lib.utilities.ReferenceGenerator.Gen;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 
 /**

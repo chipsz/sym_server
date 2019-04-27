@@ -1,6 +1,6 @@
 package net.symbiosis.core.contract.symbiosis;
 
-import net.symbiosis.common.utilities.PrintableStringClass;
+import net.symbiosis.core_lib.interfaces.PrintableStringClass;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;

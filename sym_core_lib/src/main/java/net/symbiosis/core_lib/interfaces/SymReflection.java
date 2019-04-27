@@ -1,4 +1,4 @@
-package net.symbiosis.common.interfaces;
+package net.symbiosis.core_lib.interfaces;
 
 import java.util.Optional;
 
@@ -80,8 +80,8 @@ public interface SymReflection {
         return getLineNumber(DEPTH_CALLER_METHOD);
     }
 
-    default SymReflection getInstance() {
-        return new SymReflection() {
-        };
-    }
+//    default SymReflection getInstance() {
+//        return new SymReflection() {
+//        };
+//    }
 }

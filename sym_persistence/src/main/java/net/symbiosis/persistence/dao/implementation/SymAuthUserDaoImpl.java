@@ -1,6 +1,6 @@
 package net.symbiosis.persistence.dao.implementation;
 
-import net.symbiosis.common.structure.Pair;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.dao.complex_type.SymAuthUserDao;
 import net.symbiosis.persistence.dao.super_class.AbstractDao;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;

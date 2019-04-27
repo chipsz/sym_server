@@ -25,6 +25,7 @@
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_session</class>
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_swipe_transaction</class>
         <class>net.symbiosis.persistence.entity.enumeration.sym_channel</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_config</class>
         <class>net.symbiosis.persistence.entity.enumeration.sym_country</class>
         <class>net.symbiosis.persistence.entity.enumeration.sym_currency</class>
         <class>net.symbiosis.persistence.entity.enumeration.sym_event_type</class>

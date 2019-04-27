@@ -18,12 +18,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
-import static net.symbiosis.common.configuration.Configuration.*;
+import static net.symbiosis.common.utilities.SymValidator.*;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.DATA_NOT_FOUND;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.javaToJSRegex;
-import static net.symbiosis.core_lib.utilities.SymValidator.*;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
 /***************************************************************************
  * *
@@ -106,10 +107,10 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
         logger.info("Getting system configuration list");
         HashMap<String, String> sysConfigs = new HashMap<>();
 
-        sysConfigs.put("CurrencySymbol", getCurrencySymbol());
-        sysConfigs.put("CountryCodePrefix", getCountryCodePrefix());
-        sysConfigs.put("SupportEmail", getProperty("SupportEmail"));
-        sysConfigs.put("SupportPhone", getProperty("SupportPhone"));
+        sysConfigs.put("CurrencySymbol", getSymConfigDao().getConfig(CONFIG_DEFAULT_CURRENCY_SYMBOL));
+        sysConfigs.put("CountryCodePrefix", getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE));
+        sysConfigs.put("SupportEmail", getSymConfigDao().getConfig(CONFIG_SUPPORT_EMAIL));
+        sysConfigs.put("SupportPhone", getSymConfigDao().getConfig(CONFIG_SUPPORT_PHONE));
         sysConfigs.put("MinPasswordLength", MIN_PASSWORD_LENGTH.toString());
         sysConfigs.put("MaxPasswordLength", MAX_PASSWORD_LENGTH.toString());
         sysConfigs.put("MinNameLength", MIN_NAME_LEN.toString());

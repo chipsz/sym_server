@@ -1,4 +1,4 @@
-package net.symbiosis.common.utilities;
+package net.symbiosis.core_lib.utilities;
 
 import java.util.Calendar;
 

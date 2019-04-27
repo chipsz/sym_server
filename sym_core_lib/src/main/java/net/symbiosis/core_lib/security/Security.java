@@ -1,4 +1,4 @@
-package net.symbiosis.common.security;
+package net.symbiosis.core_lib.security;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -10,9 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
-import static net.symbiosis.common.security.SymbiosisSecurityEncryption.DEFAULT_SALT_LENGTH;
-import static net.symbiosis.common.security.SymbiosisSecurityEncryption.DEFAULT_SECURITY_HASH;
-import static net.symbiosis.core_lib.utilities.SymValidator.isNullOrEmpty;
+import static net.symbiosis.core_lib.utilities.CommonUtilities.isNullOrEmpty;
 
 /**
  * Created with IntelliJ IDEA.
@@ -52,7 +50,7 @@ public class Security {
             secureRandom = new SecureRandom();
         }
 
-        byte[] randomBytes = new byte[DEFAULT_SALT_LENGTH];
+        byte[] randomBytes = new byte[SymbiosisSecurityEncryption.DEFAULT_SALT_LENGTH];
 
         secureRandom.nextBytes(randomBytes);
 
@@ -60,7 +58,7 @@ public class Security {
     }
 
     public static String hashWithSalt(final String unencryptedStr, final byte[] salt) {
-        return hashWithSalt(unencryptedStr, DEFAULT_SECURITY_HASH, salt);
+        return hashWithSalt(unencryptedStr, SymbiosisSecurityEncryption.DEFAULT_SECURITY_HASH, salt);
     }
 
     public static String hashWithSalt(final String input, final String encryptMode, final byte[] salt) {

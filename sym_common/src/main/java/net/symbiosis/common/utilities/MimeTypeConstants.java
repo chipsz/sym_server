@@ -9,7 +9,7 @@ package net.symbiosis.common.utilities;
 import java.util.HashMap;
 import java.util.Map;
 
-import static net.symbiosis.core_lib.utilities.SymValidator.isNullOrEmpty;
+import static net.symbiosis.core_lib.utilities.CommonUtilities.isNullOrEmpty;
 
 final class MimeTypeConstants {
     private static final Map<String, String> MIME_TYPES = new HashMap<>();

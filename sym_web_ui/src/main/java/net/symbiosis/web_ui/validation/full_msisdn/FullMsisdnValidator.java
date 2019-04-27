@@ -19,8 +19,9 @@ import javax.faces.validator.ValidatorException;
 import java.util.Map;
 
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
-import static net.symbiosis.common.configuration.Configuration.getCountryCodePrefix;
-import static net.symbiosis.core_lib.utilities.SymValidator.isValidFullMsisdn;
+import static net.symbiosis.common.utilities.SymValidator.isValidFullMsisdn;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_DEFAULT_COUNTRY_CODE;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
 /**
  * Custom JSF Validator for @FullMsisdn input
@@ -29,7 +30,7 @@ import static net.symbiosis.core_lib.utilities.SymValidator.isValidFullMsisdn;
 public class FullMsisdnValidator implements Validator, ClientValidator {
 
     private static final String MSISDN_VALIDATION_ERROR =
-            "Invalid phone number: Must be in the format " + getCountryCodePrefix() + "123456789";
+            "Invalid phone number: Must be in the format " + getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE) + "123456789";
 
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         if (value == null || value.toString().equals("")) {

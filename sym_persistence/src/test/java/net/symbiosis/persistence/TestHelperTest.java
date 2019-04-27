@@ -2,7 +2,7 @@ package net.symbiosis.persistence;
 
 import org.testng.annotations.Test;
 
-import static net.symbiosis.common.utilities.ReferenceGenerator.GenMills;
+import static net.symbiosis.core_lib.utilities.ReferenceGenerator.GenMills;
 import static net.symbiosis.persistence.TestHelper.genEmail;
 import static net.symbiosis.persistence.TestHelper.genMsisdn;
 import static org.testng.Assert.assertNotNull;
