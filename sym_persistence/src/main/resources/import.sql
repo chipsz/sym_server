@@ -43,9 +43,9 @@ insert ignore into sym_config(config_id,is_enabled,config_name,config_value,conf
 #web settings
 insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (181,1,'default_reporting_days','7','Number of days to show in history by default');
 #pos settings
-insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (200,1,'falcon_pos_binary_name','7','Name of the Falcon POS binary file');
-insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (201,1,'falcon_pos_binary_location','7','Location of the Falcon POS binary file');
-insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (202,1,'falcon_pos_binary_version','7','Version of the Falcon POS binary file');
+insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (200,1,'falcon_pos_binary_name','ettl-falcon.jar','Name of the Falcon POS binary file');
+insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (201,1,'falcon_pos_binary_location','/var/www/html/ettl_pos/ettl-falcon.jar','Location of the Falcon POS binary file');
+insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (202,1,'falcon_pos_binary_version','1.0.4','Version of the Falcon POS binary file');
 
 insert ignore into sym_country(id,name,is_enabled,iso_code_2,iso_code_3,dialing_code) values (1,'GHANA',1,'GH','GHA',233);
 insert ignore into sym_country(id,name,is_enabled,iso_code_2,iso_code_3,dialing_code) values (2,'ZIMBABWE',0,'ZW','ZWE',263);
