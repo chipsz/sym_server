@@ -7,6 +7,8 @@ import net.symbiosis.persistence.entity.super_class.sym_entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
+
 /***************************************************************************
  * *
  * Created:     22 / 10 / 2016                                             *
@@ -29,6 +31,7 @@ public class sym_wallet extends sym_entity<sym_wallet> {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
     private sym_company company;
+    @Column(scale = 4)
     private BigDecimal current_balance;
 
     public sym_wallet() {
@@ -43,6 +46,7 @@ public class sym_wallet extends sym_entity<sym_wallet> {
     }
 
     public BigDecimal getCurrent_balance() {
+        getEntityManagerRepo().refresh(this);
         return current_balance;
     }
 

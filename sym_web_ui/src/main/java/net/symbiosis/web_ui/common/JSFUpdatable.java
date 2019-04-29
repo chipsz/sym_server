@@ -7,9 +7,9 @@ import net.symbiosis.persistence.entity.complex_type.sym_user;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_service_provider;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
-import net.symbiosis.persistence.entity.complex_type.voucher.sym_wallet_group_voucher;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_voucher_discount;
 import net.symbiosis.persistence.entity.enumeration.sym_event_type;
 import net.symbiosis.persistence.entity.enumeration.sym_response_code;
 import net.symbiosis.persistence.entity.enumeration.sym_voucher_type;
@@ -74,7 +74,7 @@ public abstract class JSFUpdatable extends JSFExportable implements JSFLoggable,
         if (updateTable instanceof sym_service_provider) { return fromEnum(SERVICE_PROVIDER_UPDATE); }
         if (updateTable instanceof sym_voucher_provider) { return fromEnum(VOUCHER_PROVIDER_UPDATE); }
         if (updateTable instanceof sym_wallet_group) { return fromEnum(WALLET_GROUP_UPDATE); }
-        if (updateTable instanceof sym_wallet_group_voucher) { return fromEnum(WALLET_GROUP_VOUCHER_UPDATE); }
+        if (updateTable instanceof sym_wallet_group_voucher_discount) { return fromEnum(WALLET_GROUP_VOUCHER_DISCOUNT_UPDATE); }
         if (updateTable instanceof sym_device_pos_machine) { return fromEnum(DEVICE_POS_MACHINE_UPDATE); }
         return null;
     }

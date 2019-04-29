@@ -17,6 +17,7 @@ import net.symbiosis.persistence.entity.complex_type.sym_user;
 import net.symbiosis.persistence.entity.complex_type.voucher.*;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_voucher_discount;
 import net.symbiosis.persistence.entity.enumeration.sym_response_code;
 import net.symbiosis.persistence.entity.enumeration.sym_voucher_status;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -363,8 +364,8 @@ public class VoucherProcessorImpl implements VoucherProcessor {
             cashierName, fromEnum(RECEIPT)).save();
 
 		//calculate voucher amounts based on discount
-		List<sym_wallet_group_voucher> walletGroupVoucher = getEntityManagerRepo().findWhere(
-                sym_wallet_group_voucher.class, asList(
+		List<sym_wallet_group_voucher_discount> walletGroupVoucher = getEntityManagerRepo().findWhere(
+                sym_wallet_group_voucher_discount.class, asList(
 				new Pair<>("wallet_group_id", wallet.getWallet_group().getId()),
 				new Pair<>("voucher_id", voucherId)
 		));
@@ -506,7 +507,7 @@ public class VoucherProcessorImpl implements VoucherProcessor {
 		logger.info("Getting vouchers for voucher group " + walletGroupId);
 		ArrayList<SymWalletGroupVoucher> walletGroupVouchers = new ArrayList<>();
 		getEntityManagerRepo()
-				.findWhere(sym_wallet_group_voucher.class, new Pair<>("wallet_group", walletGroupId))
+				.findWhere(sym_wallet_group_voucher_discount.class, new Pair<>("wallet_group", walletGroupId))
 				.forEach(vg -> walletGroupVouchers.add(converterService.toDTO(vg)));
 		logger.info(format("Returning %s voucher group vouchers", walletGroupVouchers.size()));
 		return new SymWalletGroupVoucherList(SUCCESS, walletGroupVouchers);

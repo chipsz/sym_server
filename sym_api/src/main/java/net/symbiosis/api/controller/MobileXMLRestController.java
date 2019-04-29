@@ -155,6 +155,21 @@ public class MobileXMLRestController implements MobileRestService {
 
     @Override
     @POST
+    @Path("/transfer")
+    public Response transferToWallet(@FormParam("userId") Long userId,
+                                     @FormParam("imei") String imei,
+                                     @FormParam("authToken") String authToken,
+                                     @FormParam("amount") BigDecimal amount,
+                                     @FormParam("recipient") String recipient,
+                                     @FormParam("pin") String pin) {
+        logger.info(format("Got mobile request transfer %s from user %s to %s", amount, userId, recipient));
+        return status(200).entity(mobileRequestProcessor.transferToWallet(getRealParamValue(userId),
+                getRealParamValue(imei), getRealParamValue(authToken), getRealParamValue(amount),
+                getRealParamValue(recipient), getRealParamValue(pin))).header("Access-Control-Allow-Origin", "*").build();
+    }
+
+    @Override
+    @POST
     @Path("/session")
     public Response startSession(@FormParam("imei") String imei,
                                  @FormParam("username") String username,

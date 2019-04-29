@@ -13,4 +13,6 @@ import java.math.BigDecimal;
 
 public interface WalletManager {
     SymResponseObject<sym_wallet> updateWalletBalance(sym_wallet wallet, BigDecimal amount);
+    SymResponseObject<sym_wallet> transferWalletBalance(sym_wallet fromWallet, sym_wallet toWallet, BigDecimal amount);
+    SymResponseObject<sym_wallet> transferWalletBalanceWithCharges(sym_wallet fromWallet, sym_wallet toWallet, BigDecimal amount);
 }

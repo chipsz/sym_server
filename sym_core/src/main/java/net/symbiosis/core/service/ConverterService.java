@@ -6,10 +6,14 @@ import net.symbiosis.persistence.entity.complex_type.log.sym_import_batch;
 import net.symbiosis.persistence.entity.complex_type.log.sym_session;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
-import net.symbiosis.persistence.entity.complex_type.voucher.*;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_service_provider;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_purchase;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_cashout_account;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_voucher_discount;
 import net.symbiosis.persistence.entity.enumeration.sym_currency;
 import net.symbiosis.persistence.entity.enumeration.sym_financial_institution;
 import net.symbiosis.persistence.entity.super_class.sym_enum_entity;
@@ -54,6 +58,6 @@ public interface ConverterService {
 
     SymVoucher toDTO(sym_voucher voucher);
 
-    SymWalletGroupVoucher toDTO(sym_wallet_group_voucher walletGroupVoucher);
+    SymWalletGroupVoucher toDTO(sym_wallet_group_voucher_discount walletGroupVoucher);
 
 }

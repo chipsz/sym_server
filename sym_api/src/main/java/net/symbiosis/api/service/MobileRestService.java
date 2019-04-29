@@ -30,6 +30,8 @@ public interface MobileRestService {
 
     Response cashoutTransaction(Long userId, String imei, String authToken, BigDecimal amount, String reference, Long cashoutAccountId, String pin);
 
+    Response transferToWallet(Long userId, String imei, String authToken, BigDecimal amount, String recipient, String pin);
+
     Response startSession(String authToken, String username, String password);
 
     Response endSession(Long sessionId, String deviceId, String authToken);

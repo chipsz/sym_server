@@ -229,7 +229,7 @@ public class SymbiosisAuthenticator {
         } else return new SymResponseObject<>(INPUT_INVALID_EMAIL);
     }
 
-    static SymResponseObject<sym_auth_user> getUserByMsisdn(
+    public static SymResponseObject<sym_auth_user> getUserByMsisdn(
             String msisdn, sym_channel channel) {
 
         if (msisdn == null || channel == null) {

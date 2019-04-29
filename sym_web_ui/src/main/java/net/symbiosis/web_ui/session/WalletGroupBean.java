@@ -2,8 +2,8 @@ package net.symbiosis.web_ui.session;
 
 import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
-import net.symbiosis.persistence.entity.complex_type.voucher.sym_wallet_group_voucher;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_voucher_discount;
 import net.symbiosis.web_ui.common.JSFUpdatable;
 import net.symbiosis.web_ui.common.UpdateOptions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +86,7 @@ public class WalletGroupBean extends JSFUpdatable {
         /* create a wallet group voucher for each voucher */
         for (sym_voucher voucher : updateOptions.getVouchers()) {
             updateOptions.getWalletGroupVouchers().add(
-                new sym_wallet_group_voucher(newWalletGroup, voucher, newWalletGroup.getDefault_discount()).save()
+                new sym_wallet_group_voucher_discount(newWalletGroup, voucher, newWalletGroup.getDefault_discount()).save()
             );
         }
 

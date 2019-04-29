@@ -121,6 +121,18 @@ public class MobileJSONRestController extends MobileXMLRestController {
 
     @Override
     @POST
+    @Path("/transfer")
+    public Response transferToWallet(@FormParam("userId") Long userId,
+                                     @FormParam("imei") String imei,
+                                     @FormParam("authToken") String authToken,
+                                     @FormParam("amount") BigDecimal amount,
+                                     @FormParam("recipient") String recipient,
+                                     @FormParam("pin") String pin) {
+        return super.transferToWallet(userId, imei, authToken, amount, recipient, pin);
+    }
+
+    @Override
+    @POST
     @Path("/session")
     public Response startSession(@FormParam("imei") String imei,
                                  @FormParam("username") String username,

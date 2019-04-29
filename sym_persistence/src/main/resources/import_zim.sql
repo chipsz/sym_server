@@ -33,7 +33,7 @@ insert ignore into sym_event_type (id,name,is_enabled) values (1104,'WALLET_ADD_
 insert ignore into sym_event_type (id,name,is_enabled) values (1105,'WALLET_DISABLE_CASHOUT_ACCOUNT',1);
 insert ignore into sym_event_type (id,name,is_enabled) values (1106,'WALLET_GROUP_CREATE',1);
 insert ignore into sym_event_type (id,name,is_enabled) values (1107,'WALLET_GROUP_UPDATE',1);
-insert ignore into sym_event_type (id,name,is_enabled) values (1108,'WALLET_GROUP_VOUCHER_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1108,'WALLET_GROUP_VOUCHER_DISCOUNT_UPDATE',1);
 insert ignore into sym_event_type (id,name,is_enabled) values (1109,'WALLET_SWIPE_IN',1);
 insert ignore into sym_event_type (id,name,is_enabled) values (1110,'WALLET_TRANSFER',1);
 

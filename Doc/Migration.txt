@@ -11,3 +11,5 @@ SQL Migration
 SQL Replication
 
 Update event types
+
+change wallet_group_voucher to wallet_group_voucher_discount

@@ -2,8 +2,8 @@ package net.symbiosis.web_ui.session;
 
 import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
-import net.symbiosis.persistence.entity.complex_type.voucher.sym_wallet_group_voucher;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_voucher_discount;
 import net.symbiosis.web_ui.common.JSFLoggable;
 import net.symbiosis.web_ui.common.UpdateOptions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +107,7 @@ public class VoucherCreateBean implements JSFLoggable {
         //create wallet group voucher for new voucher
         for (sym_wallet_group walletGroup : updateOptions.getWalletGroups()) {
             updateOptions.getWalletGroupVouchers().add(
-                new sym_wallet_group_voucher(walletGroup, newVoucher, walletGroup.getDefault_discount()).save()
+                new sym_wallet_group_voucher_discount(walletGroup, newVoucher, walletGroup.getDefault_discount()).save()
             );
         }
         getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_INFO,

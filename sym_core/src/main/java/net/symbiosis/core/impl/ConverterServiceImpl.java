@@ -7,10 +7,14 @@ import net.symbiosis.persistence.entity.complex_type.log.sym_import_batch;
 import net.symbiosis.persistence.entity.complex_type.log.sym_session;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
-import net.symbiosis.persistence.entity.complex_type.voucher.*;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_service_provider;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_purchase;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_cashout_account;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_voucher_discount;
 import net.symbiosis.persistence.entity.enumeration.sym_currency;
 import net.symbiosis.persistence.entity.enumeration.sym_financial_institution;
 import net.symbiosis.persistence.entity.super_class.sym_enum_entity;
@@ -108,6 +112,7 @@ public class ConverterServiceImpl implements ConverterService {
         symSystemUser.setUserId(symUser.getId());
         symSystemUser.setWalletId(symUser.getWallet().getId());
         symSystemUser.setCompanyName(symUser.getWallet().getCompany().getCompany_name());
+        symSystemUser.setWalletBalance(symUser.getWallet().getCurrent_balance().doubleValue());
         symSystemUser.setCountry(symUser.getCountry().getName());
         symSystemUser.setLanguage(symUser.getLanguage().getName());
         symSystemUser.setUserStatus(symUser.getUser_status().getName());
@@ -209,7 +214,7 @@ public class ConverterServiceImpl implements ConverterService {
     }
 
     @Override
-    public SymWalletGroupVoucher toDTO(sym_wallet_group_voucher sourceData) {
+    public SymWalletGroupVoucher toDTO(sym_wallet_group_voucher_discount sourceData) {
         if (sourceData == null) { return null; }
         SymWalletGroupVoucher ettlWalletGroupVoucher = new SymWalletGroupVoucher();
         modelMapper().map(sourceData, ettlWalletGroupVoucher);

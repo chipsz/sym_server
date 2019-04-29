@@ -1,6 +1,6 @@
-package net.symbiosis.persistence.entity.complex_type.voucher;
+package net.symbiosis.persistence.entity.complex_type.wallet;
 
-import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
 import net.symbiosis.persistence.entity.super_class.sym_entity;
 
 import javax.persistence.*;
@@ -15,7 +15,7 @@ import javax.persistence.*;
 
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "wallet_group_voucher_id"))
-public class sym_wallet_group_voucher extends sym_entity<sym_wallet_group_voucher> {
+public class sym_wallet_group_voucher_discount extends sym_entity<sym_wallet_group_voucher_discount> {
 
 	@ManyToOne
 	@JoinColumn(name = "wallet_group_id")
@@ -25,9 +25,9 @@ public class sym_wallet_group_voucher extends sym_entity<sym_wallet_group_vouche
 	private sym_voucher voucher;
 	Double wallet_discount;
 
-	public sym_wallet_group_voucher() {}
+	public sym_wallet_group_voucher_discount() {}
 
-	public sym_wallet_group_voucher(sym_wallet_group wallet_group, sym_voucher voucher, Double wallet_discount) {
+	public sym_wallet_group_voucher_discount(sym_wallet_group wallet_group, sym_voucher voucher, Double wallet_discount) {
 		this.wallet_group = wallet_group;
 		this.voucher = voucher;
 		this.wallet_discount = wallet_discount;

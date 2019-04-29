@@ -53,4 +53,9 @@ public class SymResponseObject<T> {
         this.responseObject = responseObject;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "{" + responseCode.getCode() + ":" + responseCode.getMessage() + "}";
+    }
 }

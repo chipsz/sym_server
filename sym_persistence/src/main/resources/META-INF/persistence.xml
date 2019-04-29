@@ -15,6 +15,7 @@
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log</class>
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_session</class>
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_swipe_transaction</class>
+        <class>net.symbiosis.persistence.entity.complex_type.log.sym_wallet_transfer</class>
 
         <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_pin_import_config</class>
         <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_pinbased_voucher</class>
@@ -23,11 +24,12 @@
         <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider</class>
         <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider_payment</class>
         <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_purchase</class>
-        <class>net.symbiosis.persistence.entity.complex_type.voucher.sym_wallet_group_voucher</class>
 
         <class>net.symbiosis.persistence.entity.complex_type.wallet.sym_cashout_account</class>
         <class>net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet</class>
         <class>net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group</class>
+        <class>net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_voucher_discount</class>
+        <class>net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_transfer_charge</class>
 
         <class>net.symbiosis.persistence.entity.complex_type.sym_auth_group_role</class>
         <class>net.symbiosis.persistence.entity.complex_type.sym_auth_user</class>

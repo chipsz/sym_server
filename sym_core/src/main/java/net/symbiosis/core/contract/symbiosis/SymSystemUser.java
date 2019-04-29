@@ -27,6 +27,7 @@ public class SymSystemUser implements Serializable {
     protected String email;
     protected String msisdn;
     protected String companyName;
+    protected Double walletBalance;
     protected String group;
     protected String deviceId;
     protected String authToken;
@@ -43,13 +44,14 @@ public class SymSystemUser implements Serializable {
         this(sessionId, symUser.getId(), symUser.getWallet().getId(), symUser.getFirst_name(),
                 symUser.getLast_name(), symUser.getUsername(), symUser.getEmail(), symUser.getMsisdn(),
                 symAuthUser.getUser().getWallet().getCompany().getCompany_name(),
+                symAuthUser.getUser().getWallet().getCurrent_balance().doubleValue(),
                 symAuthUser.getAuth_group().getName(), symAuthUser.getDevice_id(),
                 symAuthUser.getAuth_token(), symAuthUser.getLast_login_date());
     }
 
     public SymSystemUser(Long sessionId, Long userId, Long walletId, String firstName, String lastName,
-                         String username, String email, String msisdn, String companyName, String group,
-                         String deviceId, String authToken, Date lastLoginDate) {
+                         String username, String email, String msisdn, String companyName, Double walletBalance,
+                         String group, String deviceId, String authToken, Date lastLoginDate) {
         this.sessionId = sessionId;
         this.userId = userId;
         this.walletId = walletId;
@@ -59,6 +61,7 @@ public class SymSystemUser implements Serializable {
         this.email = email;
         this.msisdn = msisdn;
         this.companyName = companyName;
+        this.walletBalance = walletBalance;
         this.group = group;
         this.deviceId = deviceId;
         this.authToken = authToken;
@@ -136,6 +139,10 @@ public class SymSystemUser implements Serializable {
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
+
+    public Double getWalletBalance() { return walletBalance; }
+
+    public void setWalletBalance(Double walletBalance) { this.walletBalance = walletBalance; }
 
     public String getGroup() {
         return group;

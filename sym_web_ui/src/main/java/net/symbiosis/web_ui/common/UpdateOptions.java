@@ -5,8 +5,8 @@ import net.symbiosis.persistence.entity.complex_type.sym_company;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_service_provider;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
-import net.symbiosis.persistence.entity.complex_type.voucher.sym_wallet_group_voucher;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_voucher_discount;
 import net.symbiosis.persistence.entity.enumeration.*;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +45,7 @@ public class UpdateOptions implements Serializable {
     private List<sym_response_code> logStatuses;
     private List<sym_voucher_provider> voucherProviders;
     private List<sym_service_provider> serviceProviders;
-    private List<sym_wallet_group_voucher> walletGroupVouchers;
+    private List<sym_wallet_group_voucher_discount> walletGroupVouchers;
     private List<sym_voucher> vouchers;
 
     UpdateOptions() {
@@ -228,8 +228,8 @@ public class UpdateOptions implements Serializable {
         return vouchers;
     }
 
-    public List<sym_wallet_group_voucher> initWalletGroupVouchers() {
-        walletGroupVouchers = getEntityManagerRepo().findAll(sym_wallet_group_voucher.class);
+    public List<sym_wallet_group_voucher_discount> initWalletGroupVouchers() {
+        walletGroupVouchers = getEntityManagerRepo().findAll(sym_wallet_group_voucher_discount.class);
         return walletGroupVouchers;
     }
 
@@ -241,6 +241,6 @@ public class UpdateOptions implements Serializable {
 
     public List<sym_voucher> getVouchers() { return vouchers; }
 
-    public List<sym_wallet_group_voucher> getWalletGroupVouchers() { return walletGroupVouchers; }
+    public List<sym_wallet_group_voucher_discount> getWalletGroupVouchers() { return walletGroupVouchers; }
 
 }
