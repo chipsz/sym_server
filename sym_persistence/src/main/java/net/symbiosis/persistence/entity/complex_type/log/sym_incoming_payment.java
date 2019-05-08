@@ -3,6 +3,7 @@ package net.symbiosis.persistence.entity.complex_type.log;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.enumeration.sym_deposit_type;
 import net.symbiosis.persistence.entity.enumeration.sym_financial_institution;
+import net.symbiosis.persistence.entity.enumeration.sym_response_code;
 import net.symbiosis.persistence.entity.super_class.sym_entity;
 
 import javax.persistence.*;
@@ -37,12 +38,16 @@ public class sym_incoming_payment extends sym_entity<sym_incoming_payment> {
 	private sym_financial_institution financial_institution;
 	private String bank_reference;
 	private String bank_statement_id;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "response_code_id")
+    private sym_response_code response_code;
 
 	public sym_incoming_payment() {}
 
 	public sym_incoming_payment(BigDecimal payment_amount, sym_deposit_type deposit_type, sym_wallet wallet,
                                 String depositor_reference, Date payment_time, Date time_loaded,
-                                sym_financial_institution financial_institution, String bank_reference, String bank_statement_id) {
+                                sym_financial_institution financial_institution, String bank_reference,
+                                String bank_statement_id, sym_response_code response_code) {
 		this.payment_amount = payment_amount;
 		this.deposit_type = deposit_type;
 		this.wallet = wallet;
@@ -52,7 +57,8 @@ public class sym_incoming_payment extends sym_entity<sym_incoming_payment> {
 		this.financial_institution = financial_institution;
 		this.bank_reference = bank_reference;
 		this.bank_statement_id = bank_statement_id;
-	}
+        this.response_code = response_code;
+    }
 
 	public BigDecimal getPayment_amount() {
 		return payment_amount;
@@ -121,4 +127,13 @@ public class sym_incoming_payment extends sym_entity<sym_incoming_payment> {
 	public void setBank_statement_id(String bank_statement_id) {
 		this.bank_statement_id = bank_statement_id;
 	}
+
+    public sym_response_code getResponse_code() {
+        return response_code;
+    }
+
+    public sym_incoming_payment setResponse_code(sym_response_code response_code) {
+        this.response_code = response_code;
+        return this;
+    }
 }

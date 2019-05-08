@@ -12,6 +12,7 @@ import javax.persistence.*;
  * Time: 3:56 PM
  */
 @Entity
+@Cacheable(false)
 public class sym_user_preference extends sym_entity<sym_user_preference> {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

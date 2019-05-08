@@ -9,6 +9,7 @@ import java.util.Date;
 
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "auth_user_id"))
+@Cacheable(false)
 public class sym_auth_user extends sym_entity<sym_auth_user> {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     @JoinColumn(name = "sym_user_id")

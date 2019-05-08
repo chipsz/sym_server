@@ -170,9 +170,9 @@ public class EntityManagerRepo {
         LOGGER.info(entityClass.getSimpleName() + " findById " + id);
         try {
             E result = getEntityManager().find(entityClass, id);
-            if (result != null) {
-                result.refresh();
-            }
+//            if (result != null) {
+//                result.refresh();
+//            }
             return result;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -189,9 +189,9 @@ public class EntityManagerRepo {
         String queryString = "SELECT e FROM " + entityClass.getSimpleName() + " e" + (reverseOrder ? " ORDER BY e.id DESC" : "");
         try {
             List<E> results = getEntityManager().createQuery(queryString).getResultList();
-            for (E result : results) {
-                result.refresh();
-            }
+//            for (E result : results) {
+//                result.refresh();
+//            }
             return results;
         } catch (Exception ex) {
             ex.printStackTrace();

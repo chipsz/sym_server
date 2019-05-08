@@ -36,7 +36,7 @@ public class WalletManagerImplTest {
             new BigDecimal(100.0), null, null, null
         ).save();
 
-        SymResponseObject<sym_wallet> updateResponse = walletManager.updateWalletBalance(wallet, new BigDecimal(10));
+        SymResponseObject<sym_wallet> updateResponse = walletManager.updateWalletBalance(wallet, new BigDecimal(10), "Voucher Purchase Reversal: Transaction Failed! " + voucherPurchaseResponse.getMessage());
 
         assertTrue(updateResponse.getResponseCode().equals(SUCCESS));
         assertTrue(wallet.getCurrent_balance().equals(new BigDecimal(110)));

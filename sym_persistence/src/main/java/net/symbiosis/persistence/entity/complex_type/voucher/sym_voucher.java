@@ -15,6 +15,7 @@ import java.math.BigDecimal;
  ***************************************************************************/
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "voucher_id"))
+@Cacheable(false)
 public class sym_voucher extends sym_entity<sym_voucher> {
 
 	private BigDecimal voucher_value;

@@ -46,6 +46,8 @@ insert ignore into sym_config(config_id,is_enabled,config_name,config_value,conf
 insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (200,1,'falcon_pos_binary_name','ettl-falcon.jar','Name of the Falcon POS binary file');
 insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (201,1,'falcon_pos_binary_location','/var/www/html/ettl_pos/ettl-falcon.jar','Location of the Falcon POS binary file');
 insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (202,1,'falcon_pos_binary_version','1.0.4','Version of the Falcon POS binary file');
+#integration settings
+insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (300,1,'glo_service_request_timeout','15000','Milliseconds before a request is considered timed out');
 
 insert ignore into sym_country(id,name,is_enabled,iso_code_2,iso_code_3,dialing_code) values (1,'GHANA',1,'GH','GHA',233);
 insert ignore into sym_country(id,name,is_enabled,iso_code_2,iso_code_3,dialing_code) values (2,'ZIMBABWE',0,'ZW','ZWE',263);
@@ -227,21 +229,21 @@ insert ignore into sym_deposit_type(deposit_type_id,is_enabled,name) values (3, 
 insert ignore into sym_deposit_type(deposit_type_id,is_enabled,name) values (4, 1, 'DEBIT_CARD');
 insert ignore into sym_deposit_type(deposit_type_id,is_enabled,name) values (5, 1, 'BANK_TRANSFER');
 
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (1, 1, 'Airtel');
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (2, 0, 'Glo');
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (3, 1, 'MTN');
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (4, 1, 'Vodafone');
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (5, 1, 'Tigo');
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (6, 0, 'Multichoice');
-insert ignore into sym_service_provider (service_provider_id, is_enabled, service_provider_name) values (7, 1, 'WAEC');
+insert ignore into sym_service_provider (service_provider_id,is_enabled,service_provider_name) values (1, 1, 'Airtel');
+insert ignore into sym_service_provider (service_provider_id,is_enabled,service_provider_name) values (2, 0, 'Glo');
+insert ignore into sym_service_provider (service_provider_id,is_enabled,service_provider_name) values (3, 1, 'MTN');
+insert ignore into sym_service_provider (service_provider_id,is_enabled,service_provider_name) values (4, 1, 'Vodafone');
+insert ignore into sym_service_provider (service_provider_id,is_enabled,service_provider_name) values (5, 1, 'Tigo');
+insert ignore into sym_service_provider (service_provider_id,is_enabled,service_provider_name) values (6, 0, 'Multichoice');
+insert ignore into sym_service_provider (service_provider_id,is_enabled,service_provider_name) values (7, 1, 'WAEC');
 
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (1, 1, 'Airtel');
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (2, 0, 'Glo');
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (3, 1, 'MTN');
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (4, 1, 'Vodafone');
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (5, 1, 'Tigo');
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (6, 0, 'CowryPay');
-insert ignore into sym_voucher_provider (voucher_provider_id, is_enabled, voucher_provider_name) values (7, 1, 'WAEC');
+insert ignore into sym_voucher_provider (voucher_provider_id,is_enabled,voucher_provider_name, integration_id) values (1, 1, 'Airtel', null);
+insert ignore into sym_voucher_provider (voucher_provider_id,is_enabled,voucher_provider_name, integration_id) values (2, 0, 'Glo', 'GloSeamless');
+insert ignore into sym_voucher_provider (voucher_provider_id,is_enabled,voucher_provider_name, integration_id) values (3, 1, 'MTN', null);
+insert ignore into sym_voucher_provider (voucher_provider_id,is_enabled,voucher_provider_name, integration_id) values (4, 1, 'Vodafone', null);
+insert ignore into sym_voucher_provider (voucher_provider_id,is_enabled,voucher_provider_name, integration_id) values (5, 1, 'Tigo', null);
+insert ignore into sym_voucher_provider (voucher_provider_id,is_enabled,voucher_provider_name, integration_id) values (6, 0, 'CowryPay', null);
+insert ignore into sym_voucher_provider (voucher_provider_id,is_enabled,voucher_provider_name, integration_id) values (7, 1, 'WAEC', null);
 
 insert ignore into sym_pin_import_config (is_enabled,name,divide_amount_by,amount_in_contents,amount_in_filename,amount_line_num,amount_pos,amount_regex,batch_id_in_contents,batch_id_in_filename,batch_id_line_num,batch_id_pos,batch_id_regex,delimiter,expiry_date_format,expiry_in_contents,expiry_in_filename,expiry_line_num,expiry_pos,expiry_regex,filename_regex,pin_length,pin_pos,pin_start_line,serial_length,serial_pos,total_num_in_contents,total_num_in_filename,total_num_line_num,total_num_pos,total_num_regex,service_provider_id,voucher_provider_id,voucher_type_id,pgp_private_key_file,pgp_key_pass) VALUES (1,'AIRTEL_AIRTEL',100,1,0,2,3,'(\\d+),(\\d+),(\\d+),(.*)',0,1,NULL,2,'VOUCHER_BATCH_(\\d+)_(\\d+)',',','yyyyMMdd',1,0,2,5,'(\\d+),(\\d+),(\\d+),(\\d+),(\\d+),(.*)','VOUCHER_BATCH_(\\d+)_(\\d+)',14,1,2,12, 2,1,0,1,1,'(\\d+),(\\d+),(.*)',1,1,1,NULL,NULL);
 insert ignore into sym_pin_import_config (is_enabled,name,divide_amount_by,amount_in_contents,amount_in_filename,amount_line_num,amount_pos,amount_regex,batch_id_in_contents,batch_id_in_filename,batch_id_line_num,batch_id_pos,batch_id_regex,delimiter,expiry_date_format,expiry_in_contents,expiry_in_filename,expiry_line_num,expiry_pos,expiry_regex,filename_regex,pin_length,pin_pos,pin_start_line,serial_length,serial_pos,total_num_in_contents,total_num_in_filename,total_num_line_num,total_num_pos,total_num_regex,service_provider_id,voucher_provider_id,voucher_type_id,pgp_private_key_file,pgp_key_pass) VALUES (1,'VODAFONE_VODAFONE',100,0,1,NULL,0,NULL,0,1,NULL,2,'Voms(\\d+)_(\\d+).dec','##',NULL,0,0,NULL,NULL,NULL,'Voms(\\d+)_(\\d+).dec',14,2,2,15,3,1,0,1,1,'Total Vouchers=(\\d+),(.*)',4,4,1,NULL,NULL);
@@ -277,10 +279,10 @@ insert ignore into sym_wallet_group_voucher_discount (wallet_group_id,voucher_id
 insert ignore into sym_wallet_group_voucher_discount (wallet_group_id,voucher_id,wallet_discount) select 2, v.voucher_id, 4.0 from sym_voucher v;
 insert ignore into sym_wallet_group_voucher_discount (wallet_group_id,voucher_id,wallet_discount) select 3, v.voucher_id, 5.0 from sym_voucher v;
 
-insert ignore into sym_wallet_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,wallet_charge) select wg.wallet_group_id, CONCAT(wg.name,'_0_TO_100'),0.0,100.0,2 from sym_wallet_group wg;
-insert ignore into sym_wallet_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,wallet_charge) select wg.wallet_group_id, CONCAT(wg.name,'_100_TO_500'),100.0,500.0,3 from sym_wallet_group wg;
-insert ignore into sym_wallet_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,wallet_charge) select wg.wallet_group_id, CONCAT(wg.name,'_500_TO_5000'),500.0,5000.0,4 from sym_wallet_group wg;
-insert ignore into sym_wallet_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,wallet_charge) select wg.wallet_group_id, CONCAT(wg.name,'_5000_PLUS'),5000.0,null,5 from sym_wallet_group wg;
+insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,wallet_charge) select wg.wallet_group_id, CONCAT(wg.name,'_0_TO_100'),0.0,100.0,2 from sym_wallet_group wg;
+insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,wallet_charge) select wg.wallet_group_id, CONCAT(wg.name,'_100_TO_500'),100.0,500.0,3 from sym_wallet_group wg;
+insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,wallet_charge) select wg.wallet_group_id, CONCAT(wg.name,'_500_TO_5000'),500.0,5000.0,4 from sym_wallet_group wg;
+insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,wallet_charge) select wg.wallet_group_id, CONCAT(wg.name,'_5000_PLUS'),5000.0,null,5 from sym_wallet_group wg;
 
 insert ignore into sym_company(company_id,company_name,address_line_1,address_line_2,address_city,address_country_id,phone1,phone2) values (1,'T3raTech','4 Janeen Close','Groombridge, Mt. Pleasant','Harare',2,'263785107830','27627938765');
 insert ignore into sym_user(first_name,last_name,username,email,msisdn,msisdn2,salt,user_status_id,country_id,language_id,password,password_tries,pin,pin_tries) values ('Tsungai','Kaviya','admin','tsungai.kaviya@gmail.com','263785107830','27627938765','b4ou790Xz4jBfY0B',30,2,1,'659f6d313bb6fb10ae238ed2ecd4f3365a6a72b8ba8fbe891265a17a6a7335',0,NULL,0);

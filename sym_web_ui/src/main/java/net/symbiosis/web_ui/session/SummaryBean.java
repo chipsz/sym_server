@@ -2,12 +2,12 @@ package net.symbiosis.web_ui.session;
 
 import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.log.sym_incoming_payment;
+import net.symbiosis.persistence.entity.complex_type.log.sym_voucher_purchase;
 import net.symbiosis.persistence.entity.complex_type.sym_company;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_pinbased_voucher;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_service_provider;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
-import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_purchase;
 import net.symbiosis.web_ui.common.JSFReportable;
 import net.symbiosis.web_ui.data.VoucherStockData;
 import org.springframework.context.annotation.Scope;

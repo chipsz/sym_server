@@ -2,23 +2,17 @@ package net.symbiosis.core.impl;
 
 import net.symbiosis.core.service.WalletManager;
 import net.symbiosis.core_lib.response.SymResponseObject;
-import net.symbiosis.core_lib.structure.Pair;
+import net.symbiosis.persistence.entity.complex_type.log.sym_wallet_transaction;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
-import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_transfer_charge;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
-import static java.util.Arrays.asList;
-import static net.symbiosis.common.configuration.NetworkUtilities.sendEmailAlert;
-import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_SYSTEM_NAME;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
-import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
-import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
+import static net.symbiosis.core_lib.utilities.CommonUtilities.isNullOrEmpty;
 
 /***************************************************************************
  * Created:     23 / 02 / 2017                                             *
@@ -32,34 +26,51 @@ public class WalletManagerImpl implements WalletManager {
     private static final Logger logger = Logger.getLogger(WalletManagerImpl.class.getSimpleName());
 
     @Override
-    public synchronized SymResponseObject<sym_wallet> updateWalletBalance(sym_wallet wallet, BigDecimal amount) {
+    public synchronized SymResponseObject<sym_wallet> updateWalletBalance(sym_wallet_transaction walletTransactionDetails) {
 
-        if (wallet == null) {
-            logger.severe("Balance update not processed! Invalid wallet(null) specified.");
-            return new SymResponseObject<>(INPUT_INCOMPLETE_REQUEST);
+        if (walletTransactionDetails.getId() != null) {
+            logger.severe("Wallet balance update failed! Wallet transaction details already exist. Cannot update existing transaction.");
+            return new SymResponseObject<sym_wallet>(INPUT_INVALID_REQUEST).setMessage("Cannot update existing transaction!");
         }
-
-        if (amount == null) {
-            logger.severe("Balance update not processed! Invalid amount(null) specified.");
-            return new SymResponseObject<>(INPUT_INCOMPLETE_REQUEST, wallet);
+        if (walletTransactionDetails.getTransaction_amount() == null) {
+            logger.severe("Wallet balance update failed! Invalid amount (null) specified.");
+            return new SymResponseObject<sym_wallet>(INPUT_INVALID_REQUEST).setMessage("Invalid amount (null) specified!");
+        }
+        if (walletTransactionDetails.getEvent_type() == null) {
+            logger.severe("Wallet balance update failed! Invalid event type (null) specified.");
+            return new SymResponseObject<sym_wallet>(INPUT_INVALID_REQUEST).setMessage("Invalid event type (null) specified!");
+        }
+        if (walletTransactionDetails.getTransaction_link_reference() == null) {
+            logger.severe("Wallet balance update failed! Invalid link reference (null) specified.");
+            return new SymResponseObject<sym_wallet>(INPUT_INVALID_REQUEST).setMessage("Invalid link reference (null) specified!");
+        }
+        if (walletTransactionDetails.getTransaction_time() == null) {
+            logger.severe("Wallet balance update failed! Invalid transaction time (null) specified.");
+            return new SymResponseObject<sym_wallet>(INPUT_INVALID_REQUEST).setMessage("Invalid transaction time (null) specified!");
+        }
+        if (isNullOrEmpty(walletTransactionDetails.getTransaction_description())) {
+            logger.severe("Wallet balance update failed! Transaction description not specified.");
+            return new SymResponseObject<sym_wallet>(INPUT_INVALID_REQUEST).setMessage("Transaction description not specified!");
         }
 
         //make sure we are using an up to date balance
-        wallet.refresh();
+        sym_wallet wallet = walletTransactionDetails.getWallet().refresh();
         logger.info(format("Updating wallet id %s (current balance: %s) with amount %s",
-                wallet.getId(), wallet.getCurrent_balance().doubleValue(), amount.toPlainString()));
+                wallet.getId(), wallet.getCurrent_balance().doubleValue(), walletTransactionDetails.getTransaction_amount().doubleValue()));
 
         try {
             //check if new balance will be greater than or equal to 0
-            if (wallet.getCurrent_balance().add(amount).compareTo(new BigDecimal(0.0)) < 0) {
+            if (wallet.getCurrent_balance().add(walletTransactionDetails.getTransaction_amount()).compareTo(new BigDecimal(0.0)) < 0) {
                 logger.severe("Balance update not processed! Insufficient funds.");
                 return new SymResponseObject<>(INSUFFICIENT_FUNDS, wallet);
             }
 
-            wallet.setCurrent_balance(wallet.getCurrent_balance().add(amount)).save();
+            wallet.setCurrent_balance(wallet.getCurrent_balance().add(walletTransactionDetails.getTransaction_amount())).save();
 
             logger.info(format("Balance updated successfully. New balance for wallet %s is %s",
                     wallet.getWallet_admin_user(), wallet.getCurrent_balance().toPlainString()));
+
+            walletTransactionDetails.save();
 
             return new SymResponseObject<>(SUCCESS, wallet);
         } catch (Exception ex) {
@@ -69,10 +80,10 @@ public class WalletManagerImpl implements WalletManager {
     }
 
     @Override
-    public synchronized SymResponseObject<sym_wallet> transferWalletBalance(sym_wallet fromWallet, sym_wallet toWallet, BigDecimal amount) {
+    public synchronized SymResponseObject<sym_wallet> transferWalletBalanceWithCharges(sym_wallet_transaction fromWalletDetails, sym_wallet_transaction toWalletDetails) {
 
         //debit fromWallet
-        SymResponseObject<sym_wallet> updateResponse = updateWalletBalance(fromWallet,amount.multiply(new BigDecimal(-1)));
+        SymResponseObject<sym_wallet> updateResponse = updateWalletBalance(fromWalletDetails);
         if (!updateResponse.getResponseCode().equals(SUCCESS)) {
             String response = "Transfer not processed! " + updateResponse.getMessage();
             logger.severe(response);
@@ -80,51 +91,19 @@ public class WalletManagerImpl implements WalletManager {
         }
 
         //credit toWallet
-        updateResponse = updateWalletBalance(toWallet,amount);
+        updateResponse = updateWalletBalance(toWalletDetails);
+
         if (!updateResponse.getResponseCode().equals(SUCCESS)) {
             String response = "Transfer not processed! " + updateResponse.getMessage();
             logger.severe(response);
-            return new SymResponseObject<sym_wallet>(updateResponse.getResponseCode()).setMessage(response);
-        }
-
-        return updateResponse;
-    }
-
-    @Override
-    public synchronized SymResponseObject<sym_wallet> transferWalletBalanceWithCharges(sym_wallet fromWallet, sym_wallet toWallet, BigDecimal amount) {
-
-
-        //calculate voucher amounts based on discount
-        List<sym_wallet_transfer_charge> walletTransferCharges = getEntityManagerRepo().findWhere(
-                sym_wallet_transfer_charge.class, asList(
-                    new Pair<>("wallet_group_id", fromWallet.getWallet_group().getId()),
-                    new Pair<>("starting_value <", amount.doubleValue()),
-                    new Pair<>("ending_value >", amount.doubleValue())
-                ));
-
-        if (walletTransferCharges == null || walletTransferCharges.size() != 1) {
-            String response = format("Charge not defined for group %s, amount %s", fromWallet.getWallet_group().getId(), amount);
-            logger.severe(response);
-            sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME),"Charge not defined", response);
-            return new SymResponseObject<>(GENERAL_ERROR);
-        }
-
-        BigDecimal walletCost = amount.add(amount.multiply(new BigDecimal(walletTransferCharges.get(0).getWallet_charge()/100.0)));
-
-
-        //debit fromWallet
-        SymResponseObject<sym_wallet> updateResponse = updateWalletBalance(fromWallet,walletCost.multiply(new BigDecimal(-1)));
-        if (!updateResponse.getResponseCode().equals(SUCCESS)) {
-            String response = "Transfer not processed! " + updateResponse.getMessage();
-            logger.severe(response);
-            return new SymResponseObject<sym_wallet>(updateResponse.getResponseCode()).setMessage(response);
-        }
-
-        //credit toWallet
-        updateResponse = updateWalletBalance(toWallet,amount);
-        if (!updateResponse.getResponseCode().equals(SUCCESS)) {
-            String response = "Transfer not processed! " + updateResponse.getMessage();
-            logger.severe(response);
+            //reverse amount to initial wallet
+            sym_wallet_transaction reversalTransaction = new sym_wallet_transaction(
+                fromWalletDetails.getWallet(), fromWalletDetails.getEvent_type(),
+                fromWalletDetails.getTransaction_amount().multiply(new BigDecimal(-1)),
+                "Wallet transfer reversed! " + updateResponse.getMessage(), fromWalletDetails.getTransaction_link_reference(),
+                fromWalletDetails.getTransaction_time()
+            );
+            updateWalletBalance(reversalTransaction);
             return new SymResponseObject<sym_wallet>(updateResponse.getResponseCode()).setMessage(response);
         }
 

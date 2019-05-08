@@ -18,6 +18,7 @@ import javax.persistence.*;
     @AttributeOverride(name = "id", column = @Column(name = "config_id")),
     @AttributeOverride(name = "name", column = @Column(name = "config_name", unique = true))
 })
+@Cacheable(false)
 public class sym_config extends sym_enum_entity<sym_config> {
 
     @Column

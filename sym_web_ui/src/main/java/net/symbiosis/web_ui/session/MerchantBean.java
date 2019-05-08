@@ -6,6 +6,7 @@ import net.symbiosis.core_lib.response.SymResponseObject;
 import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.log.sym_incoming_payment;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
+import net.symbiosis.persistence.entity.complex_type.log.sym_wallet_transaction;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
@@ -35,6 +36,7 @@ import static net.symbiosis.core_lib.enumeration.SymEventType.USER_REGISTRATION;
 import static net.symbiosis.core_lib.enumeration.SymEventType.WALLET_LOAD;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.GENERAL_ERROR;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
+import static net.symbiosis.core_lib.utilities.CommonUtilities.formatDoubleToMoney;
 import static net.symbiosis.core_lib.utilities.ReferenceGenerator.GenPin;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
@@ -121,25 +123,34 @@ public class MerchantBean extends JSFUpdatable {
 
     public void loadWallet() {
         Date requestTime = new Date();
-        getNewIncomingPayment().setDeposit_type(getNewDepositType());
+
+        sym_incoming_payment incomingPayment = getNewIncomingPayment().save();
+
+        incomingPayment.setDeposit_type(getNewDepositType());
         logger.info("Loading wallet " + getSelectedWallet().getId() +
-            " with amount " + getNewIncomingPayment().getPayment_amount() +
-            " deposited from " + getNewIncomingPayment().getDeposit_type().getName());
+            " with amount " + incomingPayment.getPayment_amount() +
+            " deposited from " + incomingPayment.getDeposit_type().getName());
         try {
-            SymResponseObject<sym_wallet> loadResult = walletManager.updateWalletBalance(selectedWallet, newIncomingPayment.getPayment_amount());
+            SymResponseObject<sym_wallet> loadResult = walletManager.updateWalletBalance(
+                new sym_wallet_transaction(selectedWallet, fromEnum(WALLET_LOAD), newIncomingPayment.getPayment_amount(),
+                        format("Wallet Loaded with %s using %s", formatDoubleToMoney(newIncomingPayment.getPayment_amount().doubleValue()),
+                        incomingPayment.getDeposit_type().getName().toLowerCase()),
+                        incomingPayment.getId(), incomingPayment.getTime_loaded())
+            );
+
             if (loadResult.getResponseCode().equals(SUCCESS)) {
                 newIncomingPayment.setTime_loaded(new Date()).setWallet(selectedWallet).save();
                 getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_INFO,
                     "Funds Loaded Successfully",
                     format("Loaded wallet %s with amount %s", selectedWallet.getCompany().getCompany_name(),
-                        getNewIncomingPayment().getPayment_amount())));
+                        incomingPayment.getPayment_amount())));
 
                 log(fromEnum(WALLET_LOAD), sessionBean.getSymbiosisAuthUser(), fromEnum(loadResult.getResponseCode()),
                     requestTime, new Date(), "LOAD WALLET " + getSelectedWallet().getId() +
-                        " WITH " + getNewIncomingPayment().getPayment_amount() +
-                        " FROM " + getNewIncomingPayment().getDeposit_type().getName(),
+                        " WITH " + incomingPayment.getPayment_amount() +
+                        " FROM " + incomingPayment.getDeposit_type().getName(),
                     format("Loaded wallet %s with amount %s", selectedWallet.getCompany().getCompany_name(),
-                        getNewIncomingPayment().getPayment_amount()));
+                        incomingPayment.getPayment_amount()));
                 newIncomingPayment = new sym_incoming_payment().setDeposit_type(getNewDepositType());
             } else {
                 getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_ERROR,
@@ -147,18 +158,22 @@ public class MerchantBean extends JSFUpdatable {
 
                 log(fromEnum(WALLET_LOAD), sessionBean.getSymbiosisAuthUser(), fromEnum(loadResult.getResponseCode()),
                     requestTime, new Date(), "LOAD WALLET " + getSelectedWallet().getId() +
-                        " WITH " + getNewIncomingPayment().getPayment_amount() +
-                        " FROM " + getNewIncomingPayment().getDeposit_type().getName(),
+                        " WITH " + incomingPayment.getPayment_amount() +
+                        " FROM " + incomingPayment.getDeposit_type().getName(),
                     loadResult.getMessage());
 
             }
+
+            incomingPayment.setResponse_code(fromEnum(loadResult.getResponseCode())).save();
+
         } catch (Exception ex) {
+            incomingPayment.setResponse_code(fromEnum(GENERAL_ERROR)).save();
             getCurrentInstance().addMessage(null, new FacesMessage(SEVERITY_ERROR,
                 "Loading wallet  failed!", "Loading failed with error: " + ex.getMessage()));
             log(fromEnum(WALLET_LOAD), sessionBean.getSymbiosisAuthUser(), fromEnum(GENERAL_ERROR),
                 requestTime, new Date(), "LOAD WALLET " + getSelectedWallet().getId() +
-                    " WITH " + getNewIncomingPayment().getPayment_amount() +
-                    " FROM " + getNewIncomingPayment().getDeposit_type().getName(),
+                    " WITH " + incomingPayment.getPayment_amount() +
+                    " FROM " + incomingPayment.getDeposit_type().getName(),
                 "Loading failed with error: " + ex.getMessage());
         }
     }

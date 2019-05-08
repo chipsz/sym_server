@@ -13,6 +13,7 @@ import javax.persistence.*;
 
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "company_id"))
+@Cacheable(false)
 public class sym_company extends sym_entity<sym_company> {
 
     @Column(unique = true)

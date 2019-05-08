@@ -1,4 +1,4 @@
-package net.symbiosis.persistence.entity.complex_type.voucher;
+package net.symbiosis.persistence.entity.complex_type.log;
 
 import net.symbiosis.persistence.entity.super_class.sym_entity;
 

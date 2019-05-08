@@ -61,4 +61,7 @@ public class DBConfigVars {
     public static final String CONFIG_FALCON_POS_BINARY_NAME = "falcon_pos_binary_name";
     public static final String CONFIG_FALCON_POS_BINARY_LOCATION = "falcon_pos_binary_location";
     public static final String CONFIG_FALCON_POS_BINARY_VERSION = "falcon_pos_binary_version";
+
+    //INTEGRATION SETTINGS
+    public static final String CONFIG_GLO_SERVICE_REQUEST_TIMEOUT = "glo_service_request_timeout";
 }

@@ -20,6 +20,7 @@ import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 @Entity
 @Table(name = "sym_wallet")
 @AttributeOverride(name = "id", column = @Column(name = "wallet_id"))
+@Cacheable(false)
 public class sym_wallet extends sym_entity<sym_wallet> {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

@@ -2,6 +2,7 @@ package net.symbiosis.persistence.entity.complex_type.log;
 
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
+import net.symbiosis.persistence.entity.enumeration.sym_response_code;
 import net.symbiosis.persistence.entity.super_class.sym_entity;
 
 import javax.persistence.*;
@@ -32,17 +33,22 @@ public class sym_wallet_transfer extends sym_entity<sym_wallet_transfer> {
     private BigDecimal new_balance;
     @Basic(optional = false)
     private Date transaction_time;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "response_code_id")
+    private sym_response_code response_code;
 
     public sym_wallet_transfer() {}
 
     public sym_wallet_transfer(sym_auth_user auth_user, sym_wallet recipient_wallet, BigDecimal transfer_amount,
-                               BigDecimal previous_balance, BigDecimal new_balance, Date transaction_time) {
+                               BigDecimal previous_balance, BigDecimal new_balance, Date transaction_time,
+                               sym_response_code response_code) {
         this.auth_user = auth_user;
         this.recipient_wallet = recipient_wallet;
         this.transfer_amount = transfer_amount;
         this.previous_balance = previous_balance;
         this.new_balance = new_balance;
         this.transaction_time = transaction_time;
+        this.response_code = response_code;
     }
 
     public sym_auth_user getAuth_user() {
@@ -72,4 +78,8 @@ public class sym_wallet_transfer extends sym_entity<sym_wallet_transfer> {
     public Date getTransaction_time() { return transaction_time; }
 
     public void setTransaction_time(Date transaction_time) { this.transaction_time = transaction_time; }
+
+    public sym_response_code getResponse_code() { return response_code; }
+
+    public void setResponse_code(sym_response_code transaction_status) { this.response_code = transaction_status; }
 }

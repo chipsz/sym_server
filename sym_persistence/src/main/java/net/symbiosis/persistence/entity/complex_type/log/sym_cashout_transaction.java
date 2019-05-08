@@ -36,13 +36,14 @@ public class sym_cashout_transaction extends sym_entity<sym_cashout_transaction>
     @Basic(optional = false)
     private Date transaction_time;
     @ManyToOne
-    private sym_response_code transaction_status;
+    @JoinColumn(name = "response_code_id")
+    private sym_response_code response_code;
 
     public sym_cashout_transaction() {}
 
     public sym_cashout_transaction(sym_auth_user auth_user, String user_reference, sym_cashout_account cashout_account,
                                    BigDecimal transaction_amount, BigDecimal previous_balance, BigDecimal new_balance,
-                                   Date transaction_time, sym_response_code transaction_status) {
+                                   Date transaction_time, sym_response_code response_code) {
         this.auth_user = auth_user;
         this.user_reference = user_reference;
         this.cashout_account = cashout_account;
@@ -50,7 +51,7 @@ public class sym_cashout_transaction extends sym_entity<sym_cashout_transaction>
         this.previous_balance = previous_balance;
         this.new_balance = new_balance;
         this.transaction_time = transaction_time;
-        this.transaction_status = transaction_status;
+        this.response_code = response_code;
     }
 
     public sym_auth_user getAuth_user() {
@@ -109,11 +110,11 @@ public class sym_cashout_transaction extends sym_entity<sym_cashout_transaction>
         this.transaction_time = transaction_time;
     }
 
-    public sym_response_code getTransaction_status() {
-        return transaction_status;
+    public sym_response_code getResponse_code() {
+        return response_code;
     }
 
-    public void setTransaction_status(sym_response_code transaction_status) {
-        this.transaction_status = transaction_status;
+    public void setResponse_code(sym_response_code transaction_status) {
+        this.response_code = transaction_status;
     }
 }

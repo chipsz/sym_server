@@ -47,8 +47,9 @@ public abstract class sym_entity<E extends sym_entity> implements Serializable, 
         return DaoManager.getEntityManagerRepo().save(this);
     }
 
-    public sym_entity<E> refresh() {
-        return DaoManager.getEntityManagerRepo().refresh(this);
+    public E refresh() {
+        DaoManager.getEntityManagerRepo().refresh(this);
+        return (E) this;
     }
 
     public void delete() {

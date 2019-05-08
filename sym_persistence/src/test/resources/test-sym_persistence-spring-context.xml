@@ -17,16 +17,16 @@
         <property name="location" value="classpath:properties/database/test_application.properties"/>
     </bean>
 
-    <!--<bean id="symDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">-->
-    <!--<property name="jndiName" value="java:jboss/datasources/sym_server"/>-->
-    <!--</bean>-->
-
-    <bean id="symTestDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${hibernate.connection.driver_class}"/>
-        <property name="url" value="${hibernate.connection.url}"/>
-        <property name="username" value="${hibernate.connection.username}"/>
-        <property name="password" value="${hibernate.connection.password}"/>
+    <bean id="symTestDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiName" value="java:jboss/datasources/sym_test_server"/>
     </bean>
+
+    <!--<bean id="symTestDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
+        <!--<property name="driverClassName" value="${hibernate.connection.driver_class}"/>-->
+        <!--<property name="url" value="${hibernate.connection.url}"/>-->
+        <!--<property name="username" value="${hibernate.connection.username}"/>-->
+        <!--<property name="password" value="${hibernate.connection.password}"/>-->
+    <!--</bean>-->
 
     <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="symTestEntityManagerFactory">
         <property name="dataSource" ref="symTestDataSource"/>

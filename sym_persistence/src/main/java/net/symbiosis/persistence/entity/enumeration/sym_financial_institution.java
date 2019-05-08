@@ -19,6 +19,7 @@ import javax.persistence.*;
         @AttributeOverride(name = "id", column = @Column(name = "institution_id")),
         @AttributeOverride(name = "name", column = @Column(name = "institution_name", unique = true))
 })
+@Cacheable(false)
 public class sym_financial_institution extends sym_enum_entity<sym_financial_institution> {
 
     @Basic

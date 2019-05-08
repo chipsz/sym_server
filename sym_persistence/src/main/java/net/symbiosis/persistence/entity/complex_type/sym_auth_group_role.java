@@ -14,6 +14,7 @@ import javax.persistence.*;
  */
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "auth_group_role_id"))
+@Cacheable(false)
 public class sym_auth_group_role extends sym_enum_entity<sym_auth_group_role> {
 
     @ManyToOne(optional = false)

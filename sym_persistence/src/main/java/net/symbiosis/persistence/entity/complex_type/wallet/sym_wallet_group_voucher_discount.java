@@ -15,6 +15,7 @@ import javax.persistence.*;
 
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "wallet_group_voucher_id"))
+@Cacheable(false)
 public class sym_wallet_group_voucher_discount extends sym_entity<sym_wallet_group_voucher_discount> {
 
 	@ManyToOne

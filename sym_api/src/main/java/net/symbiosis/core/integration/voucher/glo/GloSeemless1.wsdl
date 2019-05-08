@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://clientservice.topupservice.client.ers.seamless.com/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:ns1="http://external.interfaces.ers.seamless.com/" name="ERSWSTopupServiceImplService"
+                  targetNamespace="http://clientservice.topupservice.client.ers.seamless.com/">
+  <wsdl:import location="http://197.220.173.135:8913/topupservice/service?wsdl=ERSTopupService.wsdl" namespace="http://external.interfaces.ers.seamless.com/">
+    </wsdl:import>
+  <wsdl:binding name="ERSWSTopupServiceImplServiceSoapBinding" type="ns1:ERSTopupService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="customOperation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="customOperation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="customOperationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="registerSubReseller">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="registerSubReseller">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="registerSubResellerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deLinkSubReseller">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deLinkSubReseller">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deLinkSubResellerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="commitTopup">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="commitTopup">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="commitTopupResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTransactionStatus">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTransactionStatus">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTransactionStatusResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="requestPrincipalInformation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="requestPrincipalInformation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="requestPrincipalInformationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="requestTopup">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="requestTopup">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="requestTopupResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="requestTransfer">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="requestTransfer">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="requestTransferResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancelPurchase">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cancelPurchase">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cancelPurchaseResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="unFreezeReseller">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="unFreezeReseller">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="unFreezeResellerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="freezeReseller">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="freezeReseller">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="freezeResellerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="linkSubReseller">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="linkSubReseller">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="linkSubResellerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="unBlockReseller">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="unBlockReseller">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="unBlockResellerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getVouchersDenomination">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getVouchersDenomination">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getVouchersDenominationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="requestPurchase">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="requestPurchase">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="requestPurchaseResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="redeemVoucher">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="redeemVoucher">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="redeemVoucherResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancelTopup">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cancelTopup">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cancelTopupResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateReseller">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateReseller">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateResellerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deActivateReseller">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deActivateReseller">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deActivateResellerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="activateReseller">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="activateReseller">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="activateResellerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="executeReport">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="executeReport">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="executeReportResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="blockReseller">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="blockReseller">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="blockResellerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="changePrincipalPassword">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="changePrincipalPassword">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="changePrincipalPasswordResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ERSWSTopupServiceImplService">
+    <wsdl:port binding="tns:ERSWSTopupServiceImplServiceSoapBinding" name="ERSWSTopupServiceImplPort">
+      <soap:address location="http://197.220.173.135:8913/topupservice/service"/>
+    </wsdl:port>
+  </wsdl:service>

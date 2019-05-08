@@ -17,6 +17,7 @@ import net.symbiosis.persistence.entity.complex_type.sym_company;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_cashout_account;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_transfer_charge;
 import net.symbiosis.persistence.entity.enumeration.sym_auth_group;
 import net.symbiosis.persistence.entity.enumeration.sym_country;
 import net.symbiosis.persistence.entity.enumeration.sym_financial_institution;
@@ -33,6 +34,7 @@ import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
+import static net.symbiosis.common.configuration.NetworkUtilities.sendEmailAlert;
 import static net.symbiosis.common.utilities.SymValidator.*;
 import static net.symbiosis.core.helper.ValidationHelper.validateAmount;
 import static net.symbiosis.core.helper.ValidationHelper.validateCashoutAccount;
@@ -41,8 +43,7 @@ import static net.symbiosis.core_lib.enumeration.SymChannel.SMART_PHONE;
 import static net.symbiosis.core_lib.enumeration.SymEventType.*;
 import static net.symbiosis.core_lib.enumeration.SymFinancialInstitutionType.*;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
-import static net.symbiosis.core_lib.utilities.CommonUtilities.formatFullMsisdn;
-import static net.symbiosis.core_lib.utilities.CommonUtilities.isNullOrEmpty;
+import static net.symbiosis.core_lib.utilities.CommonUtilities.*;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
@@ -445,13 +446,17 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
             null, cardNumber, amount, wallet.getCurrent_balance(),
             null, new Date(), null).save();
 
-        SymResponseObject<sym_wallet> updateResponse = walletManager.updateWalletBalance(wallet, amount);
+        SymResponseObject<sym_wallet> updateResponse = walletManager.updateWalletBalance(
+            new sym_wallet_transaction(wallet, fromEnum(VOUCHER_PURCHASE), amount,
+                format(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME) + " Swipe: %s", formatDoubleToMoney(amount.doubleValue())),
+                swipeTransaction.getId(), swipeTransaction.getTransaction_time())
+        );
 
         //TODO execute swipe transaction
 
 
         swipeTransaction.setNew_balance(wallet.getCurrent_balance());
-        swipeTransaction.setTransaction_status(fromEnum(updateResponse.getResponseCode()));
+        swipeTransaction.setResponse_code(fromEnum(updateResponse.getResponseCode()));
         swipeTransaction.save();
 
         logResponse(authUser, requestResponseLog, SUCCESS);
@@ -508,7 +513,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
 
         SymResponseObject<sym_auth_user> pinResponse = authProvider.validatePin(authUser, pin);
         if (!pinResponse.getResponseCode().equals(SUCCESS)) {
-            cashoutTransaction.setTransaction_status(fromEnum(pinResponse.getResponseCode()));
+            cashoutTransaction.setResponse_code(fromEnum(pinResponse.getResponseCode()));
             cashoutTransaction.save();
             logResponse(authUser, requestResponseLog, pinResponse.getResponseCode());
             return new SymWalletList(pinResponse.getResponseCode());
@@ -516,14 +521,18 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
 
         // TODO get charges for transaction type
         BigDecimal charges = new BigDecimal(0.0);
-        SymResponseObject<sym_wallet> updateResponse = walletManager.updateWalletBalance(wallet, amount.add(charges).multiply(new BigDecimal(-1)));
+        SymResponseObject<sym_wallet> updateResponse = walletManager.updateWalletBalance(
+            new sym_wallet_transaction(wallet, fromEnum(VOUCHER_PURCHASE), amount.add(charges).multiply(new BigDecimal(-1)),
+                format(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME) + " Cashout: %s", formatDoubleToMoney(amount.doubleValue())),
+                cashoutTransaction.getId(), cashoutTransaction.getTransaction_time())
+        );
 
 //        if (updateResponse.getResponseCode().equals(SUCCESS)) {
             //TODO execute cashout transaction
 //        }
 
         cashoutTransaction.setNew_balance(wallet.getCurrent_balance());
-        cashoutTransaction.setTransaction_status(fromEnum(updateResponse.getResponseCode()));
+        cashoutTransaction.setResponse_code(fromEnum(updateResponse.getResponseCode()));
         cashoutTransaction.save();
 
         logResponse(authUser, requestResponseLog, updateResponse.getResponseCode());
@@ -577,13 +586,45 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
             return new SymWalletList(AUTH_NON_EXISTENT).setResponse("Recipient phone number not registered");
         }
 
-        BigDecimal previousBalance = senderWallet.getCurrent_balance();
+        sym_wallet_transfer walletTransfer = new sym_wallet_transfer(authUser, recipientUser.get(0).getWallet(), amount,
+                senderWallet.getCurrent_balance(), senderWallet.getCurrent_balance(), new Date(), fromEnum(GENERAL_ERROR)).save();
 
-        SymResponseObject<sym_wallet> updateResponse = walletManager.transferWalletBalanceWithCharges(senderWallet, recipientUser.get(0).getWallet(), amount);
+        //calculate voucher amounts based on discount
+        List<sym_wallet_group_transfer_charge> walletTransferCharges = getEntityManagerRepo().findWhere(
+            sym_wallet_group_transfer_charge.class, asList(
+                    new Pair<>("wallet_group_id", senderWallet.getWallet_group().getId()),
+                    new Pair<>("starting_value <", amount.doubleValue()),
+                    new Pair<>("ending_value >", amount.doubleValue())
+            )
+        );
+
+        if (walletTransferCharges == null || walletTransferCharges.size() != 1) {
+            String response = format("Charge not defined for group %s, amount %s", senderWallet.getWallet_group().getId(), amount);
+            logger.severe(response);
+            sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME),"Charge not defined", response);
+            return new SymWalletList(GENERAL_ERROR);
+        }
+
+        BigDecimal walletCost = amount.add(amount.multiply(new BigDecimal(walletTransferCharges.get(0).getWallet_charge()/100.0)));
+
+        sym_wallet_transaction fromWalletDetails = new sym_wallet_transaction(senderWallet, fromEnum(WALLET_TRANSFER), walletCost.multiply(new BigDecimal(-1)),
+            format("Wallet Transfer: %s to %s", formatDoubleToMoney(amount.doubleValue()), recipientUser.get(0).getWallet().getWallet_admin_user().getMsisdn()),
+            walletTransfer.getId(), walletTransfer.getTransaction_time());
+
+        sym_wallet_transaction toWalletDetails = new sym_wallet_transaction(recipientUser.get(0).getWallet(), fromEnum(WALLET_TRANSFER), amount,
+            format("Wallet Transfer: %s from %s", formatDoubleToMoney(amount.doubleValue()), senderWallet.getWallet_admin_user().getMsisdn()),
+            walletTransfer.getId(), walletTransfer.getTransaction_time());
+
+        SymResponseObject<sym_wallet> updateResponse = walletManager.transferWalletBalanceWithCharges(fromWalletDetails, toWalletDetails);
 
         if (updateResponse.getResponseCode().equals(SUCCESS)) {
-            new sym_wallet_transfer(authUser, recipientUser.get(0).getWallet(), amount, previousBalance, senderWallet.getCurrent_balance(), new Date()).save();
-            // TODO send SMS to sender & recipient
+            walletTransfer.setResponse_code(fromEnum(SUCCESS));
+            walletTransfer.setNew_balance(senderWallet.getCurrent_balance());
+            walletTransfer.save();
+        } else {
+            walletTransfer.setResponse_code(fromEnum(updateResponse.getResponseCode()));
+            walletTransfer.setNew_balance(senderWallet.getCurrent_balance());
+            walletTransfer.save();
         }
 
         return new SymWalletList(updateResponse.getResponseCode(), converterService.toDTO(senderWallet));

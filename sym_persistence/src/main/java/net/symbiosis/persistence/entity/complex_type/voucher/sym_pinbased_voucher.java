@@ -17,6 +17,7 @@ import java.util.Date;
 
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "pinbased_voucher_id"))
+@Cacheable(false)
 public class sym_pinbased_voucher extends sym_entity<sym_pinbased_voucher> {
 
 	@ManyToOne

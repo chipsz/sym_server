@@ -160,6 +160,13 @@ project.ext.libraries = [
 	apache_httpcore:   [ group: 'org.apache.httpcomponents', name: 'httpcore',   version: '4.3.2' ],
 	apache_httpclient: [ group: 'org.apache.httpcomponents', name: 'httpclient', version: project.httpcomponents_version ],
 
+	/* ################################################### axis2 ################################################### */
+	apache_axis2_adb:           [ group: 'org.apache.axis2',             name: 'axis2-adb',       version: '1.7.9' ],
+	apache_axis2_kernel:        [ group: 'org.apache.axis2',             name: 'axis2-kernel',    version: '1.7.9' ],
+	apache_woden:               [ group: 'org.apache.woden',             name: 'woden',           version: '1.0M10' ],
+	apache_xmlschema:           [ group: 'org.apache.ws.commons.schema', name: 'XmlSchema',       version: '1.4.7' ],
+	apache_cfx_service_desc:    [ group: 'org.apache.cxf', name: 'cxf-rt-rs-service-description', version: '3.3.1' ],
+
 	/* ################################################ test jars ################################################# */
 	testng:			[ group: 'org.testng',              name: 'testng',				version: '6.9.6' ],
 	jmockit:		[ group: 'com.googlecode.jmockit',	name: 'jmockit',			version: '1.7' ],

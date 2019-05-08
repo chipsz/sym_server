@@ -11,6 +11,7 @@ import java.util.Date;
 
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "sym_user_id"))
+@Cacheable(false)
 public class sym_user extends sym_entity<sym_user> {
     @Column(length = 20)
     private String first_name;

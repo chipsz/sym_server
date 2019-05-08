@@ -14,6 +14,7 @@ import javax.persistence.*;
 
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "cashout_account_id"))
+@Cacheable(false)
 public class sym_cashout_account extends sym_entity<sym_cashout_account> {
 
     @ManyToOne(optional = false)

@@ -1,6 +1,8 @@
-package net.symbiosis.persistence.entity.complex_type.voucher;
+package net.symbiosis.persistence.entity.complex_type.log;
 
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_pinbased_voucher;
+import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.enumeration.sym_distribution_channel;
 import net.symbiosis.persistence.entity.enumeration.sym_response_code;
@@ -19,6 +21,7 @@ import java.util.Date;
  ***************************************************************************/
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "voucher_purchase_id"))
+@Cacheable(false)
 public class sym_voucher_purchase extends sym_entity<sym_voucher_purchase> {
 
 	@ManyToOne(optional = false)
@@ -27,6 +30,8 @@ public class sym_voucher_purchase extends sym_entity<sym_voucher_purchase> {
 	@ManyToOne(optional = true)
 	@JoinColumn(name = "pinbased_voucher_id")
 	private sym_pinbased_voucher pinbased_voucher;
+	@Column
+	private String voucher_provider_reference;
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "wallet_id")
 	private sym_wallet wallet;
@@ -35,7 +40,7 @@ public class sym_voucher_purchase extends sym_entity<sym_voucher_purchase> {
 //	private sym_user system_user;
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "auth_user_id")
-	private sym_auth_user system_auth_user;
+	private sym_auth_user auth_user;
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "response_code_id")
 	private sym_response_code response_code;
@@ -52,17 +57,18 @@ public class sym_voucher_purchase extends sym_entity<sym_voucher_purchase> {
 
 	public sym_voucher_purchase() {}
 
-	public sym_voucher_purchase(sym_voucher voucher, sym_pinbased_voucher pinbased_voucher, sym_wallet wallet,
-                                 /* sym_user system_user, */ sym_auth_user system_auth_user,
-                                 sym_response_code response_code, BigDecimal voucher_value,
-                                 BigDecimal voucher_provider_value, BigDecimal wallet_cost, Date transaction_time,
-                                 Boolean is_transaction_reconciled, String recipient, String cashier_name,
-                                 sym_distribution_channel distribution_channel) {
+	public sym_voucher_purchase(sym_voucher voucher, sym_pinbased_voucher pinbased_voucher, String voucher_provider_reference, sym_wallet wallet,
+                                 /* sym_user system_user, */ sym_auth_user auth_user,
+                                sym_response_code response_code, BigDecimal voucher_value,
+                                BigDecimal voucher_provider_value, BigDecimal wallet_cost, Date transaction_time,
+                                Boolean is_transaction_reconciled, String recipient, String cashier_name,
+                                sym_distribution_channel distribution_channel) {
 		this.voucher = voucher;
 		this.pinbased_voucher = pinbased_voucher;
-		this.wallet = wallet;
+        this.voucher_provider_reference = voucher_provider_reference;
+        this.wallet = wallet;
 //		this.system_user = system_user;
-		this.system_auth_user = system_auth_user;
+		this.auth_user = auth_user;
 		this.response_code = response_code;
 		this.voucher_value = voucher_value;
 		this.voucher_provider_value = voucher_provider_value;
@@ -85,7 +91,14 @@ public class sym_voucher_purchase extends sym_entity<sym_voucher_purchase> {
 		return this;
 	}
 
-	public sym_wallet getWallet() { return wallet; }
+    public String getVoucher_provider_reference() { return voucher_provider_reference; }
+
+    public sym_voucher_purchase setVoucher_provider_reference(String voucher_provider_reference) {
+        this.voucher_provider_reference = voucher_provider_reference;
+        return this;
+    }
+
+    public sym_wallet getWallet() { return wallet; }
 
 	public void setWallet(sym_wallet merchant) { this.wallet = merchant; }
 
@@ -93,9 +106,9 @@ public class sym_voucher_purchase extends sym_entity<sym_voucher_purchase> {
 //
 //	public void setSystem_user(sym_user system_user) { this.system_user = system_user; }
 
-	public sym_auth_user getSystem_auth_user() { return system_auth_user; }
+	public sym_auth_user getAuth_user() { return auth_user; }
 
-	public void setSystem_auth_user(sym_auth_user system_auth_user) { this.system_auth_user = system_auth_user; }
+	public void setAuth_user(sym_auth_user system_auth_user) { this.auth_user = system_auth_user; }
 
 	public sym_response_code getResponse_code() { return response_code; }
 

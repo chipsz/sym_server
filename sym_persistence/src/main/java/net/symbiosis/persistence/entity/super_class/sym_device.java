@@ -14,6 +14,7 @@ import java.util.Date;
  ***************************************************************************/
 
 @MappedSuperclass
+@Cacheable(false)
 public abstract class sym_device<E extends sym_device> extends sym_entity<E> {
 
     @ManyToOne(optional = false)
