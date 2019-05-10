@@ -14,9 +14,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static java.lang.Long.parseLong;
+import static net.symbiosis.common.configuration.Configuration.getProperty;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_GLO_SERVICE_PASSWORD;
 import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_GLO_SERVICE_REQUEST_TIMEOUT;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.GENERAL_ERROR;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
+import static net.symbiosis.core_lib.security.Security.decryptAES;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
@@ -81,7 +84,9 @@ public class GloIntegrationService implements VoucherPurchaseIntegration {
             initiatorPrincipalId.setType("RESELLERUSER");
             initiatorPrincipalId.setUserId("empowertst");
             clientContext.setInitiatorPrincipalId(initiatorPrincipalId);
-            clientContext.setPassword("empowertst0419");
+            clientContext.setPassword(decryptAES(getProperty("AES128BitKey"), getProperty("AESInitializationVector"),
+                    getSymConfigDao().getConfig(CONFIG_GLO_SERVICE_PASSWORD)
+            ));
             clientContext.setPrepareOnly(false);
             requestTopup.setContext(clientContext);
 

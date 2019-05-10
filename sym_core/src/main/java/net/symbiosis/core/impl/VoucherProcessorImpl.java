@@ -22,7 +22,6 @@ import net.symbiosis.persistence.entity.complex_type.voucher.*;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_voucher_discount;
-import net.symbiosis.persistence.entity.enumeration.sym_response_code;
 import net.symbiosis.persistence.entity.enumeration.sym_voucher_status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +35,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
+import static java.math.BigDecimal.ROUND_HALF_UP;
 import static java.util.Arrays.asList;
 import static net.symbiosis.common.configuration.Configuration.getProperty;
 import static net.symbiosis.common.configuration.NetworkUtilities.sendEmailAlert;
@@ -325,22 +325,26 @@ public class VoucherProcessorImpl implements VoucherProcessor {
             voucherId, voucherValue == null ? "not specified" : voucherValue, authUserId, cashierName));
 
 		if (!SymValidator.isValidName(cashierName)) {
+            logger.warning(format("Voucher purchase failed! Invalid cashier name '%s' specified", cashierName));
 			return new SymVoucherPurchaseList(SymResponseCode.INPUT_INVALID_CASHIER);
 		}
 
 		SymResponseObject<sym_voucher> voucherResponse = validateVoucher(voucherId);
 		if (!voucherResponse.getResponseCode().equals(SUCCESS)) {
+            logger.warning(format("Voucher purchase failed! %s", voucherResponse.getMessage()));
 			return new SymVoucherPurchaseList(voucherResponse.getResponseCode());
 		}
 
 		sym_voucher voucher = voucherResponse.getResponseObject();
 
 		if (!voucher.getIs_active()) {
+            logger.warning(format("Voucher purchase failed! Voucher %s is not active", voucher.getId()));
 			return new SymVoucherPurchaseList(INPUT_INVALID_AMOUNT);
 		}
 
 		SymResponseObject<sym_auth_user> authUserResponse = validateAuthUser(authUserId);
 		if (!authUserResponse.getResponseCode().equals(SUCCESS)) {
+            logger.warning(format("Voucher purchase failed! %s", authUserResponse.getMessage()));
 			return new SymVoucherPurchaseList(authUserResponse.getResponseCode());
 		}
 
@@ -348,6 +352,7 @@ public class VoucherProcessorImpl implements VoucherProcessor {
 
         SymResponseObject<sym_user> systemUserResponse = validateSystemUser(systemUserId);
 		if (!systemUserResponse.getResponseCode().equals(SUCCESS)) {
+            logger.warning(format("Voucher purchase failed! %s", systemUserResponse.getMessage()));
 			return new SymVoucherPurchaseList(systemUserResponse.getResponseCode());
 		}
 
@@ -357,13 +362,16 @@ public class VoucherProcessorImpl implements VoucherProcessor {
 			voucherValue = voucher.getVoucher_value();
 		}
 		else if (voucherValue == null) {
-            SymVoucherPurchaseList response = new SymVoucherPurchaseList(INPUT_INCOMPLETE_REQUEST);
-            response.getSymResponse().setResponse_message("voucherValue must be specified for variable vouchers");
-            return response;
+		    //TODO amount must be specified
+//            SymVoucherPurchaseList response = new SymVoucherPurchaseList(INPUT_INCOMPLETE_REQUEST);
+//            response.getSymResponse().setResponse_message("voucherValue must be specified for variable vouchers");
+//            return response;
+            voucherValue = voucher.getVoucher_value();
 		}
 		else if (voucherValue.compareTo(new BigDecimal(0.0)) < 1) {
             SymVoucherPurchaseList response = new SymVoucherPurchaseList(INPUT_INVALID_AMOUNT);
             response.getSymResponse().setResponse_message("voucherValue must be greater than 0");
+            logger.warning(format("Voucher purchase failed! %s", response.getSymResponse().getResponse_message()));
             return response;
 		}
 
@@ -384,8 +392,8 @@ public class VoucherProcessorImpl implements VoucherProcessor {
 		if (walletGroupVoucher == null || walletGroupVoucher.size() != 1) {
 			logger.info(format("Wallet %s does not belong to a valid voucher group ", wallet.getId()));
 			//wallet does not belong to a valid wallet group
-			voucherPurchase.setResponse_code(
-				fromEnum(CONFIGURATION_INVALID)).save();
+			voucherPurchase.setResponse_code(fromEnum(CONFIGURATION_INVALID)).save();
+            logger.warning(format("Voucher purchase failed! Wallet %s does not belong to a valid voucher group", wallet.getId()));
 			return new SymVoucherPurchaseList(GENERAL_ERROR);
 		}
 
@@ -455,6 +463,15 @@ public class VoucherProcessorImpl implements VoucherProcessor {
                 voucherPurchase.setResponse_code(fromEnum(INSUFFICIENT_STOCK)).save();
                 return new SymVoucherPurchaseList(INSUFFICIENT_STOCK);
             }
+        } else {
+		    //verify pinless amount
+            if (voucherValue.setScale(3, ROUND_HALF_UP).doubleValue() < voucher.getVoucher_value().setScale(3, ROUND_HALF_UP).doubleValue()) {
+                SymVoucherPurchaseList response = new SymVoucherPurchaseList(INPUT_INVALID_AMOUNT);
+                response.getSymResponse().setResponse_message(format("voucherValue %s must be greater than or equal to %s", voucherValue, voucher.getVoucher_value()));
+                voucherPurchase.setResponse_code(fromEnum(INPUT_INVALID_AMOUNT)).save();
+                logger.warning(format("Voucher purchase failed! %s", response.getSymResponse().getResponse_message()));
+                return response;
+            }
         }
 
 		//deduct the funds to make sure wallet has the cheese for the transaction
@@ -468,11 +485,9 @@ public class VoucherProcessorImpl implements VoucherProcessor {
         );
 
 		if (!balanceResponse.getResponseCode().equals(SUCCESS)) {
-			logger.info(format("Failed to update wallet balance %s", balanceResponse.getMessage()));
-			sym_response_code responseCode = getEntityManagerRepo()
-				.findById(sym_response_code.class, (long)balanceResponse.getCode());
-			voucherPurchase.setResponse_code(responseCode).save();
-			return new SymVoucherPurchaseList(SymResponseCode.valueOf(responseCode.getId().intValue()));
+			voucherPurchase.setResponse_code(fromEnum(balanceResponse.getResponseCode())).save();
+            logger.warning(format("Voucher purchase failed! %s", balanceResponse.getMessage()));
+			return new SymVoucherPurchaseList(balanceResponse.getResponseCode());
 		}
 
 		//after this point, any failure must result in balance reversal because wallet has already been charged
@@ -496,19 +511,23 @@ public class VoucherProcessorImpl implements VoucherProcessor {
                     .purchaseVoucher(voucherPurchase.getId(), voucher.getId(), voucherValue, recipient);
 
                 if (voucherPurchaseResponse.getResponseCode().equals(SUCCESS)) {
-                    voucherPurchase.setResponse_code(fromEnum(SUCCESS));
-                    voucherPurchase.setVoucher_provider_reference(voucherPurchaseResponse.getResponseObject());
+                    voucherPurchase
+                        .setResponse_code(fromEnum(SUCCESS))
+                        .setVoucher_provider_reference(voucherPurchaseResponse.getResponseObject())
+                        .save();
                 } else {
                     //TODO if reversal fails, send email
+                    voucherPurchase
+                        .setResponse_code(fromEnum(voucherPurchaseResponse.getResponseCode()))
+                        .save();
                     walletManager.updateWalletBalance(
                         new sym_wallet_transaction(wallet, fromEnum(VOUCHER_PURCHASE), new BigDecimal(walletCost),
                         "Voucher Purchase Reversal: Transaction Failed! " + voucherPurchaseResponse.getMessage(),
                         voucherPurchase.getId(), voucherPurchase.getTransaction_time()));
+                    logger.warning(format("Voucher purchase failed! %s", voucherPurchaseResponse.getResponseCode().getMessage()));
+                    return new SymVoucherPurchaseList(voucherPurchaseResponse.getResponseCode());
                 }
-				return new SymVoucherPurchaseList(voucherPurchaseResponse.getResponseCode());
 			}
-
-            voucherPurchase.setResponse_code(fromEnum(SUCCESS)).save();
 
 			logger.info(format("Distributing voucher using distribution channel %s", RECEIPT.name()));
 			return new SymVoucherPurchaseList(SUCCESS, converterService.toDTO(voucherPurchase));

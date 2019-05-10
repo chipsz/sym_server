@@ -30,7 +30,10 @@ dependencies {
 
     compile libraries.spring_core
     compile libraries.modelmapper
-    compile libraries.apache_axis2_adb
+    compile libraries.axis2_adb
+    compile libraries.axis2_kernel
+    compile libraries.axis2_transport_local
+    compile libraries.axis2_transport_http
 
     //TODO check if these are all needed
     testCompile libraries.hibernate_core

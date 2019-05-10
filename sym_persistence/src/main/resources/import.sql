@@ -48,6 +48,7 @@ insert ignore into sym_config(config_id,is_enabled,config_name,config_value,conf
 insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (202,1,'falcon_pos_binary_version','1.0.4','Version of the Falcon POS binary file');
 #integration settings
 insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (300,1,'glo_service_request_timeout','15000','Milliseconds before a request is considered timed out');
+insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (301,1,'glo_service_password','2suZ0Dcv5iTLOPbqOyOC0A==','Password for the Glo Integration');
 
 insert ignore into sym_country(id,name,is_enabled,iso_code_2,iso_code_3,dialing_code) values (1,'GHANA',1,'GH','GHA',233);
 insert ignore into sym_country(id,name,is_enabled,iso_code_2,iso_code_3,dialing_code) values (2,'ZIMBABWE',0,'ZW','ZWE',263);
@@ -255,6 +256,7 @@ insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_pr
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '5.00', 1, 1);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '10.00', 1, 1);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '20.00', 1, 1);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 0, 0, 'GHS', 7, 1, '1', 2, 2);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 6.5, 1, '1.00', 3, 3);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 6.5, 1, '2.00', 3, 3);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 6.5, 1, '5.00', 3, 3);
