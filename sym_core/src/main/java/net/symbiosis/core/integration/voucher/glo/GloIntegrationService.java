@@ -41,7 +41,7 @@ public class GloIntegrationService implements VoucherPurchaseIntegration {
 
     @Autowired
     GloIntegrationService(IntegrationManagerService integrationManagerService) {
-
+        logger.info("Registering GloIntegrationService with integration id '" + INTEGRATION_ID + "'");
         List<sym_voucher_provider> voucher_providers = getEntityManagerRepo()
             .findWhere(sym_voucher_provider.class, new Pair<>("integration_id", INTEGRATION_ID));
 

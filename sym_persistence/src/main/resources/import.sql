@@ -239,7 +239,7 @@ insert ignore into sym_service_provider (service_provider_id,is_enabled,service_
 insert ignore into sym_service_provider (service_provider_id,is_enabled,service_provider_name) values (7, 1, 'WAEC');
 
 insert ignore into sym_voucher_provider (voucher_provider_id,is_enabled,voucher_provider_name, integration_id) values (1, 1, 'Airtel', null);
-insert ignore into sym_voucher_provider (voucher_provider_id,is_enabled,voucher_provider_name, integration_id) values (2, 0, 'Glo', 'GloSeamless');
+insert ignore into sym_voucher_provider (voucher_provider_id,is_enabled,voucher_provider_name, integration_id) values (2, 1, 'Glo', 'GloSeamless');
 insert ignore into sym_voucher_provider (voucher_provider_id,is_enabled,voucher_provider_name, integration_id) values (3, 1, 'MTN', null);
 insert ignore into sym_voucher_provider (voucher_provider_id,is_enabled,voucher_provider_name, integration_id) values (4, 1, 'Vodafone', null);
 insert ignore into sym_voucher_provider (voucher_provider_id,is_enabled,voucher_provider_name, integration_id) values (5, 1, 'Tigo', null);
