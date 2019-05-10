@@ -164,7 +164,7 @@ project.ext.libraries = [
 	axis2_adb:              [ group: 'org.apache.axis2',    name: 'axis2-adb',              version: '1.7.9' ],
 	axis2_kernel:           [ group: 'org.apache.axis2',    name: 'axis2-kernel',           version: '1.7.9' ],
 	axis2_transport_local:  [ group: 'org.apache.axis2',    name: 'axis2-transport-local',  version: '1.7.9' ],
-	axis2_transport_http:   [ group: 'org.apache.axis2',    name: 'axis2-transport-http',  version: '1.7.9' ],
+	axis2_transport_http:   [ group: 'org.apache.axis2',    name: 'axis2-transport-http',   version: '1.7.9' ],
 
 	/* ################################################ test jars ################################################# */
 	testng:			[ group: 'org.testng',              name: 'testng',				version: '6.9.6' ],

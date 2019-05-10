@@ -81,7 +81,7 @@ public class sym_incoming_payment extends sym_entity<sym_incoming_payment> {
 		return wallet;
 	}
 
-	public sym_incoming_payment setWallet(sym_wallet merchant) { this.wallet = merchant; return this; }
+	public sym_incoming_payment setWallet(sym_wallet wallet) { this.wallet = wallet; return this; }
 
 	public String getDepositor_reference() {
 		return depositor_reference;

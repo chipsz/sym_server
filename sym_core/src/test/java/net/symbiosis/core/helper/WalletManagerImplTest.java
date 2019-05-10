@@ -2,13 +2,17 @@ package net.symbiosis.core.helper;
 
 import net.symbiosis.core.service.WalletManager;
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.persistence.entity.complex_type.log.sym_wallet_transaction;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
+import net.symbiosis.persistence.helper.SymEnumHelper;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
+import static net.symbiosis.core_lib.enumeration.SymEventType.WALLET_LOAD;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static org.testng.Assert.assertTrue;
 
@@ -36,7 +40,12 @@ public class WalletManagerImplTest {
             new BigDecimal(100.0), null, null, null
         ).save();
 
-        SymResponseObject<sym_wallet> updateResponse = walletManager.updateWalletBalance(wallet, new BigDecimal(10), "Voucher Purchase Reversal: Transaction Failed! " + voucherPurchaseResponse.getMessage());
+        SymResponseObject<sym_wallet> updateResponse = walletManager.updateWalletBalance(
+            new sym_wallet_transaction(
+                wallet, SymEnumHelper.fromEnum(WALLET_LOAD), new BigDecimal(10),
+                "Test wallet load", 0L, new Date()
+            )
+        );
 
         assertTrue(updateResponse.getResponseCode().equals(SUCCESS));
         assertTrue(wallet.getCurrent_balance().equals(new BigDecimal(110)));
