@@ -4,6 +4,7 @@ import net.symbiosis.common.utilities.FileUtils;
 import net.symbiosis.common.utilities.SymValidator;
 import net.symbiosis.core.contract.*;
 import net.symbiosis.core.contract.symbiosis.*;
+import net.symbiosis.core.integration.voucher.VoucherPurchaseIntegration;
 import net.symbiosis.core.service.ConverterService;
 import net.symbiosis.core.service.IntegrationManagerService;
 import net.symbiosis.core.service.VoucherProcessor;
@@ -506,9 +507,19 @@ public class VoucherProcessorImpl implements VoucherProcessor {
 				logger.info(format("Need to get voucher from voucher provider %s",
 					voucher.getVoucher_provider().getName()));
 
-                SymResponseObject<String> voucherPurchaseResponse = integrationManagerService
-                    .getVoucherPurchaseIntegration(voucher.getVoucher_provider().getId())
-                    .purchaseVoucher(voucherPurchase.getId(), voucher.getId(), voucherValue, recipient);
+                VoucherPurchaseIntegration integrationService = integrationManagerService
+                        .getVoucherPurchaseIntegration(voucher.getVoucher_provider().getId());
+
+                if (integrationService == null) {
+                    voucherPurchase.setResponse_code(fromEnum(CONFIGURATION_INVALID)).save();
+                    logger.warning(format("Voucher purchase failed! Integration for voucherProvider %s:%s was not found.",
+                        voucher.getVoucher_provider().getId(),
+                        voucher.getVoucher_provider().getName()));
+                    return new SymVoucherPurchaseList(GENERAL_ERROR);
+                }
+
+                SymResponseObject<String> voucherPurchaseResponse =
+                        integrationService.purchaseVoucher(voucherPurchase.getId(), voucher.getId(), voucherValue, recipient);
 
                 if (voucherPurchaseResponse.getResponseCode().equals(SUCCESS)) {
                     voucherPurchase
