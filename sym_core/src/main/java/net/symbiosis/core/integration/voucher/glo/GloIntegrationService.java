@@ -6,6 +6,7 @@ import net.symbiosis.core.service.IntegrationManagerService;
 import net.symbiosis.core_lib.response.SymResponseObject;
 import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
+import net.symbiosis.persistence.helper.DaoManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,14 +41,12 @@ public class GloIntegrationService implements VoucherPurchaseIntegration {
     private sym_voucher_provider voucherProvider;
 
     @Autowired
-    GloIntegrationService(IntegrationManagerService integrationManagerService) {
+    GloIntegrationService(IntegrationManagerService integrationManagerService, DaoManager daoManager) {
         logger.info("Registering GloIntegrationService with integration id '" + INTEGRATION_ID + "'");
-        List<sym_voucher_provider> voucher_providers = getEntityManagerRepo()
+        List<sym_voucher_provider> voucherProviders = getEntityManagerRepo()
             .findWhere(sym_voucher_provider.class, new Pair<>("integration_id", INTEGRATION_ID));
-        this.voucherProvider = voucher_providers.get(0);
-        if (voucher_providers != null && voucher_providers.size() > 0) {
-            integrationManagerService.registerVoucherPurchaseIntegration(voucherProvider.getId(), this);
-        }
+        this.voucherProvider = voucherProviders.get(0);
+        integrationManagerService.registerVoucherPurchaseIntegration(voucherProvider.getId(), this);
     }
 
     private static SymResponseObject<ERSWSTopupServiceImplServiceStub> getTopupService() {
