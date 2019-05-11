@@ -6550,7 +6550,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -7006,7 +7006,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -7365,7 +7365,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -7835,7 +7835,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -8604,7 +8604,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -9099,7 +9099,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -9626,7 +9626,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -10130,7 +10130,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -10504,7 +10504,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -10832,7 +10832,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -11160,7 +11160,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -11575,7 +11575,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -11949,7 +11949,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -12506,7 +12506,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -13144,7 +13144,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -13602,7 +13602,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -14055,7 +14055,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -15491,7 +15491,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -15976,7 +15976,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -16821,7 +16821,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -17393,7 +17393,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -17810,7 +17810,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -18358,7 +18358,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -18808,7 +18808,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -19364,7 +19364,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -19841,7 +19841,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -20256,7 +20256,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -20669,7 +20669,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -21028,7 +21028,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -21356,7 +21356,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -21684,7 +21684,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -22051,7 +22051,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -22410,7 +22410,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -22777,7 +22777,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -23283,7 +23283,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -23681,7 +23681,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -24154,7 +24154,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -24574,7 +24574,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -24941,7 +24941,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -25397,7 +25397,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -25841,7 +25841,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -26239,7 +26239,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -26745,7 +26745,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -27143,7 +27143,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -27523,7 +27523,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -28053,7 +28053,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -28451,7 +28451,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -29194,7 +29194,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -30085,7 +30085,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -30632,7 +30632,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -30960,7 +30960,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -31423,7 +31423,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -31861,7 +31861,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -32220,7 +32220,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -32548,7 +32548,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -33047,7 +33047,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -33835,7 +33835,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -34715,7 +34715,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -35247,7 +35247,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -35611,7 +35611,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -36028,7 +36028,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -36467,7 +36467,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -36898,7 +36898,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -37296,7 +37296,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -37922,7 +37922,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -38368,7 +38368,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -39091,7 +39091,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -39631,7 +39631,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -39995,7 +39995,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -40451,7 +40451,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -40810,7 +40810,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -41177,7 +41177,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -41575,7 +41575,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -41934,7 +41934,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -42262,7 +42262,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -42629,7 +42629,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -42988,7 +42988,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -43427,7 +43427,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -43959,7 +43959,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -44428,7 +44428,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -45126,7 +45126,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -45969,7 +45969,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -46575,7 +46575,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -47078,7 +47078,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -47470,7 +47470,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -47798,7 +47798,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -48165,7 +48165,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -48623,7 +48623,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -49045,7 +49045,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -49443,7 +49443,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -49802,7 +49802,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -50130,7 +50130,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -50557,7 +50557,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -50979,7 +50979,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -51435,7 +51435,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -51924,7 +51924,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -52695,7 +52695,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -53324,7 +53324,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -53875,7 +53875,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -54406,7 +54406,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -54923,7 +54923,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -55282,7 +55282,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -55649,7 +55649,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -56105,7 +56105,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -56510,7 +56510,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -56874,7 +56874,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -57291,7 +57291,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -57619,7 +57619,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -57947,7 +57947,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -58407,7 +58407,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -58937,7 +58937,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -59716,7 +59716,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -60319,7 +60319,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -60772,7 +60772,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -61677,7 +61677,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -62307,7 +62307,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -62758,7 +62758,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -63191,7 +63191,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -63519,7 +63519,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -63924,7 +63924,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -64511,7 +64511,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -65123,7 +65123,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -65683,7 +65683,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -66168,7 +66168,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -66581,7 +66581,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -67256,7 +67256,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -67755,7 +67755,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -68194,7 +68194,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -68586,7 +68586,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -69373,7 +69373,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -69936,7 +69936,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
@@ -70353,7 +70353,7 @@
 
         private static java.lang.String generatePrefix(java.lang.String namespace) {
             if(namespace.equals("http://external.interfaces.ers.seamless.com/")){
-                return "ns1";
+                return "ext";
             }
             return org.apache.axis2.databinding.utils.BeanUtil.getUniquePrefix();
         }
