@@ -77,14 +77,14 @@ public enum SymResponseCode implements Serializable {
 
     static Map<Integer, SymResponseCode> enumMap;
 
-    public static SymResponseCode valueOf(Integer value) {
+    public static SymResponseCode valueOf(Long value) {
         if (enumMap == null) {
             enumMap = new HashMap<>();
             for (SymResponseCode rc : SymResponseCode.values()) {
                 enumMap.put(rc.code, rc);
             }
         }
-        return enumMap.get(value);
+        return enumMap.get(value.intValue());
     }
 
     public int getCode() {

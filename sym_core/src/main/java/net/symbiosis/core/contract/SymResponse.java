@@ -26,7 +26,7 @@ public class SymResponse implements Serializable {
     }
 
     public SymResponse(sym_response_code symResponseCode) {
-        this.setResponse(SymResponseCode.valueOf(symResponseCode.getId().intValue()));
+        this.setResponse(SymResponseCode.valueOf(symResponseCode.getId()));
     }
 
     public SymResponseCode getResponse() {

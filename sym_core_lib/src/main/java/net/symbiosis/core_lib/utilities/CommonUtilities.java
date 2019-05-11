@@ -139,7 +139,7 @@ public class CommonUtilities {
     public static String formatFullMsisdn(String msisdn, String countryCodePrefix) {
 
         if (msisdn == null || countryCodePrefix == null) {
-            return null;
+            return msisdn;
         }
 
         if (msisdn.length() > 10) {
@@ -155,6 +155,38 @@ public class CommonUtilities {
             return msisdn.replaceFirst("0", countryCodePrefix);
         }
         return msisdn;
+    }
+
+    public static Long format10DigitPhoneNumber(Long msisdn, String countryCodePrefix) {
+        String result = format10DigitPhoneNumber(String.valueOf(msisdn), countryCodePrefix);
+        if (!isNullOrEmpty(result)) {
+            return Long.parseLong(result);
+        } else {
+            return msisdn;
+        }
+    }
+
+    public static String format10DigitPhoneNumber(String msisdn, String countryCodePrefix) {
+
+        String returnMsisdn = msisdn;
+        if (msisdn == null || countryCodePrefix == null) {
+            return msisdn;
+        }
+        if (msisdn.length() == 10 && msisdn.startsWith("0")) {
+            return msisdn;
+        }
+        if (returnMsisdn.length() > 10) {
+            if (returnMsisdn.startsWith("+")) {
+                returnMsisdn = returnMsisdn.replaceFirst("\\+","");
+            }
+            if (returnMsisdn.startsWith("00")) {
+                returnMsisdn = returnMsisdn.replaceFirst("00", "");
+            }
+            if (returnMsisdn.startsWith(countryCodePrefix)) {
+                returnMsisdn = returnMsisdn.replaceFirst(countryCodePrefix,"0");
+            }
+        }
+        return returnMsisdn.length() == 10 && returnMsisdn.startsWith("0") ? returnMsisdn : msisdn;
     }
 
     public static long secondsBetween(final Date firstDate, final Date secondDate) {

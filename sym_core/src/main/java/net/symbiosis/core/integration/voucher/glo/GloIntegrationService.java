@@ -20,16 +20,17 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static java.lang.Long.parseLong;
+import static java.lang.String.format;
 import static net.symbiosis.common.configuration.Configuration.getProperty;
-import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_GLO_SERVICE_PASSWORD;
-import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_GLO_SERVICE_REQUEST_TIMEOUT;
-import static net.symbiosis.core_lib.enumeration.SymResponseCode.GENERAL_ERROR;
-import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
+import static net.symbiosis.common.configuration.NetworkUtilities.sendEmailAlert;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
+import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
 import static net.symbiosis.core_lib.security.Security.decryptAES;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.throwableAsString;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
+import static net.symbiosis.persistence.helper.SymEnumHelper.getMappedResponseMessage;
 
 /***************************************************************************
  *                                                                         *
@@ -137,28 +138,46 @@ public class GloIntegrationService implements VoucherPurchaseIntegration {
 
             XMLOutputFactory factory = XMLOutputFactory.newInstance();
             StringWriter requestXMLWriter = new StringWriter();
-            requestTopupE.getRequestTopup().serialize(new QName(""), factory.createXMLStreamWriter(requestXMLWriter));
+            requestTopupE.getRequestTopup().serialize(
+                new QName("http://external.interfaces.ers.seamless.com/", "requestTopup"),
+                factory.createXMLStreamWriter(requestXMLWriter)
+            );
             String outgoingRequestStr = requestXMLWriter.toString();
 
-            transactionLog.setOutgoing_request_time(new Date())
-                    .setOutgoing_request(outgoingRequestStr)
-                    .save();
+            transactionLog.setOutgoing_request_time(new Date()).setOutgoing_request(outgoingRequestStr).save();
 
             logger.info("Performing Glo topup for amount: " + amount.doubleValue() + "\r\n" + outgoingRequestStr);
             RequestTopupResponseE topupResponseE = topupService.getResponseObject().requestTopup(requestTopupE);
-            logger.info("Purchase response: " +
-            topupResponseE.getRequestTopupResponse().get_return().getResultCode() + ":" +
-            topupResponseE.getRequestTopupResponse().get_return().getResultDescription()
-            );
-            //return voucher provider reference
-            return new SymResponseObject<>(SUCCESS, topupResponseE.getRequestTopupResponse().get_return().getErsReference());
+
+            int responseCode = topupResponseE.getRequestTopupResponse().get_return().getResultCode();
+            String responseMessage = topupResponseE.getRequestTopupResponse().get_return().getResultDescription();
+
+
+            logger.info("Purchase response: " + responseCode + ":" + responseMessage);
+
+            if (responseCode == 0) {
+                //return voucher provider reference
+                return new SymResponseObject<>(SUCCESS, topupResponseE.getRequestTopupResponse().get_return().getErsReference());
+            } else {
+                switch (responseCode) {
+                    case 1: case 2: case 3: case 4: case 45: case 47: { /* user error. do nothing. user should retry */ break; }
+                    default: {
+                        sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME),INTEGRATION_ID + " Error " + responseCode,
+                            format("Voucher Purchase failed with error %s: %s", responseCode, responseMessage));
+                        break;
+                    }
+                }
+                Pair<Long, String> mappedResponse = getMappedResponseMessage(INTEGRATION_ID, (long)responseCode);
+                return new SymResponseObject<String>(valueOf(mappedResponse.getLeft())).setMessage(mappedResponse.getRight());
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             transactionLog.setIncoming_response_time(new Date())
                           .setResponse_code(fromEnum(GENERAL_ERROR))
                           .setIncoming_response(throwableAsString(ex))
                           .save();
-            return new SymResponseObject<String>(GENERAL_ERROR).setMessage(ex.getMessage());
+            logger.info("Request topup failed: " + ex.getMessage());
+            return new SymResponseObject<>(GENERAL_ERROR);
         }
 
     }

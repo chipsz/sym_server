@@ -7,6 +7,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_DEFAULT_COUNTRY_CODE;
+import static net.symbiosis.core_lib.utilities.CommonUtilities.format10DigitPhoneNumber;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
+
 /***************************************************************************
  * *
  * Created:     21 / 10 / 2016                                             *
@@ -26,6 +30,7 @@ public class SymSystemUser implements Serializable {
     protected String username;
     protected String email;
     protected String msisdn;
+    protected String phoneNumber;
     protected String companyName;
     protected Double walletBalance;
     protected String group;
@@ -43,6 +48,7 @@ public class SymSystemUser implements Serializable {
     public SymSystemUser(Long sessionId, sym_auth_user symAuthUser, sym_user symUser) {
         this(sessionId, symUser.getId(), symUser.getWallet().getId(), symUser.getFirst_name(),
                 symUser.getLast_name(), symUser.getUsername(), symUser.getEmail(), symUser.getMsisdn(),
+                format10DigitPhoneNumber(symUser.getMsisdn(), getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE)),
                 symAuthUser.getUser().getWallet().getCompany().getCompany_name(),
                 symAuthUser.getUser().getWallet().getCurrent_balance().doubleValue(),
                 symAuthUser.getAuth_group().getName(), symAuthUser.getDevice_id(),
@@ -50,7 +56,7 @@ public class SymSystemUser implements Serializable {
     }
 
     public SymSystemUser(Long sessionId, Long userId, Long walletId, String firstName, String lastName,
-                         String username, String email, String msisdn, String companyName, Double walletBalance,
+                         String username, String email, String msisdn, String phoneNumber, String companyName, Double walletBalance,
                          String group, String deviceId, String authToken, Date lastLoginDate) {
         this.sessionId = sessionId;
         this.userId = userId;
@@ -59,6 +65,7 @@ public class SymSystemUser implements Serializable {
         this.lastName = lastName;
         this.username = username;
         this.email = email;
+        this.phoneNumber = phoneNumber;
         this.msisdn = msisdn;
         this.companyName = companyName;
         this.walletBalance = walletBalance;
@@ -122,6 +129,14 @@ public class SymSystemUser implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getMsisdn() {

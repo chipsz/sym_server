@@ -1,9 +1,14 @@
 package net.symbiosis.persistence.helper;
 
 import net.symbiosis.core_lib.enumeration.*;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.enumeration.*;
 
+import java.util.List;
+
+import static java.util.Arrays.asList;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
+import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 
 /***************************************************************************
  * *
@@ -21,6 +26,19 @@ public class SymEnumHelper {
 
     public static sym_language languageFromString(String name) {
         return findByName(sym_language.class, name);
+    }
+
+    public static Pair<Long, String> getMappedResponseMessage(String systemId, Long responseCode) {
+        List<sym_response_mapping> mappedResponseList = getEntityManagerRepo().findWhere(sym_response_mapping.class, asList(
+            new Pair<>("system_id", systemId), new Pair<>("response_code", responseCode)
+        ));
+
+        if (mappedResponseList != null && mappedResponseList.size() == 1) {
+            sym_response_mapping mappedResponse = mappedResponseList.get(0);
+            return new Pair<>(mappedResponse.getResponse_code_id(), mappedResponse.getMapped_response_message());
+        } else {
+            return new Pair<>((long)SymResponseCode.GENERAL_ERROR.code, SymResponseCode.GENERAL_ERROR.message);
+        }
     }
 
     public static sym_voucher_type voucherTypeFromString(String name) {

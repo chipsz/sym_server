@@ -363,11 +363,9 @@ public class VoucherProcessorImpl implements VoucherProcessor {
 			voucherValue = voucher.getVoucher_value();
 		}
 		else if (voucherValue == null) {
-		    //TODO amount must be specified
-//            SymVoucherPurchaseList response = new SymVoucherPurchaseList(INPUT_INCOMPLETE_REQUEST);
-//            response.getSymResponse().setResponse_message("voucherValue must be specified for variable vouchers");
-//            return response;
-            voucherValue = voucher.getVoucher_value();
+            SymVoucherPurchaseList response = new SymVoucherPurchaseList(INPUT_INCOMPLETE_REQUEST);
+            response.getSymResponse().setResponse_message("voucherValue must be specified for variable vouchers");
+            return response;
 		}
 		else if (voucherValue.compareTo(new BigDecimal(0.0)) < 1) {
             SymVoucherPurchaseList response = new SymVoucherPurchaseList(INPUT_INVALID_AMOUNT);

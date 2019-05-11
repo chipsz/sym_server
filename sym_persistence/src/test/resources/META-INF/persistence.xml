@@ -56,6 +56,7 @@
         <class>net.symbiosis.persistence.entity.enumeration.sym_language</class>
         <class>net.symbiosis.persistence.entity.enumeration.sym_preference</class>
         <class>net.symbiosis.persistence.entity.enumeration.sym_response_code</class>
+        <class>net.symbiosis.persistence.entity.enumeration.sym_response_mapping</class>
         <class>net.symbiosis.persistence.entity.enumeration.sym_role</class>
         <class>net.symbiosis.persistence.entity.enumeration.sym_voucher_status</class>
         <class>net.symbiosis.persistence.entity.enumeration.sym_voucher_type</class>

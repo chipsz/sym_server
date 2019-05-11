@@ -35,6 +35,6 @@ public class sym_response_code extends sym_enum_entity<sym_response_code> {
     }
 
     public SymResponseCode asSymResponseCode() {
-        return SymResponseCode.valueOf(this.getId().intValue());
+        return SymResponseCode.valueOf(this.getId());
     }
 }

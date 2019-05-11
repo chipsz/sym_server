@@ -134,6 +134,19 @@ public class CommonUtilitiesTest {
     }
 
     @Test
+    public void testFormat10DigitPhoneNumber() {
+        System.out.println("RUNNING TEST: format10DigitPhoneNumber");
+        assertEquals(format10DigitPhoneNumber("+263781234567", null), "+263781234567");
+        assertEquals(format10DigitPhoneNumber("0123456789", null), "0123456789");
+        assertEquals(format10DigitPhoneNumber("junkMsisdn", "263"), "junkMsisdn");
+        assertEquals(format10DigitPhoneNumber("00263111111111", "263"), "0111111111");
+        assertEquals(format10DigitPhoneNumber("+27121212121", "27"), "0121212121");
+        assertEquals(format10DigitPhoneNumber("+11123456789", "263"), "+11123456789");
+        assertEquals(format10DigitPhoneNumber("00263123456789", "263"), "0123456789");
+        assertEquals(format10DigitPhoneNumber("00263123456789", "61"), "00263123456789");
+    }
+
+    @Test
     public void testFormatFullMsisdn() {
         System.out.println("RUNNING TEST: formatFullMsisdn");
         assertNull(formatFullMsisdn(null, "263"));
