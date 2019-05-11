@@ -13,21 +13,21 @@ import javax.persistence.*;
  ***************************************************************************/
 
 @Entity
-@Table(indexes = {@Index(name = "index_system_id",  columnList="system_id", unique = true)})
+//@Table(indexes = {@Index(name = "index_system_id",  columnList="system_id", unique = true)})
 public class sym_response_mapping extends sym_entity<sym_response_mapping> {
 
     @Column(nullable = false)
-    public String system_id;
+    private String system_id;
 
     @Column(nullable = false)
-    public Long response_code_id;
+    private Long response_code_id;
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    public sym_response_code mapped_response_code;
+    private sym_response_code mapped_response_code;
 
     @Column(nullable = false)
-    public String mapped_response_message;
+    private String mapped_response_message;
 
     public sym_response_mapping() {}
 

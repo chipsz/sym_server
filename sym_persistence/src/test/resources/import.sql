@@ -1,3 +1,4 @@
+
 # system settings
 insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (1,1,'system_name','Jarvis','System Name');
 insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (2,1,'config_update_duration','1440','How often switch re-reads configs from the database');

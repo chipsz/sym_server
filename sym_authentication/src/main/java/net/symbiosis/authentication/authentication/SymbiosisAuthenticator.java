@@ -498,7 +498,7 @@ public class SymbiosisAuthenticator {
         authUser.setLast_auth_date(new Date());
         if (!symUser.getUser_status().getId().equals(fromEnum(ACC_ACTIVE).getId())) {
             logger.info("Account is not active. Setting response to " + authUser.getUser().getUser_status().getName());
-            response.setResponseCode(SymResponseCode.valueOf(symUser.getUser_status().getId().intValue()));
+            response.setResponseCode(SymResponseCode.valueOf(symUser.getUser_status().getId()));
         } else {
             int passwordTries = symUser.getPassword_tries();
 
@@ -547,7 +547,7 @@ public class SymbiosisAuthenticator {
         authUser.setLast_auth_date(new Date());
         if (!symUser.getUser_status().getId().equals(fromEnum(ACC_ACTIVE).getId())) {
             logger.info("Account is not active. Setting response to " + authUser.getUser().getUser_status().getName());
-            response.setResponseCode(SymResponseCode.valueOf(symUser.getUser_status().getId().intValue()));
+            response.setResponseCode(SymResponseCode.valueOf(symUser.getUser_status().getId()));
         } else {
             int pinTries = symUser.getPin_tries();
 
