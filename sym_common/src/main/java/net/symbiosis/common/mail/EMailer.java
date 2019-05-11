@@ -1,8 +1,5 @@
 package net.symbiosis.common.mail;
 
-import net.symbiosis.persistence.dao.complex_type.SymConfigDao;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -17,11 +14,10 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
 public class EMailer implements Runnable {
 
-    @Autowired
-    private SymConfigDao symConfigDao;
     private final Logger logger = Logger.getLogger(this.getClass().getSimpleName());
     public static final String DEFAULT_CONTENT_TYPE = "text/plain";
     public static final String CONTENT_TYPE_HTML = "text/html";
@@ -88,15 +84,15 @@ public class EMailer implements Runnable {
         try {
             // create some properties and get the default Session
             Authenticator auth = new PopupAuthenticator(
-                    symConfigDao.getConfig(CONFIG_EMAIL_USERNAME),
-                    symConfigDao.getConfig(CONFIG_EMAIL_PASSWORD));
+                    getSymConfigDao().getConfig(CONFIG_EMAIL_USERNAME),
+                    getSymConfigDao().getConfig(CONFIG_EMAIL_PASSWORD));
 
             Properties emailProps = new Properties();
-            emailProps.put("mail.transport.protocol", symConfigDao.getConfig(CONFIG_EMAIL_PROTOCOL));
-            emailProps.put("mail.smtp.host", symConfigDao.getConfig(CONFIG_EMAIL_HOST));
-            emailProps.put("mail.smtp.auth", symConfigDao.getConfig(CONFIG_EMAIL_SMTP_AUTH));
-            emailProps.put("mail.smtp.starttls.enable", symConfigDao.getConfig(CONFIG_EMAIL_SMTP_STARTTLS_ENABLE));
-            emailProps.put("mail.smtp.port", symConfigDao.getConfig(CONFIG_EMAIL_PORT));
+            emailProps.put("mail.transport.protocol", getSymConfigDao().getConfig(CONFIG_EMAIL_PROTOCOL));
+            emailProps.put("mail.smtp.host", getSymConfigDao().getConfig(CONFIG_EMAIL_HOST));
+            emailProps.put("mail.smtp.auth", getSymConfigDao().getConfig(CONFIG_EMAIL_SMTP_AUTH));
+            emailProps.put("mail.smtp.starttls.enable", getSymConfigDao().getConfig(CONFIG_EMAIL_SMTP_STARTTLS_ENABLE));
+            emailProps.put("mail.smtp.port", getSymConfigDao().getConfig(CONFIG_EMAIL_PORT));
 
             Session session = Session.getInstance(emailProps, auth);
 
@@ -104,7 +100,7 @@ public class EMailer implements Runnable {
             Message msg = new MimeMessage(session);
 
             // set the from and to address
-            InternetAddress addressFrom = new InternetAddress(symConfigDao.getConfig(CONFIG_EMAIL_FROM));
+            InternetAddress addressFrom = new InternetAddress(getSymConfigDao().getConfig(CONFIG_EMAIL_FROM));
             msg.setFrom(addressFrom);
 
             InternetAddress[] addressTo = new InternetAddress[recipients.length];
@@ -122,7 +118,7 @@ public class EMailer implements Runnable {
             String addresses = addressesBuilder.toString();
             addresses += "}";
 
-            logger.info("Sending email with subject: " + subject + " to addresses " + addresses + " using host: " + symConfigDao.getConfig(CONFIG_EMAIL_HOST));
+            logger.info("Sending email with subject: " + subject + " to addresses " + addresses + " using host: " + getSymConfigDao().getConfig(CONFIG_EMAIL_HOST));
 
             msg.setRecipients(Message.RecipientType.TO, addressTo);
             msg.setSubject(subject);

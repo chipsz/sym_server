@@ -1,8 +1,6 @@
 package net.symbiosis.common.configuration;
 
 import net.symbiosis.common.mail.EMailer;
-import net.symbiosis.persistence.dao.complex_type.SymConfigDao;
-import net.symbiosis.persistence.helper.DaoManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,6 +11,7 @@ import java.util.logging.Logger;
 import static net.symbiosis.common.mail.EMailer.DEFAULT_CONTENT_TYPE;
 import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_DOMAIN_NAME;
 import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_EMAIL_ALERT_TO;
+import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
 /**
  * Created by photon on 2016/01/01.
@@ -20,8 +19,6 @@ import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_EMAIL_ALERT
 public class NetworkUtilities {
 
     private static Logger logger = Logger.getLogger(NetworkUtilities.class.getSimpleName());
-
-    private static SymConfigDao symConfigDao = DaoManager.getInstance().getSymConfigDao();
 
     public static String execReadToString(String execCommand) throws IOException {
         Process proc = Runtime.getRuntime().exec(execCommand);
@@ -55,14 +52,14 @@ public class NetworkUtilities {
     }
 
     public static String getEmailFromName() {
-        return "noreply-" + getHostName() + "@" + symConfigDao.getConfig(CONFIG_DOMAIN_NAME);
+        return "noreply-" + getHostName() + "@" + getSymConfigDao().getConfig(CONFIG_DOMAIN_NAME);
     }
 
     public static void sendEmailAlert(String symSystem, String alertSubject, String alertMessage) {
         logger.info("Sending alert email from " + symSystem + " with subject: " + alertSubject);
         logger.info(alertMessage);
         ThreadPoolManager.schedule(new EMailer(
-                new String[]{symConfigDao.getConfig(CONFIG_EMAIL_ALERT_TO)},
+                new String[]{getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)},
                 symSystem + " alert! " + alertSubject, alertMessage,
                 getEmailFromName(), getHostName(), DEFAULT_CONTENT_TYPE));
     }

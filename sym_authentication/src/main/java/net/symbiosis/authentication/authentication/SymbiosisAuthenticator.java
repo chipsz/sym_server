@@ -4,8 +4,6 @@ import net.symbiosis.core_lib.enumeration.SymResponseCode;
 import net.symbiosis.core_lib.response.SymResponseObject;
 import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.core_lib.utilities.CommonUtilities;
-import net.symbiosis.persistence.dao.complex_type.SymAuthUserDao;
-import net.symbiosis.persistence.dao.complex_type.SymConfigDao;
 import net.symbiosis.persistence.entity.complex_type.log.sym_session;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
@@ -45,9 +43,6 @@ import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 public class SymbiosisAuthenticator {
 
     private static Logger logger = Logger.getLogger(SymbiosisAuthenticator.class.getSimpleName());
-
-    private static SymAuthUserDao authUserDao;
-    private static SymConfigDao symConfigDao;
 
     static SymResponseObject<sym_session> startSession(sym_channel channel,
                                                        String deviceId, String username, String password, boolean searchAllUsernameTypes) {

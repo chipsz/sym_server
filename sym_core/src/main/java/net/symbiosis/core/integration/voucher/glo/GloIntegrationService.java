@@ -36,17 +36,17 @@ public class GloIntegrationService implements VoucherPurchaseIntegration {
 
     private static Logger logger = Logger.getLogger(GloIntegrationService.class.getSimpleName());
     private static final String INTEGRATION_ID = "GloSeamless";
-
     private static ERSWSTopupServiceImplServiceStub topupService = null;
+    private sym_voucher_provider voucherProvider;
 
     @Autowired
     GloIntegrationService(IntegrationManagerService integrationManagerService) {
         logger.info("Registering GloIntegrationService with integration id '" + INTEGRATION_ID + "'");
         List<sym_voucher_provider> voucher_providers = getEntityManagerRepo()
             .findWhere(sym_voucher_provider.class, new Pair<>("integration_id", INTEGRATION_ID));
-
+        this.voucherProvider = voucher_providers.get(0);
         if (voucher_providers != null && voucher_providers.size() > 0) {
-            integrationManagerService.registerVoucherPurchaseIntegration(voucher_providers.get(0).getId(), this);
+            integrationManagerService.registerVoucherPurchaseIntegration(voucherProvider.getId(), this);
         }
     }
 
@@ -61,6 +61,12 @@ public class GloIntegrationService implements VoucherPurchaseIntegration {
         }
         return new SymResponseObject<>(SUCCESS, topupService);
     }
+
+    @Override
+    public String getIntegrationName() { return INTEGRATION_ID; }
+
+    @Override
+    public sym_voucher_provider getVoucherProvider() { return this.voucherProvider; }
 
     @Override
     public SymResponseObject<String> purchaseVoucher(Long senderReference, Long voucherId, BigDecimal amount, String recipient) {
