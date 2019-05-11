@@ -2,6 +2,8 @@ package net.symbiosis.core_lib.utilities;
 
 import net.symbiosis.core_lib.response.SymResponseObject;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.logging.Logger;
@@ -223,6 +225,13 @@ public class CommonUtilities {
             cause = cause.getCause();
         }
         return cause;
+    }
+
+    public static String throwableAsString(Throwable throwable) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        throwable.printStackTrace(pw);
+        return sw.toString();
     }
 
     public static boolean isNullOrEmpty(String string) {

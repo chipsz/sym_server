@@ -12,6 +12,7 @@
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_cashout_transaction</class>
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_import_batch</class>
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_incoming_payment</class>
+        <class>net.symbiosis.persistence.entity.complex_type.log.sym_integration_log</class>
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log</class>
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_session</class>
         <class>net.symbiosis.persistence.entity.complex_type.log.sym_swipe_transaction</class>

@@ -5,12 +5,17 @@ import net.symbiosis.core.integration.voucher.glo.ERSWSTopupServiceImplServiceSt
 import net.symbiosis.core.service.IntegrationManagerService;
 import net.symbiosis.core_lib.response.SymResponseObject;
 import net.symbiosis.core_lib.structure.Pair;
+import net.symbiosis.persistence.entity.complex_type.log.sym_integration_log;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
 import net.symbiosis.persistence.helper.DaoManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLOutputFactory;
+import java.io.StringWriter;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -21,8 +26,10 @@ import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_GLO_SERVICE
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.GENERAL_ERROR;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.core_lib.security.Security.decryptAES;
+import static net.symbiosis.core_lib.utilities.CommonUtilities.throwableAsString;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
+import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 
 /***************************************************************************
  *                                                                         *
@@ -74,6 +81,9 @@ public class GloIntegrationService implements VoucherPurchaseIntegration {
         if (!topupService.getResponseCode().equals(SUCCESS)) {
             return new SymResponseObject<String>(topupService.getResponseCode()).setMessage(topupService.getMessage());
         }
+
+        sym_integration_log transactionLog = new sym_integration_log();
+
         try {
             RequestTopup requestTopup = new RequestTopup();
 
@@ -125,15 +135,29 @@ public class GloIntegrationService implements VoucherPurchaseIntegration {
             RequestTopupE requestTopupE = new RequestTopupE();
             requestTopupE.setRequestTopup(requestTopup);
 
-            logger.info("Performing Glo topup for amount: " + amount.doubleValue());
+            XMLOutputFactory factory = XMLOutputFactory.newInstance();
+            StringWriter requestXMLWriter = new StringWriter();
+            requestTopupE.getRequestTopup().serialize(new QName(""), factory.createXMLStreamWriter(requestXMLWriter));
+            String outgoingRequestStr = requestXMLWriter.toString();
+
+            transactionLog.setOutgoing_request_time(new Date())
+                    .setOutgoing_request(outgoingRequestStr)
+                    .save();
+
+            logger.info("Performing Glo topup for amount: " + amount.doubleValue() + "\r\n" + outgoingRequestStr);
             RequestTopupResponseE topupResponseE = topupService.getResponseObject().requestTopup(requestTopupE);
             logger.info("Purchase response: " +
-                topupResponseE.getRequestTopupResponse().get_return().getResultCode() + ":" +
-                topupResponseE.getRequestTopupResponse().get_return().getResultDescription()
+            topupResponseE.getRequestTopupResponse().get_return().getResultCode() + ":" +
+            topupResponseE.getRequestTopupResponse().get_return().getResultDescription()
             );
             //return voucher provider reference
             return new SymResponseObject<>(SUCCESS, topupResponseE.getRequestTopupResponse().get_return().getErsReference());
         } catch (Exception ex) {
+            ex.printStackTrace();
+            transactionLog.setIncoming_response_time(new Date())
+                          .setResponse_code(fromEnum(GENERAL_ERROR))
+                          .setIncoming_response(throwableAsString(ex))
+                          .save();
             return new SymResponseObject<String>(GENERAL_ERROR).setMessage(ex.getMessage());
         }
 
