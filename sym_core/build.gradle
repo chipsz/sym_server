@@ -34,13 +34,13 @@ dependencies {
     compile libraries.axis2_kernel
     compile libraries.axis2_transport_local
     compile libraries.axis2_transport_http
+    compile libraries.axis2_jaxws
 
     //TODO check if these are all needed
     testCompile libraries.hibernate_core
     testCompile libraries.jpa_2_1_api
     testCompile libraries.dom4j
     testCompile libraries.hibernate_antlr
-    testCompile libraries.jpa_2_1_api
 
     testCompile libraries.testng
 	testCompile libraries.jmockit
