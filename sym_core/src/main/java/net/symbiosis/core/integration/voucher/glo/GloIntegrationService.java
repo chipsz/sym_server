@@ -26,6 +26,7 @@ import static net.symbiosis.common.configuration.NetworkUtilities.sendEmailAlert
 import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
 import static net.symbiosis.core_lib.security.Security.decryptAES;
+import static net.symbiosis.core_lib.utilities.CommonUtilities.formatFullMsisdn;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.throwableAsString;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
@@ -89,19 +90,19 @@ public class GloIntegrationService implements VoucherPurchaseIntegration {
             RequestTopup requestTopup = new RequestTopup();
 
             ClientContext clientContext = new ClientContext();
-            clientContext.setChannel("GLOWEBSERVICE");
-            clientContext.setClientComment("Testing topup");
-            clientContext.setClientId("Etopup Systems");
+            clientContext.setChannel("WEBSERVICE");
+            clientContext.setClientComment("");
+            clientContext.setClientId(getSymConfigDao().getConfig(CONFIG_GLO_SERVICE_CLIENT_ID));
             clientContext.setClientReference(String.valueOf(senderReference));
             clientContext.setClientRequestTimeout(parseLong(getSymConfigDao().getConfig(CONFIG_GLO_SERVICE_REQUEST_TIMEOUT)));
 
             PrincipalId initiatorPrincipalId = new PrincipalId();
-            initiatorPrincipalId.setId("EMPOWER");
+            initiatorPrincipalId.setId(getSymConfigDao().getConfig(CONFIG_GLO_SERVICE_CLIENT_ID));
             initiatorPrincipalId.setType("RESELLERUSER");
-            initiatorPrincipalId.setUserId("empowertst");
+            initiatorPrincipalId.setUserId(getSymConfigDao().getConfig(CONFIG_GLO_SERVICE_USER_ID));
             clientContext.setInitiatorPrincipalId(initiatorPrincipalId);
             clientContext.setPassword(decryptAES(getProperty("AES128BitKey"), getProperty("AESInitializationVector"),
-                    getSymConfigDao().getConfig(CONFIG_GLO_SERVICE_PASSWORD)
+                getSymConfigDao().getConfig(CONFIG_GLO_SERVICE_PASSWORD)
             ));
             clientContext.setPrepareOnly(false);
             requestTopup.setContext(clientContext);
@@ -109,27 +110,28 @@ public class GloIntegrationService implements VoucherPurchaseIntegration {
             PrincipalId senderPrincipalId = new PrincipalId();
             senderPrincipalId.setId("EMPOWER");
             senderPrincipalId.setType("RESELLERUSER");
-            senderPrincipalId.setUserId("empowertst");
+            senderPrincipalId.setUserId(getSymConfigDao().getConfig(CONFIG_GLO_SERVICE_USER_ID));
             requestTopup.setSenderPrincipalId(senderPrincipalId);
 
             PrincipalId topupPrincipalId = new PrincipalId();
-            topupPrincipalId.setId("230089518");
+            topupPrincipalId.setId(formatFullMsisdn(recipient, getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE)));
             topupPrincipalId.setType("SUBSCRIBERMSISDN");
-            topupPrincipalId.setUserId(recipient);
+//            topupPrincipalId.setUserId(recipient);
             requestTopup.setTopupPrincipalId(topupPrincipalId);
 
             PrincipalAccountSpecifier senderAccountSpecifier = new PrincipalAccountSpecifier();
-            senderAccountSpecifier.setAccountId("?");
+            senderAccountSpecifier.setAccountId(getSymConfigDao().getConfig(CONFIG_GLO_SERVICE_CLIENT_ID));
             senderAccountSpecifier.setAccountTypeId("RESELLER");
             requestTopup.setSenderAccountSpecifier(senderAccountSpecifier);
 
             PrincipalAccountSpecifier topupAccountSpecifier = new PrincipalAccountSpecifier();
-            topupAccountSpecifier.setAccountId("?");
-            topupAccountSpecifier.setAccountTypeId("RESELLER");
+            topupAccountSpecifier.setAccountId(formatFullMsisdn(recipient, getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE)));
+            topupAccountSpecifier.setAccountTypeId("AIRTIME");
             requestTopup.setTopupAccountSpecifier(topupAccountSpecifier);
 
             requestTopup.setProductId("TOPUP");
             Amount sAmount = new Amount();
+            sAmount.setCurrency(getSymConfigDao().getConfig(CONFIG_DEFAULT_CURRENCY_SYMBOL).toUpperCase());
             sAmount.setValue(amount);
             requestTopup.setAmount(sAmount);
 

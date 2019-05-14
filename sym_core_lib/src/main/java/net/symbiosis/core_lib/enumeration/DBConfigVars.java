@@ -64,5 +64,7 @@ public class DBConfigVars {
 
     //INTEGRATION SETTINGS
     public static final String CONFIG_GLO_SERVICE_REQUEST_TIMEOUT = "glo_service_request_timeout";
+    public static final String CONFIG_GLO_SERVICE_CLIENT_ID = "glo_service_client_id";
+    public static final String CONFIG_GLO_SERVICE_USER_ID = "glo_service_user_id";
     public static final String CONFIG_GLO_SERVICE_PASSWORD = "glo_service_password";
 }

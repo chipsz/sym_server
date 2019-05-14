@@ -3,12 +3,12 @@
         xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
         xmlns:tns="http://clientservice.topupservice.client.ers.seamless.com/"
         xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-        xmlns:ns1="http://external.interfaces.ers.seamless.com/"
+        xmlns:ext="http://external.interfaces.ers.seamless.com/"
         name="ERSWSTopupServiceImplService"
         targetNamespace="http://clientservice.topupservice.client.ers.seamless.com/">
   <wsdl:import location="http://197.220.173.135:8913/topupservice/service?wsdl=ERSTopupService.wsdl" namespace="http://external.interfaces.ers.seamless.com/">
     </wsdl:import>
-  <wsdl:binding name="ERSWSTopupServiceImplServiceSoapBinding" type="ns1:ERSTopupService">
+  <wsdl:binding name="ERSWSTopupServiceImplServiceSoapBinding" type="ext:ERSTopupService">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="customOperation">
       <soap:operation soapAction="" style="document"/>

@@ -48,7 +48,9 @@ insert ignore into sym_config(config_id,is_enabled,config_name,config_value,conf
 insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (202,1,'falcon_pos_binary_version','1.0.4','Version of the Falcon POS binary file');
 #integration settings
 insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (300,1,'glo_service_request_timeout','15000','Milliseconds before a request is considered timed out');
-insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (301,1,'glo_service_password','2suZ0Dcv5iTLOPbqOyOC0A==','Password for the Glo Integration');
+insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (301,1,'glo_service_client_id','EMPOWER','Client Id for the Glo Integration');
+insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (302,1,'glo_service_user_id','empowertst','User Id for the Glo Integration');
+insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (303,1,'glo_service_password','2suZ0Dcv5iTLOPbqOyOC0A==','Password for the Glo Integration');
 
 insert ignore into sym_country(id,name,is_enabled,iso_code_2,iso_code_3,dialing_code) values (1,'GHANA',1,'GH','GHA',233);
 insert ignore into sym_country(id,name,is_enabled,iso_code_2,iso_code_3,dialing_code) values (2,'ZIMBABWE',0,'ZW','ZWE',263);
