@@ -7,7 +7,6 @@ import net.symbiosis.core_lib.response.SymResponseObject;
 import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.entity.complex_type.log.sym_integration_log;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
-import net.symbiosis.persistence.helper.DaoManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +49,7 @@ public class GloIntegrationService implements VoucherPurchaseIntegration {
     private sym_voucher_provider voucherProvider;
 
     @Autowired
-    GloIntegrationService(IntegrationManagerService integrationManagerService, DaoManager daoManager) {
+    GloIntegrationService(IntegrationManagerService integrationManagerService) {
         logger.info("Registering GloIntegrationService with integration id '" + INTEGRATION_ID + "'");
         List<sym_voucher_provider> voucherProviders = getEntityManagerRepo()
             .findWhere(sym_voucher_provider.class, new Pair<>("integration_id", INTEGRATION_ID));
