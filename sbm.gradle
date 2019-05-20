@@ -181,11 +181,11 @@ project.ext.libraries = [
 	hibernate_core:			[ group: 'org.hibernate',	name: 'hibernate-core',				version: project.hibernate_version ],
 	hibernate_entitymanager:[ group: 'org.hibernate',	name: 'hibernate-entitymanager',	version: project.hibernate_version ],
 	hibernate_jpamodelgen:	[ group: 'org.hibernate',	name: 'hibernate-jpamodelgen',		version: project.hibernate_version ],
-	hibernate_ehcache:		[ group: 'org.hibernate',	name: 'hibernate-ehcache',			version: '5.1.0.Final' ],
+	hibernate_ehcache:		[ group: 'org.hibernate',	name: 'hibernate-ehcache',			version: project.hibernate_version ],
 	hibernate_annotations:	[ group: 'org.hibernate',	name: 'hibernate-annotations',		version: '3.5.6-Final' ],
 	hibernate_antlr:		[ group: 'org.hibernate',	name: 'antlr',						version: '2.7.5H3' ],
 	hibernate_ejb3:			[ group: 'org.hibernate',	name: 'ejb3-persistence',			version: '1.0.2.GA' ],
-	ehcache:				[ group: 'net.sf.ehcache',	name: 'ehcache',					version: '2.10.1' ],
+	ehcache:				[ group: 'net.sf.ehcache',	name: 'ehcache',					version: '2.10.6' ],
 	jpa_2_1_api: [ group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api',	version: '1.0.0.Final' ],
 	jpa_2_0_api: [ group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.0-api',	version: '1.0.1.Final' ],
 
