@@ -45,11 +45,7 @@ dependencies {
 	compile libraries.commons_collections
 	compile libraries.commons_dbcp
 	provided libraries.hibernate_ehcache
-//	compile (libraries.hibernate_ehcache) {
-//		exclude group: 'net.sf.ehcache', module: 'ehcache'
-//	}
 	provided libraries.hibernate_jcache
-//	compile libraries.ehcache
 
     //testCompile libraries.log4j
     testCompile libraries.testng
