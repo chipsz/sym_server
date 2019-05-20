@@ -36,6 +36,7 @@ insert ignore into sym_event_type (id,name,is_enabled) values (1107,'WALLET_GROU
 insert ignore into sym_event_type (id,name,is_enabled) values (1108,'WALLET_GROUP_VOUCHER_DISCOUNT_UPDATE',1);
 insert ignore into sym_event_type (id,name,is_enabled) values (1109,'WALLET_SWIPE_IN',1);
 insert ignore into sym_event_type (id,name,is_enabled) values (1110,'WALLET_TRANSFER',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1111,'WALLET_HISTORY',1);
 
 insert ignore into sym_event_type (id,name,is_enabled) values (1200,'VOUCHER_IMPORT',1);
 insert ignore into sym_event_type (id,name,is_enabled) values (1201,'VOUCHER_CREATE',1);

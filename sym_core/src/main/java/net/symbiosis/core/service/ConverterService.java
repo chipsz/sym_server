@@ -5,6 +5,7 @@ import net.symbiosis.core.contract.symbiosis.*;
 import net.symbiosis.persistence.entity.complex_type.log.sym_import_batch;
 import net.symbiosis.persistence.entity.complex_type.log.sym_session;
 import net.symbiosis.persistence.entity.complex_type.log.sym_voucher_purchase;
+import net.symbiosis.persistence.entity.complex_type.log.sym_wallet_transaction;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_service_provider;
@@ -49,6 +50,8 @@ public interface ConverterService {
     SymWalletGroup toDTO(sym_wallet_group walletGroup);
 
     SymWallet toDTO(sym_wallet wallet);
+
+    SymWalletTransaction toDTO(sym_wallet_transaction walletTransaction);
 
     SymServiceProvider toDTO(sym_service_provider serviceProvider);
 

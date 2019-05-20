@@ -38,6 +38,7 @@ import org.apache.axis2.databinding.utils.ConverterUtil;
 import org.apache.axis2.description.AxisOperation;
 import org.apache.axis2.description.AxisService;
 import org.apache.axis2.description.OutInAxisOperation;
+import org.apache.axis2.description.WSDL2Constants;
 import org.apache.axis2.util.CallbackReceiver;
 import org.apache.axis2.util.Utils;
 import org.apache.axis2.wsdl.WSDLConstants;
@@ -61,8 +62,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
-import static java.lang.Class.forName;
-import static org.apache.axis2.description.WSDL2Constants.ATTR_WHTTP_QUERY_PARAMETER_SEPARATOR;
+import static java.lang.Class.*;
+import static org.apache.axis2.description.WSDL2Constants.*;
 
 public class ERSWSTopupServiceImplServiceStub extends Stub {
     protected AxisOperation[] _operations;
@@ -382,8 +383,8 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public CustomOperationResponseE customOperation(
-            CustomOperationE customOperation0) throws RemoteException
+    public ERSWSTopupServiceImplServiceStub.CustomOperationResponseE customOperation(
+            ERSWSTopupServiceImplServiceStub.CustomOperationE customOperation0) throws RemoteException
     {
         MessageContext _messageContext = new MessageContext();
         try {
@@ -423,10 +424,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    CustomOperationResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.CustomOperationResponseE.class);
 
 
-            return (CustomOperationResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.CustomOperationResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -490,7 +491,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startcustomOperation(
 
-            CustomOperationE customOperation0,
+            ERSWSTopupServiceImplServiceStub.CustomOperationE customOperation0,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -532,9 +533,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            CustomOperationResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.CustomOperationResponseE.class);
                     callback.receiveResultcustomOperation(
-                            (CustomOperationResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.CustomOperationResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorcustomOperation(e);
@@ -632,9 +633,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public RegisterSubResellerResponseE registerSubReseller(
+    public ERSWSTopupServiceImplServiceStub.RegisterSubResellerResponseE registerSubReseller(
 
-            RegisterSubResellerE registerSubReseller2)
+            ERSWSTopupServiceImplServiceStub.RegisterSubResellerE registerSubReseller2)
 
 
             throws RemoteException
@@ -678,10 +679,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    RegisterSubResellerResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.RegisterSubResellerResponseE.class);
 
 
-            return (RegisterSubResellerResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.RegisterSubResellerResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -745,7 +746,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startregisterSubReseller(
 
-            RegisterSubResellerE registerSubReseller2,
+            ERSWSTopupServiceImplServiceStub.RegisterSubResellerE registerSubReseller2,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -787,9 +788,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            RegisterSubResellerResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.RegisterSubResellerResponseE.class);
                     callback.receiveResultregisterSubReseller(
-                            (RegisterSubResellerResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.RegisterSubResellerResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorregisterSubReseller(e);
@@ -887,9 +888,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public DeLinkSubResellerResponseE deLinkSubReseller(
+    public ERSWSTopupServiceImplServiceStub.DeLinkSubResellerResponseE deLinkSubReseller(
 
-            DeLinkSubResellerE deLinkSubReseller4)
+            ERSWSTopupServiceImplServiceStub.DeLinkSubResellerE deLinkSubReseller4)
 
 
             throws RemoteException
@@ -933,10 +934,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    DeLinkSubResellerResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.DeLinkSubResellerResponseE.class);
 
 
-            return (DeLinkSubResellerResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.DeLinkSubResellerResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -1000,7 +1001,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startdeLinkSubReseller(
 
-            DeLinkSubResellerE deLinkSubReseller4,
+            ERSWSTopupServiceImplServiceStub.DeLinkSubResellerE deLinkSubReseller4,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -1042,9 +1043,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            DeLinkSubResellerResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.DeLinkSubResellerResponseE.class);
                     callback.receiveResultdeLinkSubReseller(
-                            (DeLinkSubResellerResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.DeLinkSubResellerResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrordeLinkSubReseller(e);
@@ -1142,9 +1143,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public CommitTopupResponse commitTopup(
+    public ERSWSTopupServiceImplServiceStub.CommitTopupResponse commitTopup(
 
-            CommitTopup commitTopup6)
+            ERSWSTopupServiceImplServiceStub.CommitTopup commitTopup6)
 
 
             throws RemoteException
@@ -1188,10 +1189,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    CommitTopupResponse.class);
+                    ERSWSTopupServiceImplServiceStub.CommitTopupResponse.class);
 
 
-            return (CommitTopupResponse) object;
+            return (ERSWSTopupServiceImplServiceStub.CommitTopupResponse) object;
 
         } catch (AxisFault f) {
 
@@ -1255,7 +1256,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startcommitTopup(
 
-            CommitTopup commitTopup6,
+            ERSWSTopupServiceImplServiceStub.CommitTopup commitTopup6,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -1297,9 +1298,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            CommitTopupResponse.class);
+                            ERSWSTopupServiceImplServiceStub.CommitTopupResponse.class);
                     callback.receiveResultcommitTopup(
-                            (CommitTopupResponse) object);
+                            (ERSWSTopupServiceImplServiceStub.CommitTopupResponse) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorcommitTopup(e);
@@ -1397,9 +1398,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public CancelPurchaseResponseE cancelPurchase(
+    public ERSWSTopupServiceImplServiceStub.CancelPurchaseResponseE cancelPurchase(
 
-            CancelPurchaseE cancelPurchase8)
+            ERSWSTopupServiceImplServiceStub.CancelPurchaseE cancelPurchase8)
 
 
             throws RemoteException
@@ -1443,10 +1444,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    CancelPurchaseResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.CancelPurchaseResponseE.class);
 
 
-            return (CancelPurchaseResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.CancelPurchaseResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -1510,7 +1511,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startcancelPurchase(
 
-            CancelPurchaseE cancelPurchase8,
+            ERSWSTopupServiceImplServiceStub.CancelPurchaseE cancelPurchase8,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -1552,9 +1553,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            CancelPurchaseResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.CancelPurchaseResponseE.class);
                     callback.receiveResultcancelPurchase(
-                            (CancelPurchaseResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.CancelPurchaseResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorcancelPurchase(e);
@@ -1652,9 +1653,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public UnFreezeResellerResponseE unFreezeReseller(
+    public ERSWSTopupServiceImplServiceStub.UnFreezeResellerResponseE unFreezeReseller(
 
-            UnFreezeResellerE unFreezeReseller10)
+            ERSWSTopupServiceImplServiceStub.UnFreezeResellerE unFreezeReseller10)
 
 
             throws RemoteException
@@ -1698,10 +1699,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    UnFreezeResellerResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.UnFreezeResellerResponseE.class);
 
 
-            return (UnFreezeResellerResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.UnFreezeResellerResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -1765,7 +1766,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startunFreezeReseller(
 
-            UnFreezeResellerE unFreezeReseller10,
+            ERSWSTopupServiceImplServiceStub.UnFreezeResellerE unFreezeReseller10,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -1807,9 +1808,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            UnFreezeResellerResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.UnFreezeResellerResponseE.class);
                     callback.receiveResultunFreezeReseller(
-                            (UnFreezeResellerResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.UnFreezeResellerResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorunFreezeReseller(e);
@@ -1907,9 +1908,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public FreezeResellerResponseE freezeReseller(
+    public ERSWSTopupServiceImplServiceStub.FreezeResellerResponseE freezeReseller(
 
-            FreezeResellerE freezeReseller12)
+            ERSWSTopupServiceImplServiceStub.FreezeResellerE freezeReseller12)
 
 
             throws RemoteException
@@ -1953,10 +1954,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    FreezeResellerResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.FreezeResellerResponseE.class);
 
 
-            return (FreezeResellerResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.FreezeResellerResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -2020,7 +2021,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startfreezeReseller(
 
-            FreezeResellerE freezeReseller12,
+            ERSWSTopupServiceImplServiceStub.FreezeResellerE freezeReseller12,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -2062,9 +2063,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            FreezeResellerResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.FreezeResellerResponseE.class);
                     callback.receiveResultfreezeReseller(
-                            (FreezeResellerResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.FreezeResellerResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorfreezeReseller(e);
@@ -2162,9 +2163,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public GetTransactionStatusResponseE getTransactionStatus(
+    public ERSWSTopupServiceImplServiceStub.GetTransactionStatusResponseE getTransactionStatus(
 
-            GetTransactionStatusE getTransactionStatus14)
+            ERSWSTopupServiceImplServiceStub.GetTransactionStatusE getTransactionStatus14)
 
 
             throws RemoteException
@@ -2208,10 +2209,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    GetTransactionStatusResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.GetTransactionStatusResponseE.class);
 
 
-            return (GetTransactionStatusResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.GetTransactionStatusResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -2275,7 +2276,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startgetTransactionStatus(
 
-            GetTransactionStatusE getTransactionStatus14,
+            ERSWSTopupServiceImplServiceStub.GetTransactionStatusE getTransactionStatus14,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -2317,9 +2318,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            GetTransactionStatusResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.GetTransactionStatusResponseE.class);
                     callback.receiveResultgetTransactionStatus(
-                            (GetTransactionStatusResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.GetTransactionStatusResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorgetTransactionStatus(e);
@@ -2417,9 +2418,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public RequestPrincipalInformationResponseE requestPrincipalInformation(
+    public ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationResponseE requestPrincipalInformation(
 
-            RequestPrincipalInformationE requestPrincipalInformation16)
+            ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationE requestPrincipalInformation16)
 
 
             throws RemoteException
@@ -2463,10 +2464,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    RequestPrincipalInformationResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationResponseE.class);
 
 
-            return (RequestPrincipalInformationResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -2530,7 +2531,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startrequestPrincipalInformation(
 
-            RequestPrincipalInformationE requestPrincipalInformation16,
+            ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationE requestPrincipalInformation16,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -2572,9 +2573,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            RequestPrincipalInformationResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationResponseE.class);
                     callback.receiveResultrequestPrincipalInformation(
-                            (RequestPrincipalInformationResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorrequestPrincipalInformation(e);
@@ -2713,10 +2714,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    RequestTopupResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.RequestTopupResponseE.class);
 
 
-            return (RequestTopupResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.RequestTopupResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -2780,7 +2781,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startrequestTopup(
 
-            RequestTopupE requestTopup18,
+            ERSWSTopupServiceImplServiceStub.RequestTopupE requestTopup18,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -2822,9 +2823,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            RequestTopupResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.RequestTopupResponseE.class);
                     callback.receiveResultrequestTopup(
-                            (RequestTopupResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.RequestTopupResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorrequestTopup(e);
@@ -2922,9 +2923,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public RequestTransferResponseE requestTransfer(
+    public ERSWSTopupServiceImplServiceStub.RequestTransferResponseE requestTransfer(
 
-            RequestTransferE requestTransfer20)
+            ERSWSTopupServiceImplServiceStub.RequestTransferE requestTransfer20)
 
 
             throws RemoteException
@@ -2968,10 +2969,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    RequestTransferResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.RequestTransferResponseE.class);
 
 
-            return (RequestTransferResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.RequestTransferResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -3035,7 +3036,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startrequestTransfer(
 
-            RequestTransferE requestTransfer20,
+            ERSWSTopupServiceImplServiceStub.RequestTransferE requestTransfer20,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -3077,9 +3078,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            RequestTransferResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.RequestTransferResponseE.class);
                     callback.receiveResultrequestTransfer(
-                            (RequestTransferResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.RequestTransferResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorrequestTransfer(e);
@@ -3177,9 +3178,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public RedeemVoucherResponse redeemVoucher(
+    public ERSWSTopupServiceImplServiceStub.RedeemVoucherResponse redeemVoucher(
 
-            RedeemVoucher redeemVoucher22)
+            ERSWSTopupServiceImplServiceStub.RedeemVoucher redeemVoucher22)
 
 
             throws RemoteException
@@ -3223,10 +3224,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    RedeemVoucherResponse.class);
+                    ERSWSTopupServiceImplServiceStub.RedeemVoucherResponse.class);
 
 
-            return (RedeemVoucherResponse) object;
+            return (ERSWSTopupServiceImplServiceStub.RedeemVoucherResponse) object;
 
         } catch (AxisFault f) {
 
@@ -3290,7 +3291,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startredeemVoucher(
 
-            RedeemVoucher redeemVoucher22,
+            ERSWSTopupServiceImplServiceStub.RedeemVoucher redeemVoucher22,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -3332,9 +3333,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            RedeemVoucherResponse.class);
+                            ERSWSTopupServiceImplServiceStub.RedeemVoucherResponse.class);
                     callback.receiveResultredeemVoucher(
-                            (RedeemVoucherResponse) object);
+                            (ERSWSTopupServiceImplServiceStub.RedeemVoucherResponse) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorredeemVoucher(e);
@@ -3432,9 +3433,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public LinkSubResellerResponseE linkSubReseller(
+    public ERSWSTopupServiceImplServiceStub.LinkSubResellerResponseE linkSubReseller(
 
-            LinkSubResellerE linkSubReseller24)
+            ERSWSTopupServiceImplServiceStub.LinkSubResellerE linkSubReseller24)
 
 
             throws RemoteException
@@ -3478,10 +3479,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    LinkSubResellerResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.LinkSubResellerResponseE.class);
 
 
-            return (LinkSubResellerResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.LinkSubResellerResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -3545,7 +3546,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startlinkSubReseller(
 
-            LinkSubResellerE linkSubReseller24,
+            ERSWSTopupServiceImplServiceStub.LinkSubResellerE linkSubReseller24,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -3587,9 +3588,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            LinkSubResellerResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.LinkSubResellerResponseE.class);
                     callback.receiveResultlinkSubReseller(
-                            (LinkSubResellerResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.LinkSubResellerResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorlinkSubReseller(e);
@@ -3687,9 +3688,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public UnBlockResellerResponseE unBlockReseller(
+    public ERSWSTopupServiceImplServiceStub.UnBlockResellerResponseE unBlockReseller(
 
-            UnBlockResellerE unBlockReseller26)
+            ERSWSTopupServiceImplServiceStub.UnBlockResellerE unBlockReseller26)
 
 
             throws RemoteException
@@ -3733,10 +3734,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    UnBlockResellerResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.UnBlockResellerResponseE.class);
 
 
-            return (UnBlockResellerResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.UnBlockResellerResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -3800,7 +3801,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startunBlockReseller(
 
-            UnBlockResellerE unBlockReseller26,
+            ERSWSTopupServiceImplServiceStub.UnBlockResellerE unBlockReseller26,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -3842,9 +3843,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            UnBlockResellerResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.UnBlockResellerResponseE.class);
                     callback.receiveResultunBlockReseller(
-                            (UnBlockResellerResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.UnBlockResellerResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorunBlockReseller(e);
@@ -3942,9 +3943,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public GetVouchersDenominationResponseE getVouchersDenomination(
+    public ERSWSTopupServiceImplServiceStub.GetVouchersDenominationResponseE getVouchersDenomination(
 
-            GetVouchersDenominationE getVouchersDenomination28)
+            ERSWSTopupServiceImplServiceStub.GetVouchersDenominationE getVouchersDenomination28)
 
 
             throws RemoteException
@@ -3988,10 +3989,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    GetVouchersDenominationResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.GetVouchersDenominationResponseE.class);
 
 
-            return (GetVouchersDenominationResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.GetVouchersDenominationResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -4055,7 +4056,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startgetVouchersDenomination(
 
-            GetVouchersDenominationE getVouchersDenomination28,
+            ERSWSTopupServiceImplServiceStub.GetVouchersDenominationE getVouchersDenomination28,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -4097,9 +4098,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            GetVouchersDenominationResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.GetVouchersDenominationResponseE.class);
                     callback.receiveResultgetVouchersDenomination(
-                            (GetVouchersDenominationResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.GetVouchersDenominationResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorgetVouchersDenomination(e);
@@ -4197,9 +4198,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public RequestPurchaseResponseE requestPurchase(
+    public ERSWSTopupServiceImplServiceStub.RequestPurchaseResponseE requestPurchase(
 
-            RequestPurchaseE requestPurchase30)
+            ERSWSTopupServiceImplServiceStub.RequestPurchaseE requestPurchase30)
 
 
             throws RemoteException
@@ -4243,10 +4244,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    RequestPurchaseResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.RequestPurchaseResponseE.class);
 
 
-            return (RequestPurchaseResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.RequestPurchaseResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -4310,7 +4311,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startrequestPurchase(
 
-            RequestPurchaseE requestPurchase30,
+            ERSWSTopupServiceImplServiceStub.RequestPurchaseE requestPurchase30,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -4352,9 +4353,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            RequestPurchaseResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.RequestPurchaseResponseE.class);
                     callback.receiveResultrequestPurchase(
-                            (RequestPurchaseResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.RequestPurchaseResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorrequestPurchase(e);
@@ -4452,9 +4453,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public ActivateResellerResponseE activateReseller(
+    public ERSWSTopupServiceImplServiceStub.ActivateResellerResponseE activateReseller(
 
-            ActivateResellerE activateReseller32)
+            ERSWSTopupServiceImplServiceStub.ActivateResellerE activateReseller32)
 
 
             throws RemoteException
@@ -4498,10 +4499,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    ActivateResellerResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.ActivateResellerResponseE.class);
 
 
-            return (ActivateResellerResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.ActivateResellerResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -4565,7 +4566,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startactivateReseller(
 
-            ActivateResellerE activateReseller32,
+            ERSWSTopupServiceImplServiceStub.ActivateResellerE activateReseller32,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -4607,9 +4608,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            ActivateResellerResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.ActivateResellerResponseE.class);
                     callback.receiveResultactivateReseller(
-                            (ActivateResellerResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.ActivateResellerResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErroractivateReseller(e);
@@ -4707,9 +4708,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public ExecuteReportResponseE executeReport(
+    public ERSWSTopupServiceImplServiceStub.ExecuteReportResponseE executeReport(
 
-            ExecuteReportE executeReport34)
+            ERSWSTopupServiceImplServiceStub.ExecuteReportE executeReport34)
 
 
             throws RemoteException
@@ -4753,10 +4754,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    ExecuteReportResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.ExecuteReportResponseE.class);
 
 
-            return (ExecuteReportResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.ExecuteReportResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -4820,7 +4821,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startexecuteReport(
 
-            ExecuteReportE executeReport34,
+            ERSWSTopupServiceImplServiceStub.ExecuteReportE executeReport34,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -4862,9 +4863,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            ExecuteReportResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.ExecuteReportResponseE.class);
                     callback.receiveResultexecuteReport(
-                            (ExecuteReportResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.ExecuteReportResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorexecuteReport(e);
@@ -4962,9 +4963,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public BlockResellerResponseE blockReseller(
+    public ERSWSTopupServiceImplServiceStub.BlockResellerResponseE blockReseller(
 
-            BlockResellerE blockReseller36)
+            ERSWSTopupServiceImplServiceStub.BlockResellerE blockReseller36)
 
 
             throws RemoteException
@@ -5008,10 +5009,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    BlockResellerResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.BlockResellerResponseE.class);
 
 
-            return (BlockResellerResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.BlockResellerResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -5075,7 +5076,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startblockReseller(
 
-            BlockResellerE blockReseller36,
+            ERSWSTopupServiceImplServiceStub.BlockResellerE blockReseller36,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -5117,9 +5118,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            BlockResellerResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.BlockResellerResponseE.class);
                     callback.receiveResultblockReseller(
-                            (BlockResellerResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.BlockResellerResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorblockReseller(e);
@@ -5217,9 +5218,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public ChangePrincipalPasswordResponseE changePrincipalPassword(
+    public ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordResponseE changePrincipalPassword(
 
-            ChangePrincipalPasswordE changePrincipalPassword38)
+            ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordE changePrincipalPassword38)
 
 
             throws RemoteException
@@ -5263,10 +5264,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    ChangePrincipalPasswordResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordResponseE.class);
 
 
-            return (ChangePrincipalPasswordResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -5330,7 +5331,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startchangePrincipalPassword(
 
-            ChangePrincipalPasswordE changePrincipalPassword38,
+            ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordE changePrincipalPassword38,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -5372,9 +5373,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            ChangePrincipalPasswordResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordResponseE.class);
                     callback.receiveResultchangePrincipalPassword(
-                            (ChangePrincipalPasswordResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorchangePrincipalPassword(e);
@@ -5472,9 +5473,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public CancelTopupResponse cancelTopup(
+    public ERSWSTopupServiceImplServiceStub.CancelTopupResponse cancelTopup(
 
-            RequestCancelTopup requestCancelTopup40)
+            ERSWSTopupServiceImplServiceStub.RequestCancelTopup requestCancelTopup40)
 
 
             throws RemoteException
@@ -5518,10 +5519,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    CancelTopupResponse.class);
+                    ERSWSTopupServiceImplServiceStub.CancelTopupResponse.class);
 
 
-            return (CancelTopupResponse) object;
+            return (ERSWSTopupServiceImplServiceStub.CancelTopupResponse) object;
 
         } catch (AxisFault f) {
 
@@ -5585,7 +5586,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startcancelTopup(
 
-            RequestCancelTopup requestCancelTopup40,
+            ERSWSTopupServiceImplServiceStub.RequestCancelTopup requestCancelTopup40,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -5627,9 +5628,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            CancelTopupResponse.class);
+                            ERSWSTopupServiceImplServiceStub.CancelTopupResponse.class);
                     callback.receiveResultcancelTopup(
-                            (CancelTopupResponse) object);
+                            (ERSWSTopupServiceImplServiceStub.CancelTopupResponse) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorcancelTopup(e);
@@ -5727,9 +5728,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public UpdateResellerResponseE updateReseller(
+    public ERSWSTopupServiceImplServiceStub.UpdateResellerResponseE updateReseller(
 
-            UpdateResellerE updateReseller42)
+            ERSWSTopupServiceImplServiceStub.UpdateResellerE updateReseller42)
 
 
             throws RemoteException
@@ -5773,10 +5774,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    UpdateResellerResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.UpdateResellerResponseE.class);
 
 
-            return (UpdateResellerResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.UpdateResellerResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -5840,7 +5841,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startupdateReseller(
 
-            UpdateResellerE updateReseller42,
+            ERSWSTopupServiceImplServiceStub.UpdateResellerE updateReseller42,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -5882,9 +5883,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            UpdateResellerResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.UpdateResellerResponseE.class);
                     callback.receiveResultupdateReseller(
-                            (UpdateResellerResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.UpdateResellerResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrorupdateReseller(e);
@@ -5982,9 +5983,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
 
 
-    public DeActivateResellerResponseE deActivateReseller(
+    public ERSWSTopupServiceImplServiceStub.DeActivateResellerResponseE deActivateReseller(
 
-            DeActivateResellerE deActivateReseller44)
+            ERSWSTopupServiceImplServiceStub.DeActivateResellerE deActivateReseller44)
 
 
             throws RemoteException
@@ -6028,10 +6029,10 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
             Object object = fromOM(
                     _returnEnv.getBody().getFirstElement(),
-                    DeActivateResellerResponseE.class);
+                    ERSWSTopupServiceImplServiceStub.DeActivateResellerResponseE.class);
 
 
-            return (DeActivateResellerResponseE) object;
+            return (ERSWSTopupServiceImplServiceStub.DeActivateResellerResponseE) object;
 
         } catch (AxisFault f) {
 
@@ -6095,7 +6096,7 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
      */
     public void startdeActivateReseller(
 
-            DeActivateResellerE deActivateReseller44,
+            ERSWSTopupServiceImplServiceStub.DeActivateResellerE deActivateReseller44,
 
             final ERSWSTopupServiceImplServiceCallbackHandler callback)
 
@@ -6137,9 +6138,9 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                     SOAPEnvelope resultEnv = resultContext.getEnvelope();
 
                     Object object = fromOM(resultEnv.getBody().getFirstElement(),
-                            DeActivateResellerResponseE.class);
+                            ERSWSTopupServiceImplServiceStub.DeActivateResellerResponseE.class);
                     callback.receiveResultdeActivateReseller(
-                            (DeActivateResellerResponseE) object);
+                            (ERSWSTopupServiceImplServiceStub.DeActivateResellerResponseE) object);
 
                 } catch (AxisFault e) {
                     callback.receiveErrordeActivateReseller(e);
@@ -68166,12 +68167,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
     }
 
 
-    private OMElement toOM(CustomOperationE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.CustomOperationE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(CustomOperationE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.CustomOperationE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68180,12 +68181,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(CustomOperationResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.CustomOperationResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(CustomOperationResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.CustomOperationResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68194,12 +68195,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(RegisterSubResellerE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.RegisterSubResellerE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(RegisterSubResellerE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.RegisterSubResellerE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68208,12 +68209,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(RegisterSubResellerResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.RegisterSubResellerResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(RegisterSubResellerResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.RegisterSubResellerResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68222,12 +68223,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(DeLinkSubResellerE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.DeLinkSubResellerE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(DeLinkSubResellerE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.DeLinkSubResellerE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68236,12 +68237,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(DeLinkSubResellerResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.DeLinkSubResellerResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(DeLinkSubResellerResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.DeLinkSubResellerResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68250,12 +68251,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(CommitTopup param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.CommitTopup param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(CommitTopup.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.CommitTopup.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68264,12 +68265,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(CommitTopupResponse param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.CommitTopupResponse param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(CommitTopupResponse.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.CommitTopupResponse.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68278,12 +68279,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(CancelPurchaseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.CancelPurchaseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(CancelPurchaseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.CancelPurchaseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68292,12 +68293,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(CancelPurchaseResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.CancelPurchaseResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(CancelPurchaseResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.CancelPurchaseResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68306,12 +68307,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(UnFreezeResellerE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.UnFreezeResellerE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(UnFreezeResellerE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.UnFreezeResellerE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68320,12 +68321,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(UnFreezeResellerResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.UnFreezeResellerResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(UnFreezeResellerResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.UnFreezeResellerResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68334,12 +68335,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(FreezeResellerE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.FreezeResellerE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(FreezeResellerE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.FreezeResellerE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68348,12 +68349,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(FreezeResellerResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.FreezeResellerResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(FreezeResellerResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.FreezeResellerResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68362,12 +68363,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(GetTransactionStatusE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.GetTransactionStatusE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(GetTransactionStatusE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.GetTransactionStatusE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68376,12 +68377,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(GetTransactionStatusResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.GetTransactionStatusResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(GetTransactionStatusResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.GetTransactionStatusResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68390,12 +68391,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(RequestPrincipalInformationE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(RequestPrincipalInformationE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68404,12 +68405,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(RequestPrincipalInformationResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(RequestPrincipalInformationResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68418,12 +68419,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(RequestTopupE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.RequestTopupE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(RequestTopupE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestTopupE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68432,12 +68433,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(RequestTopupResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.RequestTopupResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(RequestTopupResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestTopupResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68446,12 +68447,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(RequestTransferE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.RequestTransferE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(RequestTransferE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestTransferE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68460,12 +68461,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(RequestTransferResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.RequestTransferResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(RequestTransferResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestTransferResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68474,12 +68475,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(RedeemVoucher param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.RedeemVoucher param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(RedeemVoucher.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.RedeemVoucher.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68488,12 +68489,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(RedeemVoucherResponse param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.RedeemVoucherResponse param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(RedeemVoucherResponse.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.RedeemVoucherResponse.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68502,12 +68503,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(LinkSubResellerE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.LinkSubResellerE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(LinkSubResellerE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.LinkSubResellerE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68516,12 +68517,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(LinkSubResellerResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.LinkSubResellerResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(LinkSubResellerResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.LinkSubResellerResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68530,12 +68531,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(UnBlockResellerE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.UnBlockResellerE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(UnBlockResellerE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.UnBlockResellerE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68544,12 +68545,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(UnBlockResellerResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.UnBlockResellerResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(UnBlockResellerResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.UnBlockResellerResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68558,12 +68559,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(GetVouchersDenominationE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.GetVouchersDenominationE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(GetVouchersDenominationE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.GetVouchersDenominationE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68572,12 +68573,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(GetVouchersDenominationResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.GetVouchersDenominationResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(GetVouchersDenominationResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.GetVouchersDenominationResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68586,12 +68587,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(RequestPurchaseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.RequestPurchaseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(RequestPurchaseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestPurchaseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68600,12 +68601,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(RequestPurchaseResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.RequestPurchaseResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(RequestPurchaseResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestPurchaseResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68614,12 +68615,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(ActivateResellerE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.ActivateResellerE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(ActivateResellerE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.ActivateResellerE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68628,12 +68629,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(ActivateResellerResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.ActivateResellerResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(ActivateResellerResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.ActivateResellerResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68642,12 +68643,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(ExecuteReportE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.ExecuteReportE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(ExecuteReportE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.ExecuteReportE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68656,12 +68657,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(ExecuteReportResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.ExecuteReportResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(ExecuteReportResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.ExecuteReportResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68670,12 +68671,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(BlockResellerE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.BlockResellerE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(BlockResellerE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.BlockResellerE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68684,12 +68685,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(BlockResellerResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.BlockResellerResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(BlockResellerResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.BlockResellerResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68698,12 +68699,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(ChangePrincipalPasswordE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(ChangePrincipalPasswordE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68712,12 +68713,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(ChangePrincipalPasswordResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(ChangePrincipalPasswordResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68726,12 +68727,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(RequestCancelTopup param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.RequestCancelTopup param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(RequestCancelTopup.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestCancelTopup.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68740,12 +68741,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(CancelTopupResponse param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.CancelTopupResponse param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(CancelTopupResponse.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.CancelTopupResponse.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68754,12 +68755,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(UpdateResellerE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.UpdateResellerE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(UpdateResellerE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.UpdateResellerE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68768,12 +68769,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(UpdateResellerResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.UpdateResellerResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(UpdateResellerResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.UpdateResellerResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68782,12 +68783,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(DeActivateResellerE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.DeActivateResellerE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(DeActivateResellerE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.DeActivateResellerE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68796,12 +68797,12 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
     }
 
-    private OMElement toOM(DeActivateResellerResponseE param, boolean optimizeContent)
+    private OMElement toOM(ERSWSTopupServiceImplServiceStub.DeActivateResellerResponseE param, boolean optimizeContent)
             throws AxisFault {
 
 
         try {
-            return param.getOMElement(DeActivateResellerResponseE.MY_QNAME,
+            return param.getOMElement(ERSWSTopupServiceImplServiceStub.DeActivateResellerResponseE.MY_QNAME,
                     OMAbstractFactory.getOMFactory());
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68811,14 +68812,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
     }
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, CustomOperationE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.CustomOperationE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(CustomOperationE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.CustomOperationE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68831,14 +68832,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, DeLinkSubResellerE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.DeLinkSubResellerE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(DeLinkSubResellerE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.DeLinkSubResellerE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68851,14 +68852,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, RegisterSubResellerE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.RegisterSubResellerE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(RegisterSubResellerE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.RegisterSubResellerE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68871,14 +68872,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, CommitTopup param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.CommitTopup param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(CommitTopup.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.CommitTopup.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68891,14 +68892,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, GetTransactionStatusE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.GetTransactionStatusE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(GetTransactionStatusE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.GetTransactionStatusE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68911,14 +68912,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, RequestPrincipalInformationE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(RequestPrincipalInformationE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68931,14 +68932,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, RequestTopupE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.RequestTopupE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(RequestTopupE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestTopupE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68951,14 +68952,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, RequestTransferE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.RequestTransferE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(RequestTransferE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestTransferE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68971,14 +68972,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, CancelPurchaseE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.CancelPurchaseE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(CancelPurchaseE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.CancelPurchaseE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -68991,14 +68992,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, UnFreezeResellerE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.UnFreezeResellerE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(UnFreezeResellerE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.UnFreezeResellerE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69011,14 +69012,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, FreezeResellerE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.FreezeResellerE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(FreezeResellerE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.FreezeResellerE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69031,14 +69032,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, LinkSubResellerE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.LinkSubResellerE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(LinkSubResellerE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.LinkSubResellerE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69051,14 +69052,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, UnBlockResellerE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.UnBlockResellerE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(UnBlockResellerE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.UnBlockResellerE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69071,14 +69072,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, GetVouchersDenominationE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.GetVouchersDenominationE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(GetVouchersDenominationE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.GetVouchersDenominationE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69091,14 +69092,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, RequestPurchaseE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.RequestPurchaseE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(RequestPurchaseE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestPurchaseE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69111,14 +69112,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, RedeemVoucher param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.RedeemVoucher param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(RedeemVoucher.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.RedeemVoucher.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69131,14 +69132,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, RequestCancelTopup param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.RequestCancelTopup param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(RequestCancelTopup.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.RequestCancelTopup.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69151,14 +69152,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, UpdateResellerE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.UpdateResellerE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(UpdateResellerE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.UpdateResellerE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69171,14 +69172,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, DeActivateResellerE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.DeActivateResellerE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(DeActivateResellerE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.DeActivateResellerE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69191,14 +69192,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, ActivateResellerE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.ActivateResellerE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(ActivateResellerE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.ActivateResellerE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69211,14 +69212,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, ExecuteReportE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.ExecuteReportE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(ExecuteReportE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.ExecuteReportE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69231,14 +69232,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, BlockResellerE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.BlockResellerE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(BlockResellerE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.BlockResellerE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69251,14 +69252,14 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
                              /* methods to provide back word compatibility */
 
 
-    private SOAPEnvelope toEnvelope(SOAPFactory factory, ChangePrincipalPasswordE param, boolean optimizeContent, QName elementQName)
+    private SOAPEnvelope toEnvelope(SOAPFactory factory, ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordE param, boolean optimizeContent, QName elementQName)
             throws AxisFault {
 
 
         try {
 
             SOAPEnvelope emptyEnvelope = factory.getDefaultEnvelope();
-            emptyEnvelope.getBody().addChild(param.getOMElement(ChangePrincipalPasswordE.MY_QNAME, factory));
+            emptyEnvelope.getBody().addChild(param.getOMElement(ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordE.MY_QNAME, factory));
             return emptyEnvelope;
         } catch (ADBException e) {
             throw AxisFault.makeFault(e);
@@ -69285,324 +69286,324 @@ public class ERSWSTopupServiceImplServiceStub extends Stub {
 
         try {
 
-            if (ActivateResellerE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.ActivateResellerE.class.equals(type)) {
 
-                return ActivateResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (ActivateResellerResponseE.class.equals(type)) {
-
-                return ActivateResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.ActivateResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (BlockResellerE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.ActivateResellerResponseE.class.equals(type)) {
 
-                return BlockResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (BlockResellerResponseE.class.equals(type)) {
-
-                return BlockResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.ActivateResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (CancelPurchaseE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.BlockResellerE.class.equals(type)) {
 
-                return CancelPurchaseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (CancelPurchaseResponseE.class.equals(type)) {
-
-                return CancelPurchaseResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.BlockResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (CancelTopupResponse.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.BlockResellerResponseE.class.equals(type)) {
 
-                return CancelTopupResponse.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (ChangePrincipalPasswordE.class.equals(type)) {
-
-                return ChangePrincipalPasswordE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.BlockResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (ChangePrincipalPasswordResponseE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.CancelPurchaseE.class.equals(type)) {
 
-                return ChangePrincipalPasswordResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (CommitTopup.class.equals(type)) {
-
-                return CommitTopup.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.CancelPurchaseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (CommitTopupResponse.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.CancelPurchaseResponseE.class.equals(type)) {
 
-                return CommitTopupResponse.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (CustomOperationE.class.equals(type)) {
-
-                return CustomOperationE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.CancelPurchaseResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (CustomOperationResponseE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.CancelTopupResponse.class.equals(type)) {
 
-                return CustomOperationResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (DeActivateResellerE.class.equals(type)) {
-
-                return DeActivateResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.CancelTopupResponse.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (DeActivateResellerResponseE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordE.class.equals(type)) {
 
-                return DeActivateResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (DeLinkSubResellerE.class.equals(type)) {
-
-                return DeLinkSubResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (DeLinkSubResellerResponseE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordResponseE.class.equals(type)) {
 
-                return DeLinkSubResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (ExecuteReportE.class.equals(type)) {
-
-                return ExecuteReportE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.ChangePrincipalPasswordResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (ExecuteReportResponseE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.CommitTopup.class.equals(type)) {
 
-                return ExecuteReportResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (FreezeResellerE.class.equals(type)) {
-
-                return FreezeResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.CommitTopup.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (FreezeResellerResponseE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.CommitTopupResponse.class.equals(type)) {
 
-                return FreezeResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (GetTransactionStatusE.class.equals(type)) {
-
-                return GetTransactionStatusE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.CommitTopupResponse.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (GetTransactionStatusResponseE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.CustomOperationE.class.equals(type)) {
 
-                return GetTransactionStatusResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (GetVouchersDenominationE.class.equals(type)) {
-
-                return GetVouchersDenominationE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.CustomOperationE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (GetVouchersDenominationResponseE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.CustomOperationResponseE.class.equals(type)) {
 
-                return GetVouchersDenominationResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (LinkSubResellerE.class.equals(type)) {
-
-                return LinkSubResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.CustomOperationResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (LinkSubResellerResponseE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.DeActivateResellerE.class.equals(type)) {
 
-                return LinkSubResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (RedeemVoucher.class.equals(type)) {
-
-                return RedeemVoucher.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.DeActivateResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (RedeemVoucherResponse.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.DeActivateResellerResponseE.class.equals(type)) {
 
-                return RedeemVoucherResponse.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (RegisterSubResellerE.class.equals(type)) {
-
-                return RegisterSubResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.DeActivateResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (RegisterSubResellerResponseE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.DeLinkSubResellerE.class.equals(type)) {
 
-                return RegisterSubResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (RequestCancelTopup.class.equals(type)) {
-
-                return RequestCancelTopup.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.DeLinkSubResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (RequestPrincipalInformationE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.DeLinkSubResellerResponseE.class.equals(type)) {
 
-                return RequestPrincipalInformationE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (RequestPrincipalInformationResponseE.class.equals(type)) {
-
-                return RequestPrincipalInformationResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.DeLinkSubResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (RequestPurchaseE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.ExecuteReportE.class.equals(type)) {
 
-                return RequestPurchaseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (RequestPurchaseResponseE.class.equals(type)) {
-
-                return RequestPurchaseResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.ExecuteReportE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (RequestTopupE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.ExecuteReportResponseE.class.equals(type)) {
 
-                return RequestTopupE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (RequestTopupResponseE.class.equals(type)) {
-
-                return RequestTopupResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.ExecuteReportResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (RequestTransferE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.FreezeResellerE.class.equals(type)) {
 
-                return RequestTransferE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (RequestTransferResponseE.class.equals(type)) {
-
-                return RequestTransferResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.FreezeResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (UnBlockResellerE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.FreezeResellerResponseE.class.equals(type)) {
 
-                return UnBlockResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (UnBlockResellerResponseE.class.equals(type)) {
-
-                return UnBlockResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.FreezeResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (UnFreezeResellerE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.GetTransactionStatusE.class.equals(type)) {
 
-                return UnFreezeResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
-
-
-            }
-
-            if (UnFreezeResellerResponseE.class.equals(type)) {
-
-                return UnFreezeResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.GetTransactionStatusE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (UpdateResellerE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.GetTransactionStatusResponseE.class.equals(type)) {
 
-                return UpdateResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.GetTransactionStatusResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }
 
-            if (UpdateResellerResponseE.class.equals(type)) {
+            if (ERSWSTopupServiceImplServiceStub.GetVouchersDenominationE.class.equals(type)) {
 
-                return UpdateResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+                return ERSWSTopupServiceImplServiceStub.GetVouchersDenominationE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.GetVouchersDenominationResponseE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.GetVouchersDenominationResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.LinkSubResellerE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.LinkSubResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.LinkSubResellerResponseE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.LinkSubResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.RedeemVoucher.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.RedeemVoucher.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.RedeemVoucherResponse.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.RedeemVoucherResponse.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.RegisterSubResellerE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.RegisterSubResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.RegisterSubResellerResponseE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.RegisterSubResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.RequestCancelTopup.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.RequestCancelTopup.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationResponseE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.RequestPrincipalInformationResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.RequestPurchaseE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.RequestPurchaseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.RequestPurchaseResponseE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.RequestPurchaseResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.RequestTopupE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.RequestTopupE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.RequestTopupResponseE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.RequestTopupResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.RequestTransferE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.RequestTransferE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.RequestTransferResponseE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.RequestTransferResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.UnBlockResellerE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.UnBlockResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.UnBlockResellerResponseE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.UnBlockResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.UnFreezeResellerE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.UnFreezeResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.UnFreezeResellerResponseE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.UnFreezeResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.UpdateResellerE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.UpdateResellerE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
+
+
+            }
+
+            if (ERSWSTopupServiceImplServiceStub.UpdateResellerResponseE.class.equals(type)) {
+
+                return ERSWSTopupServiceImplServiceStub.UpdateResellerResponseE.Factory.parse(param.getXMLStreamReaderWithoutCaching());
 
 
             }

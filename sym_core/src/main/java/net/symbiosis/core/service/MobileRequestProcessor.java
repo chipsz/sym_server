@@ -39,4 +39,6 @@ public interface MobileRequestProcessor extends RequestProcessor {
                                      String reference, Long cashoutAccountId, String pin);
 
     SymWalletList transferToWallet(Long userId, String imei, String authToken, BigDecimal amount, String recipient, String pin);
+
+    SymWalletTransactionList getWalletTransactions(Long walletId, Long userId, String deviceId, String authToken);
 }

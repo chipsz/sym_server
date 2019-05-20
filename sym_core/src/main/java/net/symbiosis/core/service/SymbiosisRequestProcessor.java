@@ -1,6 +1,7 @@
 package net.symbiosis.core.service;
 
 import net.symbiosis.core.contract.*;
+import net.symbiosis.core_lib.enumeration.SymChannel;
 
 /***************************************************************************
  * *
@@ -40,4 +41,6 @@ public interface SymbiosisRequestProcessor extends RequestProcessor {
     SymWalletList getWallet(Long walletId);
 
     SymWalletList getWallets();
+
+    SymWalletTransactionList getWalletTransactions(Long walletId, Long userId, String deviceId, SymChannel channel, String authToken);
 }

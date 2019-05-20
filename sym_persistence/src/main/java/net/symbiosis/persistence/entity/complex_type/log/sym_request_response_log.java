@@ -49,8 +49,7 @@ public class sym_request_response_log extends sym_entity<sym_request_response_lo
 
     public sym_request_response_log() {}
 
-    public sym_request_response_log(sym_channel channel,
-                                    sym_event_type event_type, String incoming_request) {
+    public sym_request_response_log(sym_channel channel, sym_event_type event_type, String incoming_request) {
         this.channel = channel;
         this.event_type = event_type;
         this.incoming_request = incoming_request;

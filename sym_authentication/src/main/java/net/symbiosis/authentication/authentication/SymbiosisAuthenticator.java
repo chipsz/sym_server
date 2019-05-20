@@ -83,6 +83,35 @@ public class SymbiosisAuthenticator {
         return new SymResponseObject<>(SUCCESS, newSession);
     }
 
+    public static SymResponseObject<sym_session> verifyLogin(Long authUserId, String deviceId, String authToken) {
+
+        logger.info(format("Verifying auth token %s for auth user %s with imei %s", authToken, authUserId, deviceId));
+
+        if (authUserId == null) {
+            logger.info("Login verification failed! authUserId cannot be null");
+            return new SymResponseObject<>(AUTH_AUTHENTICATION_FAILED);
+        }
+
+        if (!isValidAuthData(authToken)) {
+            logger.info(format("Login verification failed! Invalid auth token %s", authToken));
+            return new SymResponseObject<>(AUTH_AUTHENTICATION_FAILED);
+        }
+
+        sym_session authSession = getEntityManagerRepo().findLast(sym_session.class, asList(
+            new Pair<>("auth_user_id", authUserId),
+            new Pair<>("device_id", deviceId),
+            new Pair<>("auth_token", authToken)
+        ));
+
+        if (authSession == null || authSession.getEnd_time() != null) {
+            logger.info(format("Login verification failed! Session does not exist for auth user %s with deviceId %s", authToken, deviceId));
+            return new SymResponseObject<>(AUTH_AUTHENTICATION_FAILED);
+        }
+
+        authSession.getAuth_user().setLast_auth_date(new Date()).save();
+        return new SymResponseObject<>(SUCCESS, authSession);
+    }
+
     static SymResponseObject endSession(Long sessionId,
                                         sym_channel channel, String deviceId, String authToken) {
 
@@ -264,7 +293,7 @@ public class SymbiosisAuthenticator {
         newUser.setMsisdn(formatFullMsisdn(newUser.getMsisdn(), newUser.getCountry().getDialing_code()));
 
         SymResponseObject<sym_user> validationResponse = AuthenticationHelper.validateMandatoryChannelData(newUser, channel);
-        if (validationResponse.getResponseCode() != SUCCESS) {
+        if (!validationResponse.getResponseCode().equals(SUCCESS)) {
             logger.info("Registration failed! User data incomplete for registration on channel " + channel.getName());
             logger.info(validationResponse.getMessage());
             return new SymResponseObject<>(validationResponse.getResponseCode());

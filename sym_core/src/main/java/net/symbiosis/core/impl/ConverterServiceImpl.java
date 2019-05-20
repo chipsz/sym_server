@@ -6,6 +6,7 @@ import net.symbiosis.core.service.ConverterService;
 import net.symbiosis.persistence.entity.complex_type.log.sym_import_batch;
 import net.symbiosis.persistence.entity.complex_type.log.sym_session;
 import net.symbiosis.persistence.entity.complex_type.log.sym_voucher_purchase;
+import net.symbiosis.persistence.entity.complex_type.log.sym_wallet_transaction;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_service_provider;
@@ -167,6 +168,18 @@ public class ConverterServiceImpl implements ConverterService {
         symWallet.setAccountAdminUserId(sourceData.getWallet_admin_user().getId());
         symWallet.setVoucherGroupId(sourceData.getWallet_group().getId());
         return symWallet;
+    }
+
+    @Override
+    public SymWalletTransaction toDTO(sym_wallet_transaction sourceData) {
+        if (sourceData == null) {
+            return null;
+        }
+        SymWalletTransaction symWalletTransaction = new SymWalletTransaction();
+        modelMapper().map(sourceData, symWalletTransaction);
+        symWalletTransaction.setWalletId(sourceData.getWallet().getId());
+        symWalletTransaction.setEventType(sourceData.getEvent_type().getName());
+        return symWalletTransaction;
     }
 
     @Override

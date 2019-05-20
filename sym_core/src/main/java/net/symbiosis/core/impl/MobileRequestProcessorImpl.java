@@ -3,10 +3,7 @@ package net.symbiosis.core.impl;
 import net.symbiosis.authentication.authentication.MobileAuthenticationProvider;
 import net.symbiosis.core.contract.*;
 import net.symbiosis.core.contract.symbiosis.SymCashoutAccount;
-import net.symbiosis.core.service.ConverterService;
-import net.symbiosis.core.service.MobileRequestProcessor;
-import net.symbiosis.core.service.VoucherProcessor;
-import net.symbiosis.core.service.WalletManager;
+import net.symbiosis.core.service.*;
 import net.symbiosis.core_lib.enumeration.SymChannel;
 import net.symbiosis.core_lib.enumeration.SymFinancialInstitutionType;
 import net.symbiosis.core_lib.response.SymResponseObject;
@@ -64,12 +61,15 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
     private final VoucherProcessor voucherProcessor;
     private final ConverterService converterService;
     private final WalletManager walletManager;
+    private final SymbiosisRequestProcessor symbiosisRequestProcessor;
 
     @Autowired
-    public MobileRequestProcessorImpl(VoucherProcessor voucherProcessor, ConverterService converterService, WalletManager walletManager) {
+    public MobileRequestProcessorImpl(VoucherProcessor voucherProcessor, ConverterService converterService,
+                                      WalletManager walletManager, SymbiosisRequestProcessor symbiosisRequestProcessor) {
         this.voucherProcessor = voucherProcessor;
         this.converterService = converterService;
         this.walletManager = walletManager;
+        this.symbiosisRequestProcessor = symbiosisRequestProcessor;
     }
 
     @Override
@@ -138,7 +138,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
 
     private SymResponseObject<sym_session> verifyLogin(Long userId, String imei, String authToken) {
 
-        logger.info(format("Verifying auth token %s for user %s with imei %s", authToken, userId, imei));
+        logger.info(format("Verifying auth token %s for user %s with imei %s on channel SMART_PHONE", authToken, userId, imei));
 
         if (userId == null) {
             logger.info("Authentication failed! userId cannot be null");
@@ -541,7 +541,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
 
     @Override
     public SymWalletList transferToWallet(Long userId, String imei, String authToken, BigDecimal amount, String recipient, String pin) {
-        logger.info(format("Got mobile transfer request from from user %s to user %s for amount %s", userId, recipient, amount));
+        logger.info(format("Got mobile transfer request from user %s to user %s for amount %s", userId, recipient, amount));
 
         String incomingRequest = format("userId=%s|imei=%s|amount=%s|recipient=%s", userId, imei, amount, recipient);
 
@@ -628,5 +628,10 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
         }
 
         return new SymWalletList(updateResponse.getResponseCode(), converterService.toDTO(senderWallet));
+    }
+
+    @Override
+    public SymWalletTransactionList getWalletTransactions(Long walletId, Long userId, String deviceId, String authToken) {
+        return symbiosisRequestProcessor.getWalletTransactions(walletId, userId, deviceId, SMART_PHONE, authToken);
     }
 }

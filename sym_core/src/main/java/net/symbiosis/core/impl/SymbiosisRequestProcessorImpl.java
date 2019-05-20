@@ -4,27 +4,41 @@ import net.symbiosis.core.contract.*;
 import net.symbiosis.core.contract.symbiosis.SymCurrency;
 import net.symbiosis.core.contract.symbiosis.SymFinancialInstitution;
 import net.symbiosis.core.contract.symbiosis.SymWallet;
+import net.symbiosis.core.contract.symbiosis.SymWalletTransaction;
 import net.symbiosis.core.service.ConverterService;
 import net.symbiosis.core.service.SymbiosisRequestProcessor;
+import net.symbiosis.core_lib.enumeration.SymChannel;
+import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.dao.EnumEntityRepoManager;
+import net.symbiosis.persistence.entity.complex_type.device.sym_device_phone;
+import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
+import net.symbiosis.persistence.entity.complex_type.log.sym_session;
+import net.symbiosis.persistence.entity.complex_type.log.sym_wallet_transaction;
+import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.enumeration.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
+import static net.symbiosis.authentication.authentication.SymbiosisAuthenticator.verifyLogin;
 import static net.symbiosis.common.utilities.SymValidator.*;
+import static net.symbiosis.core.helper.ValidationHelper.*;
 import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
+import static net.symbiosis.core_lib.enumeration.SymEventType.WALLET_HISTORY;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.DATA_NOT_FOUND;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.javaToJSRegex;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
+import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 
 /***************************************************************************
  * *
@@ -188,5 +202,64 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
         getEntityManagerRepo().findAll(sym_wallet.class).forEach(v -> wallets.add(converterService.toDTO(v)));
         logger.info(format("Returning %s wallets", wallets.size()));
         return new SymWalletList(SUCCESS, wallets);
+    }
+
+
+    @Override
+    public SymWalletTransactionList getWalletTransactions(Long walletId, Long authUserId, String deviceId, SymChannel channel, String authToken) {
+        logger.info(format("Getting transaction history for auth user %s from channel %s", authUserId, channel));
+
+        String incomingRequest = format("walletId=%s|authUserId=%s|deviceId=%s|channel=%s", walletId, authUserId, deviceId, channel);
+
+        sym_request_response_log requestResponseLog = new sym_request_response_log(
+            fromEnum(channel), fromEnum(WALLET_HISTORY), incomingRequest
+        ).save();
+
+        SymResponseObject<sym_wallet> walletResponse = validateWallet(walletId);
+        if (!walletResponse.getResponseCode().equals(SUCCESS)) {
+            logger.warning("Failed to validate walletId! " + walletResponse.getMessage());
+            logResponse(null, requestResponseLog, walletResponse.getResponseCode());
+            return new SymWalletTransactionList(walletResponse.getResponseCode());
+        }
+
+        SymResponseObject<sym_auth_user> authUserResponse = validateAuthUser(authUserId);
+        if (authUserResponse.getResponseCode() != SUCCESS) {
+            logger.warning("Failed to validate authUserId! " + authUserResponse.getMessage());
+            logResponse(null, requestResponseLog, authUserResponse.getResponseCode());
+            return new SymWalletTransactionList(authUserResponse.getResponseCode());
+        }
+
+        SymResponseObject<sym_device_phone> deviceResponse = validatePhoneDevice(deviceId, false);
+        if (!deviceResponse.getResponseCode().equals(SUCCESS)) {
+            logger.warning("Failed to validate deviceId! " + deviceResponse.getMessage());
+            logResponse(null, requestResponseLog, deviceResponse.getResponseCode());
+            return new SymWalletTransactionList(deviceResponse.getResponseCode());
+        }
+
+        SymResponseObject<sym_session> sessionResponse = verifyLogin(authUserId, deviceId, authToken);
+        if (sessionResponse.getResponseCode() != SUCCESS) {
+            logger.warning("Failed to validate session! " + sessionResponse.getMessage());
+            logResponse(null, requestResponseLog, sessionResponse.getResponseCode());
+            return new SymWalletTransactionList(sessionResponse.getResponseCode());
+        }
+
+        if (!walletResponse.getResponseObject().getWallet_admin_user().getId().equals(authUserResponse.getResponseObject().getId())) {
+            logger.warning(format("Incorrect wallet admin user %s! Auth user has no privileges to pull transactions", authUserId));
+            logResponse(null, requestResponseLog, sessionResponse.getResponseCode());
+            return new SymWalletTransactionList(sessionResponse.getResponseCode());
+        }
+
+        ArrayList<SymWalletTransaction> walletTransactions = new ArrayList<>();
+        getEntityManagerRepo().findWhere(sym_wallet_transaction.class,
+            new Pair<>("wallet_id", authUserResponse.getResponseObject().getUser().getWallet().getId()),20
+        ).forEach(v -> walletTransactions.add(converterService.toDTO(v)));
+
+        requestResponseLog.setResponse_code(fromEnum(SUCCESS))
+            .setOutgoing_response(walletTransactions.toString())
+            .setOutgoing_response_time(new Date())
+            .save();
+
+        logger.info(format("Returning %s wallet transactions", walletTransactions.size()));
+        return new SymWalletTransactionList(SUCCESS, walletTransactions);
     }
 }

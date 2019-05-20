@@ -1,6 +1,7 @@
 package net.symbiosis.core.helper;
 
 import net.symbiosis.core_lib.response.SymResponseObject;
+import net.symbiosis.persistence.entity.complex_type.device.sym_device_phone;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
+import static net.symbiosis.common.utilities.SymValidator.isValidAuthData;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 
@@ -141,6 +143,29 @@ public class ValidationHelper {
         }
 
         return new SymResponseObject<>(SUCCESS, voucherProvider);
+    }
+
+    public static SymResponseObject<sym_device_phone> validatePhoneDevice(String deviceId, boolean isMandatory) {
+        if (deviceId == null && isMandatory) {
+            return new SymResponseObject<sym_device_phone>(INPUT_INCOMPLETE_REQUEST)
+                    .setMessage("deviceId cannot be null");
+        } else if (deviceId == null) {
+            return new SymResponseObject<>(SUCCESS);
+        } else if (!isValidAuthData(deviceId)) {
+            return new SymResponseObject<sym_device_phone>(INPUT_INVALID_REQUEST)
+                .setMessage(format("deviceId %s is not valid", deviceId));
+        }
+        sym_device_phone phone = getEntityManagerRepo().findById(sym_device_phone.class, deviceId);
+
+        if (phone == null) {
+            return new SymResponseObject<sym_device_phone>(INPUT_INVALID_REQUEST)
+                .setMessage(format("phone with imei %s was not found", deviceId));
+        } else if (!phone.getIs_active()) {
+            return new SymResponseObject<sym_device_phone>(INPUT_INVALID_REQUEST)
+                .setMessage(format("phone with imei %s is disabled", deviceId));
+        }
+
+        return new SymResponseObject<>(SUCCESS, phone);
     }
 
 }
