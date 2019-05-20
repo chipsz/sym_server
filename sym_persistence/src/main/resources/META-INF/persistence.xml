@@ -62,15 +62,18 @@
         <class>net.symbiosis.persistence.entity.super_class.sym_entity</class>
         <class>net.symbiosis.persistence.entity.super_class.sym_enum_entity</class>
 
-        <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
+        <!--<shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>-->
 
         <properties>
-            <property name="hibernate.cache.use_second_level_cache" value="true" />
-            <property name="hibernate.cache.use_query_cache" value="true" />
-            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.jbc2.JndiMultiplexedJBossCacheRegionFactory"/>
-            <property name="hibernate.cache.region.jbc2.cachefactory" value="java:CacheManager"/>
-            <property name="hibernate.cache.region.jbc2.cfg.entity" value="mvcc-entity"/>
-            <property name="hibernate.cache.region.jbc2.cfg.collection" value="mvcc-entity"/>
+            <!--<property name="hibernate.cache.use_second_level_cache" value="true" />-->
+            <!--<property name="hibernate.cache.use_query_cache" value="true" />-->
+            <!--<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.jbc2.JndiMultiplexedJBossCacheRegionFactory"/>-->
+            <!--<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory"/>-->
+            <!--<property name="hibernate.cache.region.factory_class" value="net.sf.ehcache.hibernate.EhCacheRegionFactory"/>-->
+            <!--<property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.EhCacheProvider"/>-->
+            <!--<property name="hibernate.cache.region.jbc2.cachefactory" value="java:CacheManager"/>-->
+            <!--<property name="hibernate.cache.region.jbc2.cfg.entity" value="mvcc-entity"/>-->
+            <!--<property name="hibernate.cache.region.jbc2.cfg.collection" value="mvcc-entity"/>-->
 
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
