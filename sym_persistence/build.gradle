@@ -48,6 +48,7 @@ dependencies {
 	compile (libraries.hibernate_ehcache) {
 		exclude group: 'net.sf.ehcache', module: 'ehcache'
 	}
+	compile libraries.hibernate_jcache
 	compile libraries.ehcache
 
     //testCompile libraries.log4j
