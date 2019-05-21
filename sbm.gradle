@@ -161,6 +161,11 @@ project.ext.libraries = [
 	apache_httpcore:   [ group: 'org.apache.httpcomponents', name: 'httpcore',   version: '4.3.2' ],
 	apache_httpclient: [ group: 'org.apache.httpcomponents', name: 'httpclient', version: project.httpcomponents_version ],
 
+	/* ################################################### axis ################################################### */
+	axis:           [ group: 'org.apache.axis', name: 'axis',         version: '1.4' ],
+	axis_jaxrpc:	[ group: 'org.apache.axis', name: 'axis-jaxrpc',  version: '1.4' ],
+	xerces:			[ group: 'org.apache',    	name: 'xerces',       version: '2.9.0-v201101211617' ],
+
 	/* ################################################### axis2 ################################################### */
 	axis2_adb:              [ group: 'org.apache.axis2',    name: 'axis2-adb',              version: '1.7.9' ],
 	axis2_kernel:           [ group: 'org.apache.axis2',    name: 'axis2-kernel',           version: '1.7.9' ],

@@ -30,6 +30,9 @@ dependencies {
 
     compile libraries.spring_core
     compile libraries.modelmapper
+    compile libraries.axis
+    compile libraries.axis_jaxrpc
+//    compile libraries.xerces
     compile libraries.axis2_adb
     compile libraries.axis2_kernel
     compile libraries.axis2_transport_local
