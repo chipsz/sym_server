@@ -206,7 +206,7 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
 
 
     @Override
-    public SymWalletTransactionList getWalletTransactions(Long walletId, Long authUserId, String deviceId, SymChannel channel, String authToken) {
+    public SymWalletTransactionList getWalletTransactions(Long authUserId, String deviceId, SymChannel channel, String authToken, Long walletId) {
         logger.info(format("Getting transaction history for auth user %s from channel %s", authUserId, channel));
 
         String incomingRequest = format("walletId=%s|authUserId=%s|deviceId=%s|channel=%s", walletId, authUserId, deviceId, channel);

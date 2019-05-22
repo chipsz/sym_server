@@ -33,8 +33,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static net.symbiosis.common.configuration.NetworkUtilities.sendEmailAlert;
 import static net.symbiosis.common.utilities.SymValidator.*;
-import static net.symbiosis.core.helper.ValidationHelper.validateAmount;
-import static net.symbiosis.core.helper.ValidationHelper.validateCashoutAccount;
+import static net.symbiosis.core.helper.ValidationHelper.*;
 import static net.symbiosis.core_lib.enumeration.DBConfigVars.*;
 import static net.symbiosis.core_lib.enumeration.SymChannel.SMART_PHONE;
 import static net.symbiosis.core_lib.enumeration.SymEventType.*;
@@ -136,12 +135,12 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
         return new SymResponse(logoutResponse.getResponseCode());
     }
 
-    private SymResponseObject<sym_session> verifyLogin(Long userId, String imei, String authToken) {
+    private SymResponseObject<sym_session> verifyLogin(Long authUserId, String imei, String authToken) {
 
-        logger.info(format("Verifying auth token %s for user %s with imei %s on channel SMART_PHONE", authToken, userId, imei));
+        logger.info(format("Verifying auth token %s for auth user %s with imei %s on channel SMART_PHONE", authToken, authUserId, imei));
 
-        if (userId == null) {
-            logger.info("Authentication failed! userId cannot be null");
+        if (authUserId == null) {
+            logger.info("Authentication failed! authUserId cannot be null");
             return new SymResponseObject<>(AUTH_AUTHENTICATION_FAILED);
         }
 
@@ -150,34 +149,31 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
             return new SymResponseObject<>(AUTH_AUTHENTICATION_FAILED);
         }
 
-        sym_auth_user authUser = getEntityManagerRepo().findFirst(sym_auth_user.class, asList(
-            new Pair<>("sym_user_id", userId),
-            new Pair<>("channel_id", fromEnum(SMART_PHONE).getId())
-        ));
+        SymResponseObject<sym_auth_user> authUserResponse = validateAuthUser(authUserId);
 
-        if (authUser == null) {
-            logger.info(format("Authentication failed! User %s does not exist on SMART_PHONE chanel", userId));
-            return new SymResponseObject<>(AUTH_NON_EXISTENT);
+        if (!authUserResponse.getResponseCode().equals(SUCCESS)) {
+            logger.info(format("Auth User %s authentication failed! %s", authUserId, authUserResponse.getMessage()));
+            return new SymResponseObject<>(authUserResponse.getResponseCode());
         }
 
         sym_session authSession = getEntityManagerRepo().findLast(sym_session.class, asList(
-            new Pair<>("auth_user_id", authUser.getId()),
+            new Pair<>("auth_user_id", authUserId),
             new Pair<>("device_id", imei)
         ));
 
         if (authSession == null) {
-            logger.info(format("Authentication failed! Session for auth user %s with imei %s does not exist", authUser.getId(), imei));
+            logger.info(format("Authentication failed! Session for auth user %s with imei %s does not exist", authUserId, imei));
             return new SymResponseObject<>(AUTH_NON_EXISTENT);
         }
 
         if (authSession.getAuth_token().equals(authToken)) {
-            logger.info(format("Authentication verified for user %s with imei %s", userId, imei));
+            logger.fine(format("Authentication verified for auth user %s with imei %s", authUserId, imei));
             //TODO check auth token expiry
             //TODO device is in sym_device_phone table and is active
-            authUser.setLast_auth_date(new Date()).save();
+            authUserResponse.getResponseObject().setLast_auth_date(new Date()).save();
             return new SymResponseObject<>(SUCCESS, authSession);
         } else {
-            logger.info(format("Authentication failed! Could not verify authToken %s for user %s", authToken, userId));
+            logger.info(format("Authentication failed! Could not verify authToken %s for auth user %s", authToken, authUserId));
             return new SymResponseObject<>(AUTH_AUTHENTICATION_FAILED);
         }
     }
@@ -231,16 +227,16 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
     }
 
     @Override
-    public SymCashoutAccountList getCashoutAccounts(Long userId, String imei, String authToken) {
+    public SymCashoutAccountList getCashoutAccounts(Long authUserId, String imei, String authToken) {
 
-        logger.info("Getting cashout accounts for user " + userId);
+        logger.info("Getting cashout accounts for auth user " + authUserId);
 
-        String incomingRequest = format("userId=%s|imei=%s", userId, imei);
+        String incomingRequest = format("authUserId=%s|imei=%s", authUserId, imei);
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(
                 fromEnum(SMART_PHONE), fromEnum(WALLET_GET_CASHOUT_ACCOUNTS), incomingRequest).save();
 
-        SymResponseObject<sym_session> authResponse = verifyLogin(userId, imei, authToken);
+        SymResponseObject<sym_session> authResponse = verifyLogin(authUserId, imei, authToken);
         if (!authResponse.getResponseCode().equals(SUCCESS)) {
             logResponse(null, requestResponseLog, authResponse.getResponseCode());
             logger.info(format("Getting cashout accounts failed! %s", authResponse));
@@ -251,29 +247,29 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
 
         ArrayList<SymCashoutAccount> cashoutAccounts = new ArrayList<>();
         getEntityManagerRepo()
-            .findWhere(sym_cashout_account.class, asList(new Pair<>("sym_user_id", userId), new Pair<>("is_active", 1)))
+            .findWhere(sym_cashout_account.class, asList(new Pair<>("sym_user_id", authUser.getUser().getId()), new Pair<>("is_active", 1)))
             .forEach(ca -> cashoutAccounts.add(converterService.toDTO(ca)));
-        logger.info(format("Returning %s cashout accounts for user %s", cashoutAccounts.size(), userId));
+        logger.info(format("Returning %s cashout accounts for user %s", cashoutAccounts.size(), authUser.getUser().getId()));
         logResponse(authUser, requestResponseLog, SUCCESS);
         return new SymCashoutAccountList(SUCCESS, cashoutAccounts);
     }
 
     @Override
-    public SymResponse addCashoutAccount(Long userId, String imei, String authToken, Long institutionId,
+    public SymResponse addCashoutAccount(Long authUserId, String imei, String authToken, Long institutionId,
                                          String accountNickName, String accountName, String accountNumber,
                                          String accountBranchCode, String accountPhone, String accountEmail) {
 
-        logger.info(format("Adding cashout account %s for user %s", accountNickName, userId));
+        logger.info(format("Adding cashout account %s for auth user %s", accountNickName, authUserId));
 
-        String incomingRequest = format("userId=%s|imei=%s|institutionId=%s|accountNickName=%s|" +
+        String incomingRequest = format("authUserId=%s|imei=%s|institutionId=%s|accountNickName=%s|" +
             "accountName=%s|accountNumber=%s|accountBranchCode=%s|accountPhone=%s|accountEmail=%s",
-            userId, imei, institutionId, accountNickName, accountName,
+		        authUserId, imei, institutionId, accountNickName, accountName,
             accountNumber, accountBranchCode, accountPhone, accountEmail);
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(
                 fromEnum(SMART_PHONE), fromEnum(WALLET_ADD_CASHOUT_ACCOUNT), incomingRequest).save();
 
-        SymResponseObject<sym_session> authResponse = verifyLogin(userId, imei, authToken);
+        SymResponseObject<sym_session> authResponse = verifyLogin(authUserId, imei, authToken);
         if (!authResponse.getResponseCode().equals(SUCCESS)) {
             logResponse(null, requestResponseLog, authResponse.getResponseCode());
             logger.info(format("Adding cashout accounts failed! %s", authResponse));
@@ -330,22 +326,22 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
 
         new sym_cashout_account(authUser.getUser(), financialInstitution, accountNickName, accountName, accountNumber,
                 accountBranchCode, accountPhone, accountEmail, true).save();
-        logger.info(format("Added new %s cashout account %s for user %s", institutionType.name(), accountNickName, userId));
+        logger.info(format("Added new %s cashout account %s for user %s", institutionType.name(), accountNickName, authUser.getUser().getId()));
         logResponse(authUser, requestResponseLog, SUCCESS);
         return new SymResponse(SUCCESS);
     }
 
     @Override
-    public SymResponse removeCashoutAccounts(Long userId, String imei, String authToken, Long cashoutAccountId) {
+    public SymResponse removeCashoutAccounts(Long authUserId, String imei, String authToken, Long cashoutAccountId) {
 
-        logger.info(format("Removing cashout account %s for user %s", cashoutAccountId, userId));
+        logger.info(format("Removing cashout account %s for auth user %s", cashoutAccountId, authUserId));
 
-        String incomingRequest = format("userId=%s|imei=%s|cashoutAccountId=%s", userId, imei, cashoutAccountId);
+        String incomingRequest = format("authUserId=%s|imei=%s|cashoutAccountId=%s", authUserId, imei, cashoutAccountId);
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(
                 fromEnum(SMART_PHONE), fromEnum(WALLET_DISABLE_CASHOUT_ACCOUNT), incomingRequest).save();
 
-        SymResponseObject<sym_session> authResponse = verifyLogin(userId, imei, authToken);
+        SymResponseObject<sym_session> authResponse = verifyLogin(authUserId, imei, authToken);
         if (!authResponse.getResponseCode().equals(SUCCESS)) {
             logResponse(null, requestResponseLog, authResponse.getResponseCode());
             return new SymResponse(authResponse.getResponseCode());
@@ -360,8 +356,8 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
             logger.warning(outgoingResponse);
             logResponse(authUser, requestResponseLog, DATA_NOT_FOUND, outgoingResponse);
             return new SymResponse(DATA_NOT_FOUND);
-        } else if (!cashoutAccount.getCashout_account_user().getId().equals(userId)) {
-            String outgoingResponse = format("cashoutAccount %s is not linked to user %s", cashoutAccountId, userId);
+        } else if (!cashoutAccount.getCashout_account_user().getId().equals(authUser.getUser().getId())) {
+            String outgoingResponse = format("cashoutAccount %s is not linked to user %s", cashoutAccountId, authUser.getUser().getId());
             logger.warning(outgoingResponse);
             logResponse(authUser, requestResponseLog, DATA_NOT_FOUND, outgoingResponse);
             return new SymResponse(DATA_NOT_FOUND);
@@ -369,24 +365,24 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
 
         cashoutAccount.setIs_active(false);
         cashoutAccount.save();
-        String outgoingResponse = format("Removed cashoutAccount %s for user %s", cashoutAccountId, userId);
+        String outgoingResponse = format("Removed cashoutAccount %s for auth user %s", cashoutAccountId, authUserId);
         logger.info(outgoingResponse);
         logResponse(authUser, requestResponseLog, SUCCESS, outgoingResponse);
         return new SymResponse(SUCCESS);
     }
 
     @Override
-    public SymVoucherPurchaseList buyVoucher(Long userId, String imei, String authToken, Long voucherId, BigDecimal voucherValue, String recipient) {
+    public SymVoucherPurchaseList buyVoucher(Long authUserId, String imei, String authToken, Long voucherId, BigDecimal voucherValue, String recipient) {
 
-        logger.info(format("Got mobile voucher purchase request by user %s for voucherId %s (amount=%s, recipient=%s)",
-                userId, voucherId, voucherValue == null ? "not specified" : voucherValue, recipient));
+        logger.info(format("Got mobile voucher purchase request by auth user %s for voucherId %s (amount=%s, recipient=%s)",
+		        authUserId, voucherId, voucherValue == null ? "not specified" : voucherValue, recipient));
 
-        String incomingRequest = format("userId=%s|imei=%s|voucherId=%s|voucherValue=%s|recipient=%s",
-                userId, imei, voucherId, voucherValue, recipient);
+        String incomingRequest = format("authUserId=%s|imei=%s|voucherId=%s|voucherValue=%s|recipient=%s",
+		        authUserId, imei, voucherId, voucherValue, recipient);
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(fromEnum(SMART_PHONE), fromEnum(VOUCHER_PURCHASE), incomingRequest);
 
-        SymResponseObject<sym_session> authResponse = verifyLogin(userId, imei, authToken);
+        SymResponseObject<sym_session> authResponse = verifyLogin(authUserId, imei, authToken);
         if (!authResponse.getResponseCode().equals(SUCCESS)) {
             logResponse(null, requestResponseLog, authResponse.getResponseCode());
             return new SymVoucherPurchaseList(authResponse.getResponseCode());
@@ -404,17 +400,17 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
     }
 
     @Override
-    public SymWalletList swipeTransaction(Long userId, String imei, String authToken, BigDecimal amount, String reference, String cardNumber, String cardPin) {
+    public SymWalletList swipeTransaction(Long authUserId, String imei, String authToken, BigDecimal amount, String reference, String cardNumber, String cardPin) {
 
-        logger.info(format("Got mobile swipe transaction from user %s for amount %s (reference=%s)",
-                userId, amount, reference == null ? "not specified" : reference));
+        logger.info(format("Got mobile swipe transaction from auth user %s for amount %s (reference=%s)",
+		        authUserId, amount, reference == null ? "not specified" : reference));
 
-        String incomingRequest = format("userId=%s|imei=%s|amount=%s|reference=%s|cardNumber=%s",
-                userId, imei, amount, reference, cardNumber);
+        String incomingRequest = format("authUserId=%s|imei=%s|amount=%s|reference=%s|cardNumber=%s",
+		        authUserId, imei, amount, reference, cardNumber);
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(fromEnum(SMART_PHONE), fromEnum(WALLET_SWIPE_IN), incomingRequest);
 
-        SymResponseObject<sym_session> authResponse = verifyLogin(userId, imei, authToken);
+        SymResponseObject<sym_session> authResponse = verifyLogin(authUserId, imei, authToken);
         if (!authResponse.getResponseCode().equals(SUCCESS)) {
             logResponse(null, requestResponseLog, authResponse.getResponseCode());
             return new SymWalletList(authResponse.getResponseCode());
@@ -464,17 +460,17 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
     }
 
     @Override
-    public SymWalletList cashoutTransaction(Long userId, String imei, String authToken, BigDecimal amount, String reference, Long cashoutAccountId, String pin) {
+    public SymWalletList cashoutTransaction(Long authUserId, String imei, String authToken, BigDecimal amount, String reference, Long cashoutAccountId, String pin) {
 
-        logger.info(format("Got mobile cashout transaction from user %s for amount %s (reference=%s)",
-                userId, amount, reference == null ? "not specified" : reference));
+        logger.info(format("Got mobile cashout transaction from auth user %s for amount %s (reference=%s)",
+		        authUserId, amount, reference == null ? "not specified" : reference));
 
-        String incomingRequest = format("userId=%s|imei=%s|amount=%s|reference=%s|cashoutAccountId=%s",
-                userId, imei, amount, reference, cashoutAccountId);
+        String incomingRequest = format("authUserId=%s|imei=%s|amount=%s|reference=%s|cashoutAccountId=%s",
+		        authUserId, imei, amount, reference, cashoutAccountId);
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(fromEnum(SMART_PHONE), fromEnum(WALLET_CASHOUT), incomingRequest);
 
-        SymResponseObject<sym_session> authResponse = verifyLogin(userId, imei, authToken);
+        SymResponseObject<sym_session> authResponse = verifyLogin(authUserId, imei, authToken);
         if (!authResponse.getResponseCode().equals(SUCCESS)) {
             logResponse(null, requestResponseLog, authResponse.getResponseCode());
             return new SymWalletList(authResponse.getResponseCode());
@@ -540,14 +536,14 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
     }
 
     @Override
-    public SymWalletList transferToWallet(Long userId, String imei, String authToken, BigDecimal amount, String recipient, String pin) {
-        logger.info(format("Got mobile transfer request from user %s to user %s for amount %s", userId, recipient, amount));
+    public SymWalletList transferToWallet(Long authUserId, String imei, String authToken, BigDecimal amount, String recipient, String pin) {
+        logger.info(format("Got mobile transfer request from auth user %s to user %s for amount %s", authUserId, recipient, amount));
 
-        String incomingRequest = format("userId=%s|imei=%s|amount=%s|recipient=%s", userId, imei, amount, recipient);
+        String incomingRequest = format("userId=%s|imei=%s|amount=%s|recipient=%s", authUserId, imei, amount, recipient);
 
         sym_request_response_log requestResponseLog = new sym_request_response_log(fromEnum(SMART_PHONE), fromEnum(WALLET_TRANSFER), incomingRequest);
 
-        SymResponseObject<sym_session> authResponse = verifyLogin(userId, imei, authToken);
+        SymResponseObject<sym_session> authResponse = verifyLogin(authUserId, imei, authToken);
         if (!authResponse.getResponseCode().equals(SUCCESS)) {
             logResponse(null, requestResponseLog, authResponse.getResponseCode());
             return new SymWalletList(authResponse.getResponseCode());
@@ -631,7 +627,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
     }
 
     @Override
-    public SymWalletTransactionList getWalletTransactions(Long walletId, Long userId, String deviceId, String authToken) {
-        return symbiosisRequestProcessor.getWalletTransactions(walletId, userId, deviceId, SMART_PHONE, authToken);
+    public SymWalletTransactionList getWalletTransactions(Long authUserId, String deviceId, String authToken, Long walletId) {
+        return symbiosisRequestProcessor.getWalletTransactions(authUserId, deviceId, SMART_PHONE, authToken, walletId);
     }
 }

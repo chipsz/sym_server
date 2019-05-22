@@ -130,6 +130,7 @@ public class ConverterServiceImpl implements ConverterService {
             return null;
         }
         SymSystemUser symSystemUser = toDTO(sourceData.getUser());
+        symSystemUser.setAuthUserId(sourceData.getId());
         symSystemUser.setGroup(sourceData.getAuth_group().getName());
         return symSystemUser;
     }

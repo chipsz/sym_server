@@ -70,8 +70,8 @@ public class MobileXMLRestController implements MobileRestService {
 
     @Override
     @POST
-    @Path("/user/{userId}/cashoutAccount")
-    public Response addCashoutAccount(@PathParam("userId") Long userId,
+    @Path("/authUser/{authUserId}/cashoutAccount")
+    public Response addCashoutAccount(@PathParam("authUserId") Long authUserId,
                                       @FormParam("imei") String imei,
                                       @FormParam("authToken") String authToken,
                                       @FormParam("institutionId") Long institutionId,
@@ -81,8 +81,8 @@ public class MobileXMLRestController implements MobileRestService {
                                       @FormParam("accountBranchCode") String accountBranchCode,
                                       @FormParam("accountPhone") String accountPhone,
                                       @FormParam("accountEmail") String accountEmail) {
-        logger.info(format("Got mobile request to add cashout account %s for user %s", accountNickName, userId));
-        return status(200).entity(mobileRequestProcessor.addCashoutAccount(getRealParamValue(userId),
+        logger.info(format("Got mobile request to add cashout account %s for auth user %s", accountNickName, authUserId));
+        return status(200).entity(mobileRequestProcessor.addCashoutAccount(getRealParamValue(authUserId),
                 getRealParamValue(imei), getRealParamValue(authToken),
                 getRealParamValue(institutionId), getRealParamValue(accountNickName), getRealParamValue(accountName),
                 getRealParamValue(accountNumber), getRealParamValue(accountBranchCode), getRealParamValue(accountPhone),
@@ -91,29 +91,29 @@ public class MobileXMLRestController implements MobileRestService {
 
     @Override
     @DELETE
-    @Path("/user/{userId}/cashoutAccount/{cashoutAccountId}")
-    public Response removeCashoutAccount(@PathParam("userId") Long userId,
+    @Path("/authUser/{authUserId}/cashoutAccount/{cashoutAccountId}")
+    public Response removeCashoutAccount(@PathParam("authUserId") Long authUserId,
                                          @FormParam("imei") String imei,
                                          @FormParam("authToken") String authToken,
                                          @PathParam("cashoutAccountId") Long cashoutAccountId) {
-        logger.info(format("Got mobile request to remove cashout account %s for user %s", cashoutAccountId, userId));
+        logger.info(format("Got mobile request to remove cashout account %s for auth user %s", cashoutAccountId, authUserId));
         return status(200).entity(mobileRequestProcessor.removeCashoutAccounts(
-                getRealParamValue(userId), getRealParamValue(imei), getRealParamValue(authToken),
+                getRealParamValue(authUserId), getRealParamValue(imei), getRealParamValue(authToken),
                 getRealParamValue(cashoutAccountId))).header("Access-Control-Allow-Origin", "*").build();
     }
 
     @Override
     @POST @Path("/voucher/{voucherId}/purchase")
-    public Response buyVoucher(@FormParam("userId") Long userId,
+    public Response buyVoucher(@FormParam("authUserId") Long authUserId,
                                @FormParam("imei") String imei,
                                @FormParam("authToken") String authToken,
                                @PathParam("voucherId") Long voucherId,
                                @FormParam("voucherValue") BigDecimal voucherValue,
                                @FormParam("recipient") String recipient) {
-        logger.info(format("Got mobile request to buy voucherId %s (amount=%s) from user %s",
-                voucherId, voucherValue == null ? "not specified" : voucherValue, userId));
+        logger.info(format("Got mobile request to buy voucherId %s (amount=%s) from auth user %s",
+                voucherId, voucherValue == null ? "not specified" : voucherValue, authUserId));
 
-        return Response.status(200).entity(mobileRequestProcessor.buyVoucher(getRealParamValue(userId),
+        return Response.status(200).entity(mobileRequestProcessor.buyVoucher(getRealParamValue(authUserId),
                 getRealParamValue(imei), getRealParamValue(authToken), getRealParamValue(voucherId),
                 getRealParamValue(voucherValue), getRealParamValue(recipient))).header("Access-Control-Allow-Origin", "*").build();
     }
@@ -121,16 +121,16 @@ public class MobileXMLRestController implements MobileRestService {
     @Override
     @POST
     @Path("/swipeTransaction")
-    public Response swipeTransaction(@FormParam("userId") Long userId,
+    public Response swipeTransaction(@FormParam("authUserId") Long authUserId,
                                      @FormParam("imei") String imei,
                                      @FormParam("authToken") String authToken,
                                      @FormParam("amount") BigDecimal amount,
                                      @FormParam("reference") String reference,
                                      @FormParam("cardNumber") String cardNumber,
                                      @FormParam("cardPin") String cardPin) {
-        logger.info(format("Got mobile request process swipe transaction of %s for user %s from card %s",
-                reference, userId, cardNumber));
-        return status(200).entity(mobileRequestProcessor.swipeTransaction(getRealParamValue(userId),
+        logger.info(format("Got mobile request process swipe transaction of %s for auth user %s from card %s",
+                reference, authUserId, cardNumber));
+        return status(200).entity(mobileRequestProcessor.swipeTransaction(getRealParamValue(authUserId),
                 getRealParamValue(imei), getRealParamValue(authToken), getRealParamValue(amount),
                 getRealParamValue(reference), getRealParamValue(cardNumber),
                 getRealParamValue(cardPin))).header("Access-Control-Allow-Origin", "*").build();
@@ -139,15 +139,15 @@ public class MobileXMLRestController implements MobileRestService {
     @Override
     @POST
     @Path("/cashoutTransaction")
-    public Response cashoutTransaction(@FormParam("userId") Long userId,
+    public Response cashoutTransaction(@FormParam("authUserId") Long authUserId,
                                        @FormParam("imei") String imei,
                                        @FormParam("authToken") String authToken,
                                        @FormParam("amount") BigDecimal amount,
                                        @FormParam("reference") String reference,
                                        @FormParam("cashoutAccountId") Long cashoutAccountId,
                                        @FormParam("pin") String pin) {
-        logger.info(format("Got mobile request process cashout of %s for user %s", amount, userId));
-        return status(200).entity(mobileRequestProcessor.cashoutTransaction(getRealParamValue(userId),
+        logger.info(format("Got mobile request process cashout of %s for auth user %s", amount, authUserId));
+        return status(200).entity(mobileRequestProcessor.cashoutTransaction(getRealParamValue(authUserId),
                 getRealParamValue(imei), getRealParamValue(authToken), getRealParamValue(amount),
                 getRealParamValue(reference), getRealParamValue(cashoutAccountId),
                 getRealParamValue(pin))).header("Access-Control-Allow-Origin", "*").build();
@@ -156,13 +156,13 @@ public class MobileXMLRestController implements MobileRestService {
     @Override
     @POST
     @Path("/transfer")
-    public Response transferToWallet(@FormParam("userId") Long userId,
+    public Response transferToWallet(@FormParam("authUserId") Long userId,
                                      @FormParam("imei") String imei,
                                      @FormParam("authToken") String authToken,
                                      @FormParam("amount") BigDecimal amount,
                                      @FormParam("recipient") String recipient,
                                      @FormParam("pin") String pin) {
-        logger.info(format("Got mobile request transfer %s from user %s to %s", amount, userId, recipient));
+        logger.info(format("Got mobile request transfer %s from auth user %s to %s", amount, userId, recipient));
         return status(200).entity(mobileRequestProcessor.transferToWallet(getRealParamValue(userId),
                 getRealParamValue(imei), getRealParamValue(authToken), getRealParamValue(amount),
                 getRealParamValue(recipient), getRealParamValue(pin))).header("Access-Control-Allow-Origin", "*").build();
@@ -171,13 +171,13 @@ public class MobileXMLRestController implements MobileRestService {
     @Override
     @POST
     @Path("/wallet/{walletId}/transaction")
-    public Response getWalletTransactions(@PathParam("walletId") Long walletId,
-                                          @FormParam("authUserId") Long authUserId,
+    public Response getWalletTransactions(@FormParam("authUserId") Long authUserId,
                                           @FormParam("imei") String imei,
-                                          @FormParam("authToken") String authToken) {
+                                          @FormParam("authToken") String authToken,
+                                          @PathParam("walletId") Long walletId) {
         logger.info(format("Got mobile request to get wallet %s transactions from auth user %s with device id %s", walletId, authUserId, imei));
-        return status(200).entity(mobileRequestProcessor.getWalletTransactions(getRealParamValue(walletId),
-                getRealParamValue(authUserId), getRealParamValue(imei), getRealParamValue(authToken)
+        return status(200).entity(mobileRequestProcessor.getWalletTransactions(getRealParamValue(authUserId),
+		        getRealParamValue(imei), getRealParamValue(authToken), getRealParamValue(walletId)
         )).header("Access-Control-Allow-Origin", "*").build();
     }
 
@@ -187,7 +187,7 @@ public class MobileXMLRestController implements MobileRestService {
     public Response startSession(@FormParam("imei") String imei,
                                  @FormParam("username") String username,
                                  @FormParam("pin") String pin) {
-        logger.info(format("Got mobile login request from device %s for user %s", imei, username));
+        logger.info(format("Got mobile login request from device %s for username %s", imei, username));
         return status(200).entity(mobileRequestProcessor.startSession(getRealParamValue(imei),
                 getRealParamValue(username), getRealParamValue(pin), SMART_PHONE)).header("Access-Control-Allow-Origin", "*").build();
     }

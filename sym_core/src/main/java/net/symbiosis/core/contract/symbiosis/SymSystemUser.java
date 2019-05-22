@@ -23,6 +23,7 @@ import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 public class SymSystemUser implements Serializable {
 
     protected Long sessionId;
+    protected Long authUserId;
     protected Long userId;
     protected Long walletId;
     protected String firstName;
@@ -46,7 +47,7 @@ public class SymSystemUser implements Serializable {
     }
 
     public SymSystemUser(Long sessionId, sym_auth_user symAuthUser, sym_user symUser) {
-        this(sessionId, symUser.getId(), symUser.getWallet().getId(), symUser.getFirst_name(),
+        this(sessionId, symAuthUser.getId(), symUser.getId(), symUser.getWallet().getId(), symUser.getFirst_name(),
                 symUser.getLast_name(), symUser.getUsername(), symUser.getEmail(), symUser.getMsisdn(),
                 format10DigitPhoneNumber(symUser.getMsisdn(), getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE)),
                 symAuthUser.getUser().getWallet().getCompany().getCompany_name(),
@@ -55,10 +56,11 @@ public class SymSystemUser implements Serializable {
                 symAuthUser.getAuth_token(), symAuthUser.getLast_login_date());
     }
 
-    public SymSystemUser(Long sessionId, Long userId, Long walletId, String firstName, String lastName,
+    public SymSystemUser(Long sessionId, Long authUserId, Long userId, Long walletId, String firstName, String lastName,
                          String username, String email, String msisdn, String phoneNumber, String companyName, Double walletBalance,
                          String group, String deviceId, String authToken, Date lastLoginDate) {
         this.sessionId = sessionId;
+        this.authUserId = authUserId;
         this.userId = userId;
         this.walletId = walletId;
         this.firstName = firstName;
@@ -83,7 +85,15 @@ public class SymSystemUser implements Serializable {
         this.sessionId = sessionId;
     }
 
-    public Long getUserId() {
+	public Long getAuthUserId() {
+		return authUserId;
+	}
+
+	public void setAuthUserId(Long authUserId) {
+		this.authUserId = authUserId;
+	}
+
+	public Long getUserId() {
         return userId;
     }
 

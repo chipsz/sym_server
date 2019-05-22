@@ -55,8 +55,8 @@ public class MobileJSONRestController extends MobileXMLRestController {
 
     @Override
     @POST
-    @Path("/user/{userId}/cashoutAccount")
-    public Response addCashoutAccount(@PathParam("userId") Long userId,
+    @Path("/authUser/{authUserId}/cashoutAccount")
+    public Response addCashoutAccount(@PathParam("authUserId") Long authUserId,
                                       @FormParam("imei") String imei,
                                       @FormParam("authToken") String authToken,
                                       @FormParam("institutionId") Long institutionId,
@@ -66,79 +66,79 @@ public class MobileJSONRestController extends MobileXMLRestController {
                                       @FormParam("accountBranchCode") String accountBranchCode,
                                       @FormParam("accountPhone") String accountPhone,
                                       @FormParam("accountEmail") String accountEmail) {
-        return super.addCashoutAccount(userId, imei, authToken, institutionId, accountNickName, accountName, accountNumber,
+        return super.addCashoutAccount(authUserId, imei, authToken, institutionId, accountNickName, accountName, accountNumber,
                 accountBranchCode, accountPhone, accountEmail);
     }
 
 
     @Override
     @DELETE
-    @Path("/user/{userId}/cashoutAccount/{cashoutAccountId}")
-    public Response removeCashoutAccount(@PathParam("userId") Long userId,
+    @Path("/authUser/{authUserId}/cashoutAccount/{cashoutAccountId}")
+    public Response removeCashoutAccount(@PathParam("authUserId") Long authUserId,
                                          @FormParam("imei") String imei,
                                          @FormParam("authToken") String authToken,
                                          @PathParam("cashoutAccountId") Long cashoutAccountId) {
-        return super.removeCashoutAccount(userId, imei, authToken, cashoutAccountId);
+        return super.removeCashoutAccount(authUserId, imei, authToken, cashoutAccountId);
     }
 
 
     @Override
     @POST @Path("/voucher/{voucherId}/purchase")
-    public Response buyVoucher(@FormParam("userId") Long userId,
+    public Response buyVoucher(@FormParam("authUserId") Long authUserId,
                                @FormParam("imei") String imei,
                                @FormParam("authToken") String authToken,
                                @PathParam("voucherId") Long voucherId,
                                @FormParam("voucherValue") BigDecimal voucherValue,
                                @FormParam("recipient") String recipient) {
-        return super.buyVoucher(userId, imei, authToken, voucherId, voucherValue, recipient);
+        return super.buyVoucher(authUserId, imei, authToken, voucherId, voucherValue, recipient);
     }
 
     @Override
     @POST
     @Path("/swipeTransaction")
-    public Response swipeTransaction(@FormParam("userId") Long userId,
+    public Response swipeTransaction(@FormParam("authUserId") Long authUserId,
                                      @FormParam("imei") String imei,
                                      @FormParam("authToken") String authToken,
                                      @FormParam("amount") BigDecimal amount,
                                      @FormParam("reference") String reference,
                                      @FormParam("cardNumber") String cardNumber,
                                      @FormParam("cardPin") String cardPin) {
-        return super.swipeTransaction(userId, imei, authToken, amount, reference, cardNumber, cardPin);
+        return super.swipeTransaction(authUserId, imei, authToken, amount, reference, cardNumber, cardPin);
     }
 
     @Override
     @POST
     @Path("/cashoutTransaction")
-    public Response cashoutTransaction(@FormParam("userId") Long userId,
+    public Response cashoutTransaction(@FormParam("authUserId") Long authUserId,
                                        @FormParam("imei") String imei,
                                        @FormParam("authToken") String authToken,
                                        @FormParam("amount") BigDecimal amount,
                                        @FormParam("reference") String reference,
                                        @FormParam("cashoutAccountId") Long cashoutAccountId,
                                        @FormParam("pin") String pin) {
-        return super.cashoutTransaction(userId, imei, authToken, amount, reference, cashoutAccountId, pin);
+        return super.cashoutTransaction(authUserId, imei, authToken, amount, reference, cashoutAccountId, pin);
     }
 
     @Override
     @POST
     @Path("/transfer")
-    public Response transferToWallet(@FormParam("userId") Long userId,
+    public Response transferToWallet(@FormParam("authUserId") Long authUserId,
                                      @FormParam("imei") String imei,
                                      @FormParam("authToken") String authToken,
                                      @FormParam("amount") BigDecimal amount,
                                      @FormParam("recipient") String recipient,
                                      @FormParam("pin") String pin) {
-        return super.transferToWallet(userId, imei, authToken, amount, recipient, pin);
+        return super.transferToWallet(authUserId, imei, authToken, amount, recipient, pin);
     }
 
     @Override
     @POST
     @Path("/wallet/{walletId}/transaction")
-    public Response getWalletTransactions(@PathParam("walletId") Long walletId,
-                                          @FormParam("authUserId") Long authUserId,
+    public Response getWalletTransactions(@FormParam("authUserId") Long authUserId,
                                           @FormParam("imei") String imei,
-                                          @FormParam("authToken") String authToken) {
-        return super.getWalletTransactions(walletId, authUserId, imei, authToken);
+                                          @FormParam("authToken") String authToken,
+                                          @PathParam("walletId") Long walletId) {
+        return super.getWalletTransactions(authUserId, imei, authToken, walletId);
     }
 
     @Override

@@ -42,5 +42,5 @@ public interface SymbiosisRequestProcessor extends RequestProcessor {
 
     SymWalletList getWallets();
 
-    SymWalletTransactionList getWalletTransactions(Long walletId, Long userId, String deviceId, SymChannel channel, String authToken);
+    SymWalletTransactionList getWalletTransactions(Long authUserId, String deviceId, SymChannel channel, String authToken, Long walletId);
 }

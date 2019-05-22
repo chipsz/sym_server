@@ -22,23 +22,23 @@ public interface MobileRequestProcessor extends RequestProcessor {
     SymSystemUserList registerMobileUser(String email, String msisdn, String username, String imei,
                                          String companyName, String firstName, String lastName, String pin);
 
-    SymCashoutAccountList getCashoutAccounts(Long userId, String imei, String authToken);
+    SymCashoutAccountList getCashoutAccounts(Long authUserId, String imei, String authToken);
 
-    SymResponse addCashoutAccount(Long userId, String imei, String authToken, Long institutionId, String accountNickName,
+    SymResponse addCashoutAccount(Long authUserId, String imei, String authToken, Long institutionId, String accountNickName,
                                   String accountName, String accountNumber, String accountBranchCode,
                                   String accountPhone, String accountEmail);
 
-    SymResponse removeCashoutAccounts(Long userId, String imei, String authToken, Long cashoutAccountId);
+    SymResponse removeCashoutAccounts(Long authUserId, String imei, String authToken, Long cashoutAccountId);
 
-    SymVoucherPurchaseList buyVoucher(Long userId, String imei, String authToken, Long voucherId, BigDecimal voucherValue, String recipient);
+    SymVoucherPurchaseList buyVoucher(Long authUserId, String imei, String authToken, Long voucherId, BigDecimal voucherValue, String recipient);
 
-    SymWalletList swipeTransaction(Long userId, String imei, String authToken, BigDecimal amount,
+    SymWalletList swipeTransaction(Long authUserId, String imei, String authToken, BigDecimal amount,
                                    String reference, String cardNumber, String cardPin);
 
-    SymWalletList cashoutTransaction(Long userId, String imei, String authToken, BigDecimal amount,
+    SymWalletList cashoutTransaction(Long authUserId, String imei, String authToken, BigDecimal amount,
                                      String reference, Long cashoutAccountId, String pin);
 
-    SymWalletList transferToWallet(Long userId, String imei, String authToken, BigDecimal amount, String recipient, String pin);
+    SymWalletList transferToWallet(Long authUserId, String imei, String authToken, BigDecimal amount, String recipient, String pin);
 
-    SymWalletTransactionList getWalletTransactions(Long walletId, Long userId, String deviceId, String authToken);
+    SymWalletTransactionList getWalletTransactions(Long authUserId, String deviceId, String authToken, Long walletId);
 }

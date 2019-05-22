@@ -11,7 +11,6 @@ import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.enumeration.sym_deposit_type;
 
 import java.math.BigDecimal;
-import java.util.logging.Logger;
 
 import static java.lang.String.format;
 import static net.symbiosis.common.utilities.SymValidator.isValidAuthData;
@@ -28,8 +27,6 @@ import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 
 public class ValidationHelper {
 
-    private static final Logger logger = Logger.getLogger(ValidationHelper.class.getSimpleName());
-
     public static SymResponseObject<sym_user> validateSystemUser(Long symUserId) {
         if (symUserId == null) {
             return new SymResponseObject<sym_user>(INPUT_INCOMPLETE_REQUEST)
@@ -37,7 +34,7 @@ public class ValidationHelper {
         }
         sym_user symUser = getEntityManagerRepo().findById(sym_user.class, symUserId);
         if (symUser == null) {
-            return new SymResponseObject<sym_user>(INPUT_INVALID_REQUEST)
+            return new SymResponseObject<sym_user>(AUTH_NON_EXISTENT)
                     .setMessage(format("System User with id %d was not found", symUserId));
         }
         return new SymResponseObject<>(SUCCESS, symUser);
@@ -50,7 +47,7 @@ public class ValidationHelper {
         }
         sym_auth_user authUser = getEntityManagerRepo().findById(sym_auth_user.class, authUserId);
         if (authUser == null) {
-            return new SymResponseObject<sym_auth_user>(INPUT_INVALID_REQUEST)
+            return new SymResponseObject<sym_auth_user>(AUTH_NON_EXISTENT)
                     .setMessage(format("Auth User with id %d was not found", authUserId));
         }
         return new SymResponseObject<>(SUCCESS, authUser);
@@ -63,7 +60,7 @@ public class ValidationHelper {
         }
         sym_voucher voucher = getEntityManagerRepo().findById(sym_voucher.class, voucherId);
         if (voucher == null) {
-            return new SymResponseObject<sym_voucher>(INPUT_INVALID_REQUEST)
+            return new SymResponseObject<sym_voucher>(AUTH_NON_EXISTENT)
                     .setMessage(format("Voucher with id %d was not found", voucherId));
         }
         return new SymResponseObject<>(SUCCESS, voucher);
@@ -109,7 +106,7 @@ public class ValidationHelper {
         }
         sym_deposit_type depositType = getEntityManagerRepo().findById(sym_deposit_type.class, depositTypeId);
         if (depositType == null) {
-            return new SymResponseObject<sym_deposit_type>(INPUT_INVALID_WALLET)
+            return new SymResponseObject<sym_deposit_type>(INPUT_INVALID_REQUEST)
                     .setMessage(format("Deposit type with id %d was not found", depositTypeId));
         }
 
