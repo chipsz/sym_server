@@ -9,7 +9,6 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 import static net.symbiosis.common.mail.EMailer.DEFAULT_CONTENT_TYPE;
-import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_DOMAIN_NAME;
 import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_EMAIL_ALERT_TO;
 import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
@@ -51,29 +50,22 @@ public class NetworkUtilities {
         }
     }
 
-    public static String getEmailFromName() {
-        return "noreply-" + getHostName() + "@" + getSymConfigDao().getConfig(CONFIG_DOMAIN_NAME);
-    }
-
     public static void sendEmailAlert(String symSystem, String alertSubject, String alertMessage) {
         logger.info("Sending alert email from " + symSystem + " with subject: " + alertSubject);
         logger.info(alertMessage);
         ThreadPoolManager.schedule(new EMailer(
                 new String[]{getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)},
-                symSystem + " alert! " + alertSubject, alertMessage,
-                getEmailFromName(), getHostName(), DEFAULT_CONTENT_TYPE));
+                symSystem + " alert! " + alertSubject, alertMessage, DEFAULT_CONTENT_TYPE));
     }
 
     public static void sendEmail(String symSystem, String recipient, String emailSubject, String emailMessage) {
         logger.info("Sending email from " + symSystem + " with subject: " + emailSubject);
-        ThreadPoolManager.schedule(new EMailer(new String[]{recipient}, emailSubject, emailMessage,
-                getEmailFromName(), getHostName(), DEFAULT_CONTENT_TYPE));
+        ThreadPoolManager.schedule(new EMailer(new String[]{recipient}, emailSubject, emailMessage, DEFAULT_CONTENT_TYPE));
     }
 
     public static void sendEmail(String symSystem, String[] recipients, String emailSubject, String emailMessage,
                                  String contentType) {
         logger.info("Sending email from " + symSystem + " with subject: " + emailSubject);
-        ThreadPoolManager.schedule(new EMailer(recipients, emailSubject, emailMessage,
-                getEmailFromName(), getHostName(), contentType));
+        ThreadPoolManager.schedule(new EMailer(recipients, emailSubject, emailMessage, contentType));
     }
 }

@@ -31,6 +31,7 @@ dependencies {
     compile libraries.spring_core
     compile libraries.modelmapper
     compile libraries.axis
+    compile libraries.commons_discovery
     compile libraries.axis_jaxrpc
 //    compile libraries.xerces
     compile libraries.axis2_adb

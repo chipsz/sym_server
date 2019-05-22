@@ -152,8 +152,13 @@ public class GloIntegrationService implements VoucherPurchaseIntegration {
             int responseCode = topupResponse.getResultCode();
             String responseMessage = topupResponse.getResultDescription();
 
+		    logger.info("Purchase request: " + topupResponse.getRequestSoapXML());
+            logger.info("Purchase response: " + responseCode + " : " + responseMessage + "\r\n" + topupResponse.getResponseSoapXML());
 
-            logger.info("Purchase response: " + responseCode + ":" + responseMessage);
+		    if (topupResponse.getRequestSoapXML() != null) {
+		    	transactionLog.setOutgoing_request(topupResponse.getRequestSoapXML());
+		    }
+		    transactionLog.setIncoming_response(topupResponse.getResponseSoapXML()).save();
 
             if (responseCode == 0) {
                 //return voucher provider reference

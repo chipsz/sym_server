@@ -29,7 +29,7 @@ public interface PrintableStringClass {
                 } else if (fieldValue instanceof Number) {
                     fieldData = "" + fieldValue;
                 } else if (fieldValue instanceof Boolean) {
-                    fieldData = "" + ((Boolean) fieldValue).booleanValue();
+                    fieldData = "" + fieldValue;
                 } else {
                     fieldData = "[" + field.getName() + ":" +/* fieldValue +*/ "not null]";
                 }

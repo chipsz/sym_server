@@ -9,10 +9,10 @@ package net.symbiosis.core.integration.voucher.glo.seamless;
 
 public class ERSWSResponse  implements java.io.Serializable {
     private String ersReference;
-
     private int resultCode;
-
     private String resultDescription;
+    private String requestSoapXML;
+    private String responseSoapXML;
 
     public ERSWSResponse() {
     }
@@ -86,7 +86,25 @@ public class ERSWSResponse  implements java.io.Serializable {
         this.resultDescription = resultDescription;
     }
 
-    private Object __equalsCalc = null;
+	public String getRequestSoapXML() {
+		return requestSoapXML;
+	}
+
+	public ERSWSResponse setRequestSoapXML(String requestSoapXML) {
+		this.requestSoapXML = requestSoapXML;
+		return this;
+	}
+
+	public String getResponseSoapXML() {
+		return responseSoapXML;
+	}
+
+	public ERSWSResponse setResponseSoapXML(String responseSoapXML) {
+		this.responseSoapXML = responseSoapXML;
+		return this;
+	}
+
+	private Object __equalsCalc = null;
     public synchronized boolean equals(Object obj) {
         if (!(obj instanceof ERSWSResponse)) return false;
         ERSWSResponse other = (ERSWSResponse) obj;

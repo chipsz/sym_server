@@ -30,7 +30,7 @@ public class SymEnumHelper {
 
     public static Pair<Long, String> getMappedResponseMessage(String systemId, Long responseCode) {
         List<sym_response_mapping> mappedResponseList = getEntityManagerRepo().findWhere(sym_response_mapping.class, asList(
-            new Pair<>("system_id", systemId), new Pair<>("response_code", responseCode)
+            new Pair<>("system_id", systemId), new Pair<>("response_code_id", responseCode)
         ));
 
         if (mappedResponseList != null && mappedResponseList.size() == 1) {
