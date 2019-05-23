@@ -32,6 +32,8 @@ public interface MobileRestService {
 
     Response transferToWallet(Long userId, String imei, String authToken, BigDecimal amount, String recipient, String pin);
 
+    Response getWallet(Long authUserId, String imei, String authToken, Long walletId);
+
     Response getWalletTransactions(Long authUserId, String imei, String authToken, Long walletId);
 
     Response startSession(String authToken, String username, String password);

@@ -22,13 +22,13 @@ public interface SymbiosisRequestProcessor extends RequestProcessor {
 
     SymEnumEntity getCountry(Long countryId);
 
-    SymEnumEntity getGroup(Long groupId);
+//    SymEnumEntity getGroup(Long groupId);
 
-    SymEnumEntity getRole(Long roleId);
+//    SymEnumEntity getRole(Long roleId);
 
-    SymEnumEntity getEventType(Long eventTypeId);
+//    SymEnumEntity getEventType(Long eventTypeId);
 
-    SymMap getSystemConfigs();
+//    SymMap getSystemConfigs();
 
     SymFinancialInstitutionList getFinancialInstitution(Long institutionId);
 
@@ -38,9 +38,9 @@ public interface SymbiosisRequestProcessor extends RequestProcessor {
 
     SymCurrencyList getCurrencies();
 
-    SymWalletList getWallet(Long walletId);
+    SymWalletList getWallet(Long authUserId, String deviceId, SymChannel channel, String authToken, Long walletId);
 
-    SymWalletList getWallets();
+//    SymWalletList getWallets();
 
     SymWalletTransactionList getWalletTransactions(Long authUserId, String deviceId, SymChannel channel, String authToken, Long walletId);
 }

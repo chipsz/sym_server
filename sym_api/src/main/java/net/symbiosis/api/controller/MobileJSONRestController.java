@@ -133,6 +133,16 @@ public class MobileJSONRestController extends MobileXMLRestController {
 
     @Override
     @POST
+    @Path("/wallet/{walletId}")
+    public Response getWallet(@FormParam("authUserId") Long authUserId,
+                              @FormParam("imei") String imei,
+                              @FormParam("authToken") String authToken,
+                              @PathParam("walletId") Long walletId) {
+        return super.getWallet(authUserId, imei, authToken, walletId);
+    }
+
+    @Override
+    @POST
     @Path("/wallet/{walletId}/transaction")
     public Response getWalletTransactions(@FormParam("authUserId") Long authUserId,
                                           @FormParam("imei") String imei,

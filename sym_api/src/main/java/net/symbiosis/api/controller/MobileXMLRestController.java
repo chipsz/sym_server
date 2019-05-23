@@ -170,6 +170,19 @@ public class MobileXMLRestController implements MobileRestService {
 
     @Override
     @POST
+    @Path("/wallet/{walletId}")
+    public Response getWallet(@FormParam("authUserId") Long authUserId,
+                              @FormParam("imei") String imei,
+                              @FormParam("authToken") String authToken,
+                              @PathParam("walletId") Long walletId) {
+        logger.info(format("Got mobile request to get wallet %s details from auth user %s with device id %s", walletId, authUserId, imei));
+        return status(200).entity(mobileRequestProcessor.getWallet(getRealParamValue(authUserId),
+		        getRealParamValue(imei), getRealParamValue(authToken), getRealParamValue(walletId)
+        )).header("Access-Control-Allow-Origin", "*").build();
+    }
+
+    @Override
+    @POST
     @Path("/wallet/{walletId}/transaction")
     public Response getWalletTransactions(@FormParam("authUserId") Long authUserId,
                                           @FormParam("imei") String imei,

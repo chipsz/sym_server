@@ -74,37 +74,41 @@ public class SymXMLRestController implements SymbiosisRestService {
                 .header("Access-Control-Allow-Origin", "*").build();
     }
 
-    @GET
-    @Path("/group/{groupId}")
-    public Response getGroup(@PathParam("groupId") Long groupId) {
-        logger.info("Got request to get group with id " + groupId);
-        return status(200).entity(symbiosisRequestProcessor.getGroup(groupId))
-                .header("Access-Control-Allow-Origin", "*").build();
-    }
-
-    @GET
-    @Path("/role/{roleId}")
-    public Response getRole(@PathParam("roleId") Long roleId) {
-        logger.info("Got request to get role with id " + roleId);
-        return status(200).entity(symbiosisRequestProcessor.getRole(roleId))
-                .header("Access-Control-Allow-Origin", "*").build();
-    }
-
-    @GET
-    @Path("/eventType/{eventTypeId}")
-    public Response getEventType(@PathParam("eventTypeId") Long eventTypeId) {
-        logger.info("Got request to get eventType with id " + eventTypeId);
-        return status(200).entity(symbiosisRequestProcessor.getEventType(eventTypeId))
-                .header("Access-Control-Allow-Origin", "*").build();
-    }
-
-    @GET
-    @Path("/systemConfig")
-    public Response getSystemConfigs() {
-        logger.info("Got request to get system configurations");
-        return status(200).entity(symbiosisRequestProcessor.getSystemConfigs())
-                .header("Access-Control-Allow-Origin", "*").build();
-    }
+//    @Override
+//    @GET
+//    @Path("/group/{groupId}")
+//    public Response getGroup(@PathParam("groupId") Long groupId) {
+//        logger.info("Got request to get group with id " + groupId);
+//        return status(200).entity(symbiosisRequestProcessor.getGroup(groupId))
+//                .header("Access-Control-Allow-Origin", "*").build();
+//    }
+//
+//    @Override
+//    @GET
+//    @Path("/role/{roleId}")
+//    public Response getRole(@PathParam("roleId") Long roleId) {
+//        logger.info("Got request to get role with id " + roleId);
+//        return status(200).entity(symbiosisRequestProcessor.getRole(roleId))
+//                .header("Access-Control-Allow-Origin", "*").build();
+//    }
+//
+//    @Override
+//    @GET
+//    @Path("/eventType/{eventTypeId}")
+//    public Response getEventType(@PathParam("eventTypeId") Long eventTypeId) {
+//        logger.info("Got request to get eventType with id " + eventTypeId);
+//        return status(200).entity(symbiosisRequestProcessor.getEventType(eventTypeId))
+//                .header("Access-Control-Allow-Origin", "*").build();
+//    }
+//
+//    @Override
+//    @GET
+//    @Path("/systemConfig")
+//    public Response getSystemConfigs() {
+//        logger.info("Got request to get system configurations");
+//        return status(200).entity(symbiosisRequestProcessor.getSystemConfigs())
+//                .header("Access-Control-Allow-Origin", "*").build();
+//    }
 
     @Override
     @GET
@@ -142,21 +146,24 @@ public class SymXMLRestController implements SymbiosisRestService {
                 .header("Access-Control-Allow-Origin", "*").build();
     }
 
-    @Override
-    @GET
-    @Path("/wallet/{walletId}")
-    public Response getWallet(@PathParam("walletId") Long walletId) {
-        logger.info("Got request to get wallet with id " + walletId);
-        return Response.status(200).entity(symbiosisRequestProcessor.getWallet(walletId))
-                .header("Access-Control-Allow-Origin", "*").build();
-    }
+//    @Override
+//    @POST
+//    @Path("/wallet/{walletId}")
+//    public Response getWallet(@FormParam("authUserId") Long authUserId,
+//                              @FormParam("imei") String imei,
+//                              @FormParam("authToken") String authToken,
+//                              @PathParam("walletId") Long walletId) {
+//        logger.info("Got request to get wallet with id " + walletId);
+//        return Response.status(200).entity(symbiosisRequestProcessor.getWallet(authUserId, imei, authToken, walletId))
+//                .header("Access-Control-Allow-Origin", "*").build();
+//    }
 
-    @Override
-    @GET
-    @Path("/wallet")
-    public Response getWallets() {
-        logger.info("Got request to get wallets");
-        return Response.status(200).entity(symbiosisRequestProcessor.getWallets())
-                .header("Access-Control-Allow-Origin", "*").build();
-    }
+//    @Override
+//    @GET
+//    @Path("/wallet")
+//    public Response getWallets() {
+//        logger.info("Got request to get wallets");
+//        return Response.status(200).entity(symbiosisRequestProcessor.getWallets())
+//                .header("Access-Control-Allow-Origin", "*").build();
+//    }
 }

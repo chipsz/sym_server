@@ -30,11 +30,11 @@ public interface SymbiosisRestService {
 
     Response getCountry(Long countryId);
 
-    Response getGroup(Long groupId);
-
-    Response getRole(Long roleId);
-
-    Response getEventType(Long eventTypeId);
+//    Response getGroup(Long groupId);
+//
+//    Response getRole(Long roleId);
+//
+//    Response getEventType(Long eventTypeId);
 
     Response getFinancialInstitution(Long institutionId);
 
@@ -44,9 +44,9 @@ public interface SymbiosisRestService {
 
     Response getCurrencies();
 
-    Response getWallet(Long walletId);
+//    Response getWallet(Long authUserId, String deviceId, SymChannel channel, String authToken, Long walletId);
 
-    Response getWallets();
+//    Response getWallets();
 
-    Response getSystemConfigs();
+//    Response getSystemConfigs();
 }

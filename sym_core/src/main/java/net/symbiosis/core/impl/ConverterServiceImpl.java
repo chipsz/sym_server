@@ -178,6 +178,7 @@ public class ConverterServiceImpl implements ConverterService {
         }
         SymWalletTransaction symWalletTransaction = new SymWalletTransaction();
         modelMapper().map(sourceData, symWalletTransaction);
+        symWalletTransaction.setWalletTransactionId(sourceData.getId());
         symWalletTransaction.setWalletId(sourceData.getWallet().getId());
         symWalletTransaction.setEventType(sourceData.getEvent_type().getName());
         return symWalletTransaction;

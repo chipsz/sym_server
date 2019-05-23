@@ -64,33 +64,33 @@ public class SymJSONRestController extends SymXMLRestController {
         return super.getCountry(countryId);
     }
 
-    @Override
-    @GET
-    @Path("/group/{groupId}")
-    public Response getGroup(@PathParam("groupId") Long groupId) {
-        return super.getGroup(groupId);
-    }
+//    @Override
+//    @GET
+//    @Path("/group/{groupId}")
+//    public Response getGroup(@PathParam("groupId") Long groupId) {
+//        return super.getGroup(groupId);
+//    }
 
-    @Override
-    @GET
-    @Path("/role/{roleId}")
-    public Response getRole(@PathParam("roleId") Long roleId) {
-        return super.getRole(roleId);
-    }
-
-    @Override
-    @GET
-    @Path("/eventType/{eventTypeId}")
-    public Response getEventType(@PathParam("eventTypeId") Long eventTypeId) {
-        return super.getEventType(eventTypeId);
-    }
-
-    @Override
-    @GET
-    @Path("/systemConfig")
-    public Response getSystemConfigs() {
-        return super.getSystemConfigs();
-    }
+//    @Override
+//    @GET
+//    @Path("/role/{roleId}")
+//    public Response getRole(@PathParam("roleId") Long roleId) {
+//        return super.getRole(roleId);
+//    }
+//
+//    @Override
+//    @GET
+//    @Path("/eventType/{eventTypeId}")
+//    public Response getEventType(@PathParam("eventTypeId") Long eventTypeId) {
+//        return super.getEventType(eventTypeId);
+//    }
+//
+//    @Override
+//    @GET
+//    @Path("/systemConfig")
+//    public Response getSystemConfigs() {
+//        return super.getSystemConfigs();
+//    }
 
     @Override
     @GET
@@ -119,18 +119,18 @@ public class SymJSONRestController extends SymXMLRestController {
     public Response getCurrencies() {
         return super.getCurrencies();
     }
+//
+//    @Override
+//    @GET
+//    @Path("/wallet/{walletId}")
+//    public Response getWallet(@PathParam("walletId") Long walletId) {
+//        return super.getWallet(walletId);
+//    }
 
-    @Override
-    @GET
-    @Path("/wallet/{walletId}")
-    public Response getWallet(@PathParam("walletId") Long walletId) {
-        return super.getWallet(walletId);
-    }
-
-    @Override
-    @GET
-    @Path("/wallet")
-    public Response getWallets() {
-        return super.getWallets();
-    }
+//    @Override
+//    @GET
+//    @Path("/wallet")
+//    public Response getWallets() {
+//        return super.getWallets();
+//    }
 }

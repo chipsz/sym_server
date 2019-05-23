@@ -17,6 +17,7 @@ import java.util.Date;
 
 @XmlRootElement
 public class SymWalletTransaction implements Serializable, PrintableStringClass {
+    private Long walletTransactionId;
     private Long walletId;
     private String eventType;
     private BigDecimal transactionAmount;
@@ -25,12 +26,21 @@ public class SymWalletTransaction implements Serializable, PrintableStringClass 
 
     public SymWalletTransaction() {}
 
-    public SymWalletTransaction(Long walletId, String eventType, BigDecimal transactionAmount, String transactionDescription, Date transactionTime) {
+    public SymWalletTransaction(Long walletTransactionId, Long walletId, String eventType, BigDecimal transactionAmount, String transactionDescription, Date transactionTime) {
+        this.walletTransactionId = walletTransactionId;
         this.walletId = walletId;
         this.eventType = eventType;
         this.transactionAmount = transactionAmount;
         this.transactionDescription = transactionDescription;
         this.transactionTime = transactionTime;
+    }
+
+    public Long getWalletTransactionId() {
+        return walletTransactionId;
+    }
+
+    public void setWalletTransactionId(Long walletTransactionId) {
+        this.walletTransactionId = walletTransactionId;
     }
 
     public Long getWalletId() { return walletId; }

@@ -627,6 +627,11 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
     }
 
     @Override
+    public SymWalletList getWallet(Long authUserId, String deviceId, String authToken, Long walletId) {
+        return symbiosisRequestProcessor.getWallet(authUserId, deviceId, SMART_PHONE, authToken, walletId);
+    }
+
+    @Override
     public SymWalletTransactionList getWalletTransactions(Long authUserId, String deviceId, String authToken, Long walletId) {
         return symbiosisRequestProcessor.getWalletTransactions(authUserId, deviceId, SMART_PHONE, authToken, walletId);
     }
