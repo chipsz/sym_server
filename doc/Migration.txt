@@ -6,6 +6,8 @@ Changed to username authentication for POS
 Standardized REST API endpoints
 - Change endpoint on POS machine
 
+change javax.faces.PROJECT_STAGE in web.xml
+
 SQL Migration
 
 SQL Replication

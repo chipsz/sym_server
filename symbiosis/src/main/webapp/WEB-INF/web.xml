@@ -79,15 +79,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>SymWebServlet</servlet-name>
-        <url-pattern>/sym/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SymWebServlet</servlet-name>
-        <url-pattern>*.jsf</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SymWebServlet</servlet-name>
-        <url-pattern>*.faces</url-pattern>
+        <url-pattern>/web/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SymWebServlet</servlet-name>

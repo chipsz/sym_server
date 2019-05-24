@@ -44,8 +44,8 @@ dependencies {
 	compile libraries.commons_logging
 	compile libraries.commons_collections
 	compile libraries.commons_dbcp
-	provided libraries.hibernate_ehcache
-	provided libraries.hibernate_jcache
+//	provided libraries.hibernate_ehcache
+//	provided libraries.hibernate_jcache
 
     //testCompile libraries.log4j
     testCompile libraries.testng
