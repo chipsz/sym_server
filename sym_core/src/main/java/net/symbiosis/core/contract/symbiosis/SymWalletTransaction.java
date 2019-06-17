@@ -4,8 +4,6 @@ import net.symbiosis.core_lib.interfaces.PrintableStringClass;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
 
 /***************************************************************************
  * *
@@ -20,13 +18,13 @@ public class SymWalletTransaction implements Serializable, PrintableStringClass 
     private Long walletTransactionId;
     private Long walletId;
     private String eventType;
-    private BigDecimal transactionAmount;
+    private String transactionAmount;
     private String transactionDescription;
-    private Date transactionTime;
+    private String transactionTime;
 
     public SymWalletTransaction() {}
 
-    public SymWalletTransaction(Long walletTransactionId, Long walletId, String eventType, BigDecimal transactionAmount, String transactionDescription, Date transactionTime) {
+    public SymWalletTransaction(Long walletTransactionId, Long walletId, String eventType, String transactionAmount, String transactionDescription, String transactionTime) {
         this.walletTransactionId = walletTransactionId;
         this.walletId = walletId;
         this.eventType = eventType;
@@ -51,9 +49,9 @@ public class SymWalletTransaction implements Serializable, PrintableStringClass 
 
     public void setEventType(String eventType) { this.eventType = eventType; }
 
-    public BigDecimal getTransactionAmount() { return transactionAmount; }
+    public String getTransactionAmount() { return transactionAmount; }
 
-    public void setTransactionAmount(BigDecimal transactionAmount) { this.transactionAmount = transactionAmount; }
+    public void setTransactionAmount(String transactionAmount) { this.transactionAmount = transactionAmount; }
 
     public String getTransactionDescription() { return transactionDescription; }
 
@@ -61,9 +59,9 @@ public class SymWalletTransaction implements Serializable, PrintableStringClass 
         this.transactionDescription = transactionDescription;
     }
 
-    public Date getTransactionTime() { return transactionTime; }
+    public String getTransactionTime() { return transactionTime; }
 
-    public void setTransactionTime(Date transactionTime) { this.transactionTime = transactionTime; }
+    public void setTransactionTime(String transactionTime) { this.transactionTime = transactionTime; }
 
     @Override
     public String toString() {

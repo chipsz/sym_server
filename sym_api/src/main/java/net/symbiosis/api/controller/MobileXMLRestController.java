@@ -195,6 +195,19 @@ public class MobileXMLRestController implements MobileRestService {
     }
 
     @Override
+    @POST @Path("/voucherPurchase/{voucherPurchaseId}")
+    public Response getVoucherPurchase(@FormParam("authUserId") Long authUserId,
+                                       @FormParam("imei") String imei,
+                                       @FormParam("authToken") String authToken,
+                                       @PathParam("voucherPurchaseId") Long voucherPurchaseId) {
+        logger.info(format("Got mobile request to query transaction %s by auth user %s", voucherPurchaseId, authUserId));
+
+        return Response.status(200).entity(mobileRequestProcessor.getVoucherPurchase(getRealParamValue(authUserId),
+	        getRealParamValue(imei), getRealParamValue(authToken), getRealParamValue(voucherPurchaseId))
+        ).header("Access-Control-Allow-Origin", "*").build();
+    }
+
+    @Override
     @POST
     @Path("/session")
     public Response startSession(@FormParam("imei") String imei,

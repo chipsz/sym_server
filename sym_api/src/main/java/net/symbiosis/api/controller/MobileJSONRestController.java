@@ -153,6 +153,16 @@ public class MobileJSONRestController extends MobileXMLRestController {
 
     @Override
     @POST
+    @Path("/voucherPurchase/{voucherPurchaseId}")
+    public Response getVoucherPurchase(@FormParam("authUserId") Long authUserId,
+                                     @FormParam("imei") String imei,
+                                     @FormParam("authToken") String authToken,
+                                     @PathParam("voucherPurchaseId") Long voucherPurchaseId) {
+        return super.getVoucherPurchase(authUserId, imei, authToken, voucherPurchaseId);
+    }
+
+    @Override
+    @POST
     @Path("/session")
     public Response startSession(@FormParam("imei") String imei,
                                  @FormParam("username") String username,

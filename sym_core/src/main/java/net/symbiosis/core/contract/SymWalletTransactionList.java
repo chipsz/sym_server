@@ -6,6 +6,7 @@ import net.symbiosis.core_lib.enumeration.SymResponseCode;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /***************************************************************************
@@ -18,7 +19,9 @@ import java.util.ArrayList;
 
 @XmlRootElement
 public class SymWalletTransactionList extends DataContract<SymWalletTransactionList> implements Serializable {
-    protected ArrayList<SymWalletTransaction> walletTransactionData;
+
+    private ArrayList<SymWalletTransaction> walletTransactionData;
+    private BigDecimal currentBalance;
 
     public SymWalletTransactionList() {}
 
@@ -26,15 +29,11 @@ public class SymWalletTransactionList extends DataContract<SymWalletTransactionL
         this.symResponse = new SymResponse(symResponseCode);
     }
 
-    public SymWalletTransactionList(SymResponseCode symResponseCode, SymWalletTransaction wallet) {
-        this.symResponse = new SymResponse(symResponseCode);
-        this.walletTransactionData = new ArrayList<>();
-        this.walletTransactionData.add(wallet);
-    }
 
-    public SymWalletTransactionList(SymResponseCode symResponseCode, ArrayList<SymWalletTransaction> walletTransactionData) {
+    public SymWalletTransactionList(SymResponseCode symResponseCode, ArrayList<SymWalletTransaction> walletTransactionData, BigDecimal currentBalance) {
         this.symResponse = new SymResponse(symResponseCode);
         this.walletTransactionData = walletTransactionData;
+        this.currentBalance = currentBalance;
     }
 
     public ArrayList<SymWalletTransaction> getWalletTransactionData() {
@@ -44,4 +43,12 @@ public class SymWalletTransactionList extends DataContract<SymWalletTransactionL
     public void setWalletTransactionData(ArrayList<SymWalletTransaction> walletTransactionData) {
         this.walletTransactionData = walletTransactionData;
     }
+
+	public BigDecimal getCurrentBalance() {
+		return currentBalance;
+	}
+
+	public void setCurrentBalance(BigDecimal currentBalance) {
+		this.currentBalance = currentBalance;
+	}
 }

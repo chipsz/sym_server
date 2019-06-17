@@ -51,6 +51,7 @@ insert ignore into sym_config(config_id,is_enabled,config_name,config_value,conf
 insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (301,1,'glo_service_client_id','EMPOWER','Client Id for the Glo Integration');
 insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (302,1,'glo_service_user_id','empowertst','User Id for the Glo Integration');
 insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (303,1,'glo_service_password','2suZ0Dcv5iTLOPbqOyOC0A==','Password for the Glo Integration');
+insert ignore into sym_config(config_id,is_enabled,config_name,config_value,config_description) values (304,1,'glo_service_low_balance_threshold','100','Low threshold amount before the system sends warning email');
 
 insert ignore into sym_country(id,name,is_enabled,iso_code_2,iso_code_3,dialing_code) values (1,'GHANA',1,'GH','GHA',233);
 insert ignore into sym_country(id,name,is_enabled,iso_code_2,iso_code_3,dialing_code) values (2,'ZIMBABWE',0,'ZW','ZWE',263);
@@ -93,16 +94,17 @@ insert ignore into sym_event_type(id,name,is_enabled) values (1109,'WALLET_SWIPE
 insert ignore into sym_event_type(id,name,is_enabled) values (1110,'WALLET_TRANSFER',1);
 insert ignore into sym_event_type(id,name,is_enabled) values (1111,'WALLET_HISTORY',1);
 
-insert ignore into sym_event_type(id,name,is_enabled) values (1200,'VOUCHER_IMPORT',1);
-insert ignore into sym_event_type(id,name,is_enabled) values (1201,'VOUCHER_CREATE',1);
-insert ignore into sym_event_type(id,name,is_enabled) values (1202,'VOUCHER_PURCHASE',1);
-insert ignore into sym_event_type(id,name,is_enabled) values (1203,'VOUCHER_UPDATE',1);
-insert ignore into sym_event_type(id,name,is_enabled) values (1204,'VOUCHER_TYPE_CREATE',1);
-insert ignore into sym_event_type(id,name,is_enabled) values (1205,'VOUCHER_TYPE_UPDATE',1);
-insert ignore into sym_event_type(id,name,is_enabled) values (1206,'VOUCHER_PROVIDER_CREATE',1);
-insert ignore into sym_event_type(id,name,is_enabled) values (1207,'VOUCHER_PROVIDER_UPDATE',1);
-insert ignore into sym_event_type(id,name,is_enabled) values (1208,'SERVICE_PROVIDER_CREATE',1);
-insert ignore into sym_event_type(id,name,is_enabled) values (1209,'SERVICE_PROVIDER_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1200,'VOUCHER_IMPORT',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1201,'VOUCHER_CREATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1202,'VOUCHER_PURCHASE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1203,'VOUCHER_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1204,'VOUCHER_TYPE_CREATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1205,'VOUCHER_TYPE_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1206,'VOUCHER_PURCHASE_QUERY',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1207,'VOUCHER_PROVIDER_CREATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1208,'VOUCHER_PROVIDER_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1209,'SERVICE_PROVIDER_CREATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1210,'SERVICE_PROVIDER_UPDATE',1);
 
 insert ignore into sym_event_type(id,name,is_enabled) values (1300,'DEVICE_POS_MACHINE_UPDATE',1);
 insert ignore into sym_event_type(id,name,is_enabled) values (1301,'DEVICE_PHONE_UPDATE',1);
@@ -289,6 +291,7 @@ insert ignore into sym_voucher_type(voucher_type_id,is_enabled,name) values (1, 
 insert ignore into sym_voucher_type(voucher_type_id,is_enabled,name) values (2, 0, 'INTERNET');
 insert ignore into sym_voucher_type(voucher_type_id,is_enabled,name) values (3, 0, 'DSTV');
 insert ignore into sym_voucher_type(voucher_type_id,is_enabled,name) values (4, 0, 'RESULT CHECKER PIN');
+insert ignore into sym_voucher_type(voucher_type_id,is_enabled,name) values (5, 1, 'DATABUNDLE');
 
 insert ignore into sym_voucher_status(voucher_status_id,is_enabled,name) values (1, 1, 'NEW');
 insert ignore into sym_voucher_status(voucher_status_id,is_enabled,name) values (2, 1, 'SOLD');
@@ -330,6 +333,9 @@ insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_pr
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '10.00', 1, 1);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 8, 1, '20.00', 1, 1);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 0, 0, 'GHS', 7, 1, '1', 2, 2);
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id,description,product_id) values (1, 1, 0, 'GHS', 7, 5, '1', 2, 2, '100MB DAILY', 'BUNDLE_100MB_Plan');
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id,description,product_id) values (1, 1, 0, 'GHS', 7, 5, '2', 2, 2, '200MB WEEKLY', 'BUNDLE_200MB_Plan');
+insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id,description,product_id) values (1, 1, 0, 'GHS', 7, 5, '10', 2, 2, '1.7GB MONTHLY', 'BUNDLE_1.7GB_Plan');
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 6.5, 1, '1.00', 3, 3);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 6.5, 1, '2.00', 3, 3);
 insert ignore into sym_voucher (is_active,is_fixed,is_pin_based,units,voucher_provider_discount,voucher_type_id,voucher_value,service_provider_id,voucher_provider_id) values (1, 1, 1, 'GHS', 6.5, 1, '5.00', 3, 3);
@@ -359,8 +365,8 @@ insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_ch
 insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,wallet_charge) select wg.wallet_group_id, CONCAT(wg.name,'_500_TO_5000'),500.0,5000.0,4 from sym_wallet_group wg;
 insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,wallet_charge) select wg.wallet_group_id, CONCAT(wg.name,'_5000_PLUS'),5000.0,null,5 from sym_wallet_group wg;
 
-insert ignore into sym_company(company_id,company_name,address_line_1,address_line_2,address_city,address_country_id,phone1,phone2) values (1,'T3raTech','4 Janeen Close','Groombridge, Mt. Pleasant','Harare',2,'263785107830','27627938765');
-insert ignore into sym_user(first_name,last_name,username,email,msisdn,msisdn2,salt,user_status_id,country_id,language_id,password,password_tries,pin,pin_tries) values ('Tsungai','Kaviya','admin','tsungai.kaviya@gmail.com','263785107830','27627938765','b4ou790Xz4jBfY0B',30,2,1,'659f6d313bb6fb10ae238ed2ecd4f3365a6a72b8ba8fbe891265a17a6a7335',0,NULL,0);
+insert ignore into sym_company(company_id,company_name,address_line_1,address_line_2,address_city,address_country_id,phone1,phone2) values (1,'T3raTech','4 Janeen Close','Groombridge, Mt. Pleasant','Harare',2,'233785107830','27627938765');
+insert ignore into sym_user(first_name,last_name,username,email,msisdn,msisdn2,salt,user_status_id,country_id,language_id,password,password_tries,pin,pin_tries) values ('Tsungai','Kaviya','admin','tsungai.kaviya@gmail.com','233785107830','27627938765','b4ou790Xz4jBfY0B',30,2,1,'659f6d313bb6fb10ae238ed2ecd4f3365a6a72b8ba8fbe891265a17a6a7335',0,NULL,0);
 insert ignore into sym_auth_user (sym_user_id,channel_id,auth_group_id,device_id,registration_date,last_auth_date,last_login_date) SELECT su.sym_user_id,2,1,null,sysdate(),NULL,NULL FROM sym_user su WHERE su.username = 'admin';
 insert ignore into sym_wallet (wallet_id, current_balance, company_id, wallet_admin_user_id, wallet_group_id) values (1, '0.00', 1, 1, 1);
 update sym_user set wallet_id = 1 where sym_user_id = 1;

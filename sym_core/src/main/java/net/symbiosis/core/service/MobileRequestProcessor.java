@@ -43,4 +43,6 @@ public interface MobileRequestProcessor extends RequestProcessor {
     SymWalletList getWallet(Long authUserId, String deviceId, String authToken, Long walletId);
 
     SymWalletTransactionList getWalletTransactions(Long authUserId, String deviceId, String authToken, Long walletId);
+
+	SymVoucherPurchaseList getVoucherPurchase(Long authUserId, String deviceId, String authToken, Long voucherPurchaseId);
 }

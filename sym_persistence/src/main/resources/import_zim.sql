@@ -44,10 +44,11 @@ insert ignore into sym_event_type (id,name,is_enabled) values (1202,'VOUCHER_PUR
 insert ignore into sym_event_type (id,name,is_enabled) values (1203,'VOUCHER_UPDATE',1);
 insert ignore into sym_event_type (id,name,is_enabled) values (1204,'VOUCHER_TYPE_CREATE',1);
 insert ignore into sym_event_type (id,name,is_enabled) values (1205,'VOUCHER_TYPE_UPDATE',1);
-insert ignore into sym_event_type (id,name,is_enabled) values (1206,'VOUCHER_PROVIDER_CREATE',1);
-insert ignore into sym_event_type (id,name,is_enabled) values (1207,'VOUCHER_PROVIDER_UPDATE',1);
-insert ignore into sym_event_type (id,name,is_enabled) values (1208,'SERVICE_PROVIDER_CREATE',1);
-insert ignore into sym_event_type (id,name,is_enabled) values (1209,'SERVICE_PROVIDER_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1206,'VOUCHER_PURCHASE_QUERY',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1207,'VOUCHER_PROVIDER_CREATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1208,'VOUCHER_PROVIDER_UPDATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1209,'SERVICE_PROVIDER_CREATE',1);
+insert ignore into sym_event_type (id,name,is_enabled) values (1210,'SERVICE_PROVIDER_UPDATE',1);
 
 insert ignore into sym_event_type (id,name,is_enabled) values (1300,'DEVICE_POS_MACHINE_UPDATE',1);
 insert ignore into sym_event_type (id,name,is_enabled) values (1301,'DEVICE_PHONE_UPDATE',1);

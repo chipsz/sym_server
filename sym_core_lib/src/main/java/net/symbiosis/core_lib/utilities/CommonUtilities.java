@@ -4,6 +4,7 @@ import net.symbiosis.core_lib.response.SymResponseObject;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.logging.Logger;
@@ -114,9 +115,21 @@ public class CommonUtilities {
 
     public static String alignStringToLength(String str, final int length) {
         if (isNullOrEmpty(str)) str = "";
-        while (str.length() < length) {
-            str += " ";
+        StringBuilder strBuilder = new StringBuilder(str);
+        while (strBuilder.length() < length) {
+            strBuilder.append(" ");
         }
+        str = strBuilder.toString();
+        return str;
+    }
+
+    public static String rightAlignStringToLength(String str, final int length) {
+        if (isNullOrEmpty(str)) str = "";
+        StringBuilder strBuilder = new StringBuilder(str);
+        while (strBuilder.length() < length) {
+            strBuilder.insert(0, " ");
+        }
+        str = strBuilder.toString();
         return str;
     }
 
@@ -130,6 +143,14 @@ public class CommonUtilities {
         } else {
             return "-" + (currencySymbol == null ? "" : currencySymbol) + formattedString.replaceFirst("-", "");
         }
+    }
+
+    public static String formatBigDecimalToMoney(final BigDecimal value) {
+        return formatDoubleToMoney(value.doubleValue(), null);
+    }
+
+    public static String formatBigDecimalToMoney(final BigDecimal value, final String currencySymbol) {
+        return formatDoubleToMoney(value.doubleValue(), currencySymbol);
     }
 
     public static String formatDoubleToMoney(final double value) {

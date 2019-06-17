@@ -22,10 +22,6 @@ public interface SymbiosisRequestProcessor extends RequestProcessor {
 
     SymEnumEntity getCountry(Long countryId);
 
-//    SymEnumEntity getGroup(Long groupId);
-
-//    SymEnumEntity getRole(Long roleId);
-
 //    SymEnumEntity getEventType(Long eventTypeId);
 
 //    SymMap getSystemConfigs();
@@ -40,7 +36,7 @@ public interface SymbiosisRequestProcessor extends RequestProcessor {
 
     SymWalletList getWallet(Long authUserId, String deviceId, SymChannel channel, String authToken, Long walletId);
 
-//    SymWalletList getWallets();
-
     SymWalletTransactionList getWalletTransactions(Long authUserId, String deviceId, SymChannel channel, String authToken, Long walletId);
+
+	SymVoucherPurchaseList getVoucherPurchase(Long authUserId, String deviceId, SymChannel channel, String authToken, Long walletId);
 }

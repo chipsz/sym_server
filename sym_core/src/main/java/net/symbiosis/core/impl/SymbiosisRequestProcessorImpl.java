@@ -11,8 +11,10 @@ import net.symbiosis.core_lib.response.SymResponseObject;
 import net.symbiosis.core_lib.structure.Pair;
 import net.symbiosis.persistence.dao.EnumEntityRepoManager;
 import net.symbiosis.persistence.entity.complex_type.device.sym_device_phone;
+import net.symbiosis.persistence.entity.complex_type.device.sym_device_pos_machine;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
 import net.symbiosis.persistence.entity.complex_type.log.sym_session;
+import net.symbiosis.persistence.entity.complex_type.log.sym_voucher_purchase;
 import net.symbiosis.persistence.entity.complex_type.log.sym_wallet_transaction;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
@@ -26,11 +28,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static java.lang.String.format;
+import static java.util.Arrays.asList;
 import static net.symbiosis.authentication.authentication.SymbiosisAuthenticator.verifyLogin;
 import static net.symbiosis.core.helper.ValidationHelper.*;
+import static net.symbiosis.core_lib.enumeration.SymChannel.POS_MACHINE;
+import static net.symbiosis.core_lib.enumeration.SymEventType.VOUCHER_PURCHASE_QUERY;
 import static net.symbiosis.core_lib.enumeration.SymEventType.WALLET_HISTORY;
-import static net.symbiosis.core_lib.enumeration.SymResponseCode.DATA_NOT_FOUND;
-import static net.symbiosis.core_lib.enumeration.SymResponseCode.SUCCESS;
+import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 
@@ -92,52 +96,6 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
                 converterService.toDTO(getEntityManagerRepo().findById(sym_country.class, countryId)));
     }
 
-//    @Override
-//    public SymEnumEntity getGroup(Long groupId) {
-//        return new SymEnumEntity(SUCCESS,
-//                converterService.toDTO(getEntityManagerRepo().findById(sym_auth_group.class, groupId)));
-//    }
-//
-//    @Override
-//    public SymEnumEntity getRole(Long roleId) {
-//        return new SymEnumEntity(SUCCESS,
-//                converterService.toDTO(getEntityManagerRepo().findById(sym_role.class, roleId)));
-//    }
-//
-//    @Override
-//    public SymEnumEntity getEventType(Long eventTypeId) {
-//        return new SymEnumEntity(SUCCESS,
-//                converterService.toDTO(getEntityManagerRepo().findById(sym_event_type.class, eventTypeId)));
-//    }
-//
-//    @Override
-//    public SymMap getSystemConfigs() {
-//        logger.info("Getting system configuration list");
-//        HashMap<String, String> sysConfigs = new HashMap<>();
-//
-//        sysConfigs.put("CurrencySymbol", getSymConfigDao().getConfig(CONFIG_DEFAULT_CURRENCY_SYMBOL));
-//        sysConfigs.put("CountryCodePrefix", getSymConfigDao().getConfig(CONFIG_DEFAULT_COUNTRY_CODE));
-//        sysConfigs.put("SupportEmail", getSymConfigDao().getConfig(CONFIG_SUPPORT_EMAIL));
-//        sysConfigs.put("SupportPhone", getSymConfigDao().getConfig(CONFIG_SUPPORT_PHONE));
-//        sysConfigs.put("MinPasswordLength", MIN_PASSWORD_LENGTH.toString());
-//        sysConfigs.put("MaxPasswordLength", MAX_PASSWORD_LENGTH.toString());
-//        sysConfigs.put("MinNameLength", MIN_NAME_LEN.toString());
-//        sysConfigs.put("MaxNameLength", MAX_NAME_LEN.toString());
-//        sysConfigs.put("MinUsernameLength", MIN_UNAME_LEN.toString());
-//        sysConfigs.put("MaxUsernameLength", MAX_UNAME_LEN.toString());
-//        sysConfigs.put("PinLength", PIN_LEN.toString());
-//        sysConfigs.put("NameRegex", javaToJSRegex(NAME_REGEX));
-//        sysConfigs.put("UsernameRegex", javaToJSRegex(USERNAME_REGEX));
-//        sysConfigs.put("EmailRegex", javaToJSRegex(EMAIL_REGEX));
-//        sysConfigs.put("PasswordRegex", javaToJSRegex(PASSWORD_REGEX));
-//        sysConfigs.put("TenDigitMsisdnRegex", javaToJSRegex(TEN_DIGIT_MSISDN_REGEX));
-//        sysConfigs.put("MsisdnRegex", javaToJSRegex(MSISDN_REGEX));
-//
-//        logger.info(format("Got %s system configurations", sysConfigs.size()));
-//
-//        return new SymMap(SUCCESS, sysConfigs);
-//    }
-
     @Override
     public SymFinancialInstitutionList getFinancialInstitution(Long institutionId) {
         logger.info(format("Getting financial institution with Id %s", institutionId));
@@ -180,7 +138,7 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
 
     @Override
     public SymWalletList getWallet(Long authUserId, String deviceId, SymChannel channel, String authToken, Long walletId) {
-        logger.info(format("Getting wallet with Id %s for auth user %s from channel %s", walletId, authUserId, channel));
+        logger.info(format("Getting wallet with Id %s for auth user %s from channel %s", walletId, authUserId, channel.name()));
 
         String incomingRequest = format("walletId=%s|authUserId=%s|deviceId=%s|channel=%s", walletId, authUserId, deviceId, channel);
 
@@ -219,19 +177,9 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
         return new SymWalletList(SUCCESS, converterService.toDTO(walletResponse.getResponseObject()));
     }
 
-//    @Override
-//    public SymWalletList getWallets() {
-//        logger.info("Getting wallet list");
-//        ArrayList<SymWallet> wallets = new ArrayList<>();
-//        getEntityManagerRepo().findAll(sym_wallet.class).forEach(v -> wallets.add(converterService.toDTO(v)));
-//        logger.info(format("Returning %s wallets", wallets.size()));
-//        return new SymWalletList(SUCCESS, wallets);
-//    }
-
-
     @Override
     public SymWalletTransactionList getWalletTransactions(Long authUserId, String deviceId, SymChannel channel, String authToken, Long walletId) {
-        logger.info(format("Getting wallet %s transactions for auth user %s from channel %s", walletId, authUserId, channel));
+        logger.info(format("Getting wallet %s transactions for auth user %s from channel %s", walletId, authUserId, channel.name()));
 
         String incomingRequest = format("walletId=%s|authUserId=%s|deviceId=%s|channel=%s", walletId, authUserId, deviceId, channel);
 
@@ -284,6 +232,66 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
             .save();
 
         logger.info(format("Returning %s wallet transactions", walletTransactions.size()));
-        return new SymWalletTransactionList(SUCCESS, walletTransactions);
+        return new SymWalletTransactionList(SUCCESS, walletTransactions, walletResponse.getResponseObject().getCurrent_balance());
+    }
+
+    @Override
+    public SymVoucherPurchaseList getVoucherPurchase(Long authUserId, String deviceId, SymChannel channel, String authToken, Long voucherPurchaseId) {
+
+	    logger.info(format("Getting voucher purchase %s for auth user %s from channel %s", voucherPurchaseId, authUserId, channel.name()));
+
+	    String incomingRequest = format("authUserId=%s|deviceId=%s|channel=%s|voucherPurchaseId=%s", authUserId, deviceId, channel, voucherPurchaseId);
+
+	    sym_request_response_log requestResponseLog = new sym_request_response_log(fromEnum(channel), fromEnum(VOUCHER_PURCHASE_QUERY), incomingRequest);
+
+	    SymResponseObject<sym_session> authResponse = verifyLogin(authUserId, deviceId, authToken);
+	    if (!authResponse.getResponseCode().equals(SUCCESS)) {
+		    logResponse(null, requestResponseLog, authResponse.getResponseCode());
+		    return new SymVoucherPurchaseList(authResponse.getResponseCode());
+	    }
+
+	    if (channel == POS_MACHINE) {
+		    List<sym_device_pos_machine> posMachines = getEntityManagerRepo().findWhere(
+			    sym_device_pos_machine.class, asList(
+				    new Pair<>("is_active", 1),
+				    new Pair<>("auth_user", authUserId)
+			    )
+		    );
+
+		    if (posMachines.size() != 1) {
+			    logger.warning(format("Failed to get voucher purchase %s. POS Machine %s not found or not active for auth user %s",
+				    deviceId, authUserId, voucherPurchaseId));
+			    logResponse(authResponse.getResponseObject().getAuth_user(), requestResponseLog, AUTH_NON_EXISTENT);
+			    return new SymVoucherPurchaseList(AUTH_NON_EXISTENT);
+		    }
+	    }
+
+        sym_auth_user authUser = authResponse.getResponseObject().getAuth_user();
+
+        sym_voucher_purchase voucherPurchaseResponse = getEntityManagerRepo().findById(
+            sym_voucher_purchase.class, voucherPurchaseId
+        );
+
+        if (voucherPurchaseResponse == null) {
+	        logger.warning(format("Failed to get voucher purchase %s. Voucher purchase not found", voucherPurchaseId));
+	        logResponse(authUser, requestResponseLog, DATA_NOT_FOUND);
+	        return new SymVoucherPurchaseList(DATA_NOT_FOUND);
+        }
+
+        if (!voucherPurchaseResponse.getWallet().getId().equals(authUser.getUser().getWallet().getId())) {
+	        logger.warning(format("Cannot return voucher purchase %s. Wallet %s does not match transaction wallet %s",
+		        voucherPurchaseId, authUser.getUser().getWallet().getId(), voucherPurchaseResponse.getWallet().getId()));
+	        logResponse(authUser, requestResponseLog, INPUT_INVALID_WALLET);
+	        return new SymVoucherPurchaseList(INPUT_INVALID_WALLET);
+        }
+
+        if (!voucherPurchaseResponse.getResponse_code().equals(fromEnum(SUCCESS))) {
+            logger.warning(format("Failed to get voucher purchase %s. " + voucherPurchaseResponse.getResponse_code().getResponse_message(), voucherPurchaseId));
+            logResponse(authUser, requestResponseLog, voucherPurchaseResponse.getResponse_code());
+            return new SymVoucherPurchaseList(voucherPurchaseResponse.getResponse_code().asSymResponseCode());
+        }
+
+        return new SymVoucherPurchaseList(SUCCESS, converterService.toDTO(voucherPurchaseResponse));
+
     }
 }

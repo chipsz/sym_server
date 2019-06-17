@@ -27,7 +27,7 @@ public class sym_voucher_purchase extends sym_entity<sym_voucher_purchase> {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "voucher_id")
 	private sym_voucher voucher;
-	@ManyToOne(optional = true)
+	@ManyToOne
 	@JoinColumn(name = "pinbased_voucher_id")
 	private sym_pinbased_voucher pinbased_voucher;
 	@Column

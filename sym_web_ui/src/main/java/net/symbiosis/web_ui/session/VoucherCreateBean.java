@@ -63,7 +63,8 @@ public class VoucherCreateBean implements JSFLoggable {
     private sym_voucher initNewVoucher() {
         return new sym_voucher(
             new BigDecimal(0), false,null, voucherTypeFromString("AIRTIME"),
-            0.0, getSymConfigDao().getConfig(CONFIG_DEFAULT_CURRENCY_SYMBOL),true, true
+            0.0, getSymConfigDao().getConfig(CONFIG_DEFAULT_CURRENCY_SYMBOL),true,
+            true, null, null
         );
     }
 

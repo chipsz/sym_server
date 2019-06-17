@@ -18,7 +18,9 @@ import java.math.BigDecimal;
 @Cacheable(false)
 public class sym_voucher extends sym_entity<sym_voucher> {
 
+	@Column(nullable = false)
 	private BigDecimal voucher_value;
+	@Column(nullable = false)
 	private boolean is_active;
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "service_provider_id")
@@ -29,17 +31,23 @@ public class sym_voucher extends sym_entity<sym_voucher> {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "voucher_provider_id")
 	private sym_voucher_provider voucher_provider;
+	@Column(nullable = false)
 	private double voucher_provider_discount;
+	@Column(nullable = false)
 	private String units;
+	@Column(nullable = false)
 	private boolean is_fixed;
+	@Column(nullable = false)
 	private boolean is_pin_based;
+	private String description;
+	private String product_id;
 
 	public sym_voucher() {}
 
 	public sym_voucher(BigDecimal voucher_value, boolean is_active,
             sym_service_provider service_provider, sym_voucher_type voucher_type,
             double voucher_provider_discount, String units,
-            boolean is_fixed, boolean is_pin_based) {
+            boolean is_fixed, boolean is_pin_based, String description, String product_id) {
 		this.voucher_value = voucher_value;
 		this.is_active = is_active;
 		this.service_provider = service_provider;
@@ -48,6 +56,8 @@ public class sym_voucher extends sym_entity<sym_voucher> {
 		this.units = units;
 		this.is_fixed = is_fixed;
 		this.is_pin_based = is_pin_based;
+		this.description = description;
+		this.product_id = product_id;
 	}
 
 	public BigDecimal getVoucher_value() {
@@ -120,5 +130,21 @@ public class sym_voucher extends sym_entity<sym_voucher> {
 
 	public void setIs_pin_based(boolean is_pin_based) {
 		this.is_pin_based = is_pin_based;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getProduct_id() {
+		return product_id;
+	}
+
+	public void setProduct_id(String productId) {
+		this.product_id = productId;
 	}
 }

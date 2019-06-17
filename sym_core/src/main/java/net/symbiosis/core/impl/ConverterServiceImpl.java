@@ -26,9 +26,12 @@ import org.modelmapper.convention.NameTokenizers;
 import org.springframework.stereotype.Service;
 
 import static net.symbiosis.common.configuration.Configuration.getProperty;
+import static net.symbiosis.common.utilities.SymTransformer.dateToString;
 import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_DEFAULT_COUNTRY_CODE;
+import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_DEFAULT_CURRENCY_SYMBOL;
 import static net.symbiosis.core_lib.security.Security.decryptAES;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.format10DigitPhoneNumber;
+import static net.symbiosis.core_lib.utilities.CommonUtilities.formatBigDecimalToMoney;
 import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
 
 /***************************************************************************
@@ -181,6 +184,10 @@ public class ConverterServiceImpl implements ConverterService {
         symWalletTransaction.setWalletTransactionId(sourceData.getId());
         symWalletTransaction.setWalletId(sourceData.getWallet().getId());
         symWalletTransaction.setEventType(sourceData.getEvent_type().getName());
+        symWalletTransaction.setTransactionAmount(
+            formatBigDecimalToMoney(sourceData.getTransaction_amount(), getSymConfigDao().getConfig(CONFIG_DEFAULT_CURRENCY_SYMBOL))
+        );
+        symWalletTransaction.setTransactionTime(dateToString(sourceData.getTransaction_time()));
         return symWalletTransaction;
     }
 

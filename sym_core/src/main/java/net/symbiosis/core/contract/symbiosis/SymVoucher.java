@@ -24,6 +24,7 @@ public class SymVoucher implements Serializable {
     private String units;
     private Boolean isFixed;
     private Boolean isPinBased;
+    private String description;
 
     public Long getVoucherId() {
         return voucherId;
@@ -103,5 +104,13 @@ public class SymVoucher implements Serializable {
 
     public void setIsPinBased(Boolean pinBased) {
         isPinBased = pinBased;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

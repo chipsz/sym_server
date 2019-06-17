@@ -29,19 +29,10 @@ public class IntegrationManagerServiceImpl implements IntegrationManagerService 
         logger.info(format("Added provider %s to list of integrations with class %s for voucher provider %s:%s ",
             integration.getIntegrationName(), integration.getClass().getSimpleName(),
             voucherProviderId, integration.getVoucherProvider().getName()));
-
-        logger.info("Displaying available voucher provider integrations");
-        for (Long vpId : voucherPurchaseIntegrations.keySet()) {
-            logger.info(format("Voucher Provider %s has integration %s", vpId, voucherPurchaseIntegrations.get(vpId).getIntegrationName()));
-        }
     }
 
     @Override
     public VoucherPurchaseIntegration getVoucherPurchaseIntegration(Long voucherProviderId) {
-        logger.info("Displaying available voucher provider integrations");
-        for (Long vpId : voucherPurchaseIntegrations.keySet()) {
-            logger.info(format("Voucher Provider %s has integration %s", vpId, voucherPurchaseIntegrations.get(vpId).getIntegrationName()));
-        }
         return voucherPurchaseIntegrations.get(voucherProviderId);
     }
 }

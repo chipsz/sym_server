@@ -36,7 +36,9 @@ public interface MobileRestService {
 
     Response getWalletTransactions(Long authUserId, String imei, String authToken, Long walletId);
 
-    Response startSession(String authToken, String username, String password);
+	Response getVoucherPurchase(Long authUserId, String imei, String authToken, Long voucherPurchaseId);
+
+	Response startSession(String authToken, String username, String password);
 
     Response endSession(Long sessionId, String deviceId, String authToken);
 }

@@ -3,7 +3,6 @@ package net.symbiosis.authentication.authentication;
 import net.symbiosis.core_lib.enumeration.SymResponseCode;
 import net.symbiosis.core_lib.response.SymResponseObject;
 import net.symbiosis.core_lib.structure.Pair;
-import net.symbiosis.core_lib.utilities.CommonUtilities;
 import net.symbiosis.persistence.entity.complex_type.log.sym_session;
 import net.symbiosis.persistence.entity.complex_type.sym_auth_user;
 import net.symbiosis.persistence.entity.complex_type.sym_user;
@@ -20,6 +19,7 @@ import java.util.logging.Logger;
 import static java.lang.Integer.parseInt;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static net.symbiosis.authentication.authentication.AuthenticationHelper.validateMandatoryChannelData;
 import static net.symbiosis.common.utilities.SymValidator.*;
 import static net.symbiosis.core_lib.enumeration.DBConfigVars.CONFIG_MAX_PASSWORD_TRIES;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
@@ -27,6 +27,7 @@ import static net.symbiosis.core_lib.security.Security.generateIV;
 import static net.symbiosis.core_lib.security.Security.hashWithSalt;
 import static net.symbiosis.core_lib.security.SymbiosisSecurityEncryption.DEFAULT_SECURITY_HASH;
 import static net.symbiosis.core_lib.utilities.CommonUtilities.formatFullMsisdn;
+import static net.symbiosis.core_lib.utilities.CommonUtilities.isNullOrEmpty;
 import static net.symbiosis.core_lib.utilities.ReferenceGenerator.Gen;
 import static net.symbiosis.core_lib.utilities.ReferenceGenerator.GenPin;
 import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findByName;
@@ -281,7 +282,7 @@ public class SymbiosisAuthenticator {
             return new SymResponseObject<>(INPUT_INVALID_REQUEST);
         }
 
-        if (CommonUtilities.isNullOrEmpty(newUser.getUsername()) && CommonUtilities.isNullOrEmpty(newUser.getEmail()) && CommonUtilities.isNullOrEmpty(newUser.getMsisdn())) {
+        if (isNullOrEmpty(newUser.getUsername()) && isNullOrEmpty(newUser.getEmail()) && isNullOrEmpty(newUser.getMsisdn())) {
             logger.info("Registration failed! User has no valid identifier (username/email/phone) specified.");
             return new SymResponseObject<>(INPUT_INVALID_REQUEST);
         }
@@ -292,7 +293,7 @@ public class SymbiosisAuthenticator {
 
         newUser.setMsisdn(formatFullMsisdn(newUser.getMsisdn(), newUser.getCountry().getDialing_code()));
 
-        SymResponseObject<sym_user> validationResponse = AuthenticationHelper.validateMandatoryChannelData(newUser, channel);
+        SymResponseObject<sym_user> validationResponse = validateMandatoryChannelData(newUser, channel);
         if (!validationResponse.getResponseCode().equals(SUCCESS)) {
             logger.info("Registration failed! User data incomplete for registration on channel " + channel.getName());
             logger.info(validationResponse.getMessage());
@@ -301,13 +302,13 @@ public class SymbiosisAuthenticator {
 
         //valid data supplied, now check for previous registration
         List<Pair<String, ?>> conditionList = new ArrayList<>();
-        if (!CommonUtilities.isNullOrEmpty(newUser.getEmail())) {
+        if (!isNullOrEmpty(newUser.getEmail())) {
             conditionList.add(new Pair<>("email", newUser.getEmail()));
         }
-        if (!CommonUtilities.isNullOrEmpty(newUser.getMsisdn())) {
+        if (!isNullOrEmpty(newUser.getMsisdn())) {
             conditionList.add(new Pair<>("msisdn", newUser.getMsisdn()));
         }
-        if (!CommonUtilities.isNullOrEmpty(newUser.getUsername())) {
+        if (!isNullOrEmpty(newUser.getUsername())) {
             conditionList.add(new Pair<>("username", newUser.getUsername()));
         }
         List<sym_user> existingUser = getEntityManagerRepo().findWhere(sym_user.class, conditionList,

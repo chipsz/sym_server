@@ -582,6 +582,12 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
             return new SymWalletList(AUTH_NON_EXISTENT).setResponse("Recipient phone number not registered");
         }
 
+	    if (recipientUser.get(0).getWallet().getId().equals(senderWallet.getId())) {
+		    logger.info("Invalid recipient specified: " + recipient);
+		    logResponse(authUser, requestResponseLog, INPUT_INVALID_REQUEST, "You cannot transfer to yourself");
+		    return new SymWalletList(INPUT_INVALID_REQUEST).setResponse("You cannot transfer to yourself");
+	    }
+
         sym_wallet_transfer walletTransfer = new sym_wallet_transfer(authUser, recipientUser.get(0).getWallet(), amount,
                 senderWallet.getCurrent_balance(), senderWallet.getCurrent_balance(), new Date(), fromEnum(GENERAL_ERROR)).save();
 
@@ -613,15 +619,9 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
 
         SymResponseObject<sym_wallet> updateResponse = walletManager.transferWalletBalanceWithCharges(fromWalletDetails, toWalletDetails);
 
-        if (updateResponse.getResponseCode().equals(SUCCESS)) {
-            walletTransfer.setResponse_code(fromEnum(SUCCESS));
-            walletTransfer.setNew_balance(senderWallet.getCurrent_balance());
-            walletTransfer.save();
-        } else {
-            walletTransfer.setResponse_code(fromEnum(updateResponse.getResponseCode()));
-            walletTransfer.setNew_balance(senderWallet.getCurrent_balance());
-            walletTransfer.save();
-        }
+        walletTransfer.setResponse_code(fromEnum(updateResponse.getResponseCode()));
+        walletTransfer.setNew_balance(senderWallet.getCurrent_balance());
+        walletTransfer.save();
 
         return new SymWalletList(updateResponse.getResponseCode(), converterService.toDTO(senderWallet));
     }
@@ -634,5 +634,10 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
     @Override
     public SymWalletTransactionList getWalletTransactions(Long authUserId, String deviceId, String authToken, Long walletId) {
         return symbiosisRequestProcessor.getWalletTransactions(authUserId, deviceId, SMART_PHONE, authToken, walletId);
+    }
+
+    @Override
+    public SymVoucherPurchaseList getVoucherPurchase(Long authUserId, String deviceId, String authToken, Long walletId) {
+        return symbiosisRequestProcessor.getVoucherPurchase(authUserId, deviceId, SMART_PHONE, authToken, walletId);
     }
 }

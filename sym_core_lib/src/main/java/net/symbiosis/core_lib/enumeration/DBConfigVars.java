@@ -67,4 +67,5 @@ public class DBConfigVars {
     public static final String CONFIG_GLO_SERVICE_CLIENT_ID = "glo_service_client_id";
     public static final String CONFIG_GLO_SERVICE_USER_ID = "glo_service_user_id";
     public static final String CONFIG_GLO_SERVICE_PASSWORD = "glo_service_password";
+    public static final String CONFIG_GLO_SERVICE_LOW_BALANCE_THRESHOLD = "glo_service_low_balance_threshold";
 }
