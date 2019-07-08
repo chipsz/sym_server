@@ -6,6 +6,7 @@ import net.symbiosis.persistence.entity.complex_type.voucher.sym_service_provide
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_transfer_charge;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_voucher_discount;
 import net.symbiosis.persistence.entity.enumeration.*;
 import org.springframework.stereotype.Component;
@@ -45,7 +46,8 @@ public class UpdateOptions implements Serializable {
     private List<sym_response_code> logStatuses;
     private List<sym_voucher_provider> voucherProviders;
     private List<sym_service_provider> serviceProviders;
-    private List<sym_wallet_group_voucher_discount> walletGroupVouchers;
+    private List<sym_wallet_group_voucher_discount> walletGroupVoucherDiscounts;
+    private List<sym_wallet_group_transfer_charge> walletGroupTransferCharges;
     private List<sym_voucher> vouchers;
 
     UpdateOptions() {
@@ -64,7 +66,8 @@ public class UpdateOptions implements Serializable {
         initVoucherProviders();
         initServiceProviders();
         initVouchers();
-        initWalletGroupVouchers();
+        initWalletGroupVoucherDiscounts();
+        initWalletGroupTransferCharges();
     }
 
     private List<sym_country> initCountries() {
@@ -228,9 +231,14 @@ public class UpdateOptions implements Serializable {
         return vouchers;
     }
 
-    public List<sym_wallet_group_voucher_discount> initWalletGroupVouchers() {
-        walletGroupVouchers = getEntityManagerRepo().findAll(sym_wallet_group_voucher_discount.class);
-        return walletGroupVouchers;
+    public List<sym_wallet_group_voucher_discount> initWalletGroupVoucherDiscounts() {
+        walletGroupVoucherDiscounts = getEntityManagerRepo().findAll(sym_wallet_group_voucher_discount.class);
+        return walletGroupVoucherDiscounts;
+    }
+
+    public List<sym_wallet_group_transfer_charge> initWalletGroupTransferCharges() {
+        walletGroupTransferCharges = getEntityManagerRepo().findAll(sym_wallet_group_transfer_charge.class);
+        return walletGroupTransferCharges;
     }
 
     public List<sym_voucher_type> getVoucherTypes() { return voucherTypes; }
@@ -241,6 +249,8 @@ public class UpdateOptions implements Serializable {
 
     public List<sym_voucher> getVouchers() { return vouchers; }
 
-    public List<sym_wallet_group_voucher_discount> getWalletGroupVouchers() { return walletGroupVouchers; }
+    public List<sym_wallet_group_voucher_discount> getWalletGroupVoucherDiscounts() { return walletGroupVoucherDiscounts; }
+
+    public List<sym_wallet_group_transfer_charge> getWalletGroupTransferCharges() { return walletGroupTransferCharges; }
 
 }

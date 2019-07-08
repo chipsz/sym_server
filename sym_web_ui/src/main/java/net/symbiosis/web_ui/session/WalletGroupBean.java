@@ -85,7 +85,7 @@ public class WalletGroupBean extends JSFUpdatable {
 
         /* create a wallet group voucher for each voucher */
         for (sym_voucher voucher : updateOptions.getVouchers()) {
-            updateOptions.getWalletGroupVouchers().add(
+            updateOptions.getWalletGroupVoucherDiscounts().add(
                 new sym_wallet_group_voucher_discount(newWalletGroup, voucher, newWalletGroup.getDefault_discount()).save()
             );
         }

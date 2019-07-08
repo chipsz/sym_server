@@ -107,7 +107,7 @@ public class VoucherCreateBean implements JSFLoggable {
 
         //create wallet group voucher for new voucher
         for (sym_wallet_group walletGroup : updateOptions.getWalletGroups()) {
-            updateOptions.getWalletGroupVouchers().add(
+            updateOptions.getWalletGroupVoucherDiscounts().add(
                 new sym_wallet_group_voucher_discount(walletGroup, newVoucher, walletGroup.getDefault_discount()).save()
             );
         }

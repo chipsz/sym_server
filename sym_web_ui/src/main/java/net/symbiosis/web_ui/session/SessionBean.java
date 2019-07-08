@@ -59,7 +59,8 @@ public class SessionBean implements Serializable {
         registerPageHandler(PAGE_RESET_PASSWORD);
         registerPageHandler(PAGE_SUMMARY);
         registerPageHandler(PAGE_V_IMPORT);
-        registerPageHandler(PAGE_WGV_UPDATE);
+        registerPageHandler(PAGE_WGVD_UPDATE);
+        registerPageHandler(PAGE_WGTC_UPDATE);
         registerPageHandler(PAGE_V_UPDATE);
         registerPageHandler(PAGE_V_CREATE);
         registerPageHandler(PAGE_M_CREATE);

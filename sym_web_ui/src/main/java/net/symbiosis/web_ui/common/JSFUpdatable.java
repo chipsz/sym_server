@@ -10,6 +10,7 @@ import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher;
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group;
+import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_transfer_charge;
 import net.symbiosis.persistence.entity.complex_type.wallet.sym_wallet_group_voucher_discount;
 import net.symbiosis.persistence.entity.enumeration.sym_event_type;
 import net.symbiosis.persistence.entity.enumeration.sym_response_code;
@@ -76,6 +77,7 @@ public abstract class JSFUpdatable extends JSFExportable implements JSFLoggable,
         if (updateTable instanceof sym_voucher_provider) { return fromEnum(VOUCHER_PROVIDER_UPDATE); }
         if (updateTable instanceof sym_wallet_group) { return fromEnum(WALLET_GROUP_UPDATE); }
         if (updateTable instanceof sym_wallet_group_voucher_discount) { return fromEnum(WALLET_GROUP_VOUCHER_DISCOUNT_UPDATE); }
+        if (updateTable instanceof sym_wallet_group_transfer_charge) { return fromEnum(WALLET_GROUP_TRANSFER_CHARGE_UPDATE); }
         if (updateTable instanceof sym_device_pos_machine) { return fromEnum(DEVICE_POS_MACHINE_UPDATE); }
         if (updateTable instanceof sym_device_phone) { return fromEnum(DEVICE_PHONE_UPDATE); }
         return null;
@@ -95,8 +97,7 @@ public abstract class JSFUpdatable extends JSFExportable implements JSFLoggable,
         Object oldValue = event.getOldValue(), newValue = event.getNewValue();
         String columnName = event.getColumn().getHeaderText();
 
-        logger.info(format("Got request to update \"%s\" column from \"%s\" to \"%s\"",
-                columnName, oldValue, newValue));
+        logger.info(format("Got request to update \"%s\" column from \"%s\" to \"%s\"", columnName, oldValue, newValue));
 
         if (newValue != null && !newValue.equals(oldValue)) {
 

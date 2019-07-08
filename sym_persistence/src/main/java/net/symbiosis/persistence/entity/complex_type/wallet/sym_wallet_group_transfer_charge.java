@@ -27,16 +27,16 @@ public class sym_wallet_group_transfer_charge extends sym_enum_entity<sym_wallet
     @Column(nullable = false)
     private BigDecimal starting_value;
     private BigDecimal ending_value;
-    private Double wallet_charge;
+    private Double transfer_charge;
 
     public sym_wallet_group_transfer_charge() {}
 
     public sym_wallet_group_transfer_charge(sym_wallet_group wallet_group, BigDecimal starting_value,
-                                            BigDecimal ending_value, Double wallet_charge) {
+                                            BigDecimal ending_value, Double transfer_charge) {
         this.wallet_group = wallet_group;
         this.starting_value = starting_value;
         this.ending_value = ending_value;
-        this.wallet_charge = wallet_charge;
+        this.transfer_charge = transfer_charge;
     }
 
     public sym_wallet_group getWallet_group() { return wallet_group; }
@@ -51,8 +51,8 @@ public class sym_wallet_group_transfer_charge extends sym_enum_entity<sym_wallet
 
     public void setEnding_value(BigDecimal ending_value) { this.ending_value = ending_value; }
 
-    public Double getWallet_charge() { return wallet_charge; }
+    public Double getTransfer_charge() { return transfer_charge; }
 
-    public void setWallet_charge(Double merchant_discount) { this.wallet_charge = merchant_discount; }
+    public void setTransfer_charge(Double merchant_discount) { this.transfer_charge = merchant_discount; }
 
 }

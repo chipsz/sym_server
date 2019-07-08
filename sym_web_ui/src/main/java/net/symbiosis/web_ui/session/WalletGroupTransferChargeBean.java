@@ -11,7 +11,7 @@ import static net.symbiosis.web_ui.common.DataTableHeaders.*;
 
 /***************************************************************************
  *                                                                         *
- * Created:     13 / 02 / 2017                                             *
+ * Created:     18 / 06 / 2019                                             *
  * Author:      Tsungai Kaviya                                             *
  * Contact:     tsungai.kaviya@gmail.com                                   *
  *                                                                         *
@@ -19,21 +19,23 @@ import static net.symbiosis.web_ui.common.DataTableHeaders.*;
 
 @Component
 @Scope("session")
-public class WalletGroupVoucherBean extends JSFUpdatable {
+public class WalletGroupTransferChargeBean extends JSFUpdatable {
 
-    private static final String TABLE_NAME = "Group Vouchers";
+    private static final String TABLE_NAME = "Transfer Charges";
 
     @Autowired
-    public WalletGroupVoucherBean(SessionBean sessionBean) {
+    public WalletGroupTransferChargeBean(SessionBean sessionBean) {
         super(sessionBean);
     }
 
     @PostConstruct
     public void init() {
         notUpdatableColumns.add(HEADER_TEXT_ID);
-        notUpdatableColumns.add(HEADER_TEXT_W_GROUP);
-        notUpdatableColumns.add(HEADER_TEXT_V_DESCRIPTION);
-        updatableColumns.add(HEADER_TEXT_M_DISCOUNT);
+        updatableColumns.add(HEADER_TEXT_NAME);
+        updatableColumns.add(HEADER_TEXT_ENABLED);
+        updatableColumns.add(HEADER_TEXT_STARTING_VALUE);
+        updatableColumns.add(HEADER_TEXT_ENDING_VALUE);
+        updatableColumns.add(HEADER_TEXT_TRANSFER_CHARGE);
     }
 
     @Override

@@ -58,8 +58,7 @@ public class sym_voucher_purchase extends sym_entity<sym_voucher_purchase> {
 	public sym_voucher_purchase() {}
 
 	public sym_voucher_purchase(sym_voucher voucher, sym_pinbased_voucher pinbased_voucher, String voucher_provider_reference, sym_wallet wallet,
-                                 /* sym_user system_user, */ sym_auth_user auth_user,
-                                sym_response_code response_code, BigDecimal voucher_value,
+	                            sym_auth_user auth_user, sym_response_code response_code, BigDecimal voucher_value,
                                 BigDecimal voucher_provider_value, BigDecimal wallet_cost, Date transaction_time,
                                 Boolean is_transaction_reconciled, String recipient, String cashier_name,
                                 sym_distribution_channel distribution_channel) {
@@ -67,7 +66,6 @@ public class sym_voucher_purchase extends sym_entity<sym_voucher_purchase> {
 		this.pinbased_voucher = pinbased_voucher;
         this.voucher_provider_reference = voucher_provider_reference;
         this.wallet = wallet;
-//		this.system_user = system_user;
 		this.auth_user = auth_user;
 		this.response_code = response_code;
 		this.voucher_value = voucher_value;
@@ -101,10 +99,6 @@ public class sym_voucher_purchase extends sym_entity<sym_voucher_purchase> {
     public sym_wallet getWallet() { return wallet; }
 
 	public void setWallet(sym_wallet merchant) { this.wallet = merchant; }
-
-//	public sym_user getSystem_user() { return system_user; }
-//
-//	public void setSystem_user(sym_user system_user) { this.system_user = system_user; }
 
 	public sym_auth_user getAuth_user() { return auth_user; }
 

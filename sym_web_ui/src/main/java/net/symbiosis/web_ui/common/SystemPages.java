@@ -14,7 +14,8 @@ public class SystemPages {
     public static final SystemPage PAGE_RESET_PASSWORD = new SystemPage("resetPassword", "reset_password.xhtml", null, null);
     public static final SystemPage PAGE_SUMMARY = new SystemPage("summary", "admin.xhtml", "summary.xhtml", null);
     public static final SystemPage PAGE_V_IMPORT = new SystemPage("vImport", "admin.xhtml", "v_import.xhtml", null);
-    public static final SystemPage PAGE_WGV_UPDATE = new SystemPage("wgvEdit", "admin.xhtml", "wgv_update.xhtml", null);
+    public static final SystemPage PAGE_WGVD_UPDATE = new SystemPage("wgvdEdit", "admin.xhtml", "wgvd_update.xhtml", null);
+    public static final SystemPage PAGE_WGTC_UPDATE = new SystemPage("wgtcEdit", "admin.xhtml", "wgtc_update.xhtml", null);
     public static final SystemPage PAGE_V_UPDATE = new SystemPage("vEdit", "admin.xhtml", "v_update.xhtml", null);
     public static final SystemPage PAGE_V_CREATE = new SystemPage("vCreate", "admin.xhtml", "v_create.xhtml", null);
     public static final SystemPage PAGE_M_CREATE = new SystemPage("mCreate", "admin.xhtml", "m_create.xhtml", null);

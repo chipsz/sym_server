@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+    <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
+</f:metadata>
+
+<h:form id="walletGroupTransferChargeForm" rendered="#{sessionBean.isCurrentPage('wgtcEdit')}" layout="block">
+    <p:dataTable id="walletGroupTransferCharges" var="wgtc" value="#{updateOptions.walletGroupTransferCharges}" draggableColumns="true"
+                 editable="true" resizableColumns="true" editMode="cell" widgetVar="cellWalletGroupTransferCharges"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                 paginator="true" pageLinks="5" rows="20" style="margin-bottom:20px">
+        <f:facet name="header">
+            <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
+            <p:columnToggler datasource="walletGroupTransferCharges" trigger="toggler" />
+            Group Vouchers<br/><br/>
+        </f:facet>
+        <p:ajax event="cellEdit" listener="#{walletGroupTransferChargeBean.onCellEdit}" update=":msgs" />
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_W_GROUP}" sortBy="#{wgtc.wallet_group.name}" filterBy="#{wgtc.wallet_group}">
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellWalletGroupTransferCharges').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.walletGroups}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{wgtc.wallet_group.name}" /></f:facet>
+                <f:facet name="input"><p:inputText readonly="true" value="#{wgtc.wallet_group.name}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ENABLED}" filterBy="#{wgtc.is_enabled}" filterMatchMode="exact">
+            <f:facet name="filter">
+                <p:selectOneMenu onchange="PF('cellWalletGroupTransferCharges').filter()" >
+                    <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
+                    <f:selectItems value="#{updateOptions.booleanList}" />
+                </p:selectOneMenu>
+            </f:facet>
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{wgtc.is_enabled}" /></f:facet>
+                <f:facet name="input">
+                    <h:selectOneMenu value="#{wgtc.is_enabled}" style="width:100%">
+                        <f:selectItems value="#{updateOptions.booleanList}" var="is_enabled" itemLabel="#{is_enabled}" itemValue="#{is_enabled}" />
+                    </h:selectOneMenu>
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_STARTING_VALUE}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{wgtc.starting_value}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{wgtc.starting_value}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_ENDING_VALUE}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{wgtc.ending_value}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{wgtc.ending_value}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_TRANSFER_CHARGE}" sortBy="#{wgtc.transfer_charge}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{wgtc.transfer_charge}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{wgtc.transfer_charge}" style="width:96%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+    </p:dataTable>
+    <p:contextMenu for="walletGroupTransferCharges" widgetVar="cMenu">
+        <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('cellWalletGroupTransferCharges').showCellEditor();return false;"/>
+        <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>
+    </p:contextMenu>
+</h:form>
+
+</html>

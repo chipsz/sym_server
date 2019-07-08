@@ -607,7 +607,7 @@ public class MobileRequestProcessorImpl implements MobileRequestProcessor {
             return new SymWalletList(GENERAL_ERROR);
         }
 
-        BigDecimal walletCost = amount.add(amount.multiply(new BigDecimal(walletTransferCharges.get(0).getWallet_charge()/100.0)));
+        BigDecimal walletCost = amount.add(amount.multiply(new BigDecimal(walletTransferCharges.get(0).getTransfer_charge()/100.0)));
 
         sym_wallet_transaction fromWalletDetails = new sym_wallet_transaction(senderWallet, fromEnum(WALLET_TRANSFER), walletCost.multiply(new BigDecimal(-1)),
             format("Wallet Transfer: %s to %s", formatDoubleToMoney(amount.doubleValue()), recipientUser.get(0).getWallet().getWallet_admin_user().getMsisdn()),

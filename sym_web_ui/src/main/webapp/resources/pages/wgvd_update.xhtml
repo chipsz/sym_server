@@ -9,8 +9,8 @@
     <f:event type="preRenderView" listener="#{sessionBean.checkValidSession}"/>
 </f:metadata>
 
-<h:form id="walletGroupVoucherForm" rendered="#{sessionBean.isCurrentPage('wgvEdit')}" layout="block">
-    <p:dataTable id="walletGroupVouchers" var="wgv" value="#{updateOptions.walletGroupVouchers}" draggableColumns="true"
+<h:form id="walletGroupVoucherForm" rendered="#{sessionBean.isCurrentPage('wgvdEdit')}" layout="block">
+    <p:dataTable id="walletGroupVouchers" var="wgtc" value="#{updateOptions.walletGroupVoucherDiscounts}" draggableColumns="true"
                  editable="true" resizableColumns="true" editMode="cell" widgetVar="cellWalletGroupVouchers"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                  paginator="true" pageLinks="5" rows="20" style="margin-bottom:20px">
@@ -19,8 +19,8 @@
             <p:columnToggler datasource="walletGroupVouchers" trigger="toggler" />
             Group Vouchers<br/><br/>
         </f:facet>
-        <p:ajax event="cellEdit" listener="#{walletGroupVoucherBean.onCellEdit}" update=":msgs" />
-        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_W_GROUP}" sortBy="#{wgv.wallet_group.name}" filterBy="#{wgv.wallet_group}">
+        <p:ajax event="cellEdit" listener="#{walletGroupVoucherDiscountBean.onCellEdit}" update=":msgs" />
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_W_GROUP}" sortBy="#{wgtc.wallet_group.name}" filterBy="#{wgtc.wallet_group}">
             <f:facet name="filter">
                 <p:selectOneMenu onchange="PF('cellWalletGroupVouchers').filter()" >
                     <f:selectItem itemLabel="No Filter" itemValue="#{null}" noSelectionOption="true" />
@@ -28,20 +28,20 @@
                 </p:selectOneMenu>
             </f:facet>
             <p:cellEditor>
-                <f:facet name="output"><h:outputText value="#{wgv.wallet_group.name}" /></f:facet>
-                <f:facet name="input"><p:inputText readonly="true" value="#{wgv.wallet_group.name}" style="width:96%"/></f:facet>
+                <f:facet name="output"><h:outputText value="#{wgtc.wallet_group.name}" /></f:facet>
+                <f:facet name="input"><p:inputText readonly="true" value="#{wgtc.wallet_group.name}" style="width:96%"/></f:facet>
             </p:cellEditor>
         </p:column>
         <p:column headerText="#{dataTableHeaders.HEADER_TEXT_V_DESCRIPTION}">
             <p:cellEditor>
-                <f:facet name="output"><h:outputText value="(#{wgv.voucher.id}) #{wgv.voucher.voucher_value} #{wgv.voucher.service_provider.name} #{wgv.voucher.voucher_type.name}" /></f:facet>
+                <f:facet name="output"><h:outputText value="(#{wgtc.voucher.id}) #{wgtc.voucher.voucher_value} #{wgtc.voucher.service_provider.name} #{wgtc.voucher.voucher_type.name}" /></f:facet>
                 <f:facet name="input"><p:inputText readonly="true" style="width:96%"/></f:facet>
             </p:cellEditor>
         </p:column>
-        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_M_DISCOUNT}" sortBy="#{wgv.wallet_discount}">
+        <p:column headerText="#{dataTableHeaders.HEADER_TEXT_M_DISCOUNT}" sortBy="#{wgtc.wallet_discount}">
             <p:cellEditor>
-                <f:facet name="output"><h:outputText value="#{wgv.wallet_discount}" /></f:facet>
-                <f:facet name="input"><p:inputText value="#{wgv.wallet_discount}" style="width:96%"/></f:facet>
+                <f:facet name="output"><h:outputText value="#{wgtc.wallet_discount}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{wgtc.wallet_discount}" style="width:96%"/></f:facet>
             </p:cellEditor>
         </p:column>
     </p:dataTable>

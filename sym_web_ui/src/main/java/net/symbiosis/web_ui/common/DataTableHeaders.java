@@ -72,6 +72,9 @@ public class DataTableHeaders {
     public static final String HEADER_TEXT_BANK_REF = "Bank Reference";
     public static final String HEADER_TEXT_DEPOSITOR_REF = "Depositor Reference";
     public static final String HEADER_TEXT_W_GROUP = "Wallet Group";
+    public static final String HEADER_TEXT_STARTING_VALUE = "Starting Value";
+    public static final String HEADER_TEXT_ENDING_VALUE = "Ending Value";
+    public static final String HEADER_TEXT_TRANSFER_CHARGE = "Transfer Charge";
     public static final String HEADER_TEXT_V_DESCRIPTION = "Voucher";
     public static final String HEADER_TEXT_T_AMOUNT = "Total Amount";
     public static final String HEADER_TEXT_VP_BATCH_ID = "VP Batch ID";
@@ -325,6 +328,18 @@ public class DataTableHeaders {
 
     public String getHEADER_TEXT_W_GROUP() {
         return HEADER_TEXT_W_GROUP;
+    }
+
+    public String getHEADER_TEXT_STARTING_VALUE() {
+        return HEADER_TEXT_STARTING_VALUE;
+    }
+
+    public String getHEADER_TEXT_ENDING_VALUE() {
+        return HEADER_TEXT_ENDING_VALUE;
+    }
+
+    public String getHEADER_TEXT_TRANSFER_CHARGE() {
+        return HEADER_TEXT_TRANSFER_CHARGE;
     }
 
     public String getHEADER_TEXT_V_DESCRIPTION() {

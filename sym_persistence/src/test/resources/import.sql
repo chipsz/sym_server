@@ -85,10 +85,10 @@ insert ignore into sym_event_type(id,name,is_enabled) values (1105,'WALLET_DISAB
 insert ignore into sym_event_type(id,name,is_enabled) values (1106,'WALLET_GROUP_CREATE',1);
 insert ignore into sym_event_type(id,name,is_enabled) values (1107,'WALLET_GROUP_UPDATE',1);
 insert ignore into sym_event_type(id,name,is_enabled) values (1108,'WALLET_GROUP_VOUCHER_DISCOUNT_UPDATE',1);
-insert ignore into sym_event_type(id,name,is_enabled) values (1109,'WALLET_GROUP_WALLET_CHARGE_UPDATE',1);
+insert ignore into sym_event_type(id,name,is_enabled) values (1109,'WALLET_GROUP_TRANSFER_CHARGE_UPDATE',1);
 insert ignore into sym_event_type(id,name,is_enabled) values (1110,'WALLET_SWIPE_IN',1);
 insert ignore into sym_event_type(id,name,is_enabled) values (1111,'WALLET_TRANSFER',1);
-insert ignore into sym_event_type(id,name,is_enabled) values (1111,'WALLET_HISTORY',1);
+insert ignore into sym_event_type(id,name,is_enabled) values (1112,'WALLET_HISTORY',1);
 
 insert ignore into sym_event_type (id,name,is_enabled) values (1200,'VOUCHER_IMPORT',1);
 insert ignore into sym_event_type (id,name,is_enabled) values (1201,'VOUCHER_CREATE',1);
@@ -351,11 +351,10 @@ insert ignore into sym_wallet_group_voucher_discount (wallet_group_id,voucher_id
 insert ignore into sym_wallet_group_voucher_discount (wallet_group_id,voucher_id,wallet_discount) select 2, v.voucher_id, 4.0 from sym_voucher v;
 insert ignore into sym_wallet_group_voucher_discount (wallet_group_id,voucher_id,wallet_discount) select 3, v.voucher_id, 5.0 from sym_voucher v;
 
-insert ignore into sym_transfer_charge(starting_value,ending_value)
-
-insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_type_id,transfer_charge) select 1, v.voucher_id, 3.5 from sym_voucher v;
-insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_type_id,transfer_charge) select 2, v.voucher_id, 4.0 from sym_voucher v;
-insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_type_id,transfer_charge) select 3, v.voucher_id, 5.0 from sym_voucher v;
+insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,transfer_charge) select wg.wallet_group_id, CONCAT(wg.name,'_0_TO_100'),0.0,100.0,2 from sym_wallet_group wg;
+insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,transfer_charge) select wg.wallet_group_id, CONCAT(wg.name,'_100_TO_500'),100.0,500.0,3 from sym_wallet_group wg;
+insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,transfer_charge) select wg.wallet_group_id, CONCAT(wg.name,'_500_TO_5000'),500.0,5000.0,4 from sym_wallet_group wg;
+insert ignore into sym_wallet_group_transfer_charge (wallet_group_id,transfer_charge_name,starting_value,ending_value,transfer_charge) select wg.wallet_group_id, CONCAT(wg.name,'_5000_PLUS'),5000.0,null,5 from sym_wallet_group wg;
 
 insert ignore into sym_company(company_id,company_name,address_line_1,address_line_2,address_city,address_country_id,phone1,phone2) values (1,'T3raTech','4 Janeen Close','Groombridge, Mt. Pleasant','Harare',2,'263785107830','27627938765');
 insert ignore into sym_user(first_name,last_name,username,email,msisdn,msisdn2,salt,user_status_id,country_id,language_id,password,password_tries,pin,pin_tries) values ('Tsungai','Kaviya','admin','tsungai.kaviya@gmail.com','263785107830','27627938765','b4ou790Xz4jBfY0B',30,2,1,'659f6d313bb6fb10ae238ed2ecd4f3365a6a72b8ba8fbe891265a17a6a7335',0,NULL,0);
