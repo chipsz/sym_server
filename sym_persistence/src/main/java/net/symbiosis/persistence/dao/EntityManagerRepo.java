@@ -46,14 +46,14 @@ public class EntityManagerRepo {
 
     @Transactional
     public <E extends sym_entity> E refresh(E e) {
-        try {
-            getEntityManager().refresh(e);
-            LOGGER.info("Refreshed " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + e.toString());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            LOGGER.severe("Could not refresh " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + ex.getMessage());
-            entityManager = null;
-        }
+//        try {
+//            getEntityManager().refresh(e);
+//            LOGGER.info("Refreshed " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + e.toString());
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            LOGGER.severe("Could not refresh " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + ex.getMessage());
+//            entityManager = null;
+//        }
         return e;
     }
 
@@ -246,9 +246,9 @@ public class EntityManagerRepo {
                 query.setMaxResults(maxResults).getResultList();
             }
             List<E> results = query.getResultList();
-            for (E result : results) {
-                result.refresh();
-            }
+//            for (E result : results) {
+//                result.refresh();
+//            }
             return results;
         } catch (Exception ex) {
             ex.printStackTrace();
