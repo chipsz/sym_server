@@ -11,9 +11,9 @@
 </f:metadata>
 
 <h:head>
-    <title>Symbiosis Control Center - Admin</title>
+    <title>#{systemSettings.systemName} Control Center - Admin</title>
     <h:outputStylesheet library="css" name="style.css"  />
-    <link rel="icon" type="image/x-icon" href="resources/images/favicon.png"/>
+    <link rel="icon" type="image/x-icon" href="resources/images/#{systemSettings.systemNameToLower}/favicon.ico"/>
 </h:head>
 
 <h:body>
@@ -23,7 +23,7 @@
     <div id="pageData" class="centerAlign" style="width: 90%;">
 
         <h:form id="pageHeader">
-            <p:panel header="Symbiosis Control Center" style="margin-bottom: 10px;">
+            <p:panel header="#{systemSettings.systemName} Control Center" style="margin-bottom: 10px;">
                 <table width="100%" style="table-layout: fixed">
                     <tr valign="top">
                         <td valign="top" class="leftAlign">

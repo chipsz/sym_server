@@ -111,8 +111,9 @@ public class WebAuthenticationProvider extends SymChainAuthenticationProvider {
                         .replaceAll("%support_phone%", getSymConfigDao().getConfig(CONFIG_SUPPORT_PHONE))
                         .replaceAll("%support_email%", getSymConfigDao().getConfig(CONFIG_SUPPORT_EMAIL))).append("\r\n");
             }
-            sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[]{newUser.getEmail(), getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)},
-                    "Welcome to Symbiosis Control Center!", registrationEmail.toString(), CONTENT_TYPE_HTML);
+            sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[]{newUser.getEmail(),
+                      getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)}, "Welcome to " +
+                      getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME) + " Control Center!", registrationEmail.toString(), CONTENT_TYPE_HTML);
         } catch (Exception e) {
             e.printStackTrace();
             sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), "Failed to send registration email! \r\n", e.getMessage());
@@ -162,8 +163,9 @@ public class WebAuthenticationProvider extends SymChainAuthenticationProvider {
                             .replaceAll("%support_phone%", getSymConfigDao().getConfig(CONFIG_SUPPORT_PHONE))
                             .replaceAll("%support_email%", getSymConfigDao().getConfig(CONFIG_SUPPORT_EMAIL)) + "\r\n";
                 }
-                sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[]{authUser.getUser().getEmail(), getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)},
-                        "Password Changed on Symbiosis Control Center", registrationEmail, CONTENT_TYPE_HTML);
+                sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[]{authUser.getUser().getEmail(),
+		                  getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)}, "Password Changed on " +
+		                  getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME) + " Control Center", registrationEmail, CONTENT_TYPE_HTML);
             } catch (Exception e) {
                 e.printStackTrace();
                 sendEmailAlert(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), "Failed to send password changed email! \r\n", e.getMessage());

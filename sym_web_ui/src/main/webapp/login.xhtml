@@ -6,9 +6,9 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-    <title>Symbiosis Control Center - Login</title>
+    <title>#{systemSettings.systemName} Control Center - Login</title>
     <h:outputStylesheet library="css" name="style.css"  />
-    <link rel="icon" type="image/x-icon" href="resources/images/favicon.png"/>
+    <link rel="icon" type="image/x-icon" href="resources/images/#{systemSettings.systemNameToLower}/favicon.ico"/>
 </h:head>
 <h:body>
     <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
@@ -17,9 +17,9 @@
     <div class="centerAlign">
         <h:form id="loginForm">
             <!--<p:defaultCommand target="btnLogin" />-->
-            <p:panel header="Login to Symbiosis Control Center" style="width: 900px;" styleClass="centerAlign">
+            <p:panel header="Login to #{systemSettings.systemName} Control Center" style="width: 900px;" styleClass="centerAlign">
                 <p class="centerAlign">POWERED BY</p>
-                <p class="centerAlign"><img src="resources/images/sym_logo_trans.jpg" width="276px"
+                <p class="centerAlign"><img src="resources/images/#{systemSettings.systemNameToLower}/logo.png" width="276px"
                                             alt="Symbiosis Logo"/></p>
                 <p:messages id="msgs" showDetail="false" showSummary="true"/>
                 <p:spacer/>

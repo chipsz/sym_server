@@ -90,8 +90,9 @@ public class PosAuthenticationProvider extends SymChainAuthenticationProvider {
                         .replaceAll("%support_phone%", getSymConfigDao().getConfig(CONFIG_SUPPORT_PHONE))
                         .replaceAll("%support_email%", getSymConfigDao().getConfig(CONFIG_SUPPORT_EMAIL))).append("\r\n");
             }
-            sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[] {user.getEmail(), getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)},
-                    "Welcome to " + getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), registrationEmail.toString(), CONTENT_TYPE_HTML);
+            sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[] {user.getEmail(),
+                      getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)}, "Welcome to " +
+                      getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), registrationEmail.toString(), CONTENT_TYPE_HTML);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -138,8 +139,9 @@ public class PosAuthenticationProvider extends SymChainAuthenticationProvider {
                             .replaceAll("%support_phone%", getSymConfigDao().getConfig(CONFIG_SUPPORT_PHONE))
                             .replaceAll("%support_email%", getSymConfigDao().getConfig(CONFIG_SUPPORT_EMAIL))).append("\r\n");
                 }
-                sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[] {authUser.getUser().getEmail(), getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)},
-                        "Pin changed on " + getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), registrationEmail.toString(), CONTENT_TYPE_HTML);
+                sendEmail(getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), new String[] {authUser.getUser().getEmail(),
+                          getSymConfigDao().getConfig(CONFIG_EMAIL_ALERT_TO)}, "Pin changed on " +
+                          getSymConfigDao().getConfig(CONFIG_SYSTEM_NAME), registrationEmail.toString(), CONTENT_TYPE_HTML);
             }
             catch (Exception e) {
                 e.printStackTrace();

@@ -17,7 +17,7 @@
         <f:facet name="header">
             <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="ui-icon-calculator" />
             <p:columnToggler datasource="walletGroupTransferCharges" trigger="toggler" />
-            Group Vouchers<br/><br/>
+            Wallet Group Transfer Charges<br/><br/>
         </f:facet>
         <p:ajax event="cellEdit" listener="#{walletGroupTransferChargeBean.onCellEdit}" update=":msgs" />
         <p:column headerText="#{dataTableHeaders.HEADER_TEXT_W_GROUP}" sortBy="#{wgtc.wallet_group.name}" filterBy="#{wgtc.wallet_group}">
