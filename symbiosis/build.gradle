@@ -27,10 +27,11 @@ dependencies {
     compile project(':sym_web_ui')
 
     testCompile project(':sym_core_lib').sourceSets.test.output
-    testCompile project(':sym_common').sourceSets.test.output
     testCompile project(':sym_persistence').sourceSets.test.output
+    testCompile project(':sym_common').sourceSets.test.output
     testCompile project(':sym_authentication').sourceSets.test.output
     testCompile project(':sym_core').sourceSets.test.output
+    testCompile project(':sym_api').sourceSets.test.output
     testCompile project(':sym_web_ui').sourceSets.test.output
 
     compile libraries.spring_core

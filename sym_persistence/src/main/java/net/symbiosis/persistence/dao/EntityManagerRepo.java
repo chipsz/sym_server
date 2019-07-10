@@ -37,10 +37,10 @@ public class EntityManagerRepo {
     private final static Integer UNLIMITED_RESULTS = -1;
 
     private EntityManager getEntityManager() {
-        if (entityManager == null) {
-            LOGGER.info("Creating entity manager from entityManagerFactory");
+        //if (entityManager == null) {
+        //    LOGGER.info("Creating entity manager from entityManagerFactory");
             entityManager = entityManagerFactory.createEntityManager();
-        }
+        //}
         return entityManager;
     }
 
@@ -62,15 +62,16 @@ public class EntityManagerRepo {
     public <E extends sym_entity> E saveOrUpdate(sym_entity<E> e) {
         LOGGER.info("Updating entity: " + e.toString());
         try {
-            getEntityManager().getTransaction().begin();
-            e = getEntityManager().merge(e);
-            getEntityManager().getTransaction().commit();
+	        entityManager = getEntityManager();
+	        entityManager.getTransaction().begin();
+            e = entityManager.merge(e);
+            entityManager.getTransaction().commit();
             LOGGER.info("Updated " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + e.toString());
         } catch (Exception ex) {
             ex.printStackTrace();
             LOGGER.severe("Could not merge " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + ex.getMessage());
-            if (getEntityManager().getTransaction().isActive()) {
-                getEntityManager().getTransaction().rollback();
+            if (entityManager.getTransaction().isActive()) {
+	            entityManager.getTransaction().rollback();
             }
             entityManager = null;
             throw new RuntimeException(ex.getMessage());
@@ -83,15 +84,16 @@ public class EntityManagerRepo {
     public <E extends sym_entity> E save(sym_entity<E> e) {
         LOGGER.info("Saving new entity to database: " + e.toString());
         try {
-            getEntityManager().getTransaction().begin();
-            getEntityManager().persist(e);
-            getEntityManager().getTransaction().commit();
+            entityManager = getEntityManager();
+            entityManager.getTransaction().begin();
+            entityManager.persist(e);
+            entityManager.getTransaction().commit();
             LOGGER.info("Persisted " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + e.toString());
         } catch (Exception ex) {
             ex.printStackTrace();
             LOGGER.severe("Could not persist " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + ex.getMessage());
-            if (getEntityManager().getTransaction().isActive()) {
-                getEntityManager().getTransaction().rollback();
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
             }
             entityManager = null;
             throw new RuntimeException(ex);
@@ -103,9 +105,10 @@ public class EntityManagerRepo {
     public <E extends sym_entity> void delete(sym_entity<E> e) {
         LOGGER.info("Deleting entity " + e.toString());
         try {
-            getEntityManager().getTransaction().begin();
-            getEntityManager().remove(e);
-            getEntityManager().getTransaction().commit();
+            entityManager = getEntityManager();
+            entityManager.getTransaction().begin();
+            entityManager.remove(e);
+            entityManager.getTransaction().commit();
         } catch (Exception ex) {
             ex.printStackTrace();
             LOGGER.severe("Could not delete " + e + " : " + ex.getMessage());

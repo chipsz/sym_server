@@ -4,7 +4,24 @@ Restore old data to table on failed update
 
 JBoss monitoring for reboot
 Create jboss-deployment-structure for PGP
-Bank Management
 
 register existing user
 duplicate key exception on null emails/phone/msisdn
+email images not generic
+
+# UI
+swipe transaction report
+voucher provider payment
+wallet transaction report
+wallet transfer report
+Cashout transaction list
+
+Bank Management
+Cashout account management
+Register existing company on app
+Disable phone device
+SMS notification
+incoming payment report
+integration log report
+pin import config
+request response log
