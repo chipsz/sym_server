@@ -37,10 +37,10 @@ public class EntityManagerRepo {
     private final static Integer UNLIMITED_RESULTS = -1;
 
     private EntityManager getEntityManager() {
-        //if (entityManager == null) {
-        //    LOGGER.info("Creating entity manager from entityManagerFactory");
+        if (entityManager == null || !entityManager.isOpen()) {
+            LOGGER.info("Creating entity manager from entityManagerFactory");
             entityManager = entityManagerFactory.createEntityManager();
-        //}
+        }
         return entityManager;
     }
 
