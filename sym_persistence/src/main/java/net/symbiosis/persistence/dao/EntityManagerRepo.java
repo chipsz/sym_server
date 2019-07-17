@@ -46,14 +46,15 @@ public class EntityManagerRepo {
 
     @Transactional
     public <E extends sym_entity> E refresh(E e) {
-//        try {
-//            getEntityManager().refresh(e);
-//            LOGGER.info("Refreshed " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + e.toString());
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//            LOGGER.severe("Could not refresh " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + ex.getMessage());
-//            entityManager = null;
-//        }
+        try {
+	        entityManager = getEntityManager();
+            entityManager.refresh(e);
+            LOGGER.info("Refreshed " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + e.toString());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            LOGGER.severe("Could not refresh " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + ex.getMessage());
+            entityManager = null;
+        }
         return e;
     }
 
@@ -61,18 +62,19 @@ public class EntityManagerRepo {
     @SuppressWarnings("unchecked")
     public <E extends sym_entity> E saveOrUpdate(sym_entity<E> e) {
         LOGGER.info("Updating entity: " + e.toString());
+	    entityManager = getEntityManager();
+	    EntityTransaction transaction = entityManager.getTransaction();
         try {
-	        entityManager = getEntityManager();
-	        entityManager.getTransaction().begin();
-            e = entityManager.merge(e);
-            entityManager.getTransaction().commit();
+	        transaction.begin();
+	        e = entityManager.merge(e);
+	        transaction.commit();
             LOGGER.info("Updated " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + e.toString());
         } catch (Exception ex) {
             ex.printStackTrace();
             LOGGER.severe("Could not merge " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + ex.getMessage());
-            if (entityManager.getTransaction().isActive()) {
-	            entityManager.getTransaction().rollback();
-            }
+            //if (transaction != null && transaction.isActive()) {
+	        //    transaction.rollback();
+            //}
             entityManager = null;
             throw new RuntimeException(ex.getMessage());
         }
@@ -83,18 +85,19 @@ public class EntityManagerRepo {
     @SuppressWarnings("unchecked")
     public <E extends sym_entity> E save(sym_entity<E> e) {
         LOGGER.info("Saving new entity to database: " + e.toString());
+	    entityManager = getEntityManager();
+	    EntityTransaction transaction = entityManager.getTransaction();
         try {
-            entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
+	        transaction.begin();
             entityManager.persist(e);
-            entityManager.getTransaction().commit();
+	        transaction.commit();
             LOGGER.info("Persisted " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + e.toString());
         } catch (Exception ex) {
             ex.printStackTrace();
             LOGGER.severe("Could not persist " + e.getClass().getSimpleName() + " with Id " + e.getId() + ": " + ex.getMessage());
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback();
-            }
+	        //if (transaction != null && transaction.isActive()) {
+		    //    transaction.rollback();
+	        //}
             entityManager = null;
             throw new RuntimeException(ex);
         }
@@ -104,11 +107,12 @@ public class EntityManagerRepo {
     @Transactional
     public <E extends sym_entity> void delete(sym_entity<E> e) {
         LOGGER.info("Deleting entity " + e.toString());
+	    entityManager = getEntityManager();
+	    EntityTransaction transaction = entityManager.getTransaction();
         try {
-            entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
+	        transaction.begin();
             entityManager.remove(e);
-            entityManager.getTransaction().commit();
+	        transaction.commit();
         } catch (Exception ex) {
             ex.printStackTrace();
             LOGGER.severe("Could not delete " + e + " : " + ex.getMessage());
@@ -139,9 +143,9 @@ public class EntityManagerRepo {
         LOGGER.info(entityClass.getSimpleName() + " countWhere " + conditions);
         String queryString = "SELECT count(e) FROM " + entityClass.getSimpleName() + " e WHERE " + conditions;
 
+	    entityManager = getEntityManager();
         try {
-            Query query = getEntityManager().createQuery(queryString);
-            return (Long) query.getResultList().get(0);
+            return (Long) entityManager.createQuery(queryString).getResultList().get(0);
         } catch (Exception ex) {
             ex.printStackTrace();
             LOGGER.severe("Could not execute countWhere query " + queryString + ": " + ex.getMessage());
@@ -158,8 +162,9 @@ public class EntityManagerRepo {
     public <E extends sym_entity> Long countAll(Class<E> entityClass) {
         LOGGER.info("countAll " + entityClass.getSimpleName());
         String queryString = "SELECT count(e) FROM " + entityClass.getSimpleName() + " e";
-        try {
-            return (Long) getEntityManager().createQuery(queryString).getResultList().get(0);
+	    entityManager = getEntityManager();
+	    try {
+            return (Long) entityManager.createQuery(queryString).getResultList().get(0);
         } catch (Exception ex) {
             ex.printStackTrace();
             LOGGER.severe("Could not execute countAll query " + queryString + ": " + ex.getMessage());
@@ -171,8 +176,9 @@ public class EntityManagerRepo {
     @Transactional
     public <E extends sym_entity, I extends Serializable> E findById(Class<E> entityClass, I id) {
         LOGGER.info(entityClass.getSimpleName() + " findById " + id);
-        try {
-            E result = getEntityManager().find(entityClass, id);
+	    entityManager = getEntityManager();
+	    try {
+            E result = entityManager.find(entityClass, id);
 //            if (result != null) {
 //                result.refresh();
 //            }
@@ -190,8 +196,9 @@ public class EntityManagerRepo {
     public <E extends sym_entity> List<E> findAll(Class<E> entityClass, boolean reverseOrder) {
         LOGGER.info("findAll " + entityClass.getSimpleName());
         String queryString = "SELECT e FROM " + entityClass.getSimpleName() + " e" + (reverseOrder ? " ORDER BY e.id DESC" : "");
-        try {
-            List<E> results = getEntityManager().createQuery(queryString).getResultList();
+	    try {
+		    entityManager = getEntityManager();
+		    List<E> results = entityManager.createQuery(queryString).getResultList();
 //            for (E result : results) {
 //                result.refresh();
 //            }
@@ -244,7 +251,8 @@ public class EntityManagerRepo {
         String queryString = "SELECT e FROM " + entityClass.getSimpleName() + " e WHERE " +
                 conditions + (reverseOrder ? " ORDER BY e.id DESC" : "");
         try {
-            Query query = getEntityManager().createQuery(queryString);
+	        entityManager = getEntityManager();
+            Query query = entityManager.createQuery(queryString);
             if (maxResults > 0) {
                 query.setMaxResults(maxResults).getResultList();
             }

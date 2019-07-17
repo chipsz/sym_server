@@ -191,6 +191,7 @@ project.ext.libraries = [
 	hibernate_annotations:	[ group: 'org.hibernate',	name: 'hibernate-annotations',		version: '3.5.6-Final' ],
 	hibernate_antlr:		[ group: 'org.hibernate',	name: 'antlr',						version: '2.7.5H3' ],
 	hibernate_ejb3:			[ group: 'org.hibernate',	name: 'ejb3-persistence',			version: '1.0.2.GA' ],
+	hibernate_c3p0:			[ group: 'org.hibernate',	name: 'hibernate-c3p0',				version: '5.4.3.Final' ],
 	ehcache:				[ group: 'org.ehcache',		name: 'ehcache',					version: '3.3.1' ],
 	jpa_2_1_api: [ group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api',	version: '1.0.0.Final' ],
 	jpa_2_0_api: [ group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.0-api',	version: '1.0.1.Final' ],
