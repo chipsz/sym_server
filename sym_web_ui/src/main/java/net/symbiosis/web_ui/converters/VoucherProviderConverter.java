@@ -2,7 +2,7 @@ package net.symbiosis.web_ui.converters;
 
 import net.symbiosis.persistence.entity.complex_type.voucher.sym_voucher_provider;
 
-import javax.faces.bean.ManagedBean;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -20,7 +20,8 @@ import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
  * Contact:     tsungai.kaviya@gmail.com                                   *
  *                                                                         *
  ***************************************************************************/
-@ManagedBean
+
+@ApplicationScoped
 @FacesConverter(value="vpConverter")
 public class VoucherProviderConverter implements Converter {
 

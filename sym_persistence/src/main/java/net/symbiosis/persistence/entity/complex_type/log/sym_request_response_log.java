@@ -78,39 +78,46 @@ public class sym_request_response_log extends sym_entity<sym_request_response_lo
     }
 
     public sym_channel getChannel() {
-        return channel;
+        return this.channel;
     }
 
-    public void setChannel(sym_channel channel) {
+    public sym_request_response_log setChannel(sym_channel channel) {
         this.channel = channel;
+        return this;
     }
 
     public sym_event_type getEvent_type() {
-        return event_type;
+        return this.event_type;
     }
 
-    public void setEvent_type(sym_event_type event_type) {
+    public sym_request_response_log setEvent_type(sym_event_type event_type) {
         this.event_type = event_type;
+        return this;
     }
 
     public sym_auth_user getAuth_user() {
-        return auth_user;
+        return this.auth_user;
     }
 
-    public void setAuth_user(sym_auth_user auth_user) {
+    public sym_request_response_log setAuth_user(sym_auth_user auth_user) {
         this.auth_user = auth_user;
+        if (this.system_user == null && auth_user != null) {
+            this.system_user = auth_user.getUser();
+        }
+        return this;
     }
 
     public sym_user getSystem_user() {
-        return system_user;
+        return this.system_user;
     }
 
-    public void setSystem_user(sym_user system_user) {
+    public sym_request_response_log setSystem_user(sym_user system_user) {
         this.system_user = system_user;
+        return this;
     }
 
     public sym_response_code getResponse_code() {
-        return response_code;
+        return this.response_code;
     }
 
     public sym_request_response_log setResponse_code(sym_response_code response_code) {
@@ -119,15 +126,16 @@ public class sym_request_response_log extends sym_entity<sym_request_response_lo
     }
 
     public Date getIncoming_request_time() {
-        return incoming_request_time;
+        return this.incoming_request_time;
     }
 
-    public void setIncoming_request_time(Date incoming_request_time) {
+    public sym_request_response_log setIncoming_request_time(Date incoming_request_time) {
         this.incoming_request_time = incoming_request_time;
+        return this;
     }
 
     public Date getOutgoing_response_time() {
-        return outgoing_response_time;
+        return this.outgoing_response_time;
     }
 
     public sym_request_response_log setOutgoing_response_time(Date outgoing_response_time) {
@@ -136,15 +144,16 @@ public class sym_request_response_log extends sym_entity<sym_request_response_lo
     }
 
     public String getIncoming_request() {
-        return incoming_request;
+        return this.incoming_request;
     }
 
-    public void setIncoming_request(String incoming_request) {
+    public sym_request_response_log setIncoming_request(String incoming_request) {
         this.incoming_request = incoming_request;
+        return this;
     }
 
     public String getOutgoing_response() {
-        return outgoing_response;
+        return this.outgoing_response;
     }
 
     public sym_request_response_log setOutgoing_response(String outgoing_response) {

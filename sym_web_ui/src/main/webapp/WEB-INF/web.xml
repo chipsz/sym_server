@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://java.sun.com/xml/ns/javaee"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-	                         http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         id="WebApp_ID" version="2.5">
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="WebApp_ID" version="3.0">
     <display-name>Symbiosis Web UI</display-name>
 
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Symbiosis Web UI</web-resource-name>
-            <url-pattern>/*</url-pattern>
-        </web-resource-collection>
-        <!--<user-data-constraint>-->
-            <!--<transport-guarantee>CONFIDENTIAL</transport-guarantee>-->
-        <!--</user-data-constraint>-->
-    </security-constraint>
+<!--    <security-constraint>-->
+<!--        <web-resource-collection>-->
+<!--            <web-resource-name>Symbiosis Web UI</web-resource-name>-->
+<!--            <url-pattern>/*</url-pattern>-->
+<!--        </web-resource-collection>-->
+<!--        &lt;!&ndash;<user-data-constraint>&ndash;&gt;-->
+<!--            &lt;!&ndash;<transport-guarantee>CONFIDENTIAL</transport-guarantee>&ndash;&gt;-->
+<!--        &lt;!&ndash;</user-data-constraint>&ndash;&gt;-->
+<!--    </security-constraint>-->
 
     <!-- black-tie / cupertino / cruze / excite-bike -->
     <context-param>
@@ -42,7 +41,7 @@
         <location>/login.xhtml</location>
     </error-page>
     <error-page>
-        <exception-type>com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException</exception-type>
+        <exception-type>java.sql.SQLIntegrityConstraintViolationException</exception-type>
         <location>/login.xhtml</location>
     </error-page>
 

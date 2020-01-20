@@ -1,11 +1,11 @@
 rootProject.name = 'sym_server'
 
 include ':sym_core_lib'
-include ':sym_common'
 include ':sym_persistence'
+include ':sym_common'
 include ':sym_authentication'
 include ':sym_core'
 include ':sym_api'
-include ':sym_service'
+//include ':sym_service'
 include ':sym_web_ui'
 //include ':symbiosis'

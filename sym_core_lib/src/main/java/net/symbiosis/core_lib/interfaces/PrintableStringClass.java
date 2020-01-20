@@ -17,7 +17,18 @@ public interface PrintableStringClass {
         try {
             stringBuilder.append("{ ");
             for (Field field : this.getClass().getDeclaredFields()) {
+//                try {
+//                    Method mGet = this.getClass().getDeclaredMethod("get");
+//                    Method mGetName = this.getClass().getDeclaredMethod("getName");
+//                    if (!mGet.canAccess(field) || !mGetName.canAccess(field)) {
+//                        field.setAccessible(true);
+//                    }
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                    return "";
+//                }
                 if (!field.isAccessible()) {
+//                if (!this.canAccess(field)) {
                     field.setAccessible(true);
                 }
                 Object fieldValue = field.get(this);

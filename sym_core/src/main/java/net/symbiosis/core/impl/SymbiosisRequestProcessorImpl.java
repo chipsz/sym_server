@@ -9,7 +9,6 @@ import net.symbiosis.core.service.SymbiosisRequestProcessor;
 import net.symbiosis.core_lib.enumeration.SymChannel;
 import net.symbiosis.core_lib.response.SymResponseObject;
 import net.symbiosis.core_lib.structure.Pair;
-import net.symbiosis.persistence.dao.EnumEntityRepoManager;
 import net.symbiosis.persistence.entity.complex_type.device.sym_device_phone;
 import net.symbiosis.persistence.entity.complex_type.device.sym_device_pos_machine;
 import net.symbiosis.persistence.entity.complex_type.log.sym_request_response_log;
@@ -35,6 +34,7 @@ import static net.symbiosis.core_lib.enumeration.SymChannel.POS_MACHINE;
 import static net.symbiosis.core_lib.enumeration.SymEventType.VOUCHER_PURCHASE_QUERY;
 import static net.symbiosis.core_lib.enumeration.SymEventType.WALLET_HISTORY;
 import static net.symbiosis.core_lib.enumeration.SymResponseCode.*;
+import static net.symbiosis.persistence.dao.EnumEntityRepoManager.findEnabled;
 import static net.symbiosis.persistence.helper.DaoManager.getEntityManagerRepo;
 import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
 
@@ -71,7 +71,7 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
     @Override
     public SymList getResponseCodes() {
         logger.info("Getting system response code list");
-        List<sym_response_code> dbResponseCodes = EnumEntityRepoManager.findEnabled(sym_response_code.class);
+        List<sym_response_code> dbResponseCodes = findEnabled(sym_response_code.class);
         logger.info(format("Got %s sym_response_codes from DB", dbResponseCodes.size()));
         ArrayList<SymResponse> responses = new ArrayList<>();
         dbResponseCodes.forEach((r) -> responses.add(new SymResponse(r)));
@@ -80,20 +80,17 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
 
     @Override
     public SymEnumEntity getLanguage(Long languageId) {
-        return new SymEnumEntity(SUCCESS,
-                converterService.toDTO(getEntityManagerRepo().findById(sym_language.class, languageId)));
+        return new SymEnumEntity(SUCCESS, converterService.toDTO(getEntityManagerRepo().findById(sym_language.class, languageId)));
     }
 
     @Override
     public SymEnumEntity getChannel(Long channelId) {
-        return new SymEnumEntity(SUCCESS,
-                converterService.toDTO(getEntityManagerRepo().findById(sym_channel.class, channelId)));
+        return new SymEnumEntity(SUCCESS, converterService.toDTO(getEntityManagerRepo().findById(sym_channel.class, channelId)));
     }
 
     @Override
     public SymEnumEntity getCountry(Long countryId) {
-        return new SymEnumEntity(SUCCESS,
-                converterService.toDTO(getEntityManagerRepo().findById(sym_country.class, countryId)));
+        return new SymEnumEntity(SUCCESS, converterService.toDTO(getEntityManagerRepo().findById(sym_country.class, countryId)));
     }
 
     @Override
@@ -111,7 +108,7 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
     public SymFinancialInstitutionList getFinancialInstitutions() {
         logger.info("Getting financial institution list");
         ArrayList<SymFinancialInstitution> financialInstitutions = new ArrayList<>();
-        EnumEntityRepoManager.findEnabled(sym_financial_institution.class).forEach(f -> financialInstitutions.add(converterService.toDTO(f)));
+        findEnabled(sym_financial_institution.class).forEach(f -> financialInstitutions.add(converterService.toDTO(f)));
         logger.info(format("Returning %s financial institutions", financialInstitutions.size()));
         return new SymFinancialInstitutionList(SUCCESS, financialInstitutions);
     }
@@ -131,7 +128,7 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
     public SymCurrencyList getCurrencies() {
         logger.info("Getting currency list");
         ArrayList<SymCurrency> currencies = new ArrayList<>();
-        EnumEntityRepoManager.findEnabled(sym_currency.class).forEach(c -> currencies.add(converterService.toDTO(c)));
+        findEnabled(sym_currency.class).forEach(c -> currencies.add(converterService.toDTO(c)));
         logger.info(format("Returning %s currencies", currencies.size()));
         return new SymCurrencyList(SUCCESS, currencies);
     }
@@ -146,13 +143,6 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
                 fromEnum(channel), fromEnum(WALLET_HISTORY), incomingRequest
         ).save();
 
-        SymResponseObject<sym_wallet> walletResponse = validateWallet(walletId);
-        if (!walletResponse.getResponseCode().equals(SUCCESS)) {
-            logger.warning("Failed to validate walletId! " + walletResponse.getMessage());
-            logResponse(null, requestResponseLog, walletResponse.getResponseCode());
-            return new SymWalletList(walletResponse.getResponseCode());
-        }
-
         SymResponseObject<sym_auth_user> authUserResponse = validateAuthUser(authUserId);
         if (authUserResponse.getResponseCode() != SUCCESS) {
             logger.warning("Failed to validate authUserId! " + authUserResponse.getMessage());
@@ -160,18 +150,25 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
             return new SymWalletList(authUserResponse.getResponseCode());
         }
 
-        SymResponseObject<sym_device_phone> deviceResponse = validatePhoneDevice(deviceId, false);
-        if (!deviceResponse.getResponseCode().equals(SUCCESS)) {
-            logger.warning("Failed to validate deviceId! " + deviceResponse.getMessage());
-            logResponse(null, requestResponseLog, deviceResponse.getResponseCode());
-            return new SymWalletList(deviceResponse.getResponseCode());
-        }
-
         SymResponseObject<sym_session> sessionResponse = verifyLogin(authUserId, deviceId, authToken);
         if (sessionResponse.getResponseCode() != SUCCESS) {
             logger.warning("Failed to validate session! " + sessionResponse.getMessage());
             logResponse(null, requestResponseLog, sessionResponse.getResponseCode());
             return new SymWalletList(sessionResponse.getResponseCode());
+        }
+
+        SymResponseObject<sym_wallet> walletResponse = validateWallet(walletId);
+        if (!walletResponse.getResponseCode().equals(SUCCESS)) {
+            logger.warning("Failed to validate walletId! " + walletResponse.getMessage());
+            logResponse(authUserResponse.getResponseObject(), requestResponseLog, walletResponse.getResponseCode());
+            return new SymWalletList(walletResponse.getResponseCode());
+        }
+
+        SymResponseObject<sym_device_phone> deviceResponse = validatePhoneDevice(deviceId, false);
+        if (!deviceResponse.getResponseCode().equals(SUCCESS)) {
+            logger.warning("Failed to validate deviceId! " + deviceResponse.getMessage());
+            logResponse(authUserResponse.getResponseObject(), requestResponseLog, deviceResponse.getResponseCode());
+            return new SymWalletList(deviceResponse.getResponseCode());
         }
         logger.info(format("Returning wallet with Id %s: %s", walletId, walletResponse.getResponseObject().toString()));
         return new SymWalletList(SUCCESS, converterService.toDTO(walletResponse.getResponseObject()));
@@ -187,26 +184,12 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
             fromEnum(channel), fromEnum(WALLET_HISTORY), incomingRequest
         ).save();
 
-        SymResponseObject<sym_wallet> walletResponse = validateWallet(walletId);
-        if (!walletResponse.getResponseCode().equals(SUCCESS)) {
-            logger.warning("Failed to validate walletId! " + walletResponse.getMessage());
-            logResponse(null, requestResponseLog, walletResponse.getResponseCode());
-            return new SymWalletTransactionList(walletResponse.getResponseCode());
-        }
-
-        SymResponseObject<sym_auth_user> authUserResponse = validateAuthUser(authUserId);
-        if (authUserResponse.getResponseCode() != SUCCESS) {
-            logger.warning("Failed to validate authUserId! " + authUserResponse.getMessage());
-            logResponse(null, requestResponseLog, authUserResponse.getResponseCode());
-            return new SymWalletTransactionList(authUserResponse.getResponseCode());
-        }
-
-        SymResponseObject<sym_device_phone> deviceResponse = validatePhoneDevice(deviceId, false);
-        if (!deviceResponse.getResponseCode().equals(SUCCESS)) {
-            logger.warning("Failed to validate deviceId! " + deviceResponse.getMessage());
-            logResponse(null, requestResponseLog, deviceResponse.getResponseCode());
-            return new SymWalletTransactionList(deviceResponse.getResponseCode());
-        }
+//        SymResponseObject<sym_auth_user> authUserResponse = validateAuthUser(authUserId);
+//        if (authUserResponse.getResponseCode() != SUCCESS) {
+//            logger.warning("Failed to validate authUserId! " + authUserResponse.getMessage());
+//            logResponse(null, requestResponseLog, authUserResponse.getResponseCode());
+//            return new SymWalletTransactionList(authUserResponse.getResponseCode());
+//        }
 
         SymResponseObject<sym_session> sessionResponse = verifyLogin(authUserId, deviceId, authToken);
         if (sessionResponse.getResponseCode() != SUCCESS) {
@@ -215,18 +198,35 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
             return new SymWalletTransactionList(sessionResponse.getResponseCode());
         }
 
-        if (!walletResponse.getResponseObject().getWallet_admin_user().getId().equals(authUserResponse.getResponseObject().getId())) {
+        sym_auth_user authUser = sessionResponse.getResponseObject().getAuth_user();
+
+        SymResponseObject<sym_wallet> walletResponse = validateWallet(walletId);
+        if (!walletResponse.getResponseCode().equals(SUCCESS)) {
+            logger.warning("Failed to validate walletId! " + walletResponse.getMessage());
+            logResponse(authUser, requestResponseLog, walletResponse.getResponseCode());
+            return new SymWalletTransactionList(walletResponse.getResponseCode());
+        }
+
+        SymResponseObject<sym_device_phone> deviceResponse = validatePhoneDevice(deviceId, false);
+        if (!deviceResponse.getResponseCode().equals(SUCCESS)) {
+            logger.warning("Failed to validate deviceId! " + deviceResponse.getMessage());
+            logResponse(authUser, requestResponseLog, deviceResponse.getResponseCode());
+            return new SymWalletTransactionList(deviceResponse.getResponseCode());
+        }
+
+        if (!walletResponse.getResponseObject().getWallet_admin_user().getId().equals(authUser.getId())) {
             logger.warning(format("Incorrect wallet admin user %s! Auth user has no privileges to pull transactions", authUserId));
-            logResponse(null, requestResponseLog, sessionResponse.getResponseCode());
+            logResponse(authUser, requestResponseLog, sessionResponse.getResponseCode());
             return new SymWalletTransactionList(sessionResponse.getResponseCode());
         }
 
         ArrayList<SymWalletTransaction> walletTransactions = new ArrayList<>();
         getEntityManagerRepo().findWhere(sym_wallet_transaction.class,
-            new Pair<>("wallet_id", authUserResponse.getResponseObject().getUser().getWallet().getId()),20
+            new Pair<>("wallet_id", authUser.getUser().getWallet().getId()),20
         ).forEach(v -> walletTransactions.add(converterService.toDTO(v)));
 
         requestResponseLog.setResponse_code(fromEnum(SUCCESS))
+            .setAuth_user(authUser)
             .setOutgoing_response(walletTransactions.toString())
             .setOutgoing_response_time(new Date())
             .save();
@@ -246,8 +246,9 @@ public class SymbiosisRequestProcessorImpl implements SymbiosisRequestProcessor 
 
 	    SymResponseObject<sym_session> authResponse = verifyLogin(authUserId, deviceId, authToken);
 	    if (!authResponse.getResponseCode().equals(SUCCESS)) {
-		    logResponse(null, requestResponseLog, authResponse.getResponseCode());
-		    return new SymVoucherPurchaseList(authResponse.getResponseCode());
+            logger.warning("Failed to validate session! " + authResponse.getMessage());
+            logResponse(null, requestResponseLog, authResponse.getResponseCode());
+            return new SymVoucherPurchaseList(authResponse.getResponseCode());
 	    }
 
 	    if (channel == POS_MACHINE) {

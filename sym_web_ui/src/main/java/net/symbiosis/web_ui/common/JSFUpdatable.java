@@ -24,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,7 +48,6 @@ import static net.symbiosis.persistence.helper.SymEnumHelper.fromEnum;
  *                                                                         *
  ***************************************************************************/
 
-@ManagedBean
 public abstract class JSFUpdatable extends JSFExportable implements JSFLoggable, Serializable {
 
     private static final Logger logger = Logger.getLogger(JSFUpdatable.class.getSimpleName());

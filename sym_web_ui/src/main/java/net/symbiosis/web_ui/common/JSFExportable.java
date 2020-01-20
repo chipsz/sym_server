@@ -9,7 +9,6 @@ import net.symbiosis.core_lib.enumeration.DBConfigVars;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 import java.io.ByteArrayOutputStream;
@@ -34,7 +33,6 @@ import static net.symbiosis.persistence.helper.DaoManager.getSymConfigDao;
  *                                                                         *
  ***************************************************************************/
 
-@ManagedBean
 public abstract class JSFExportable {
 
     private static final Logger logger = Logger.getLogger(JSFExportable.class.getSimpleName());

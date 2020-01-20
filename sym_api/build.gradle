@@ -37,7 +37,7 @@ dependencies {
 	compile libraries.jersey2_servlet
 	compile libraries.jersey2_jackson
 	compile libraries.jersey2_multipart
-	compile(libraries.jersey2_spring3) {
+	compile(libraries.jersey2_spring5) {
 		exclude group: 'org.springframework', module: 'spring-beans'
 		exclude group: 'org.springframework', module: 'spring-web'
 		exclude group: 'org.springframework', module: 'spring-core'

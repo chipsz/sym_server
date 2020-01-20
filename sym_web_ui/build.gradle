@@ -26,15 +26,19 @@ dependencies {
     compile project(':sym_api')
 
     testCompile project(':sym_core_lib').sourceSets.test.output
-    testCompile project(':sym_common').sourceSets.test.output
     testCompile project(':sym_persistence').sourceSets.test.output
+    testCompile project(':sym_common').sourceSets.test.output
     testCompile project(':sym_authentication').sourceSets.test.output
     testCompile project(':sym_core').sourceSets.test.output
+    testCompile project(':sym_api').sourceSets.test.output
 
     compile libraries.spring_core
     compile libraries.spring_web
-    compile libraries.jsf_api
-    compile libraries.jsf_impl
+    compile libraries.reactive_streams
+//    compile libraries.jsf_api
+//    compile libraries.jsf_impl
+    compile libraries.jsf
+    compile libraries.wildfly_jsf
     compile libraries.cdi_api
     compile libraries.javax_servlet_jstl
     compile libraries.javax_servlet_api
@@ -43,7 +47,8 @@ dependencies {
     compile libraries.theme_pf
     compile libraries.theme_pf_all
     compile libraries.theme_pf_extensions
-    compile libraries.itext
+    compile libraries.lowagie_legacy_itext
+//    compile libraries.itext
     compile libraries.poi
     compile libraries.xmlbeans
 
